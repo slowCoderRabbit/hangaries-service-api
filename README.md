@@ -1,2 +1,2 @@
 # hangaries-service-api
- hangaries service project
+ Please refer 'Hangaries API.postman_collection.json' the Postman API export for service endpoint testing.  
