@@ -1,2 +1,2 @@
-# hungaries-service-api
- hungaries service project
+# hangaries-service-api
+ hangaries service project
