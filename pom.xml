@@ -13,11 +13,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
-    <groupId>com.hungries</groupId>
-    <artifactId>hungries-service</artifactId>
+    <groupId>com.hangaries</groupId>
+    <artifactId>hangaries-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>hungaries-service-api</name>
-    <description>Services for hungaries</description>
+    <name>hangaries-service-api</name>
+    <description>Services for hangaries</description>
 
     <dependencies>
         <dependency>
@@ -47,10 +47,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>javax.validation</groupId>-->
-        <!--            <artifactId>validation-api</artifactId>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
