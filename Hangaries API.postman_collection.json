@@ -117,6 +117,402 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "gCloud-getNewOrderId",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"KK\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hangariesapp-4cgktmnhga-em.a.run.app/api/getNewOrderId",
+					"protocol": "https",
+					"host": [
+						"hangariesapp-4cgktmnhga-em",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"api",
+						"getNewOrderId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gCloud-getAllStores",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hangariesapp-4cgktmnhga-em.a.run.app/api/getAllStores",
+					"protocol": "https",
+					"host": [
+						"hangariesapp-4cgktmnhga-em",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"api",
+						"getAllStores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "gCloud-getStoreDetailsByStoreId",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hangariesapp-4cgktmnhga-em.a.run.app/api/getStoreDetailsByStoreId?storeId=S005",
+					"protocol": "https",
+					"host": [
+						"hangariesapp-4cgktmnhga-em",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"api",
+						"getStoreDetailsByStoreId"
+					],
+					"query": [
+						{
+							"key": "storeId",
+							"value": "S005"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateOrderStatus",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updateStatusByOrderId?orderId=1&orderStatus=TestNew",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateStatusByOrderId"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "1"
+						},
+						{
+							"key": "orderStatus",
+							"value": "TestNew"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveNewOrder",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 0,\r\n        \"orderId\": \"MR001S00120220417000132\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"web\",\r\n        \"customer_id\": 123456,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"TestNew3\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"cgstCaluclatedValue\": null,\r\n        \"sgstCalculatedValue\": null,\r\n        \"overallPriceWithTax\": null\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveNewOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveNewOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrderById",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getOrderById?orderId=MR001S00120220417000132",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getOrderById"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "MR001S00120220417000132"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveNewOrderDetails",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"MR001S00120220417000132\",\r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P002\",\r\n        \"orderId\": \"MR001S00120220417000132\",\r\n        \"quantity\": 2,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveNewOrderDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveNewOrderDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrderDetailsByOrderId",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getOrderDetailsByOrderId?orderId=MR001S00120220417000132",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getOrderDetailsByOrderId"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "MR001S00120220417000132"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllTaxDetails",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getAllTaxDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllTaxDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTaxDetailsByTaxRuleId",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getTaxDetailsByTaxRuleId?taxRuleId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getTaxDetailsByTaxRuleId"
+					],
+					"query": [
+						{
+							"key": "taxRuleId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
