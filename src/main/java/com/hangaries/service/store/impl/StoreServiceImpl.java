@@ -27,4 +27,14 @@ public class StoreServiceImpl implements StoreService {
     public List<Store> getStoreDetailsByStoreId(String storeId) {
         return storeRepository.findByStoreId(storeId);
     }
+
+    @Override
+    public Store addStore(Store newStore) {
+        return storeRepository.save(newStore);
+    }
+
+    @Override
+    public long deleteStoreByStoreId(String storeId) {
+        return storeRepository.deleteByStoreId(storeId);
+    }
 }
