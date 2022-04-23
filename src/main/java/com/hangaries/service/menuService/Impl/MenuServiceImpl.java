@@ -1,6 +1,5 @@
 package com.hangaries.service.menuService.Impl;
 
-import com.hangaries.controller.MenuController;
 import com.hangaries.model.Menu;
 import com.hangaries.repository.MenuRepository;
 import com.hangaries.service.menuService.MenuService;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -21,6 +19,7 @@ public class MenuServiceImpl implements MenuService {
 
     /**
      * Get all menuItems
+     *
      * @return
      * @throws Exception
      */
@@ -36,8 +35,21 @@ public class MenuServiceImpl implements MenuService {
         return menuList;
     }
 
+    public List<Menu> getMenuItemsByRestroAndStore(String restaurantId, String storeId) throws Exception {
+        logger.debug("Inside menu service::");
+        List<Menu> menuList = null;
+        try {
+            menuList = menuRepository.getMenuItemsByRestroAndStore(restaurantId, storeId);
+        } catch (Exception ex) {
+            logger.error("Error while getting menuitems::" + ex.getMessage());
+            throw new Exception(ex);
+        }
+        return menuList;
+    }
+
     /**
      * Get all sections
+     *
      * @return
      * @throws Exception
      */
@@ -55,6 +67,7 @@ public class MenuServiceImpl implements MenuService {
 
     /**
      * Get dishses by section
+     *
      * @param section
      * @return
      * @throws Exception

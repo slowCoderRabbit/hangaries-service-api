@@ -1,5 +1,6 @@
 package com.hangaries.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -16,10 +18,10 @@ import javax.validation.constraints.NotNull;
 @ToString
 @Entity
 @Table(name = "ORDER_DETAILS")
-public class OrderDetail {
+public class OrderDetail implements Serializable {
 
     @Column(name = "order_id")
-    private @NotBlank String orderId;
+    private String orderId;
 
     @Column(name = "product_id")
     private @NotBlank String productId;

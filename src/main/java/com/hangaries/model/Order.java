@@ -8,7 +8,10 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.hangaries.config.HangariesConstants.SYSTEM;
 
@@ -18,7 +21,7 @@ import static com.hangaries.config.HangariesConstants.SYSTEM;
 @ToString
 @Entity
 @Table(name = "ORDER_MASTER")
-public class Order {
+public class Order implements Serializable {
 
     @Id
     @GeneratedValue
@@ -37,7 +40,7 @@ public class Order {
     private @NotBlank String orderSource;
 
     @Column(name = "customer_id")
-    private @NotNull Integer customer_id;
+    private @NotNull Integer customerId;
 
     @Column(name = "order_received_date_time")
     private @NotNull Date orderReceivedDateTime;
@@ -66,6 +69,9 @@ public class Order {
     @Column(name = "overall_price_with_tax")
     private Float overallPriceWithTax;
 
+    @Column(name = "customer_address_id")
+    private Integer customerAddressId;
+
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;
 
@@ -77,6 +83,10 @@ public class Order {
 
     @Column(name = "Updated_date")
     private Date updatedDate = new Date();
+
+    @OneToMany(targetEntity = OrderDetail.class,cascade = CascadeType.ALL)
+    @JoinColumn(name ="order_id",referencedColumnName = "order_id")
+    List<OrderDetail> orderDetails = new ArrayList<>();
 
 
 }

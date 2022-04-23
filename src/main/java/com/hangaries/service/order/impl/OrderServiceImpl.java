@@ -31,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderDetailRepository orderDetailRepository;
 
+
     @Override
     public String getNewOrderId(OrderIdInput orderIdInput) {
 
@@ -45,23 +46,51 @@ public class OrderServiceImpl implements OrderService {
         orderId.setPrefix(stringBuilder.toString());
         logger.info("Requesting new Deal ID with following details = {}", orderId);
 
-        OrderId newOrderId = orderIdRepository.save(orderId);
+        int currentOrderId = orderIdRepository.getLatestOrderId(orderIdInput.getRestaurantId(), orderIdInput.getStoreId());
+        int newOrderId = currentOrderId + 1;
+        orderIdRepository.saveNewOrderId(orderIdInput.getRestaurantId(), orderIdInput.getStoreId(), newOrderId);
+        logger.info("Latest order id from database = {} and updated order Id = {}.", currentOrderId, newOrderId);
 
-        StringBuilder newOrderIdString = new StringBuilder();
 
-        if (!isStrNullOrEmpty(newOrderId.getPrefix())) {
-            newOrderIdString.append(newOrderId.getPrefix());
-        }
-        String formattedId = String.format("%06d", newOrderId.getId());
-        newOrderIdString.append(formattedId);
-        if (!isStrNullOrEmpty(newOrderId.getSuffix())) {
-            newOrderIdString.append(newOrderId.getSuffix());
-        }
+        String formattedId = String.format("%06d", newOrderId);
+        stringBuilder.append(formattedId);
 
-        logger.info("The newly created formatted order id = {}", newOrderIdString);
-        return newOrderIdString.toString();
+        logger.info("The newly created formatted order id = {}", stringBuilder);
+        return stringBuilder.toString();
 
     }
+
+//    @Override
+//    public String getNewOrderId(OrderIdInput orderIdInput) {
+//
+//        StringBuilder stringBuilder = new StringBuilder(orderIdInput.getOrderSource());
+//        stringBuilder.append(orderIdInput.getRestaurantId());
+//        stringBuilder.append(orderIdInput.getStoreId());
+//        String pattern = "yyyyMMdd";
+//        SimpleDateFormat format = new SimpleDateFormat(pattern);
+//        stringBuilder.append(format.format(new Date()));
+//
+//        OrderId orderId = new OrderId();
+//        orderId.setPrefix(stringBuilder.toString());
+//        logger.info("Requesting new Deal ID with following details = {}", orderId);
+//
+//        OrderId newOrderId = orderIdRepository.save(orderId);
+//
+//        StringBuilder newOrderIdString = new StringBuilder();
+//
+//        if (!isStrNullOrEmpty(newOrderId.getPrefix())) {
+//            newOrderIdString.append(newOrderId.getPrefix());
+//        }
+//        String formattedId = String.format("%06d", newOrderId.getId());
+//        newOrderIdString.append(formattedId);
+//        if (!isStrNullOrEmpty(newOrderId.getSuffix())) {
+//            newOrderIdString.append(newOrderId.getSuffix());
+//        }
+//
+//        logger.info("The newly created formatted order id = {}", newOrderIdString);
+//        return newOrderIdString.toString();
+//
+//    }
 
     private boolean isStrNullOrEmpty(String string) {
         return string == null || string.isEmpty() || string.trim().isEmpty();
@@ -80,9 +109,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order saveOrder(Order order) {
+        OrderIdInput input = new OrderIdInput();
+        input.setRestaurantId(order.getRestaurantId());
+        input.setStoreId(order.getStoreId());
+        input.setOrderSource(order.getOrderSource());
+        String newOrderId = getNewOrderId(input);
+        order.setOrderId(newOrderId);
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            orderDetail.setOrderId(newOrderId);
+        }
         return orderRepository.save(order);
-
     }
+
 
     @Override
     public List<OrderDetail> saveOrderDetails(List<OrderDetail> orderDetails) {
@@ -93,5 +131,6 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDetail> getOrderDetailsByOrderId(String orderId) {
         return orderDetailRepository.findByOrderId(orderId);
     }
+
 
 }

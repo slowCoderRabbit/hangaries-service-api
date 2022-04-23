@@ -5,22 +5,13 @@ import com.hangaries.model.Menu;
 import com.hangaries.model.MenuIngrident;
 import com.hangaries.service.menuIngridentService.Impl.MenuIngredientServiceImpl;
 import com.hangaries.service.menuService.Impl.MenuServiceImpl;
-import com.hangaries.model.Menu;
-import com.hangaries.service.menuService.Impl.MenuServiceImpl;
-import com.hangaries.service.menuService.MenuService;
-import com.hangaries.constants.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +39,26 @@ public class MenuController {
         List<Menu> menuList = new ArrayList<Menu>();
         try {
             menuList = menuService.getAllMenuItems();
+            return new ResponseEntity<List<Menu>>(menuList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error while getting menuitems::" + ex.getMessage());
+            return new ResponseEntity<List<Menu>>(menuList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Get all menuItems
+     *
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("getMenuItemsByRestroAndStore")
+    @ResponseBody
+    public ResponseEntity<List<Menu>> getMenuItemsByRestroAndStore(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) throws Exception {
+        logger.info("Get all menu items for restaurantId = {} and storeId = {}.", restaurantId, storeId);
+        List<Menu> menuList = new ArrayList<Menu>();
+        try {
+            menuList = menuService.getMenuItemsByRestroAndStore(restaurantId, storeId);
             return new ResponseEntity<List<Menu>>(menuList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getting menuitems::" + ex.getMessage());
@@ -89,6 +100,7 @@ public class MenuController {
             return new ResponseEntity<List<String>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("getDishesBySection")
     @ResponseBody
     public ResponseEntity<List<String>> getDishesBySection(@RequestParam("section") String section) throws Exception {

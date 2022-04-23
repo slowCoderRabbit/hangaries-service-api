@@ -36,6 +36,9 @@ public class Store {
     @Column(name = "city")
     private @NotBlank String city;
 
+    @Column(name = "store_active_flag")
+    private @NotBlank String storeActiveFlag="Y";
+
     @Column(name = "zip_code")
     private String zipCode;
 

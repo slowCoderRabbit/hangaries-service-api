@@ -64,18 +64,16 @@ public class OrderController {
     }
 
     @PostMapping("saveNewOrder")
-    public ResponseEntity<Order> saveNewOrder(@Valid @RequestBody Order order) {
-        logger.info("New Order received for order Id = {} . ", order.getOrderId());
+    public ResponseEntity<Order> saveNewOrder(@Valid @RequestBody Order orderRequest) {
+        logger.info("New Order received ", orderRequest);
 
         Order newOrder = new Order();
-        try {
-            newOrder = orderService.saveOrder(order);
-            return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
-        } catch (Exception ex) {
-            logger.error("Error getting order by Id = {} :: {}", order.getOrderId(), ex.getMessage());
-            return new ResponseEntity<Order>(newOrder, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+        newOrder = orderService.saveOrder(orderRequest);
+        return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
+
     }
+
 
     @PostMapping("saveNewOrderDetails")
     public ResponseEntity<List<OrderDetail>> saveNewOrderDetails(@Valid @RequestBody List<OrderDetail> orderDetails) {
