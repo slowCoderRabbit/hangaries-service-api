@@ -27,12 +27,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8081/api/getAllStores",
+					"raw": "http://localhost:8080/api/getAllStores",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8081",
+					"port": "8080",
 					"path": [
 						"api",
 						"getAllStores"
@@ -295,7 +295,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"id\": 0,\r\n        \"orderId\": \"MR001S00120220417000132\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"web\",\r\n        \"customer_id\": 123456,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"TestNew3\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"cgstCaluclatedValue\": null,\r\n        \"sgstCalculatedValue\": null,\r\n        \"overallPriceWithTax\": null\r\n        \r\n    }",
+					"raw": "{\r\n        \"id\": 0,\r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"M\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"TestNew3\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"customerAddressId\":122,\r\n        \"cgstCaluclatedValue\": null,\r\n        \"sgstCalculatedValue\": null,\r\n        \"overallPriceWithTax\": null,\r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",             \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P002\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -509,6 +509,164 @@
 							"key": "taxRuleId",
 							"value": "1"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addStore",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"storeId\": \"S0040\",\r\n        \"restaurantId\": \"R001\",\r\n        \"resturantName\": \"Hangries Yamunanagar\",\r\n        \"country\": \"India\",\r\n        \"city\": \"YamumaNagar\",\r\n        \"zipCode\": null,\r\n        \"storeStartTime\": \"9:00\",\r\n        \"storeEndTime\": \"11:00\",\r\n        \"storeGstNumber\": \"06ABCCS2473H1ZD\",\r\n        \"address1\": \"Nehru Park Road, Near Raman Hotel\",\r\n        \"address2\": \"Model Town\",\r\n        \"address3\": \"Yamunanagar\",\r\n        \"storeAvailableForPickup\": \"Y\",\r\n        \"storeAvailableForDelivery\": \"N\"\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addStore",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addStore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteStoreByStoreId",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/deleteStoreByStoreId?storeId=S0022",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"deleteStoreByStoreId"
+					],
+					"query": [
+						{
+							"key": "storeId",
+							"value": "S0022"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getMenuItemsByRestroAndStore",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getMenuItemsByRestroAndStore?restaurantId=R001&storeId=S001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getMenuItemsByRestroAndStore"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllMenuItems",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getAllMenuItems",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllMenuItems"
 					]
 				}
 			},
