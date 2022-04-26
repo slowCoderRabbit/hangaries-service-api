@@ -671,6 +671,92 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getOrderByCustomerId",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getOrderByCustomerId?customerId=109",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getOrderByCustomerId"
+					],
+					"query": [
+						{
+							"key": "customerId",
+							"value": "109"
+						}
+					]
+				},
+				"description": "StartFragment\n\nAPI for get the data from table ORDER_MASTER and ORDER_DETAILS by CustomerId"
+			},
+			"response": []
+		},
+		{
+			"name": "getOrderProcessingDetailsByOrderId",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getOrderProcessingDetailsByOrderId?orderId=44",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getOrderProcessingDetailsByOrderId"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "44"
+						}
+					]
+				},
+				"description": "API for get the data from ORDER_PROCESSING_DETAILS table based on orderId"
+			},
+			"response": []
 		}
 	]
 }
