@@ -1,11 +1,9 @@
 package com.hangaries.service.order.impl;
 
-import com.hangaries.model.Order;
-import com.hangaries.model.OrderDetail;
-import com.hangaries.model.OrderId;
-import com.hangaries.model.OrderIdInput;
+import com.hangaries.model.*;
 import com.hangaries.repository.OrderDetailRepository;
 import com.hangaries.repository.OrderIdRepository;
+import com.hangaries.repository.OrderProcessingDetailsRepository;
 import com.hangaries.repository.OrderRepository;
 import com.hangaries.service.order.OrderService;
 import org.slf4j.Logger;
@@ -30,6 +28,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    OrderProcessingDetailsRepository orderProcessingDetailsRepository;
 
 
     @Override
@@ -130,6 +131,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDetail> getOrderDetailsByOrderId(String orderId) {
         return orderDetailRepository.findByOrderId(orderId);
+    }
+
+    @Override
+    public List<Order> getOrderByCustomerId(int customerId) {
+        return orderRepository.findByCustomerId(customerId);
+    }
+
+    @Override
+    public List<OrderProcessingDetails> getOrderProcessingDetailsByOrderId(String orderId) {
+        return orderProcessingDetailsRepository.getOrderProcessingDetailsByOrderId(orderId);
     }
 
 

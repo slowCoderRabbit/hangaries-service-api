@@ -3,6 +3,7 @@ package com.hangaries.controller;
 import com.hangaries.model.Order;
 import com.hangaries.model.OrderDetail;
 import com.hangaries.model.OrderIdInput;
+import com.hangaries.model.OrderProcessingDetails;
 import com.hangaries.service.order.impl.OrderServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,35 @@ public class OrderController {
             return new ResponseEntity<List<Order>>(orderList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("getOrderByCustomerId")
+    public ResponseEntity<List<Order>> getOrderByCustomerId(@RequestParam("customerId") String customerId) {
+        logger.info("Get Order by Customer Id = {}", customerId);
+
+        List<Order> orderList = new ArrayList<>();
+        try {
+            orderList = orderService.getOrderByCustomerId(Integer.parseInt(customerId));
+            return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error getting order by Id = {} :: {}", customerId, ex.getMessage());
+            return new ResponseEntity<List<Order>>(orderList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("getOrderProcessingDetailsByOrderId")
+    public ResponseEntity<List<OrderProcessingDetails>> getOrderProcessingDetailsByOrderId(@RequestParam("orderId") String orderId) {
+        logger.info("Get Order Processing Details by Id = {}", orderId);
+
+        List<OrderProcessingDetails> orderProcessingDetailsList = new ArrayList<>();
+        try {
+            orderProcessingDetailsList = orderService.getOrderProcessingDetailsByOrderId(orderId);
+            return new ResponseEntity<List<OrderProcessingDetails>>(orderProcessingDetailsList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
+            return new ResponseEntity<List<OrderProcessingDetails>>(orderProcessingDetailsList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @PostMapping("updateStatusByOrderId")
     public ResponseEntity<List<Order>> updateStatusByOrderId(@RequestParam("orderId") String orderId, @RequestParam("orderStatus") String orderStatus) {

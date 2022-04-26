@@ -16,6 +16,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByOrderId(String orderId);
 
+    List<Order> findByCustomerId(int customerId);
+
     @Modifying
     @Query(value = "update ORDER_MASTER om set om.order_status = :status where om.order_id = :orderId", nativeQuery = true)
     int updateOrderStatus(@Param("orderId") String orderId, @Param("status") String status);

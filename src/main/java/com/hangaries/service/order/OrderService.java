@@ -4,6 +4,7 @@ package com.hangaries.service.order;
 import com.hangaries.model.Order;
 import com.hangaries.model.OrderDetail;
 import com.hangaries.model.OrderIdInput;
+import com.hangaries.model.OrderProcessingDetails;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface OrderService {
 
     List<OrderDetail> getOrderDetailsByOrderId(String orderId);
 
+    List<Order> getOrderByCustomerId(int customerId);
+
+    List<OrderProcessingDetails> getOrderProcessingDetailsByOrderId(String orderId);
 }
