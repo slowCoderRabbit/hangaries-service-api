@@ -23,4 +23,9 @@ public class TaxMasterServiceImpl implements TaxMasterService {
     public List<TaxMaster> findByTaxRuleId(String taxRuleId) {
         return taxMasterRepository.findByTaxRuleId(taxRuleId);
     }
+
+    @Override
+    public List<TaxMaster> getTaxDetailsByRestroAndStore(String restaurantId, String storeId) {
+        return taxMasterRepository.getTaxDetailsByRestroAndStore( restaurantId, storeId);
+    }
 }

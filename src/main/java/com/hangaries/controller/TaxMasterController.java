@@ -49,4 +49,17 @@ public class TaxMasterController {
             return new ResponseEntity<List<TaxMaster>>(taxRuleDetails, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("getTaxDetailsByRestroAndStore")
+    public ResponseEntity<List<TaxMaster>> getTaxDetailsByRestroAndStore(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) {
+        List<TaxMaster> taxRuleDetails = new ArrayList<>();
+        try {
+            logger.info("Get tax details by restaurantId = {} and storeId = {}.", restaurantId,storeId);
+            taxRuleDetails = taxMasterService.getTaxDetailsByRestroAndStore(restaurantId,storeId);
+            return new ResponseEntity<List<TaxMaster>>(taxRuleDetails, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error while getting tax rule details::" + ex.getMessage());
+            return new ResponseEntity<List<TaxMaster>>(taxRuleDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
