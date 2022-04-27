@@ -757,6 +757,104 @@
 				"description": "API for get the data from ORDER_PROCESSING_DETAILS table based on orderId"
 			},
 			"response": []
+		},
+		{
+			"name": "getTaxDetailsByRestroAndStore",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getTaxDetailsByRestroAndStore?restaurantId=R001&storeId=S002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getTaxDetailsByRestroAndStore"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S002"
+						}
+					]
+				},
+				"description": "StartFragment\n\nAPI for get the data from StartFragment TaxDetails table based on restaurantId and storeId\n\n  \n\nEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "getDeliveryConfigByCriteria",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getDeliveryConfigByCriteria?restaurantId=R001&storeId=S001&criteria=AMOUNT",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getDeliveryConfigByCriteria"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						},
+						{
+							"key": "criteria",
+							"value": "AMOUNT"
+						}
+					]
+				},
+				"description": "StartFragment\n\nAPI for get the Delivery Config data based on restaurantId and storeId and Criteria\n\nEndFragment\n\n  \n  \n\nEndFragment"
+			},
+			"response": []
 		}
 	]
 }
