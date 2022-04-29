@@ -98,9 +98,13 @@ public class OrderController {
         logger.info("New Order received ", orderRequest);
 
         Order newOrder = new Order();
-
-        newOrder = orderService.saveOrder(orderRequest);
-        return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
+        try {
+            newOrder = orderService.saveOrder(orderRequest);
+            return new ResponseEntity<Order>(newOrder, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error saving order by Id = {} :: {}", orderRequest, ex.getMessage());
+            return new ResponseEntity<Order>(newOrder, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 
