@@ -295,7 +295,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"id\": 0,\r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"M\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"TestNew3\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"customerAddressId\":122,\r\n        \"cgstCaluclatedValue\": null,\r\n        \"sgstCalculatedValue\": null,\r\n        \"overallPriceWithTax\": null,\r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
+					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"M\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"TestNew3\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"customerAddressId\":122,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -853,6 +853,41 @@
 					]
 				},
 				"description": "StartFragment\n\nAPI for get the Delivery Config data based on restaurantId and storeId and Criteria\n\nEndFragment\n\n  \n  \n\nEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "saveNewOrderNAA",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"M\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"TestNew3\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"customerAddressId\":122,\r\n        \"cgstCaluclatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"NAA\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveNewOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveNewOrder"
+					]
+				}
 			},
 			"response": []
 		}
