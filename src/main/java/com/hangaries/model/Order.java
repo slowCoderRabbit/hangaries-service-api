@@ -24,9 +24,6 @@ import static com.hangaries.config.HangariesConstants.SYSTEM;
 public class Order implements Serializable {
 
     @Id
-    @GeneratedValue
-    private long id;
-
     @Column(name = "order_id")
     private @NotBlank String orderId;
 
@@ -60,8 +57,8 @@ public class Order implements Serializable {
     @Column(name = "total_price")
     private @NotNull Float totalPrice;
 
-    @Column(name = "cgst_caluclated_value")
-    private Float cgstCaluclatedValue;
+    @Column(name = "cgst_calculated_value")
+    private Float cgstCalculatedValue;
 
     @Column(name = "sgst_calculated_value")
     private Float sgstCalculatedValue;
