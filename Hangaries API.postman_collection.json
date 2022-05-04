@@ -890,6 +890,175 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "deleteAddressByDeliveryType",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/deleteAddressByDeliveryType?mobno=765765757&addrType=office",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"deleteAddressByDeliveryType"
+					],
+					"query": [
+						{
+							"key": "mobno",
+							"value": "765765757"
+						},
+						{
+							"key": "addrType",
+							"value": "office"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCustomerAddressDtlsByMobNum",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getCustomerAddressDtlsByMobNum?mobno=765765757",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getCustomerAddressDtlsByMobNum"
+					],
+					"query": [
+						{
+							"key": "mobno",
+							"value": "765765757"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveCustomerDtls",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"mobileNumber\": \"7657657573\",\r\n        \"customerAddressType\": \"office\",\r\n        \"address1\": \"addr1\",\r\n        \"address2\": \"addr22\",\r\n        \"landmark\": null,\r\n        \"state\": \"ap\",\r\n        \"city\": \"sing\",\r\n        \"zipCode\": 1245,\r\n        \"createdBy\": \"Gurmeet\",\r\n        \"createdDate\": \"2022-04-23T22:39:13.000+00:00\",\r\n        \"updatedBy\": \"Gurmeet\",\r\n        \"updatedDate\": \"2022-04-23T22:39:13.000+00:00\",\r\n        \"active\": \"Y\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveCustomerDtls",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveCustomerDtls"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activateAddressByDeliveryType",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/activateAddressByDeliveryType?mobno=765765757&addrType=office",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"activateAddressByDeliveryType"
+					],
+					"query": [
+						{
+							"key": "mobno",
+							"value": "765765757"
+						},
+						{
+							"key": "addrType",
+							"value": "office"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -2,6 +2,9 @@ package com.hangaries.model;
 
 import javax.persistence.*;
 import java.util.Date;
+
+import static com.hangaries.config.HangariesConstants.SYSTEM;
+
 @Entity
 @Table(name="CUSTOMER_ADDRESS_DETAILS")
 public class CustomerDtls {
@@ -27,13 +30,13 @@ public class CustomerDtls {
     @Column(name="zip_code")
     private int zipCode;
     @Column(name="created_by")
-    private String createdBy;
+    private String createdBy = SYSTEM;
     @Column(name="created_date")
-    private Date createdDate;
+    private Date createdDate = new Date();
     @Column(name="updated_by")
-    private String updatedBy;
+    private String updatedBy = SYSTEM;
     @Column(name="updated_date")
-    private Date updatedDate;
+    private Date updatedDate = new Date();
     @Column(name="active")
     private String active="Y";
 

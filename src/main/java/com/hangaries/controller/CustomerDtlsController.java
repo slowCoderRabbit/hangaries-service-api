@@ -9,8 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.hangaries.config.HangariesConstants.STATUS_N;
+import static com.hangaries.config.HangariesConstants.STATUS_Y;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -24,10 +28,10 @@ public class CustomerDtlsController {
     @PostMapping("saveCustomerDtls")
     @ResponseBody
     public ResponseEntity<CustomerDtls> saveCustomerDtls(@RequestBody CustomerDtls customerDtls) throws Exception {
-        CustomerDtls retCustomerDtls=null;
+        CustomerDtls retCustomerDtls = null;
         try {
             logger.info("save customer details::");
-            retCustomerDtls=customerDtlsService.saveCustomerDtls(customerDtls);
+            retCustomerDtls = customerDtlsService.saveCustomerDtls(customerDtls);
             return new ResponseEntity<CustomerDtls>(retCustomerDtls, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<CustomerDtls>(retCustomerDtls, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -48,11 +52,24 @@ public class CustomerDtlsController {
 
     @GetMapping("deleteAddressByDeliveryType")
     @ResponseBody
-    public ResponseEntity<String> deleteAdressByDeliveryTpe(String mobnum, String delType) throws Exception {
-        List<CustomerDtls> customerDtlsList = new ArrayList<CustomerDtls>();
+    public ResponseEntity<String> deleteAddressByDeliveryTpe(@RequestParam("mobno") @NotBlank String mobnum, @RequestParam("addrType") @NotBlank String addrType) throws Exception {
+        return updateAddressByDeliveryTpe(mobnum, addrType, STATUS_N);
+    }
+
+    @GetMapping("activateAddressByDeliveryType")
+    @ResponseBody
+    public ResponseEntity<String> activateAddressByDeliveryTpe(@RequestParam("mobno") @NotBlank String mobnum, @RequestParam("addrType") @NotBlank String addrType) throws Exception {
+        return updateAddressByDeliveryTpe(mobnum, addrType, STATUS_Y);
+    }
+
+    public ResponseEntity<String> updateAddressByDeliveryTpe(String mobnum, String type, String status) throws Exception {
         try {
-            customerDtlsService.deleteAddressByType(mobnum, delType);
-            return new ResponseEntity<String>("Success", HttpStatus.OK);
+            int result = customerDtlsService.updateAddressStatusByType(mobnum, type, status);
+            if (result > 0) {
+                return new ResponseEntity<String>("Success.", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<String>("No Records found!", HttpStatus.OK);
+            }
         } catch (Exception ex) {
             return new ResponseEntity<String>("Fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
