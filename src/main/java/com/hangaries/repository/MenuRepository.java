@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -14,11 +13,11 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     @Query(value = "select * from MENU_MASTER", nativeQuery = true)
     List<Menu> getAllMenuItems();
 
-    @Query(value = "select distinct section from MENU_MASTER", nativeQuery = true)
-    List<String> getAllSections() throws Exception;
+    @Query(value = "select distinct section from MENU_MASTER where restaurant_id=:restaurantId and store_id=:storeId", nativeQuery = true)
+    List<String> getAllSections(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId) throws Exception;
 
-    @Query(value = "select distinct dish from MENU_MASTER where section=:section", nativeQuery = true)
-    List<String> getDishesBySection(@Param("section") String section) throws Exception;
+    @Query(value = "select distinct dish from MENU_MASTER where section=:section and restaurant_id=:restaurantId and store_id=:storeId", nativeQuery = true)
+    List<String> getDishesBySection(@Param("section") String section, @Param("restaurantId") String restaurantId, @Param("storeId") String storeId) throws Exception;
 
     @Query(value = "select * from MENU_MASTER where restaurant_id=:restaurantId and store_id=:storeId", nativeQuery = true)
     List<Menu> getMenuItemsByRestroAndStore(String restaurantId, String storeId);

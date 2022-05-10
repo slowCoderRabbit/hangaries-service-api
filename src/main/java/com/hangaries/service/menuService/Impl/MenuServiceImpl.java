@@ -50,14 +50,16 @@ public class MenuServiceImpl implements MenuService {
     /**
      * Get all sections
      *
+     * @param restaurantId
+     * @param storeId
      * @return
      * @throws Exception
      */
-    public List<String> getAllSections() throws Exception {
-        logger.debug("Get all sections::");
+    public List<String> getAllSections(String restaurantId, String storeId) throws Exception {
+        logger.debug("Get sections for {},{}", restaurantId, storeId);
         List<String> sectionList = null;
         try {
-            sectionList = menuRepository.getAllSections();
+            sectionList = menuRepository.getAllSections(restaurantId, storeId);
         } catch (Exception ex) {
             logger.error("Error while getting all sections::");
             throw new Exception(ex);
@@ -68,15 +70,17 @@ public class MenuServiceImpl implements MenuService {
     /**
      * Get dishses by section
      *
+     * @param s
+     * @param restaurantId
      * @param section
      * @return
      * @throws Exception
      */
-    public List<String> getDishesBySection(String section) throws Exception {
-        logger.debug("Get all dishes::");
+    public List<String> getDishesBySection(String section, String restaurantId, String storeId) throws Exception {
+        logger.debug("Get all dishes for {}, {}, {}.", section, restaurantId, storeId);
         List<String> dishList = null;
         try {
-            dishList = menuRepository.getDishesBySection(section);
+            dishList = menuRepository.getDishesBySection(section, restaurantId, storeId);
 
         } catch (Exception ex) {
             logger.error("Error while getting dishes::");

@@ -780,7 +780,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getTaxDetailsByRestroAndStore?restaurantId=R001&storeId=S002",
+					"raw": "http://localhost:8080/api/getTaxDetailsByRestroAndStore?restaurantId=R001&storeId=S001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -797,7 +797,7 @@
 						},
 						{
 							"key": "storeId",
-							"value": "S002"
+							"value": "S001"
 						}
 					]
 				},
@@ -1091,6 +1091,102 @@
 					"path": [
 						"api",
 						"getReports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllSections",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getAllSections?restaurantId=R001&storeId=S001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllSections"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDishesBySection",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getDishesBySection?section=Pizza&restaurantId=R001&storeId=S001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getDishesBySection"
+					],
+					"query": [
+						{
+							"key": "section",
+							"value": "Pizza"
+						},
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
 					]
 				}
 			},

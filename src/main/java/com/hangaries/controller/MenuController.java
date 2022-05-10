@@ -89,11 +89,11 @@ public class MenuController {
 
     @GetMapping("getAllSections")
     @ResponseBody
-    public ResponseEntity<List<String>> getSections() throws Exception {
+    public ResponseEntity<List<String>> getSections(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) throws Exception {
         List<String> sections;
         try {
-            logger.info("Get sections::");
-            sections = menuService.getAllSections();
+            logger.info("Get all sections for restaurantId = {}, storeId = {}. ", restaurantId, storeId);
+            sections = menuService.getAllSections(restaurantId, storeId);
             return new ResponseEntity<List<String>>(sections, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getting Sections::" + ex.getMessage());
@@ -103,11 +103,11 @@ public class MenuController {
 
     @GetMapping("getDishesBySection")
     @ResponseBody
-    public ResponseEntity<List<String>> getDishesBySection(@RequestParam("section") String section) throws Exception {
+    public ResponseEntity<List<String>> getDishesBySection(@RequestParam("section") String section, @RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) throws Exception {
         List<String> sections;
         try {
-            logger.info("Get sections::");
-            sections = menuService.getDishesBySection(section);
+            logger.info("Get Dishes for section = {}, restaurantId = {}, storeId = {}.", section, restaurantId, storeId);
+            sections = menuService.getDishesBySection(section, restaurantId, storeId);
             return new ResponseEntity<List<String>>(sections, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getting Sections::" + ex.getMessage());
