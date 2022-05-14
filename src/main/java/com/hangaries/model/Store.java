@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+import static com.hangaries.config.HangariesConstants.SYSTEM;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -37,7 +39,7 @@ public class Store {
     private @NotBlank String city;
 
     @Column(name = "store_active_flag")
-    private @NotBlank String storeActiveFlag="Y";
+    private @NotBlank String storeActiveFlag = "Y";
 
     @Column(name = "zip_code")
     private String zipCode;
@@ -67,16 +69,16 @@ public class Store {
     private String storeAvailableForDelivery;
 
     @Column(name = "Created_by")
-    private String createdBy;
+    private String createdBy = SYSTEM;
 
     @Column(name = "created_date")
-    private Date createdDate;
+    private Date createdDate = new Date();
 
     @Column(name = "updated_by")
-    private String updatedBy;
+    private String updatedBy = SYSTEM;
 
     @Column(name = "updated_date")
-    private Date updatedDate;
+    private Date updatedDate = new Date();
 
 
 }

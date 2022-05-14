@@ -63,6 +63,9 @@ public class Order implements Serializable {
     @Column(name = "sgst_calculated_value")
     private Float sgstCalculatedValue;
 
+    @Column(name = "delivery_charges")
+    private Float deliveryCharges;
+
     @Column(name = "overall_price_with_tax")
     private Float overallPriceWithTax;
 

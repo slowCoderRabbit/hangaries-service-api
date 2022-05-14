@@ -1,10 +1,7 @@
 package com.hangaries.service.order.impl;
 
 import com.hangaries.model.*;
-import com.hangaries.repository.OrderDetailRepository;
-import com.hangaries.repository.OrderIdRepository;
-import com.hangaries.repository.OrderProcessingDetailsRepository;
-import com.hangaries.repository.OrderRepository;
+import com.hangaries.repository.*;
 import com.hangaries.service.order.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +11,14 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    public static final String ORDER_SOURCE = "ORDER_SOURCE";
+    public static final String SYSTEM = "SYSTEM";
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
-
     @Autowired
     OrderIdRepository orderIdRepository;
 
@@ -31,6 +30,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderProcessingDetailsRepository orderProcessingDetailsRepository;
+
+    @Autowired
+    ConfigMasterRepository configMasterRepository;
 
 
     @Override
@@ -61,37 +63,6 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-//    @Override
-//    public String getNewOrderId(OrderIdInput orderIdInput) {
-//
-//        StringBuilder stringBuilder = new StringBuilder(orderIdInput.getOrderSource());
-//        stringBuilder.append(orderIdInput.getRestaurantId());
-//        stringBuilder.append(orderIdInput.getStoreId());
-//        String pattern = "yyyyMMdd";
-//        SimpleDateFormat format = new SimpleDateFormat(pattern);
-//        stringBuilder.append(format.format(new Date()));
-//
-//        OrderId orderId = new OrderId();
-//        orderId.setPrefix(stringBuilder.toString());
-//        logger.info("Requesting new Deal ID with following details = {}", orderId);
-//
-//        OrderId newOrderId = orderIdRepository.save(orderId);
-//
-//        StringBuilder newOrderIdString = new StringBuilder();
-//
-//        if (!isStrNullOrEmpty(newOrderId.getPrefix())) {
-//            newOrderIdString.append(newOrderId.getPrefix());
-//        }
-//        String formattedId = String.format("%06d", newOrderId.getId());
-//        newOrderIdString.append(formattedId);
-//        if (!isStrNullOrEmpty(newOrderId.getSuffix())) {
-//            newOrderIdString.append(newOrderId.getSuffix());
-//        }
-//
-//        logger.info("The newly created formatted order id = {}", newOrderIdString);
-//        return newOrderIdString.toString();
-//
-//    }
 
     private boolean isStrNullOrEmpty(String string) {
         return string == null || string.isEmpty() || string.trim().isEmpty();
@@ -105,11 +76,20 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> updateOrderStatus(String orderId, String status) {
         orderRepository.updateOrderStatus(orderId, status);
-        return orderRepository.findByOrderId(orderId);
+        List<Order> savedOrders = orderRepository.findByOrderId(orderId);
+        logger.info("Order status updated for orderID = {}. Updating OrderProcessingDetails....!!!",orderId);
+        for (Order order : savedOrders) {
+            OrderProcessingDetails detailsOP = getNewOrderProcessingDetails(order);
+            saveOrderProcessingDetails(detailsOP);
+        }
+
+        return savedOrders;
     }
 
     @Override
     public Order saveOrder(Order order) {
+
+        logger.info("Generating new orderID.....");
         OrderIdInput input = new OrderIdInput();
         input.setRestaurantId(order.getRestaurantId());
         input.setStoreId(order.getStoreId());
@@ -119,7 +99,49 @@ public class OrderServiceImpl implements OrderService {
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setOrderId(newOrderId);
         }
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+        logger.info("Order saved for new orderID = {}. Updating OrderProcessingDetails....!!!", newOrderId);
+        OrderProcessingDetails detailsOP = getNewOrderProcessingDetails(order);
+        saveOrderProcessingDetails(detailsOP);
+        return savedOrder;
+    }
+
+    OrderProcessingDetails saveOrderProcessingDetails(OrderProcessingDetails detailsOP) {
+        logger.info("Saving order process details for orderID = {} and order status = {}.", detailsOP.getOrderId(), detailsOP.getOrderStatus());
+        OrderProcessingDetails details = orderProcessingDetailsRepository.save(detailsOP);
+        logger.info("Order process details saved for orderID = {} and order status = {}.", detailsOP.getOrderId(), detailsOP.getOrderStatus());
+        return details;
+    }
+
+    OrderProcessingDetails getNewOrderProcessingDetails(Order order) {
+        logger.info("Creating OrderProcessingDetails for orderID = {}", order.getOrderId());
+        OrderProcessingDetails detailsOP = new OrderProcessingDetails();
+
+        detailsOP.setOrderId(order.getOrderId());
+        detailsOP.setOrderStatus(order.getOrderStatus());
+        detailsOP.setRestaurantId(order.getRestaurantId());
+        detailsOP.setStoreId(order.getStoreId());
+        RoleCategoryDetails rcDetails = getRoleCategoryByOrderSource(order);
+        detailsOP.setRoleCategory(rcDetails.getRoleCategory());
+        detailsOP.setUserSeqNo(rcDetails.getUserSeqNo());
+
+        return detailsOP;
+    }
+
+
+    RoleCategoryDetails getRoleCategoryByOrderSource(Order order) {
+
+        Predicate<ConfigMaster> isOnlineOrderSource = s -> s.getConfigCriteriaValue().equals(order.getOrderSource());
+        List<ConfigMaster> configDetails = configMasterRepository.getDetailsFromConfigMaster(order.getRestaurantId(), order.getStoreId(), ORDER_SOURCE);
+
+        boolean isOnlineSource = configDetails.stream().anyMatch(isOnlineOrderSource);
+
+        if (isOnlineSource) {
+            return new RoleCategoryDetails(4, SYSTEM);
+        } else {
+            return new RoleCategoryDetails(2, "STORE MANGER");
+        }
+
     }
 
 

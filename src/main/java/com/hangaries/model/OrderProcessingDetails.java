@@ -37,8 +37,8 @@ public class OrderProcessingDetails {
     @Column(name = "order_status")
     private @NotNull String orderStatus;
 
-    @Column(name = "user_id")
-    private @NotNull String customerId;
+    @Column(name = "user_seq_no")
+    private @NotNull Integer userSeqNo;
 
     @Column(name = "role_category")
     private @NotNull String roleCategory;
