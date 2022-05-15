@@ -46,7 +46,7 @@ public class Order implements Serializable {
     private @NotBlank String orderDeliveryType;
 
     @Column(name = "store_table_id")
-    private @NotBlank String storeTableId;
+    private String storeTableId;
 
     @Column(name = "order_status")
     private @NotBlank String orderStatus;
