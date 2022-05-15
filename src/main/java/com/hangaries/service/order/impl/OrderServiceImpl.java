@@ -34,6 +34,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     ConfigMasterRepository configMasterRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
 
     @Override
     public String getNewOrderId(OrderIdInput orderIdInput) {
@@ -121,15 +124,15 @@ public class OrderServiceImpl implements OrderService {
         detailsOP.setOrderStatus(order.getOrderStatus());
         detailsOP.setRestaurantId(order.getRestaurantId());
         detailsOP.setStoreId(order.getStoreId());
-        RoleCategoryDetails rcDetails = getRoleCategoryByOrderSource(order);
-        detailsOP.setRoleCategory(rcDetails.getRoleCategory());
-        detailsOP.setUserSeqNo(rcDetails.getUserSeqNo());
+        User user = getRoleCategoryByOrderSource(order);
+        detailsOP.setRoleCategory(user.getRoleCategory());
+        detailsOP.setUserSeqNo(user.getUserSeqNo());
 
         return detailsOP;
     }
 
 
-    RoleCategoryDetails getRoleCategoryByOrderSource(Order order) {
+    User getRoleCategoryByOrderSource(Order order) {
 
         Predicate<ConfigMaster> isOnlineOrderSource = s -> s.getConfigCriteriaValue().equals(order.getOrderSource());
         List<ConfigMaster> configDetails = configMasterRepository.getDetailsFromConfigMaster(order.getRestaurantId(), order.getStoreId(), ORDER_SOURCE);
@@ -137,9 +140,9 @@ public class OrderServiceImpl implements OrderService {
         boolean isOnlineSource = configDetails.stream().anyMatch(isOnlineOrderSource);
 
         if (isOnlineSource) {
-            return new RoleCategoryDetails(4, SYSTEM);
+            return userRepository.findByLoginId(SYSTEM);
         } else {
-            return new RoleCategoryDetails(2, "STORE MANGER");
+            return userRepository.findByLoginId("STORE MANGER");
         }
 
     }

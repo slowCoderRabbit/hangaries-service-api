@@ -51,6 +51,12 @@ public class Order implements Serializable {
     @Column(name = "order_status")
     private @NotBlank String orderStatus;
 
+    @Column(name = "payment_status")
+    private @NotBlank String paymentStatus;
+
+    @Column(name = "payment_mode")
+    private @NotBlank String paymentMode;
+
     @Column(name = "tax_rule_id")
     private @NotNull Integer taxRuleId;
 
