@@ -1,27 +1,27 @@
-package com.hangaries.model;
+package com.hangaries.model.dto;
 
-import lombok.Getter;
+import com.hangaries.model.OrderMenuIngredientAddressId;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static com.hangaries.config.HangariesConstants.SYSTEM;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "ORDER_MASTER")
-public class Order implements Serializable {
+@IdClass(OrderMenuIngredientAddressId.class)
+@Table(name = "vOrderMenuIngredientAddress")
+public class OrderMenuIngredientAddressDTO implements Serializable {
 
     @Id
     @Column(name = "order_id")
@@ -90,9 +90,35 @@ public class Order implements Serializable {
     @Column(name = "Updated_date")
     private Date updatedDate = new Date();
 
-    @OneToMany(targetEntity = OrderDetail.class,cascade = CascadeType.ALL)
-    @JoinColumn(name ="order_id",referencedColumnName = "order_id")
-    List<OrderDetail> orderDetails = new ArrayList<>();
+    @Id
+    @Column(name="product_id")
+    private String productId;
+
+    @Column(name="dish_type")
+    private String dishType;
+
+    @Column(name="ingredient_type")
+    private String ingredientType;
+
+
+    @Column(name="mobile_number")
+    private String mobileNumber;
+
+    @Id
+    @Column(name = "sub_product_Id")
+    private String subProductId;
+
+    @Column(name = "quantity")
+    private @NotNull Integer quantity;
+
+    @Column(name = "price")
+    private Float price;
+
+    @Column(name = "remarks")
+    private String remarks;
+
+    @Column(name = "address")
+    private String address;
 
 
 }

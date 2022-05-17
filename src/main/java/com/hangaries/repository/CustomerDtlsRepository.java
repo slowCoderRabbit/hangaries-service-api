@@ -25,4 +25,6 @@ public interface CustomerDtlsRepository extends JpaRepository<CustomerDtls, Long
     @Transactional
     @Query(value = "update CUSTOMER_ADDRESS_DETAILS set active=:status where mobile_number=:mobnumber and customer_address_type=:type", nativeQuery = true)
     int updateAddressStatusByType(@Param("mobnumber") String mobnumber, @Param("type") String type, @Param("status") String status) throws Exception;
+
+    CustomerDtls getCustomerAddressDtlsById(Long customerAddressId);
 }

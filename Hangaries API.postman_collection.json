@@ -1191,6 +1191,56 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getOrderMenuIngredientAddressView",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getOrderMenuIngredientAddressView?restaurantId=R001&storeId=S001&mobileNumber=%2b6598375373",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getOrderMenuIngredientAddressView"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						},
+						{
+							"key": "mobileNumber",
+							"value": "%2b6598375373"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

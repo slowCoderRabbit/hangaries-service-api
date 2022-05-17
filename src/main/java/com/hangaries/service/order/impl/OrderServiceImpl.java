@@ -1,6 +1,8 @@
 package com.hangaries.service.order.impl;
 
 import com.hangaries.model.*;
+import com.hangaries.model.dto.OrderMenuIngredientAddressDTO;
+
 import com.hangaries.repository.*;
 import com.hangaries.service.order.OrderService;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
@@ -36,6 +39,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CustomerDtlsRepository customerDtlsRepository;
+
+    @Autowired
+    OrderMenuIngredientAddressRepository orderMenuIngredientAddressRepository;
+
 
 
     @Override
@@ -166,6 +176,37 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderProcessingDetails> getOrderProcessingDetailsByOrderId(String orderId) {
         return orderProcessingDetailsRepository.getOrderProcessingDetailsByOrderId(orderId);
+    }
+
+    @Override
+    public List<OrderWithCustomerDetail> getOrderAndCustomerDetailsByCustomerId(int customerId) {
+        List<Order> orders = orderRepository.findByCustomerId(customerId);
+
+        List<OrderWithCustomerDetail> details = new ArrayList<>();
+        OrderWithCustomerDetail orderWithCustomerDetail = null;
+
+        for(Order order :orders){
+            orderWithCustomerDetail = new OrderWithCustomerDetail();
+
+
+            orderWithCustomerDetail.setOrder(order);
+            orderWithCustomerDetail.setCustomerDetails(getCustomerAddressDtlsById(order.getCustomerAddressId()));
+            details.add(orderWithCustomerDetail);
+
+        }
+
+        return details;
+    }
+
+    @Override
+    public List<OrderMenuIngredientAddressDTO> getOrderMenuIngredientAddressView(String restaurantId, String storeId, String mobileNumber) {
+
+        List<OrderMenuIngredientAddressDTO>  result =  orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressView(restaurantId,storeId,mobileNumber);
+        return result;
+    }
+
+    private CustomerDtls getCustomerAddressDtlsById(long addressId) {
+       return customerDtlsRepository.getCustomerAddressDtlsById(addressId);
     }
 
 

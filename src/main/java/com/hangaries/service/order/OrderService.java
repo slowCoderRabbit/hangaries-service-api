@@ -1,10 +1,8 @@
 package com.hangaries.service.order;
 
 
-import com.hangaries.model.Order;
-import com.hangaries.model.OrderDetail;
-import com.hangaries.model.OrderIdInput;
-import com.hangaries.model.OrderProcessingDetails;
+import com.hangaries.model.*;
+import com.hangaries.model.dto.OrderMenuIngredientAddressDTO;
 
 import java.util.List;
 
@@ -25,4 +23,8 @@ public interface OrderService {
     List<Order> getOrderByCustomerId(int customerId);
 
     List<OrderProcessingDetails> getOrderProcessingDetailsByOrderId(String orderId);
+
+    List<OrderWithCustomerDetail> getOrderAndCustomerDetailsByCustomerId(int parseInt);
+
+    List<OrderMenuIngredientAddressDTO> getOrderMenuIngredientAddressView(String restaurantId, String storeId, String mobileNumber);
 }
