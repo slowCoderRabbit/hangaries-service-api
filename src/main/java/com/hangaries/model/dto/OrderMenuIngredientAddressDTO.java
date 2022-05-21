@@ -1,10 +1,7 @@
 package com.hangaries.model.dto;
 
 import com.hangaries.model.OrderMenuIngredientAddressId;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -18,6 +15,7 @@ import static com.hangaries.config.HangariesConstants.SYSTEM;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Entity
 @IdClass(OrderMenuIngredientAddressId.class)
 @Table(name = "vOrderMenuIngredientAddress")
@@ -91,17 +89,17 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
     private Date updatedDate = new Date();
 
     @Id
-    @Column(name="product_id")
+    @Column(name = "product_id")
     private String productId;
 
-    @Column(name="dish_type")
+    @Column(name = "dish_type")
     private String dishType;
 
-    @Column(name="ingredient_type")
+    @Column(name = "ingredient_type")
     private String ingredientType;
 
 
-    @Column(name="mobile_number")
+    @Column(name = "mobile_number")
     private String mobileNumber;
 
     @Id

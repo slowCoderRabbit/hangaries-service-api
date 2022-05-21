@@ -1,7 +1,7 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.*;
-import com.hangaries.model.dto.OrderMenuIngredientAddressDTO;
+import com.hangaries.model.vo.OrderVO;
 import com.hangaries.service.order.impl.OrderServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,18 +77,18 @@ public class OrderController {
     }
 
     @GetMapping("getOrderMenuIngredientAddressView")
-    public ResponseEntity<List<OrderMenuIngredientAddressDTO>> getOrderMenuIngredientAddressView(@RequestParam("restaurantId") String restaurantId,
-                                                                                                 @RequestParam("storeId") String storeId,
-                                                                                                 @RequestParam("mobileNumber") String mobileNumber) {
-        logger.info("Get OrderMenuIngredientAddress view details for restaurantId = {}, storeId = {}, mobileNumber = {}", restaurantId,storeId,mobileNumber);
+    public ResponseEntity<List<OrderVO>> getOrderMenuIngredientAddressView(@RequestParam("restaurantId") String restaurantId,
+                                                                           @RequestParam("storeId") String storeId,
+                                                                           @RequestParam("mobileNumber") String mobileNumber) {
+        logger.info("Get OrderMenuIngredientAddress view details for restaurantId = {}, storeId = {}, mobileNumber = {}", restaurantId, storeId, mobileNumber);
 
-        List<OrderMenuIngredientAddressDTO> orderList = new ArrayList<>();
+        List<OrderVO> orders = new ArrayList<>();
         try {
-            orderList = orderService.getOrderMenuIngredientAddressView(restaurantId,storeId,mobileNumber);
-            return new ResponseEntity<List<OrderMenuIngredientAddressDTO>>(orderList, HttpStatus.OK);
+            orders = orderService.getOrderMenuIngredientAddressView(restaurantId, storeId, mobileNumber);
+            return new ResponseEntity<List<OrderVO>>(orders, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error getting order by mobileNumber = {} :: {}", mobileNumber, ex.getMessage());
-            return new ResponseEntity<List<OrderMenuIngredientAddressDTO>>(orderList, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<OrderVO>>(orders, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

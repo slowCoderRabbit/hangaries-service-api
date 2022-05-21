@@ -2,7 +2,8 @@ package com.hangaries.service.order.impl;
 
 import com.hangaries.model.*;
 import com.hangaries.model.dto.OrderMenuIngredientAddressDTO;
-
+import com.hangaries.model.vo.OrderDetailsVO;
+import com.hangaries.model.vo.OrderVO;
 import com.hangaries.repository.*;
 import com.hangaries.service.order.OrderService;
 import org.slf4j.Logger;
@@ -11,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 @Service
@@ -45,7 +44,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderMenuIngredientAddressRepository orderMenuIngredientAddressRepository;
-
 
 
     @Override
@@ -90,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> updateOrderStatus(String orderId, String status) {
         orderRepository.updateOrderStatus(orderId, status);
         List<Order> savedOrders = orderRepository.findByOrderId(orderId);
-        logger.info("Order status updated for orderID = {}. Updating OrderProcessingDetails....!!!",orderId);
+        logger.info("Order status updated for orderID = {}. Updating OrderProcessingDetails....!!!", orderId);
         for (Order order : savedOrders) {
             OrderProcessingDetails detailsOP = getNewOrderProcessingDetails(order);
             saveOrderProcessingDetails(detailsOP);
@@ -157,7 +155,6 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-
     @Override
     public List<OrderDetail> saveOrderDetails(List<OrderDetail> orderDetails) {
         return orderDetailRepository.saveAll(orderDetails);
@@ -185,10 +182,8 @@ public class OrderServiceImpl implements OrderService {
         List<OrderWithCustomerDetail> details = new ArrayList<>();
         OrderWithCustomerDetail orderWithCustomerDetail = null;
 
-        for(Order order :orders){
+        for (Order order : orders) {
             orderWithCustomerDetail = new OrderWithCustomerDetail();
-
-
             orderWithCustomerDetail.setOrder(order);
             orderWithCustomerDetail.setCustomerDetails(getCustomerAddressDtlsById(order.getCustomerAddressId()));
             details.add(orderWithCustomerDetail);
@@ -199,14 +194,105 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderMenuIngredientAddressDTO> getOrderMenuIngredientAddressView(String restaurantId, String storeId, String mobileNumber) {
+    public List<OrderVO> getOrderMenuIngredientAddressView(String restaurantId, String storeId, String mobileNumber) {
+        long startTime = System.nanoTime();
+        logger.info("getOrderMenuIngredientAddressView :: Request received at [{}].", new Date());
+        List<OrderMenuIngredientAddressDTO> results = orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressView(restaurantId, storeId, mobileNumber);
+        logger.info("getOrderMenuIngredientAddressView :: Total records returned from DB = [{}].", results.size());
+        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
+        logger.info("getOrderMenuIngredientAddressView :: Result consolidated in to = [{}].", orderMap.size());
+        List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
+        logger.info("getOrderMenuIngredientAddressView :: Final order list created of size = [{}].", orderList.size());
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+        logger.info("getOrderMenuIngredientAddressView :: Response generated at [{}].", new Date());
+        logger.info("getOrderMenuIngredientAddressView :: Response processing took [{}] ms.", duration);
+        return orderList;
+    }
 
-        List<OrderMenuIngredientAddressDTO>  result =  orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressView(restaurantId,storeId,mobileNumber);
-        return result;
+    private List<OrderVO> convertOrderDTOMapTOOrderVOList(Map<String, List<OrderMenuIngredientAddressDTO>> orderMap) {
+        List<OrderDetailsVO> orderDetailsVOList;
+        OrderVO orderVO;
+        List<OrderVO> orderList = new ArrayList<>();
+        for (List<OrderMenuIngredientAddressDTO> orderDTOList : orderMap.values()) {
+            orderVO = new OrderVO();
+            orderDetailsVOList = new ArrayList<>();
+            for (int i = 0; i < orderDTOList.size(); i++) {
+                if (i == 0) {
+                    orderVO = populateOrderVO(orderDTOList.get(i));
+                }
+                orderDetailsVOList.add(populateOrderDetailsVO(orderDTOList.get(i)));
+
+            }
+            orderVO.setOrderDetails(orderDetailsVOList);
+            orderList.add(orderVO);
+
+        }
+        return orderList;
+    }
+
+    Map<String, List<OrderMenuIngredientAddressDTO>> consolidateResponseToOrderedMapByOrderId(List<OrderMenuIngredientAddressDTO> results) {
+        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = new LinkedHashMap<>();
+        for (OrderMenuIngredientAddressDTO result : results) {
+            List<OrderMenuIngredientAddressDTO> exitingList = orderMap.get(result.getOrderId());
+            if (exitingList == null) {
+                List<OrderMenuIngredientAddressDTO> newList = new ArrayList<>();
+                newList.add(result);
+                orderMap.put(result.getOrderId(), newList);
+            } else {
+                exitingList.add(result);
+                orderMap.put(result.getOrderId(), exitingList);
+            }
+        }
+        return orderMap;
+    }
+
+    private OrderDetailsVO populateOrderDetailsVO(OrderMenuIngredientAddressDTO result) {
+
+        OrderDetailsVO orderDetailsVO = new OrderDetailsVO();
+
+        orderDetailsVO.setOrderId(result.getOrderId());
+        orderDetailsVO.setProductId(result.getProductId());
+        orderDetailsVO.setProductName(result.getDishType());
+        orderDetailsVO.setSubProductId(result.getSubProductId());
+        orderDetailsVO.setIngredient(result.getIngredientType());
+        orderDetailsVO.setQuantity(result.getQuantity());
+        orderDetailsVO.setPrice(result.getPrice());
+        orderDetailsVO.setRemarks(result.getRemarks());
+        return orderDetailsVO;
+    }
+
+    OrderVO populateOrderVO(OrderMenuIngredientAddressDTO result) {
+        OrderVO vo = new OrderVO();
+        vo.setOrderId(result.getOrderId());
+        vo.setRestaurantId(result.getRestaurantId());
+        vo.setStoreId(result.getStoreId());
+        vo.setOrderSource(result.getOrderSource());
+        vo.setCustomerId(result.getCustomerId());
+        vo.setOrderDeliveryType(result.getOrderDeliveryType());
+        vo.setStoreId(result.getStoreId());
+        vo.setOrderStatus(result.getOrderStatus());
+        vo.setPaymentStatus(result.getPaymentStatus());
+        vo.setPaymentMode(result.getPaymentMode());
+        vo.setTaxRuleId(result.getTaxRuleId());
+        vo.setTotalPrice(result.getTotalPrice());
+        vo.setCgstCalculatedValue(result.getCgstCalculatedValue());
+        vo.setSgstCalculatedValue(result.getSgstCalculatedValue());
+        vo.setDeliveryCharges(result.getDeliveryCharges());
+        vo.setOverallPriceWithTax(result.getOverallPriceWithTax());
+        vo.setCreatedBy(result.getCreatedBy());
+        vo.setCreatedDate(result.getCreatedDate());
+        vo.setUpdatedBy(result.getUpdatedBy());
+        vo.setUpdatedDate(result.getUpdatedDate());
+        vo.setCustomerAddressId(result.getCustomerAddressId());
+        vo.setAddress(result.getAddress());
+        return vo;
+
+
     }
 
     private CustomerDtls getCustomerAddressDtlsById(long addressId) {
-       return customerDtlsRepository.getCustomerAddressDtlsById(addressId);
+        return customerDtlsRepository.getCustomerAddressDtlsById(addressId);
     }
 
 
