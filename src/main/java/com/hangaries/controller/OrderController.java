@@ -122,7 +122,23 @@ public class OrderController {
     }
 
     @PostMapping("saveNewOrder")
-    public ResponseEntity<Order> saveNewOrder(@Valid @RequestBody Order orderRequest) {
+    public ResponseEntity<List<OrderVO>> saveNewOrder(@Valid @RequestBody Order orderRequest) {
+        logger.info("New Order received ", orderRequest);
+
+        List<OrderVO> newOrder = new ArrayList<>();
+        try {
+            newOrder = orderService.saveOrderAndGetOrderView(orderRequest);
+            return new ResponseEntity<List<OrderVO>>(newOrder, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error saving order by Id = {} :: {}", orderRequest, ex.getMessage());
+            return new ResponseEntity<List<OrderVO>>(newOrder, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
+    @PostMapping("saveNewOrderDeprecated")
+    public ResponseEntity<Order> saveNewOrderDeprecated(@Valid @RequestBody Order orderRequest) {
         logger.info("New Order received ", orderRequest);
 
         Order newOrder = new Order();
@@ -135,7 +151,6 @@ public class OrderController {
         }
 
     }
-
 
     @PostMapping("saveNewOrderDetails")
     public ResponseEntity<List<OrderDetail>> saveNewOrderDetails(@Valid @RequestBody List<OrderDetail> orderDetails) {

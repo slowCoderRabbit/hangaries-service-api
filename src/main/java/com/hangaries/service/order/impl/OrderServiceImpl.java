@@ -117,6 +117,16 @@ public class OrderServiceImpl implements OrderService {
         return savedOrder;
     }
 
+    @Override
+    public List<OrderVO> saveOrderAndGetOrderView(Order orderRequest) {
+        Order savedOrder = saveOrder(orderRequest);
+        List<OrderMenuIngredientAddressDTO> results = orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressViewByOrderId(savedOrder.getOrderId());
+        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
+        List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
+        return orderList;
+
+    }
+
     OrderProcessingDetails saveOrderProcessingDetails(OrderProcessingDetails detailsOP) {
         logger.info("Saving order process details for orderID = {} and order status = {}.", detailsOP.getOrderId(), detailsOP.getOrderStatus());
         OrderProcessingDetails details = orderProcessingDetailsRepository.save(detailsOP);
@@ -209,6 +219,7 @@ public class OrderServiceImpl implements OrderService {
         logger.info("getOrderMenuIngredientAddressView :: Response processing took [{}] ms.", duration);
         return orderList;
     }
+
 
     private List<OrderVO> convertOrderDTOMapTOOrderVOList(Map<String, List<OrderMenuIngredientAddressDTO>> orderMap) {
         List<OrderDetailsVO> orderDetailsVOList;
