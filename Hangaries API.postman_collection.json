@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "c03d9a6b-fc40-4e23-8fde-01ee75681951",
 		"name": "Hangaries API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19925292"
 	},
 	"item": [
 		{
@@ -1237,6 +1238,186 @@
 							"key": "mobileNumber",
 							"value": "%2b6598375373"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryOrderViewByParams",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"orderId\": \"MR001S00120220505000127\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"paymentStatus\": \"Not Paid\",\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n\t\t\"mobileNumber\": \"+6598375373\",\r\n         \"orderReceivedDate\": \"2022-05-05\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/queryOrderViewByParams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryOrderViewByParams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryOrderViewByParams3",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"orderId\": \"MR001S00120220505000127\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\"\r\n        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/queryOrderViewByParams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryOrderViewByParams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryOrderViewByParamsOrderStatus",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n            \"orderStatus\": \"SUBMITTED\"\r\n        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/queryOrderViewByParams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryOrderViewByParams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryOrderViewByParamsOrderStatusOrderDate",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n            \"orderReceivedDate\": \"2022-05-05\"\r\n        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/queryOrderViewByParams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryOrderViewByParams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryOrderViewByParamsOrderStatusNoFilterGetAllView",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n         \r\n        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/queryOrderViewByParams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryOrderViewByParams"
 					]
 				}
 			},

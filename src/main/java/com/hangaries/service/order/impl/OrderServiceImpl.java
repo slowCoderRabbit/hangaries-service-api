@@ -6,14 +6,19 @@ import com.hangaries.model.vo.OrderDetailsVO;
 import com.hangaries.model.vo.OrderVO;
 import com.hangaries.repository.*;
 import com.hangaries.service.order.OrderService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Predicate;
+
+import static com.hangaries.util.HangariesUtil.generatorQueryString;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -44,6 +49,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderMenuIngredientAddressRepository orderMenuIngredientAddressRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
 
     @Override
@@ -125,6 +133,25 @@ public class OrderServiceImpl implements OrderService {
         List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
         return orderList;
 
+    }
+
+    @Override
+    public List<OrderVO> queryOrderViewByParams(OrderQueryRequest orderRequest) {
+
+        String queryString = generatorQueryString(orderRequest);
+        if (StringUtils.isBlank(queryString)) {
+            queryString = "SELECT * FROM vOrderMenuIngredientAddress";
+        } else {
+            queryString = "SELECT * FROM vOrderMenuIngredientAddress where " + queryString;
+        }
+        logger.info("Querying view using queryString = [{}]", queryString);
+        List<OrderMenuIngredientAddressDTO> results = jdbcTemplate.query(queryString, BeanPropertyRowMapper.newInstance(OrderMenuIngredientAddressDTO.class));
+        logger.info("queryOrderViewByParams :: Total records returned from DB = [{}].", results.size());
+        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
+        logger.info("queryOrderViewByParams :: Result consolidated in to = [{}].", orderMap.size());
+        List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
+        logger.info("queryOrderViewByParams :: Final order list created of size = [{}].", orderList.size());
+        return orderList;
     }
 
     OrderProcessingDetails saveOrderProcessingDetails(OrderProcessingDetails detailsOP) {

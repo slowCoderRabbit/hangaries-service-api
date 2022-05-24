@@ -29,4 +29,6 @@ public interface OrderService {
     List<OrderVO> getOrderMenuIngredientAddressView(String restaurantId, String storeId, String mobileNumber);
 
     List<OrderVO> saveOrderAndGetOrderView(Order orderRequest);
+
+    List<OrderVO> queryOrderViewByParams(OrderQueryRequest orderRequest);
 }
