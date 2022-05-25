@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Predicate;
 
+import static com.hangaries.config.HangariesConstants.ACCEPTED;
 import static com.hangaries.util.HangariesUtil.generatorQueryString;
 
 @Service
@@ -122,7 +123,24 @@ public class OrderServiceImpl implements OrderService {
         logger.info("Order saved for new orderID = {}. Updating OrderProcessingDetails....!!!", newOrderId);
         OrderProcessingDetails detailsOP = getNewOrderProcessingDetails(order);
         saveOrderProcessingDetails(detailsOP);
+        if (isAutoAcceptOrdrSource(order)) {
+            detailsOP.setOrderStatus(ACCEPTED);
+            Date date = new Date();
+            detailsOP.setCreatedDate(date);
+            detailsOP.setUpdatedDate(date);
+            saveOrderProcessingDetails(detailsOP);
+        }
         return savedOrder;
+    }
+
+    private boolean isAutoAcceptOrdrSource(Order order) {
+        List<ConfigMaster> configDetails = getConfigMasterList(order);
+        for (ConfigMaster config : configDetails) {
+            if (config.getConfigCriteriaValue().equalsIgnoreCase(order.getOrderSource())) {
+                return config.getConfigValue().equalsIgnoreCase("Y");
+            }
+        }
+        return false;
     }
 
     @Override
@@ -180,7 +198,7 @@ public class OrderServiceImpl implements OrderService {
     User getRoleCategoryByOrderSource(Order order) {
 
         Predicate<ConfigMaster> isOnlineOrderSource = s -> s.getConfigCriteriaValue().equals(order.getOrderSource());
-        List<ConfigMaster> configDetails = configMasterRepository.getDetailsFromConfigMaster(order.getRestaurantId(), order.getStoreId(), ORDER_SOURCE);
+        List<ConfigMaster> configDetails = getConfigMasterList(order);
 
         boolean isOnlineSource = configDetails.stream().anyMatch(isOnlineOrderSource);
 
@@ -190,6 +208,11 @@ public class OrderServiceImpl implements OrderService {
             return userRepository.findByLoginId("STORE MANGER");
         }
 
+    }
+
+    private List<ConfigMaster> getConfigMasterList(Order order) {
+        List<ConfigMaster> configDetails = configMasterRepository.getDetailsFromConfigMaster(order.getRestaurantId(), order.getStoreId(), ORDER_SOURCE);
+        return configDetails;
     }
 
     @Override
