@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -124,11 +125,14 @@ public class OrderServiceImpl implements OrderService {
         OrderProcessingDetails detailsOP = getNewOrderProcessingDetails(order);
         saveOrderProcessingDetails(detailsOP);
         if (isAutoAcceptOrdrSource(order)) {
+            orderRepository.updateOrderStatus(newOrderId, ACCEPTED);
             detailsOP.setOrderStatus(ACCEPTED);
-            Date date = new Date();
+            Instant later = Instant.now().plusSeconds(1);
+            Date date = Date.from(later);
             detailsOP.setCreatedDate(date);
             detailsOP.setUpdatedDate(date);
             saveOrderProcessingDetails(detailsOP);
+
         }
         return savedOrder;
     }
