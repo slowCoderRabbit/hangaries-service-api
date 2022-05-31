@@ -1,30 +1,31 @@
 package com.hangaries.model;
 
-import com.hangaries.model.keys.OrderProcessingDetailsId;
-import lombok.Getter;
+import com.hangaries.model.keys.OrderDetailId;
+import com.hangaries.model.keys.RoleId;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 import static com.hangaries.config.HangariesConstants.SYSTEM;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
-@IdClass(OrderProcessingDetailsId.class)
-@Table(name = "ORDER_PROCESSING_DETAILS")
-public class OrderProcessingDetails {
+@IdClass(RoleId.class)
+@Table(name = "ROLE_MASTER")
+public class Role {
 
     @Id
-    @Column(name = "order_id")
-    private @NotBlank String orderId;
+    @Column(name = "role_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer roleId;
 
     @Id
     @Column(name = "restaurant_id")
@@ -35,14 +36,14 @@ public class OrderProcessingDetails {
     private @NotBlank String storeId;
 
     @Id
-    @Column(name = "order_status")
-    private @NotNull String orderStatus;
-
-    @Column(name = "user_seq_no")
-    private @NotNull Integer userSeqNo;
-
     @Column(name = "role_category")
-    private @NotNull String roleCategory;
+    private @NotBlank String roleCategory;
+
+    @Column(name = "role_description")
+    private String roleDescription;
+
+    @Column(name = "role_status")
+    private String roleStatus = "ACTIVE";
 
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;

@@ -1,4 +1,4 @@
-package com.hangaries.model;
+package com.hangaries.model.keys;
 
 import lombok.*;
 
@@ -10,10 +10,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class OrderProcessingDetailsId implements Serializable {
-
-    private String orderId;
+public class RoleId implements Serializable {
+    private Integer roleId;
     private String restaurantId;
     private String storeId;
-    private String orderStatus;
+    private String roleCategory;
+
 }

@@ -1,6 +1,6 @@
 package com.hangaries.model.dto;
 
-import com.hangaries.model.OrderMenuIngredientAddressId;
+import com.hangaries.model.keys.OrderMenuIngredientAddressId;
 import lombok.*;
 
 import javax.persistence.*;

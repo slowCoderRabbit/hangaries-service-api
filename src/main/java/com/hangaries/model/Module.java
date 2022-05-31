@@ -1,48 +1,40 @@
 package com.hangaries.model;
 
-import com.hangaries.model.keys.OrderProcessingDetailsId;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 import static com.hangaries.config.HangariesConstants.SYSTEM;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
-@IdClass(OrderProcessingDetailsId.class)
-@Table(name = "ORDER_PROCESSING_DETAILS")
-public class OrderProcessingDetails {
+@Table(name = "MODULE_MASTER")
+public class Module {
 
     @Id
-    @Column(name = "order_id")
-    private @NotBlank String orderId;
+    @Column(name = "module_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer moduleId;
 
-    @Id
     @Column(name = "restaurant_id")
     private @NotBlank String restaurantId;
 
-    @Id
     @Column(name = "store_Id")
     private @NotBlank String storeId;
 
-    @Id
-    @Column(name = "order_status")
-    private @NotNull String orderStatus;
+    @Column(name = "module_name")
+    private @NotBlank String moduleName;
 
-    @Column(name = "user_seq_no")
-    private @NotNull Integer userSeqNo;
-
-    @Column(name = "role_category")
-    private @NotNull String roleCategory;
+    @Column(name = "module_status")
+    private String moduleStatus;
 
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;
@@ -55,6 +47,5 @@ public class OrderProcessingDetails {
 
     @Column(name = "Updated_date")
     private Date updatedDate = new Date();
-
 
 }

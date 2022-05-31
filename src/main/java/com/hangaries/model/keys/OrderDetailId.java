@@ -1,4 +1,4 @@
-package com.hangaries.model;
+package com.hangaries.model.keys;
 
 import lombok.*;
 

@@ -1,5 +1,6 @@
 package com.hangaries.model;
 
+import com.hangaries.model.keys.OrderDetailId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
