@@ -182,7 +182,38 @@ public class OrderController {
 
     @GetMapping("queryOrderViewByParams")
     public ResponseEntity<List<OrderVO>> queryOrderViewByParams(@RequestBody OrderQueryRequest orderRequest) {
-        logger.info("Get Order Details by = [{}]", orderRequest);
+        logger.info("queryOrderViewByParams :: Get Order Details by = [{}]", orderRequest);
+
+        List<OrderVO> orderDetailList = new ArrayList<>();
+        try {
+            orderDetailList = orderService.queryOrderViewByParams(orderRequest);
+            return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error getting order by params = {} :: {}", orderRequest, ex.getMessage());
+            return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("queryOrderViewByRequestParam")
+    public ResponseEntity<List<OrderVO>> queryOrderViewByRequestParam(@RequestParam("orderStatus") String orderStatus) {
+        logger.info("queryOrderViewByRequestParam 1 :: Get Order Details by = [{}]", orderStatus);
+
+        List<OrderVO> orderDetailList = new ArrayList<>();
+        OrderQueryRequest orderRequest = new OrderQueryRequest();
+        orderRequest.setOrderStatus(orderStatus);
+        logger.info("queryOrderViewByRequestParam 2 :: Get Order Details by = [{}]", orderRequest);
+        try {
+            orderDetailList = orderService.queryOrderViewByParams(orderRequest);
+            return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error getting order by params = {} :: {}", orderRequest, ex.getMessage());
+            return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("queryOrderViewByParamsPost")
+    public ResponseEntity<List<OrderVO>> queryOrderViewByParamsPost(@RequestBody OrderQueryRequest orderRequest) {
+        logger.info("queryOrderViewByParamsPost :: Get Order Details by = [{}]", orderRequest);
 
         List<OrderVO> orderDetailList = new ArrayList<>();
         try {
