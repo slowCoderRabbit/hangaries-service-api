@@ -22,7 +22,7 @@ public class ReportController {
     @Autowired
     ReportServiceImpl reportService;
 
-    @GetMapping("getReports")
+    @PostMapping("getReports")
     public ResponseEntity<ReportResult> addStore(@Valid @RequestBody Report report) {
         logger.info("Generating reports for details  : " + report.toString());
         ReportResult reportResult = new ReportResult();

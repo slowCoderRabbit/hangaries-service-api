@@ -1064,14 +1064,13 @@
 		{
 			"name": "getReports",
 			"protocolProfileBehavior": {
-				"strictSSL": true,
-				"disableBodyPruning": true
+				"strictSSL": true
 			},
 			"request": {
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1246,14 +1245,13 @@
 		{
 			"name": "queryOrderViewByParams",
 			"protocolProfileBehavior": {
-				"strictSSL": true,
-				"disableBodyPruning": true
+				"strictSSL": true
 			},
 			"request": {
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1282,14 +1280,13 @@
 		{
 			"name": "queryOrderViewByParams3",
 			"protocolProfileBehavior": {
-				"strictSSL": true,
-				"disableBodyPruning": true
+				"strictSSL": true
 			},
 			"request": {
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1318,14 +1315,13 @@
 		{
 			"name": "queryOrderViewByParamsOrderStatus",
 			"protocolProfileBehavior": {
-				"strictSSL": true,
-				"disableBodyPruning": true
+				"strictSSL": true
 			},
 			"request": {
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1354,14 +1350,13 @@
 		{
 			"name": "queryOrderViewByParamsOrderStatusOrderDate",
 			"protocolProfileBehavior": {
-				"strictSSL": true,
-				"disableBodyPruning": true
+				"strictSSL": true
 			},
 			"request": {
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1390,18 +1385,17 @@
 		{
 			"name": "queryOrderViewByParamsOrderStatusNoFilterGetAllView",
 			"protocolProfileBehavior": {
-				"strictSSL": true,
-				"disableBodyPruning": true
+				"strictSSL": true
 			},
 			"request": {
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{        \r\n         \r\n        \r\n}",
+					"raw": "{       \r\n         \r\n        \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1418,6 +1412,191 @@
 					"path": [
 						"api",
 						"queryOrderViewByParams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveNewRole",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getAllRoles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllRoles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllModule",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getAllModule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllModule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllRoles",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getAllRoles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllRoles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryOrderViewByRequestParam",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/queryOrderViewByRequestParam?orderStatus=SUBMITTED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryOrderViewByRequestParam"
+					],
+					"query": [
+						{
+							"key": "orderStatus",
+							"value": "SUBMITTED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryOrderViewByParamsPost",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"orderId\": \"MR001S00120220505000127\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\"\r\n        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/queryOrderViewByParamsPost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryOrderViewByParamsPost"
 					]
 				}
 			},
