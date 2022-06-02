@@ -18,4 +18,9 @@ public class ModuleServiceImpl implements ModuleService {
     public List<Module> getAllModule() {
         return moduleRepository.findAll();
     }
+
+    @Override
+    public List<Module> getModuleByRestroAndStore(String restaurantId, String storeId) {
+        return moduleRepository.getModuleByRestroAndStore(restaurantId, storeId, "ACTIVE");
+    }
 }

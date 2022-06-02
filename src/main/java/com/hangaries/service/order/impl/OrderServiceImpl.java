@@ -324,6 +324,8 @@ public class OrderServiceImpl implements OrderService {
         orderDetailsVO.setQuantity(result.getQuantity());
         orderDetailsVO.setPrice(result.getPrice());
         orderDetailsVO.setRemarks(result.getRemarks());
+        orderDetailsVO.setOrderDetailStatus(result.getOrderStatus());
+        orderDetailsVO.setKdsRoutingName(result.getKdsRoutingName());
         return orderDetailsVO;
     }
 
@@ -351,6 +353,7 @@ public class OrderServiceImpl implements OrderService {
         vo.setUpdatedDate(result.getUpdatedDate());
         vo.setCustomerAddressId(result.getCustomerAddressId());
         vo.setAddress(result.getAddress());
+        vo.setDeliveryUserId(result.getDeliveryUserId());
         return vo;
 
 

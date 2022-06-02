@@ -1,6 +1,7 @@
 package com.hangaries.service.role.impl;
 
 import com.hangaries.model.Role;
+import com.hangaries.model.RoleWithModules;
 import com.hangaries.repository.RoleRepository;
 import com.hangaries.service.role.RoleService;
 import com.hangaries.service.store.impl.StoreServiceImpl;
@@ -25,6 +26,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role saveNewRole(Role role) {
-       return roleRepository.save(role);
+        return roleRepository.save(role);
+    }
+
+    @Override
+    public Role saveNewRoleWithModuleAccess(RoleWithModules role) {
+        return null;
     }
 }

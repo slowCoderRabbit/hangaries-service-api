@@ -41,4 +41,7 @@ public class OrderDetail implements Serializable {
     @Column(name = "remarks")
     private String remarks;
 
+    @Column(name = "order_detail_status")
+    private String orderDetailStatus;
+
 }

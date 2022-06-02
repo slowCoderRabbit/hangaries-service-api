@@ -7,49 +7,52 @@ import java.util.Date;
  * Menu master entity
  */
 @Entity
-@Table(name="MENU_MASTER")
+@Table(name = "MENU_MASTER")
 public class Menu {
     @Id
     @GeneratedValue
-    @Column(name="id")
+    @Column(name = "id")
     private long id;
-    @Column(name="product_id")
+    @Column(name = "product_id")
     private String productId;
-    @Column(name="restaurant_id")
+    @Column(name = "restaurant_id")
     private String restaruantId;
-    @Column(name="store_id")
+    @Column(name = "store_id")
     private String storeId;
-    @Column(name="section")
+    @Column(name = "section")
     private String section;
-    @Column(name="dish")
+    @Column(name = "dish")
     private String dish;
-    @Column(name="dish_category")
+    @Column(name = "dish_category")
     private String dishCategory;
-    @Column(name="dish_spice_indicater")
+    @Column(name = "dish_spice_indicater")
     private String dishSpiceIndicatory;
-    @Column(name="dish_type")
+    @Column(name = "dish_type")
     private String dishType;
-    @Column(name="dish_description_id")
+    @Column(name = "dish_description_id")
     private String dishDescriptionId;
-    @Column(name="product_size")
+    @Column(name = "product_size")
     private String productSize;
-    @Column(name="price")
+    @Column(name = "price")
     private Double price;
-    @Column(name="image_path")
+    @Column(name = "image_path")
     private String imagePath;
-    @Column(name="menu_available_flag")
+    @Column(name = "menu_available_flag")
     private String menuAvailableFlag;
-    @Column(name="Common_image")
+    @Column(name = "Common_image")
     private String commonImage;
-    @Column(name="ingredient_exists_flag")
+    @Column(name = "ingredient_exists_flag")
     private String ingredientExistsFalg;
-    @Column(name="Created_by")
+
+    @Column(name = "kds_routing_name")
+    private String kdsRoutingName;
+    @Column(name = "Created_by")
     private String createdBy;
-    @Column(name="Created_date")
+    @Column(name = "Created_date")
     private Date createdDate;
-    @Column(name="Updated_by")
+    @Column(name = "Updated_by")
     private String updatedBy;
-    @Column(name="Updated_date")
+    @Column(name = "Updated_date")
     private Date updatedDate;
 
     public long getId() {

@@ -17,4 +17,6 @@ public class OrderDetailsVO {
     private Integer quantity;
     private Float price;
     private String remarks;
+    private String orderDetailStatus;
+    private String kdsRoutingName;
 }

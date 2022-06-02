@@ -31,6 +31,7 @@ public class OrderVO {
     private Float overallPriceWithTax;
     private Long customerAddressId;
     private String address;
+    private String deliveryUserId;
     private String createdBy;
     private Date createdDate;
     private String updatedBy;

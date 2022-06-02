@@ -98,7 +98,6 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
     @Column(name = "ingredient_type")
     private String ingredientType;
 
-
     @Column(name = "mobile_number")
     private String mobileNumber;
 
@@ -117,6 +116,15 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "order_detail_status")
+    private String orderDetailStatus;
+
+    @Column(name = "delivery_user_id")
+    private String deliveryUserId;
+
+    @Column(name = "kds_routing_name")
+    private String kdsRoutingName;
 
 
 }
