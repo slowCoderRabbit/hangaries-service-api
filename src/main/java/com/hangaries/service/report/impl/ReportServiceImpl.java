@@ -41,16 +41,16 @@ public class ReportServiceImpl implements ReportService {
             String result = reportRepository.getReports(report.getRestaurantId(), report.getStoreId(), report.getFromDate(), report.getToDate());
             logger.info("Result of reports table refresh {}", result);
 
-            List<RSSDate> rssDate = rssDateRepository.getReport(report.getRestaurantId(), report.getStoreId());
+            List<RSSDate> rssDate = rssDateRepository.getReport();
             reportResult.setSalesSummeryByDateList(rssDate);
 
-            List<RSSDishType> rssDishTypes = rssDishTypeRepository.getReport(report.getRestaurantId(), report.getStoreId());
+            List<RSSDishType> rssDishTypes = rssDishTypeRepository.getReport();
             reportResult.setSalesSummeryByDishType(rssDishTypes);
 
-            List<RSSOrderSource> rssOrderSources = rssOrderSourceRepository.getReport(report.getRestaurantId(), report.getStoreId());
+            List<RSSOrderSource> rssOrderSources = rssOrderSourceRepository.getReport();
             reportResult.setSalesSummeryByOrderSource(rssOrderSources);
 
-            List<RSSPaymentMode> rSSPaymentMode = rssPayModeRepository.getReport(report.getRestaurantId(), report.getStoreId());
+            List<RSSPaymentMode> rSSPaymentMode = rssPayModeRepository.getReport();
             reportResult.setSalesSummeryByPaymentMode(rSSPaymentMode);
         } catch (Exception e) {
             logger.error("Error during reports table refresh {}", e.getMessage());
