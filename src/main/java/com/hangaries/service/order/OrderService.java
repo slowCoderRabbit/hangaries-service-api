@@ -31,4 +31,6 @@ public interface OrderService {
     List<OrderVO> saveOrderAndGetOrderView(Order orderRequest);
 
     List<OrderVO> queryOrderViewByParams(OrderQueryRequest orderRequest);
+
+    List<OrderDetail> updateOrderDetailsStatus(String orderId, String orderStatus);
 }

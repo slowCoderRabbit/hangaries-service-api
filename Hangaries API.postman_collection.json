@@ -1074,7 +1074,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"fromDate\":\"2021-05-01\",\r\n        \"toDate\": \"2022-12-06\"\r\n}",
+					"raw": "{\r\n        \"restaurantId\": \"AL\",\r\n        \"storeId\": \"AL\",\r\n        \"fromDate\":\"2021-05-01\",\r\n        \"toDate\": \"2022-12-06\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1420,18 +1420,17 @@
 		{
 			"name": "saveNewRole",
 			"protocolProfileBehavior": {
-				"strictSSL": true,
-				"disableBodyPruning": true
+				"strictSSL": true
 			},
 			"request": {
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\r\n        \r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"roleCategory\": \"SUPER_ADMIN1\",\r\n        \"roleDescription\": \"Super Admin\",\r\n        \"roleStatus\": \"ACTIVE\"\r\n        \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1439,7 +1438,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getAllRoles",
+					"raw": "http://localhost:8080/api/saveNewRole",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1447,7 +1446,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"getAllRoles"
+						"saveNewRole"
 					]
 				}
 			},
@@ -1568,7 +1567,7 @@
 			"response": []
 		},
 		{
-			"name": "queryOrderViewByParamsPost",
+			"name": "GCP-queryOrderViewByParams",
 			"protocolProfileBehavior": {
 				"strictSSL": true
 			},
@@ -1597,6 +1596,169 @@
 					"path": [
 						"api",
 						"queryOrderViewByParamsPost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GCP-getReports",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"fromDate\":\"2021-05-01\",\r\n        \"toDate\": \"2022-12-06\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://hangariesapp-okfvqdwi7q-el.a.run.app/api/getReports",
+					"protocol": "https",
+					"host": [
+						"hangariesapp-okfvqdwi7q-el",
+						"a",
+						"run",
+						"app"
+					],
+					"path": [
+						"api",
+						"getReports"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getModuleByRestroAndStore",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getModuleByRestroAndStore?restaurantId=R001&storeId=S001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getModuleByRestroAndStore"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveNewRoleWithModuleAccess",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"roleCategory\": \"SUPER_ADMIN1\",\r\n        \"roleDescription\": \"Super Admin\",\r\n        \"roleStatus\": \"ACTIVE\",\r\n\t\t\"moduleIds\":[1,2,3]\r\n        \r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveNewRoleWithModuleAccess",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveNewRoleWithModuleAccess"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateOrderDetailsStatusByOrderId",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"M\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"paymentMode\": \"COD\",\r\n        \"paymentStatus\": \"Done\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"deliveryCharges\":20.45,\r\n        \"customerAddressId\":289,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updateOrderDetailsStatusByOrderId?orderId=MR001S00120220604000335&status=STATION",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateOrderDetailsStatusByOrderId"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "MR001S00120220604000335"
+						},
+						{
+							"key": "status",
+							"value": "STATION"
+						}
 					]
 				}
 			},

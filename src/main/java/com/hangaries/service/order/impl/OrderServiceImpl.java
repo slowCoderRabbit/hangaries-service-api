@@ -119,6 +119,8 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderId(newOrderId);
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setOrderId(newOrderId);
+            orderDetail.setOrderDetailStatus(order.getOrderStatus());
+
         }
         Order savedOrder = orderRepository.save(order);
         logger.info("Order saved for new orderID = {}. Updating OrderProcessingDetails....!!!", newOrderId);
@@ -126,12 +128,14 @@ public class OrderServiceImpl implements OrderService {
         saveOrderProcessingDetails(detailsOP);
         if (isAutoAcceptOrdrSource(order)) {
             orderRepository.updateOrderStatus(newOrderId, ACCEPTED);
+            orderDetailRepository.updateOrderDetailsStatus(newOrderId, ACCEPTED);
             detailsOP.setOrderStatus(ACCEPTED);
             Instant later = Instant.now().plusSeconds(1);
             Date date = Date.from(later);
             detailsOP.setCreatedDate(date);
             detailsOP.setUpdatedDate(date);
             saveOrderProcessingDetails(detailsOP);
+
 
         }
         return savedOrder;
@@ -174,6 +178,14 @@ public class OrderServiceImpl implements OrderService {
         List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
         logger.info("queryOrderViewByParams :: Final order list created of size = [{}].", orderList.size());
         return orderList;
+    }
+
+    @Override
+    public List<OrderDetail> updateOrderDetailsStatus(String orderId, String orderStatus) {
+        orderDetailRepository.updateOrderDetailsStatus(orderId, orderStatus);
+
+        return orderDetailRepository.findByOrderId(orderId);
+
     }
 
     OrderProcessingDetails saveOrderProcessingDetails(OrderProcessingDetails detailsOP) {
@@ -352,6 +364,7 @@ public class OrderServiceImpl implements OrderService {
         vo.setUpdatedBy(result.getUpdatedBy());
         vo.setUpdatedDate(result.getUpdatedDate());
         vo.setCustomerAddressId(result.getCustomerAddressId());
+        vo.setMobileNumber(result.getMobileNumber());
         vo.setAddress(result.getAddress());
         vo.setDeliveryUserId(result.getDeliveryUserId());
         return vo;

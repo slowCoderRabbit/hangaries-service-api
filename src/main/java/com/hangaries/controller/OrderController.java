@@ -194,6 +194,21 @@ public class OrderController {
         }
     }
 
+
+    @PostMapping("updateOrderDetailsStatusByOrderId")
+    public ResponseEntity<List<OrderDetail>> updateOrderDetailsStatusByOrderId(@RequestParam("orderId") String orderId, @RequestParam("status") String status) {
+        logger.info("Updating order Id = {} with order status = {}. ", orderId, status);
+
+        List<OrderDetail> orderDetailList = new ArrayList<>();
+        try {
+            orderDetailList = orderService.updateOrderDetailsStatus(orderId, status);
+            return new ResponseEntity<List<OrderDetail>>(orderDetailList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
+            return new ResponseEntity<List<OrderDetail>>(orderDetailList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 //    @GetMapping("queryOrderViewByRequestParam")
 //    public ResponseEntity<List<OrderVO>> queryOrderViewByRequestParam(@RequestParam("orderStatus") String orderStatus) {
 //        logger.info("queryOrderViewByRequestParam 1 :: Get Order Details by = [{}]", orderStatus);
