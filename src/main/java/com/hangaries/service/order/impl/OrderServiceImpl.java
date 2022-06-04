@@ -188,6 +188,13 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public OrderDetail updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status) {
+        orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId,productId,subProductId, status);
+        return orderDetailRepository.getOrderDetailsStatusBySubProductId(orderId,productId,subProductId);
+
+    }
+
     OrderProcessingDetails saveOrderProcessingDetails(OrderProcessingDetails detailsOP) {
         logger.info("Saving order process details for orderID = {} and order status = {}.", detailsOP.getOrderId(), detailsOP.getOrderStatus());
         OrderProcessingDetails details = orderProcessingDetailsRepository.save(detailsOP);
@@ -348,6 +355,7 @@ public class OrderServiceImpl implements OrderService {
         vo.setStoreId(result.getStoreId());
         vo.setOrderSource(result.getOrderSource());
         vo.setCustomerId(result.getCustomerId());
+        vo.setCustomerName(result.getCustomerName());
         vo.setOrderDeliveryType(result.getOrderDeliveryType());
         vo.setStoreId(result.getStoreId());
         vo.setOrderStatus(result.getOrderStatus());

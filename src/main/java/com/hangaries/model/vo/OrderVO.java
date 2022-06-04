@@ -17,6 +17,7 @@ public class OrderVO {
     private String storeId;
     private String orderSource;
     private Integer customerId;
+    private String customerName;
     private Date orderReceivedDateTime;
     private String orderDeliveryType;
     private String storeTableId;

@@ -35,10 +35,13 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
     private @NotBlank String orderSource;
 
     @Column(name = "customer_id")
-    private @NotNull Integer customerId;
+    private Integer customerId;
+
+    @Column(name = "customer_name")
+    private String customerName;
 
     @Column(name = "order_received_date_time")
-    private @NotNull Date orderReceivedDateTime;
+    private Date orderReceivedDateTime;
 
     @Column(name = "order_delivery_type")
     private @NotBlank String orderDeliveryType;

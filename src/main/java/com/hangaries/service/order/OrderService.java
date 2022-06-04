@@ -33,4 +33,6 @@ public interface OrderService {
     List<OrderVO> queryOrderViewByParams(OrderQueryRequest orderRequest);
 
     List<OrderDetail> updateOrderDetailsStatus(String orderId, String orderStatus);
+
+    OrderDetail updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status);
 }

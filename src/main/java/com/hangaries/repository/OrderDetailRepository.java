@@ -20,4 +20,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
     @Query(value = "update ORDER_DETAILS om set om.order_detail_status = :status where om.order_id = :orderId", nativeQuery = true)
     int updateOrderDetailsStatus(@Param("orderId") String orderId, @Param("status") String status);
 
+    @Modifying
+    @Query(value = "update ORDER_DETAILS om set om.order_detail_status = :status where om.order_id = :orderId and om.product_id = :productId and om.sub_product_Id = :subProductId ", nativeQuery = true)
+    int updateOrderDetailsStatusBySubProductId(@Param("orderId") String orderId, @Param("productId") String productId,
+                                               @Param("subProductId") String subProductId, @Param("status") String status);
+    @Query(value = "select * from ORDER_DETAILS om where om.order_id = :orderId and om.product_id = :productId and om.sub_product_Id = :subProductId", nativeQuery = true)
+    OrderDetail getOrderDetailsStatusBySubProductId(@Param("orderId") String orderId, @Param("productId") String productId, @Param("subProductId") String subProductId);
 }
