@@ -343,7 +343,7 @@ public class OrderServiceImpl implements OrderService {
         orderDetailsVO.setQuantity(result.getQuantity());
         orderDetailsVO.setPrice(result.getPrice());
         orderDetailsVO.setRemarks(result.getRemarks());
-        orderDetailsVO.setOrderDetailStatus(result.getOrderStatus());
+        orderDetailsVO.setOrderDetailStatus(result.getOrderDetailStatus());
         orderDetailsVO.setKdsRoutingName(result.getKdsRoutingName());
         return orderDetailsVO;
     }
