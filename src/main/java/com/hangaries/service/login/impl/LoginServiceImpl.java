@@ -23,7 +23,7 @@ public class LoginServiceImpl implements LoginService {
 
         if (null == user) {
             logger.info("No user found for userId = [{}] in DB.", loginRequest.getLoginId());
-            return "INVALID_ID";
+            return "INCORRECT_ID";
         }
         if (isPasswordCorrect(loginRequest.getPassword(), user.getLoginPassword())) {
             logger.info("Password matched for userId = [{}].", loginRequest.getLoginId());
@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
 
         } else {
             logger.info("Password did not match for userId = [{}].", loginRequest.getLoginId());
-            return "PASSWORD_INCORRECT";
+            return "INCORRECT_PASSWORD";
         }
 
     }

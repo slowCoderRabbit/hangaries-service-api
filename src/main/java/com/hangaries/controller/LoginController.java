@@ -23,9 +23,9 @@ public class LoginController {
     @PostMapping("employeeLogin")
     HashMap<String, String> employeeLogin(@Valid @RequestBody LoginRequest loginRequest) {
         logger.info("Login request received for userId  = " + loginRequest.getLoginId());
-        String newOrderId = loginService.employeeLogin(loginRequest);
+        String loginResponse = loginService.employeeLogin(loginRequest);
         HashMap<String, String> map = new HashMap<>();
-        map.put("newOrderId", newOrderId);
+        map.put("loginResponse", loginResponse);
         return map;
     }
 
