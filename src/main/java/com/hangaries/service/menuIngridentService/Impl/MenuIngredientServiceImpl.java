@@ -19,12 +19,12 @@ public class MenuIngredientServiceImpl implements MenuIngredientService {
     @Autowired
     private MenuIngridentRepository menuIngridentRepository;
 
-    public List<MenuIngrident> getIngredientsByMenuId(String productId) throws Exception {
+    public List<MenuIngrident> getIngredientsByMenuId(String productId,String restaurantId,String storeId) throws Exception {
 
         List<MenuIngrident>menuIngridentList=new ArrayList<MenuIngrident>() ;
         try {
             logger.info("Get ingredients by productId::");
-            menuIngridentList=menuIngridentRepository.getAllIngredientsByMenuId(productId);
+            menuIngridentList=menuIngridentRepository.getAllIngredientsByMenuId(productId,restaurantId,storeId);
 
         } catch (Exception ex) {
             logger.error("Error while getting menuingredients::");

@@ -1816,6 +1816,91 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getMenuIngredientsByMenuId",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getMenuIngredientsByMenuId?productId=P033&restaurantId=R001&storeId=S001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getMenuIngredientsByMenuId"
+					],
+					"query": [
+						{
+							"key": "productId",
+							"value": "P033"
+						},
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "employeeLogin",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loginId\" :\"aniket\",\r\n    \"password\":\"aniket\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/employeeLogin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"employeeLogin"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

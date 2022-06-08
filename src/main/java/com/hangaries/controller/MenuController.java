@@ -75,11 +75,12 @@ public class MenuController {
      */
     @GetMapping("getMenuIngredientsByMenuId")
     @ResponseBody
-    public ResponseEntity<List<MenuIngrident>> getIngredientsByMenuId(@RequestParam("productId") String productId) throws Exception {
+    public ResponseEntity<List<MenuIngrident>> getIngredientsByMenuId(@RequestParam("productId") String productId, @RequestParam("restaurantId") String restaurantId,
+                                                                      @RequestParam("storeId") String storeId) throws Exception {
         List<MenuIngrident> menuIngridentList = new ArrayList<MenuIngrident>();
         try {
             logger.info("Get ingredients::");
-            menuIngridentList = menuIngredientService.getIngredientsByMenuId(productId);
+            menuIngridentList = menuIngredientService.getIngredientsByMenuId(productId, restaurantId, storeId);
             return new ResponseEntity<List<MenuIngrident>>(menuIngridentList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getting Ingredients::" + ex.getMessage());

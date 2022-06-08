@@ -6,5 +6,5 @@
 
  public interface MenuIngredientService {
 
-    List<MenuIngrident>getIngredientsByMenuId(String productId)throws Exception;
+    List<MenuIngrident>getIngredientsByMenuId(String productId,String restaurantId, String storeId)throws Exception;
 }
