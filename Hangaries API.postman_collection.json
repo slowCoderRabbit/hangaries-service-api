@@ -1901,6 +1901,93 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getUsersByRoleCategory",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getUsersByRoleCategory?roleCategory=STORE_ADMIN",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getUsersByRoleCategory"
+					],
+					"query": [
+						{
+							"key": "roleCategory",
+							"value": "STORE_ADMIN"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateDeliveryUserByOrderId",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updateDeliveryUserByOrderId?orderId=MR001S00120220505000122&deliveryUser='Aniket'",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateDeliveryUserByOrderId"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "MR001S00120220505000122"
+						},
+						{
+							"key": "deliveryUser",
+							"value": "'Aniket'"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

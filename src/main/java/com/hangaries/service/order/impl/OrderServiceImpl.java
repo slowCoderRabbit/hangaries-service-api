@@ -190,9 +190,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDetail updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status) {
-        orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId,productId,subProductId, status);
-        return orderDetailRepository.getOrderDetailsStatusBySubProductId(orderId,productId,subProductId);
+        orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status);
+        return orderDetailRepository.getOrderDetailsStatusBySubProductId(orderId, productId, subProductId);
 
+    }
+
+    @Override
+    public List<Order> updateDeliveryUserByOrderId(String orderId, String deliveryUser) {
+        orderRepository.updateDeliveryUserByOrderId(orderId, deliveryUser);
+        return orderRepository.findByOrderId(orderId);
     }
 
     OrderProcessingDetails saveOrderProcessingDetails(OrderProcessingDetails detailsOP) {

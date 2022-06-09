@@ -211,16 +211,30 @@ public class OrderController {
 
     @PostMapping("updateOrderDetailsStatusBySubProductId")
     public ResponseEntity<OrderDetail> updateOrderDetailsStatusBySubProductId(@RequestParam("orderId") String orderId, @RequestParam("status") String status,
-                                                                                    @RequestParam("productId") String productId, @RequestParam("subProductId") String subProductId) {
-        logger.info("Updating orderId = [{}], productId  = [{}], subProductId  = [{}],   with order status = {}. ", orderId,productId,subProductId, status);
+                                                                              @RequestParam("productId") String productId, @RequestParam("subProductId") String subProductId) {
+        logger.info("Updating orderId = [{}], productId  = [{}], subProductId  = [{}],   with order status = {}. ", orderId, productId, subProductId, status);
 
         OrderDetail orderDetail = null;
         try {
-            orderDetail = orderService.updateOrderDetailsStatusBySubProductId(orderId,productId,subProductId, status);
+            orderDetail = orderService.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status);
             return new ResponseEntity<OrderDetail>(orderDetail, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
             return new ResponseEntity<OrderDetail>(orderDetail, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("updateDeliveryUserByOrderId")
+    public ResponseEntity<List<Order>> updateDeliveryUserByOrderId(@RequestParam("orderId") String orderId, @RequestParam("deliveryUser") String deliveryUser) {
+        logger.info("Updating order Id = {} with deliveryUser = {}. ", orderId, deliveryUser);
+
+        List<Order> orderList = new ArrayList<>();
+        try {
+            orderList = orderService.updateDeliveryUserByOrderId(orderId, deliveryUser);
+            return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
+            return new ResponseEntity<List<Order>>(orderList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
