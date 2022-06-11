@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
-import static com.hangaries.config.HangariesConstants.STATUS_Y;
+import static com.hangaries.constants.HangariesConstants.STATUS_Y;
 
 @Service
 public class CustomerDtlsServiceImpl implements CustomerDtlsService {

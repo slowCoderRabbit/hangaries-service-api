@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.hangaries.constants.HangariesConstants.ACTIVE;
+
 @Service
 public class ModuleServiceImpl implements ModuleService {
 
@@ -21,6 +23,6 @@ public class ModuleServiceImpl implements ModuleService {
 
     @Override
     public List<Module> getModuleByRestroAndStore(String restaurantId, String storeId) {
-        return moduleRepository.getModuleByRestroAndStore(restaurantId, storeId, "ACTIVE");
+        return moduleRepository.getModuleByRestroAndStore(restaurantId, storeId, ACTIVE);
     }
 }

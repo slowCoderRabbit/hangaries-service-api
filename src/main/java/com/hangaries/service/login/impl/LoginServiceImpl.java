@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.hangaries.constants.HangariesConstants.ACTIVE;
+
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -46,7 +48,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public List<User> getUsersByRoleCategory(String roleCategory) {
-        List<User> users = userRepository.getUsersByRoleCategory(roleCategory, "ACTIVE");
+        List<User> users = userRepository.getUsersByRoleCategory(roleCategory, ACTIVE);
         for (User user : users) {
             user.setLoginPassword("");
         }

@@ -1,6 +1,7 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.Role;
+import com.hangaries.model.RoleModuleResponse;
 import com.hangaries.model.RoleWithModules;
 import com.hangaries.service.role.impl.RoleServiceImpl;
 import org.slf4j.Logger;
@@ -63,6 +64,22 @@ public class RoleController {
         } catch (Exception ex) {
             logger.error("Error while getting store details::" + ex.getMessage());
             return new ResponseEntity<Role>(newRole, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("getRoleWithModuleAccess")
+    public ResponseEntity<List<RoleModuleResponse>> getRoleWithModuleAccess(@RequestParam("restaurantId") String restaurantId,
+                                                                            @RequestParam("storeId") String storeId,
+                                                                            @RequestParam("roleCategory") String roleCategory) {
+        logger.info("Getting modules for restaurantId = {}, storeId = {} and role = {}.", restaurantId, storeId, roleCategory);
+
+        List<RoleModuleResponse> roleModuleMappingList = null;
+        try {
+            roleModuleMappingList = roleService.getRoleWithModuleAccess(restaurantId, storeId, roleCategory);
+            return new ResponseEntity<List<RoleModuleResponse>>(roleModuleMappingList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error while getting store details::" + ex.getMessage());
+            return new ResponseEntity<List<RoleModuleResponse>>(roleModuleMappingList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
-import static com.hangaries.config.HangariesConstants.SYSTEM;
+import static com.hangaries.constants.HangariesConstants.SYSTEM;
 
 @Data
 @NoArgsConstructor

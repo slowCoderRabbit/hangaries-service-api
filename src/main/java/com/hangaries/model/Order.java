@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.hangaries.config.HangariesConstants.SYSTEM;
+import static com.hangaries.constants.HangariesConstants.SYSTEM;
 
 @Getter
 @Setter

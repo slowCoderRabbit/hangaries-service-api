@@ -1,6 +1,5 @@
 package com.hangaries.model;
 
-import com.hangaries.model.keys.OrderDetailId;
 import com.hangaries.model.keys.RoleId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
-import static com.hangaries.config.HangariesConstants.SYSTEM;
+import static com.hangaries.constants.HangariesConstants.ACTIVE;
+import static com.hangaries.constants.HangariesConstants.SYSTEM;
 
 @Data
 @NoArgsConstructor
@@ -42,8 +42,11 @@ public class Role {
     @Column(name = "role_description")
     private String roleDescription;
 
+    @Column(name = "admin_flag")
+    private String adminFlag;
+
     @Column(name = "role_status")
-    private String roleStatus = "ACTIVE";
+    private String roleStatus = ACTIVE;
 
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;

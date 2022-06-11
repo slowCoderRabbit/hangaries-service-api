@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
-import static com.hangaries.config.HangariesConstants.SYSTEM;
+import static com.hangaries.constants.HangariesConstants.SYSTEM;
 
 @Getter
 @Setter

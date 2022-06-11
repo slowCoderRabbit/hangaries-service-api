@@ -19,7 +19,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static com.hangaries.config.HangariesConstants.ACCEPTED;
+import static com.hangaries.constants.HangariesConstants.ACCEPTED;
 import static com.hangaries.util.HangariesUtil.generatorQueryString;
 
 @Service

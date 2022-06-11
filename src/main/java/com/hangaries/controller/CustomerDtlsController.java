@@ -13,8 +13,8 @@ import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.hangaries.config.HangariesConstants.STATUS_N;
-import static com.hangaries.config.HangariesConstants.STATUS_Y;
+import static com.hangaries.constants.HangariesConstants.STATUS_N;
+import static com.hangaries.constants.HangariesConstants.STATUS_Y;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController

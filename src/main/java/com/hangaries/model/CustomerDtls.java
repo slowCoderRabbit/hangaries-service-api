@@ -3,42 +3,42 @@ package com.hangaries.model;
 import javax.persistence.*;
 import java.util.Date;
 
-import static com.hangaries.config.HangariesConstants.SYSTEM;
+import static com.hangaries.constants.HangariesConstants.SYSTEM;
 
 @Entity
-@Table(name="CUSTOMER_ADDRESS_DETAILS")
+@Table(name = "CUSTOMER_ADDRESS_DETAILS")
 public class CustomerDtls {
 
     @Id
     @GeneratedValue
-    @Column(name="id")
+    @Column(name = "id")
     private long id;
-    @Column(name="mobile_number")
+    @Column(name = "mobile_number")
     private String mobileNumber;
-    @Column(name="customer_address_type")
+    @Column(name = "customer_address_type")
     private String customerAddressType;
-    @Column(name="address_1")
+    @Column(name = "address_1")
     private String address1;
-    @Column(name="address_2")
+    @Column(name = "address_2")
     private String address2;
-    @Column(name="landmark")
+    @Column(name = "landmark")
     private String landmark;
-    @Column(name="state")
+    @Column(name = "state")
     private String state;
-    @Column(name="city")
+    @Column(name = "city")
     private String city;
-    @Column(name="zip_code")
+    @Column(name = "zip_code")
     private int zipCode;
-    @Column(name="created_by")
+    @Column(name = "created_by")
     private String createdBy = SYSTEM;
-    @Column(name="created_date")
+    @Column(name = "created_date")
     private Date createdDate = new Date();
-    @Column(name="updated_by")
+    @Column(name = "updated_by")
     private String updatedBy = SYSTEM;
-    @Column(name="updated_date")
+    @Column(name = "updated_date")
     private Date updatedDate = new Date();
-    @Column(name="active")
-    private String active="Y";
+    @Column(name = "active")
+    private String active = "Y";
 
     public String getActive() {
         return active;
