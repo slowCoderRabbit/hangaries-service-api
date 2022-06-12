@@ -75,7 +75,7 @@ public class RoleServiceImpl implements RoleService {
         List<Role> roles = getRoles(restaurantId, storeId, roleCategory);
         logger.info("Role fetched {}. Fetching categories for {} roles !!", roles.size());
 
-        List<Module> roleModules = null;
+        List<ModuleMaster> roleModules = null;
         for (Role role : roles) {
             roleModuleResponse = new RoleModuleResponse();
             roleModules = getModules(role.getRestaurantId(), role.getStoreId(), role.getRoleCategory());
@@ -109,7 +109,7 @@ public class RoleServiceImpl implements RoleService {
 
     }
 
-    List<Module> getModules(String restaurantId, String storeId, String roleCategory) {
+    List<ModuleMaster> getModules(String restaurantId, String storeId, String roleCategory) {
         logger.info("Fetching role - module mapping for restaurantId = {}, storeId = {}, roleCategory = {}.", restaurantId, storeId, roleCategory);
         List<RoleModuleMapping> mappings = roleModuleRepository.getRoleModuleMapping(restaurantId, storeId, roleCategory);
         List<Integer> roleMappingIds = mappings.stream().map(m -> m.getModuleId()).collect(Collectors.toList());

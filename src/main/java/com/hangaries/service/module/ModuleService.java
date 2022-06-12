@@ -1,11 +1,11 @@
 package com.hangaries.service.module;
 
-import com.hangaries.model.Module;
+import com.hangaries.model.ModuleMaster;
 
 import java.util.List;
 
 public interface ModuleService {
-    List<Module> getAllModule();
+    List<ModuleMaster> getAllModule();
 
-    List<Module> getModuleByRestroAndStore(String restaurantId, String storeId);
+    List<ModuleMaster> getModuleByRestroAndStore(String restaurantId, String storeId);
 }

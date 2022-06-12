@@ -1,6 +1,6 @@
 package com.hangaries.service.module.impl;
 
-import com.hangaries.model.Module;
+import com.hangaries.model.ModuleMaster;
 import com.hangaries.repository.ModuleRepository;
 import com.hangaries.service.module.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class ModuleServiceImpl implements ModuleService {
     ModuleRepository moduleRepository;
 
     @Override
-    public List<Module> getAllModule() {
+    public List<ModuleMaster> getAllModule() {
         return moduleRepository.findAll();
     }
 
     @Override
-    public List<Module> getModuleByRestroAndStore(String restaurantId, String storeId) {
+    public List<ModuleMaster> getModuleByRestroAndStore(String restaurantId, String storeId) {
         return moduleRepository.getModuleByRestroAndStore(restaurantId, storeId, ACTIVE);
     }
 }

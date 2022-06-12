@@ -17,7 +17,7 @@ import static com.hangaries.constants.HangariesConstants.SYSTEM;
 @ToString
 @Entity
 @Table(name = "MODULE_MASTER")
-public class Module {
+public class ModuleMaster {
 
     @Id
     @Column(name = "module_id")

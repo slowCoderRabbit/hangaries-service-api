@@ -15,6 +15,6 @@ import java.util.List;
 public class RoleModuleResponse implements Serializable {
 
     Role role;
-    List<Module> modules;
+    List<ModuleMaster> modules;
 
 }
