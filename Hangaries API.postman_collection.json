@@ -1988,6 +1988,141 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getRoleWithModuleAccessALL",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getRoleWithModuleAccess?restaurantId=R001&storeId=S001&roleCategory=ALL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getRoleWithModuleAccess"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						},
+						{
+							"key": "roleCategory",
+							"value": "ALL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRoleWithModuleAccess",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getRoleWithModuleAccess?restaurantId=R001&storeId=S001&roleCategory=CASHIER",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getRoleWithModuleAccess"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						},
+						{
+							"key": "roleCategory",
+							"value": "CASHIER"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteRoleWithModuleAccess",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"roleCategory\": \"SUPER_ADMIN1\",\r\n        \"roleDescription\": \"Super Admin\",\r\n        \"roleStatus\": \"ACTIVE\",\r\n\t\t\"moduleIds\":[13]\r\n        \r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/deleteRoleWithModuleAccess",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"deleteRoleWithModuleAccess"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

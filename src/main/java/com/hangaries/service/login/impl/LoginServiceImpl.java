@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.hangaries.constants.HangariesConstants.ACTIVE;
+import static com.hangaries.constants.HangariesConstants.*;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -31,14 +31,14 @@ public class LoginServiceImpl implements LoginService {
 
         if (null == user) {
             logger.info("No user found for userId = [{}] in DB.", loginRequest.getLoginId());
-            loginResponse.setLoginResponse("INCORRECT_ID");
+            loginResponse.setLoginResponse(INCORRECT_ID);
         } else if (isPasswordCorrect(loginRequest.getPassword(), user.getLoginPassword())) {
             logger.info("Password matched for userId = [{}].", loginRequest.getLoginId());
-            loginResponse.setLoginResponse("SUCCESS");
+            loginResponse.setLoginResponse(SUCCESS);
             user.setLoginPassword("");
         } else {
             logger.info("Password did not match for userId = [{}].", loginRequest.getLoginId());
-            loginResponse.setLoginResponse("INCORRECT_PASSWORD");
+            loginResponse.setLoginResponse(INCORRECT_PASSWORD);
             user.setLoginPassword("");
         }
 

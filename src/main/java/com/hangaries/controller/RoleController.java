@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hangaries.constants.HangariesConstants.ERROR;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
@@ -54,16 +56,16 @@ public class RoleController {
     }
 
     @PostMapping("saveNewRoleWithModuleAccess")
-    public ResponseEntity<Role> saveNewRoleWithModuleAccess(@RequestBody @Valid RoleWithModules role) {
+    public ResponseEntity<String> saveNewRoleWithModuleAccess(@RequestBody @Valid RoleWithModules role) {
         logger.info("Adding new role {}.", role);
 
-        Role newRole = null;
+        String result = null;
         try {
-            newRole = roleService.saveNewRoleWithModuleAccess(role);
-            return new ResponseEntity<Role>(newRole, HttpStatus.OK);
+            result = roleService.saveNewRoleWithModuleAccess(role);
+            return new ResponseEntity<String>(result, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getting store details::" + ex.getMessage());
-            return new ResponseEntity<Role>(newRole, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<String>(ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -80,6 +82,20 @@ public class RoleController {
         } catch (Exception ex) {
             logger.error("Error while getting store details::" + ex.getMessage());
             return new ResponseEntity<List<RoleModuleResponse>>(roleModuleMappingList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("deleteRoleWithModuleAccess")
+    public ResponseEntity<String> deleteRoleWithModuleAccess(@RequestBody @Valid RoleWithModules role) {
+        logger.info("Removing modules for role {}.", role);
+
+        String result = null;
+        try {
+            result = roleService.deleteRoleWithModuleAccess(role);
+            return new ResponseEntity<String>(result, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error while getting store details::" + ex.getMessage());
+            return new ResponseEntity<String>(ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

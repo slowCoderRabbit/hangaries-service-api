@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.hangaries.constants.HangariesConstants.ACTIVE;
+import static com.hangaries.constants.HangariesConstants.*;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -41,8 +41,30 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role saveNewRoleWithModuleAccess(RoleWithModules role) {
-        return null;
+    public String saveNewRoleWithModuleAccess(RoleWithModules mappingRequest) {
+        List<Role> roles = getRoles(mappingRequest.getRestaurantId(), mappingRequest.getStoreId(), mappingRequest.getRoleCategory());
+
+        if (null == roles || roles.isEmpty()) {
+            return NO_RECORD_FOUND;
+        }
+
+        logger.info("Roles retrieved from DB = {}.", roles.size());
+        RoleModuleMapping roleModuleMapping = null;
+        for (Role role : roles) {
+            for (Integer moduleId : mappingRequest.getModuleIds()) {
+                roleModuleMapping = new RoleModuleMapping();
+                roleModuleMapping.setRoleId(role.getRoleId());
+                roleModuleMapping.setRestaurantId(mappingRequest.getRestaurantId());
+                roleModuleMapping.setStoreId(mappingRequest.getStoreId());
+                roleModuleMapping.setRoleCategory(mappingRequest.getRoleCategory());
+                roleModuleMapping.setModuleId(moduleId);
+                roleModuleMapping.setAccessFlag(Y);
+                logger.info("Saving Role-Module mapping = {}.", roleModuleMapping);
+                roleModuleRepository.save(roleModuleMapping);
+
+            }
+        }
+        return SUCCESS;
     }
 
     @Override
@@ -66,9 +88,20 @@ public class RoleServiceImpl implements RoleService {
         return roleModuleMappingList;
     }
 
+    @Override
+    public String deleteRoleWithModuleAccess(RoleWithModules role) {
+
+        int result = roleModuleRepository.deleteRoleWithModuleAccess(role.getRestaurantId(), role.getStoreId(), role.getRoleCategory(), role.getModuleIds());
+        if (result == 0) {
+            return NO_RECORD_FOUND;
+        }
+        return DELETED;
+
+    }
+
     private List<Role> getRoles(String restaurantId, String storeId, String roleCategory) {
 
-        if (roleCategory.equalsIgnoreCase("ALL")) {
+        if (roleCategory.equalsIgnoreCase(ALL)) {
             return roleRepository.getRoleByRoleCategory(restaurantId, storeId, ACTIVE);
         } else {
             return roleRepository.getRoleByRoleCategory(restaurantId, storeId, roleCategory, ACTIVE);

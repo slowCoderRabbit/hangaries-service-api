@@ -11,7 +11,9 @@ public interface RoleService {
 
     Role saveNewRole(Role role);
 
-    Role saveNewRoleWithModuleAccess(RoleWithModules role);
+    String saveNewRoleWithModuleAccess(RoleWithModules role);
 
     List<RoleModuleResponse> getRoleWithModuleAccess(String restaurantId, String storeId, String roleCategory);
+
+    String deleteRoleWithModuleAccess(RoleWithModules role);
 }
