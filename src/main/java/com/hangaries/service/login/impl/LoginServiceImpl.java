@@ -48,7 +48,15 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public List<User> getUsersByRoleCategory(String roleCategory) {
-        List<User> users = userRepository.getUsersByRoleCategory(roleCategory, ACTIVE);
+        List<User> users = null;
+
+        if (roleCategory.equalsIgnoreCase(ALL)) {
+            users = userRepository.getAllUsersByRoleCategory(ACTIVE);
+        } else {
+            users = userRepository.getUsersByRoleCategory(roleCategory, ACTIVE);
+        }
+
+
         for (User user : users) {
             user.setLoginPassword("");
         }

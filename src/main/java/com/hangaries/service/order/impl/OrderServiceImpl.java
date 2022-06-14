@@ -189,9 +189,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDetail updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status) {
+    public List<OrderVO> updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status) {
         orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status);
-        return orderDetailRepository.getOrderDetailsStatusBySubProductId(orderId, productId, subProductId);
+        List<OrderMenuIngredientAddressDTO> results = orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressViewByOrderId(orderId);
+        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
+        List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
+        return orderList;
 
     }
 

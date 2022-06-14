@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select * from USER_MASTER where status=:status and role_category=:roleCategory", nativeQuery = true)
     List<User> getUsersByRoleCategory(@Param("roleCategory") String roleCategory, @Param("status") String status);
+
+    @Query(value = "select * from USER_MASTER where status=:status", nativeQuery = true)
+    List<User> getAllUsersByRoleCategory(@Param("status") String status);
 }

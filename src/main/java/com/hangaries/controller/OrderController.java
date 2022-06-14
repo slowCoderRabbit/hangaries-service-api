@@ -210,17 +210,17 @@ public class OrderController {
     }
 
     @PostMapping("updateOrderDetailsStatusBySubProductId")
-    public ResponseEntity<OrderDetail> updateOrderDetailsStatusBySubProductId(@RequestParam("orderId") String orderId, @RequestParam("status") String status,
-                                                                              @RequestParam("productId") String productId, @RequestParam("subProductId") String subProductId) {
+    public ResponseEntity<List<OrderVO>> updateOrderDetailsStatusBySubProductId(@RequestParam("orderId") String orderId, @RequestParam("status") String status,
+                                                                                @RequestParam("productId") String productId, @RequestParam("subProductId") String subProductId) {
         logger.info("Updating orderId = [{}], productId  = [{}], subProductId  = [{}],   with order status = {}. ", orderId, productId, subProductId, status);
 
-        OrderDetail orderDetail = null;
+        List<OrderVO> orderDetailList = new ArrayList<>();
         try {
-            orderDetail = orderService.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status);
-            return new ResponseEntity<OrderDetail>(orderDetail, HttpStatus.OK);
+            orderDetailList = orderService.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status);
+            return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
-            return new ResponseEntity<OrderDetail>(orderDetail, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

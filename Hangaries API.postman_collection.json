@@ -2123,6 +2123,48 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getUsersByRoleCategoryAll",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getUsersByRoleCategory?roleCategory=ALL",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getUsersByRoleCategory"
+					],
+					"query": [
+						{
+							"key": "roleCategory",
+							"value": "ALL"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
