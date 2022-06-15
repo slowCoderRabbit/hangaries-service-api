@@ -14,7 +14,9 @@ public class OrderVO {
 
     private String orderId;
     private String restaurantId;
+    private String restaurantName;
     private String storeId;
+    private String storeName;
     private String orderSource;
     private Integer customerId;
     private String customerName;

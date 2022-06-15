@@ -28,8 +28,14 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
     @Column(name = "restaurant_id")
     private @NotBlank String restaurantId;
 
+    @Column(name = "restaurant_name")
+    private String restaurantName;
+
     @Column(name = "store_Id")
     private @NotBlank String storeId;
+
+    @Column(name = "store_name")
+    private String storeName;
 
     @Column(name = "order_source")
     private @NotBlank String orderSource;

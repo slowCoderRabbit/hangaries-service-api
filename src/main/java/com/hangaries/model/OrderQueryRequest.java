@@ -2,6 +2,7 @@ package com.hangaries.model;
 
 import lombok.*;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,4 +17,7 @@ public class OrderQueryRequest {
     private String orderStatus;
     private String paymentStatus;
     private String mobileNumber;
+    private String orderDeliveryType;
+    private String deliveryUserId;
+
 }

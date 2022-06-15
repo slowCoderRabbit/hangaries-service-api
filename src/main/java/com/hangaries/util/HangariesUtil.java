@@ -60,6 +60,16 @@ public class HangariesUtil {
             queryString.append(AND);
         }
 
+        if (!StringUtils.isBlank(orderRequest.getOrderDeliveryType())) {
+            queryString.append("order_delivery_type = '" + orderRequest.getOrderDeliveryType() + "'");
+            queryString.append(AND);
+        }
+
+        if (!StringUtils.isBlank(orderRequest.getDeliveryUserId())) {
+            queryString.append("delivery_user_id = '" + orderRequest.getDeliveryUserId() + "'");
+            queryString.append(AND);
+        }
+
         if (!StringUtils.isBlank(queryString)) {
             finalQuery = queryString.substring(0, queryString.lastIndexOf(AND));
         }
