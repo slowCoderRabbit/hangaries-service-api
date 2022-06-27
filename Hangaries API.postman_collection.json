@@ -2200,6 +2200,91 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getConfigDetailsByCriteria",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getConfigDetailsByCriteria?restaurantId=R001&storeId=S001&criteria=ORDER_SOURCE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getConfigDetailsByCriteria"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						},
+						{
+							"key": "criteria",
+							"value": "ORDER_SOURCE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addConfigDetailsByCriteria",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"configCriteria\": \"ORDER_SOURCE\",\r\n        \"configCriteriaValue\": \"T\",\r\n        \"configCriteriaDesc\": \"Test\",\r\n        \"configParameter\": \"ORDER_AUTO_APPROVE_FLAG\",\r\n        \"configValue\": \"Y\"\r\n       \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addConfigDetailsByCriteria",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addConfigDetailsByCriteria"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
