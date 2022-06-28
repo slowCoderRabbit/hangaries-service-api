@@ -4,10 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 import static com.hangaries.constants.HangariesConstants.SYSTEM;
@@ -21,28 +20,32 @@ public class User {
 
     @Id
     @Column(name = "user_seq_no")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userSeqNo;
 
     @Column(name = "user_first_name")
-    private String firstName;
+    private @NotBlank String firstName;
 
     @Column(name = "user_middle_name")
     private String middleName;
 
     @Column(name = "user_last_name")
-    private String lastName;
+    private @NotBlank String lastName;
 
     @Column(name = "user_login_id")
-    private String loginId;
+    private @NotBlank String loginId;
+
+    @Column(name = "user_dob")
+    private @NotNull Date userDob;
 
     @Column(name = "user_login_password")
     private String loginPassword;
 
     @Column(name = "restaurant_id")
-    private String restaurantId;
+    private @NotBlank String restaurantId;
 
     @Column(name = "store_Id")
-    private String storeId;
+    private @NotBlank String storeId;
 
     @Column(name = "status")
     private String status;

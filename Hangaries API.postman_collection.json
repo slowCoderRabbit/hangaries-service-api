@@ -2285,6 +2285,168 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "updateEmployee",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"userSeqNo\": 483,\r\n        \"firstName\": \"aniket\",\r\n        \"middleName\": \"aniket12\",\r\n        \"lastName\": \"aniket\",\r\n        \"loginId\": \"aniketT1\",\r\n        \"loginPassword\": \"\",\r\n        \"userDob\": \"1976-05-30\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"status\": \"ACTIVE\",\r\n        \"adhaarId\": \"12345\",\r\n        \"panId\": \"AIXXX6768y\",\r\n        \"drivingLicenseNumber\": \"DEF-DEF\",\r\n        \"address1\": \"Delhi\",\r\n        \"address2\": \"Delhi\",\r\n        \"address3\": \"Delhi\",\r\n        \"city\": \"Delhi\",\r\n        \"country\": \"India\",\r\n        \"zipCode\": 400012,\r\n        \"mobileNumber\": \"9661111111\",\r\n        \"alternativeContactId\": \"9661111111\",\r\n        \"emailId\": \"abc@gmail.com\",\r\n        \"qualification\": \"B. Tech\",\r\n        \"photoFileLocation\": \"abcd\",\r\n        \"roleCategory\": \"STORE_ADMIN\",\r\n        \"effectiveStartDate\": \"2022-04-25\",\r\n        \"effectiveEndDate\": \"9999-12-30\",\r\n        \"createdBy\": \"Gurmeet\",\r\n        \"createdDate\": \"2022-04-26\",\r\n        \"updatedBy\": \"Gurmeet\",\r\n        \"updatedDate\": \"2022-04-26\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addUpdateEmployee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addUpdateEmployee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addEmployee",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"firstName\": \"aniket\",\r\n        \"middleName\": \"aniket12\",\r\n        \"lastName\": \"aniket\",\r\n        \"loginId\": \"aniketT1\",\r\n        \"loginPassword\": \"\",\r\n        \"userDob\": \"1976-05-30\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"status\": \"ACTIVE\",\r\n        \"adhaarId\": \"12345\",\r\n        \"panId\": \"AIXXX6768y\",\r\n        \"drivingLicenseNumber\": \"DEF-DEF\",\r\n        \"address1\": \"Delhi\",\r\n        \"address2\": \"Delhi\",\r\n        \"address3\": \"Delhi\",\r\n        \"city\": \"Delhi\",\r\n        \"country\": \"India\",\r\n        \"zipCode\": 400012,\r\n        \"mobileNumber\": \"9661111111\",\r\n        \"alternativeContactId\": \"9661111111\",\r\n        \"emailId\": \"abc@gmail.com\",\r\n        \"qualification\": \"B. Tech\",\r\n        \"photoFileLocation\": \"abcd\",\r\n        \"roleCategory\": \"STORE_ADMIN\",\r\n        \"effectiveStartDate\": \"2022-04-25\",\r\n        \"effectiveEndDate\": \"9999-12-30\",\r\n        \"createdBy\": \"Gurmeet\",\r\n        \"createdDate\": \"2022-04-26\",\r\n        \"updatedBy\": \"Gurmeet\",\r\n        \"updatedDate\": \"2022-04-26\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addUpdateEmployee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addUpdateEmployee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllEmployee",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getAllEmployee?restaurantId=R001&storeId=S001&status=ACTIVE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllEmployee"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						},
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEmployeeByLoginId",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getEmployeeByLoginId?loginId=aniket",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getEmployeeByLoginId"
+					],
+					"query": [
+						{
+							"key": "loginId",
+							"value": "aniket"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

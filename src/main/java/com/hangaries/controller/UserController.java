@@ -7,6 +7,8 @@ import com.hangaries.service.login.impl.LoginServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,5 +35,42 @@ public class UserController {
         logger.info("Getting list of users for role category = {}.", roleCategory);
         return loginService.getUsersByRoleCategory(roleCategory);
     }
+
+    @PostMapping("addUpdateEmployee")
+    ResponseEntity<User> addEmployee(@Valid @RequestBody User user) {
+        logger.info("Adding new user = {}." + user);
+        User newUser = null;
+        try {
+            newUser = loginService.addEmployee(user);
+            return new ResponseEntity<User>(newUser, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error adding or updating user  = {} :: {}", newUser, ex.getMessage());
+            return new ResponseEntity<User>(newUser, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("getAllEmployee")
+    List<User> getAllEmployee(@RequestParam("restaurantId") String restaurantId,
+                              @RequestParam("storeId") String storeId,
+                              @RequestParam("status") String status) {
+        logger.info("Getting list of users for role restaurantId = {}, storeId = {} and status = {}.", restaurantId, storeId, status);
+        return loginService.getAllEmployee(restaurantId, storeId, status);
+    }
+
+    @GetMapping("getEmployeeByLoginId")
+    ResponseEntity<User> getEmployeeByLoginId(@RequestParam("loginId") String loginId) {
+        logger.info("Getting list of users for loginId = {}.", loginId);
+
+        User newUser = null;
+        try {
+            newUser = loginService.getEmployeeByLoginId(loginId);
+            return new ResponseEntity<User>(newUser, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error adding or updating user  = {} :: {}", newUser, ex.getMessage());
+            return new ResponseEntity<User>(newUser, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
 }

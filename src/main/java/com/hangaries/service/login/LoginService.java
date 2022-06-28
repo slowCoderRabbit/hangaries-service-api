@@ -10,4 +10,10 @@ public interface LoginService {
     LoginResponse employeeLogin(LoginRequest loginRequest);
 
     List<User> getUsersByRoleCategory(String roleCategory);
+
+    User addEmployee(User user);
+
+    List<User> getAllEmployee(String restaurantId, String storeId, String status);
+
+    User getEmployeeByLoginId(String loginId);
 }

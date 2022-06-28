@@ -63,6 +63,23 @@ public class LoginServiceImpl implements LoginService {
         return users;
     }
 
+    @Override
+    public User addEmployee(User user) {
+        user.setLoginPassword("default");
+        userRepository.save(user);
+        return userRepository.getEmployeeByLoginId(user.getLoginId());
+    }
+
+    @Override
+    public List<User> getAllEmployee(String restaurantId, String storeId, String status) {
+        return userRepository.getAllEmployee(restaurantId, storeId, status);
+    }
+
+    @Override
+    public User getEmployeeByLoginId(String loginId) {
+        return userRepository.getEmployeeByLoginId(loginId);
+    }
+
     private boolean isPasswordCorrect(String uiPassword, String dbPassword) {
         return uiPassword.equals(dbPassword);
     }
