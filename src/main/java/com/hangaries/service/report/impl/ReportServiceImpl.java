@@ -31,6 +31,9 @@ public class ReportServiceImpl implements ReportService {
     @Autowired
     RSSOrderSourceRepository rssOrderSourceRepository;
 
+    @Autowired
+    RDCSummaryRepository rdcSummaryRepository;
+
     @Override
     public ReportResult getReports(Report report) throws ParseException {
 
@@ -52,6 +55,11 @@ public class ReportServiceImpl implements ReportService {
 
             List<RSSPaymentMode> rSSPaymentMode = rssPayModeRepository.getReport();
             reportResult.setSalesSummeryByPaymentMode(rSSPaymentMode);
+
+            List<ReportDishConsumptionSummary> rDCSummary = rdcSummaryRepository.getReport();
+            reportResult.setReportDishConsumptionSummary(rDCSummary);
+
+
         } catch (Exception e) {
             logger.error("Error during reports table refresh {}", e.getMessage());
         }

@@ -19,7 +19,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static com.hangaries.constants.HangariesConstants.ACCEPTED;
+import static com.hangaries.constants.HangariesConstants.*;
 import static com.hangaries.util.HangariesUtil.generatorQueryString;
 
 @Service
@@ -96,7 +96,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> updateOrderStatus(String orderId, String status) {
-        orderRepository.updateOrderStatus(orderId, status);
+
+        String paymentStatus = autoUpdatePaymentStatus(status);
+        if (!StringUtils.isBlank(paymentStatus)) {
+            orderRepository.updateOrderAndPaymentStatus(orderId, status, paymentStatus);
+        } else {
+            orderRepository.updateOrderStatus(orderId, status);
+        }
+
         List<Order> savedOrders = orderRepository.findByOrderId(orderId);
         logger.info("Order status updated for orderID = {}. Updating OrderProcessingDetails....!!!", orderId);
         for (Order order : savedOrders) {
@@ -105,6 +112,14 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return savedOrders;
+    }
+
+    private String autoUpdatePaymentStatus(String status) {
+
+        if (status.equalsIgnoreCase(DELIVERED)) {
+            return PAID;
+        }
+        return "";
     }
 
     @Override

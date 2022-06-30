@@ -15,6 +15,8 @@ public class HangariesConstants {
     public static String ALL = "ALL";
     public static String NO_RECORD_FOUND = "NO_RECORD_FOUND";
     public static String DELETED = "DELETED";
+    public static String DELIVERED = "DELIVERED";
+    public static String PAID = "PAID";
 
 
 }

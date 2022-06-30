@@ -12,9 +12,10 @@ import java.util.List;
 public class ReportResult {
 
     List<RSSDate> salesSummeryByDateList;
-    List<RSSDishType> SalesSummeryByDishType;
-    List<RSSOrderSource> SalesSummeryByOrderSource;
-    List<RSSPaymentMode> SalesSummeryByPaymentMode;
+    List<RSSDishType> salesSummeryByDishType;
+    List<RSSOrderSource> salesSummeryByOrderSource;
+    List<RSSPaymentMode> salesSummeryByPaymentMode;
+    List<ReportDishConsumptionSummary> reportDishConsumptionSummary;
 
 
 }
