@@ -24,12 +24,6 @@ public class ModuleMaster {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer moduleId;
 
-    @Column(name = "restaurant_id")
-    private @NotBlank String restaurantId;
-
-    @Column(name = "store_Id")
-    private @NotBlank String storeId;
-
     @Column(name = "module_name")
     private @NotBlank String moduleName;
 

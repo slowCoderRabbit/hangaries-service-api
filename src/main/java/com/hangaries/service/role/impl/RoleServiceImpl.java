@@ -73,7 +73,7 @@ public class RoleServiceImpl implements RoleService {
         List<RoleModuleResponse> roleModuleMappingList = new ArrayList<>();
         RoleModuleResponse roleModuleResponse = null;
         List<Role> roles = getRoles(restaurantId, storeId, roleCategory);
-        logger.info("Role fetched {}. Fetching categories for {} roles !!", roles.size());
+        logger.info("{} Role fetched!!!", roles.size());
 
         List<ModuleMaster> roleModules = null;
         for (Role role : roles) {
