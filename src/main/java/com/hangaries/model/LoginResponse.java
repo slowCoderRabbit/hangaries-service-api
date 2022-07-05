@@ -12,6 +12,7 @@ import lombok.ToString;
 public class LoginResponse {
 
     private String loginResponse;
+    private String restaurantName;
     private User user;
 
 

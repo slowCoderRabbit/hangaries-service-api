@@ -3,6 +3,7 @@ package com.hangaries.service.login.impl;
 import com.hangaries.model.LoginRequest;
 import com.hangaries.model.LoginResponse;
 import com.hangaries.model.User;
+import com.hangaries.repository.StoreRepository;
 import com.hangaries.repository.UserRepository;
 import com.hangaries.service.login.LoginService;
 import org.slf4j.Logger;
@@ -21,6 +22,9 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    StoreRepository storeRepository;
+
     @Override
     public LoginResponse employeeLogin(LoginRequest loginRequest) {
 
@@ -35,6 +39,7 @@ public class LoginServiceImpl implements LoginService {
         } else if (isPasswordCorrect(loginRequest.getPassword(), user.getLoginPassword())) {
             logger.info("Password matched for userId = [{}].", loginRequest.getLoginId());
             loginResponse.setLoginResponse(SUCCESS);
+            loginResponse.setRestaurantName(storeRepository.findByStoreId(loginResponse.getUser().getStoreId()).stream().findFirst().get().getResturantName());
             user.setLoginPassword("");
         } else {
             logger.info("Password did not match for userId = [{}].", loginRequest.getLoginId());
