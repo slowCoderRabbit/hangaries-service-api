@@ -1,5 +1,6 @@
 package com.hangaries.controller;
 
+import com.hangaries.model.AppDetails;
 import com.hangaries.model.ConfigMaster;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import org.slf4j.Logger;
@@ -50,6 +51,20 @@ public class ConfigController {
         } catch (Exception ex) {
             logger.error("Error getting config by criteria = {} :: {}", configMaster, ex.getMessage());
             return new ResponseEntity<ConfigMaster>(configMasterList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("getAppDetails")
+    public ResponseEntity<List<AppDetails>> getAppDetails() {
+        logger.info("Get Application details");
+
+        List<AppDetails> appDetails = null;
+        try {
+            appDetails = configService.getAppDetails();
+            return new ResponseEntity<List<AppDetails>>(appDetails, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error getting Application details!!!!!!! {}", ex.getMessage());
+            return new ResponseEntity<List<AppDetails>>(appDetails, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

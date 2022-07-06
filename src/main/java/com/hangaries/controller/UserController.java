@@ -40,13 +40,10 @@ public class UserController {
     ResponseEntity<User> addEmployee(@Valid @RequestBody User user) {
         logger.info("Adding new user = {}." + user);
         User newUser = null;
-        try {
-            newUser = loginService.addEmployee(user);
-            return new ResponseEntity<User>(newUser, HttpStatus.OK);
-        } catch (Exception ex) {
-            logger.error("Error adding or updating user  = {} :: {}", newUser, ex.getMessage());
-            return new ResponseEntity<User>(newUser, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+        newUser = loginService.addEmployee(user);
+        return new ResponseEntity<User>(newUser, HttpStatus.OK);
+
     }
 
     @GetMapping("getAllEmployee")

@@ -30,7 +30,7 @@ public class User {
     private String middleName;
 
     @Column(name = "user_last_name")
-    private @NotBlank String lastName;
+    private String lastName;
 
     @Column(name = "user_login_id")
     private @NotBlank String loginId;
@@ -39,7 +39,7 @@ public class User {
     private @NotNull Date userDob;
 
     @Column(name = "user_login_password")
-    private String loginPassword;
+    private String loginPassword = "default";
 
     @Column(name = "restaurant_id")
     private @NotBlank String restaurantId;
