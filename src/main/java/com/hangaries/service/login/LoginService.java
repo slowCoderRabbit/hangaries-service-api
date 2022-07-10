@@ -16,4 +16,6 @@ public interface LoginService {
     List<User> getAllEmployee(String restaurantId, String storeId, String status);
 
     User getEmployeeByLoginId(String loginId);
+
+    LoginResponse updateEmployeePasswordByLoginId(String loginId, String loginPassword);
 }

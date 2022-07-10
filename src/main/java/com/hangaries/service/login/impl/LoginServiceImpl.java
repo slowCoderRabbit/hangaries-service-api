@@ -6,6 +6,7 @@ import com.hangaries.model.User;
 import com.hangaries.repository.StoreRepository;
 import com.hangaries.repository.UserRepository;
 import com.hangaries.service.login.LoginService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,30 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public User getEmployeeByLoginId(String loginId) {
         return userRepository.getEmployeeByLoginId(loginId);
+    }
+
+    @Override
+    public LoginResponse updateEmployeePasswordByLoginId(String loginId, String loginPassword) {
+        User user = userRepository.findByLoginId(loginId);
+
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setUser(user);
+
+        if (null == user) {
+            logger.info("No user found for userId = [{}] in DB.", loginId);
+            loginResponse.setLoginResponse(INCORRECT_ID);
+        } else if (StringUtils.isBlank(loginPassword)) {
+            logger.info("Empty password for userId = [{}].", loginId);
+            loginResponse.setLoginResponse(BLANK_OR_INCORRECT_PASSWORD);
+            user.setLoginPassword("");
+        } else {
+            logger.info("Updating Password for userId = [{}].", loginId);
+            userRepository.updateEmployeePasswordByLoginId(loginId, loginPassword);
+            loginResponse.setLoginResponse(SUCCESS);
+            user.setLoginPassword("");
+        }
+
+        return loginResponse;
     }
 
     private boolean isPasswordCorrect(String uiPassword, String dbPassword) {

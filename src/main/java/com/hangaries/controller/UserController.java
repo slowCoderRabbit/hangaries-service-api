@@ -2,6 +2,7 @@ package com.hangaries.controller;
 
 import com.hangaries.model.LoginRequest;
 import com.hangaries.model.LoginResponse;
+import com.hangaries.model.UpdatePasswordRequest;
 import com.hangaries.model.User;
 import com.hangaries.service.login.impl.LoginServiceImpl;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class UserController {
 
     @PostMapping("employeeLogin")
     LoginResponse employeeLogin(@Valid @RequestBody LoginRequest loginRequest) {
-        logger.info("Login request received for userId  = " + loginRequest.getLoginId());
+        logger.info("Login request received for userId  = {} ", loginRequest.getLoginId());
         return loginService.employeeLogin(loginRequest);
     }
 
@@ -66,6 +67,13 @@ public class UserController {
             logger.error("Error adding or updating user  = {} :: {}", newUser, ex.getMessage());
             return new ResponseEntity<User>(newUser, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+    }
+
+    @PostMapping("updateEmployeePasswordByLoginId")
+    LoginResponse updateEmployeePasswordByLoginId(@Valid @RequestBody UpdatePasswordRequest updatePasswordRequest) {
+        logger.info("Updating password for loginID = {}.", updatePasswordRequest.getLoginId());
+        return loginService.updateEmployeePasswordByLoginId(updatePasswordRequest.getLoginId(), updatePasswordRequest.getLoginPassword());
 
     }
 

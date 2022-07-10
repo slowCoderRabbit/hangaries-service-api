@@ -17,6 +17,7 @@ public class HangariesConstants {
     public static String DELETED = "DELETED";
     public static String DELIVERED = "DELIVERED";
     public static String PAID = "PAID";
+    public static String BLANK_OR_INCORRECT_PASSWORD = "BLANK_OR_INCORRECT_PASSWORD";
 
 
 }
