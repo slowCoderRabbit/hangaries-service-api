@@ -219,6 +219,12 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByOrderId(orderId);
     }
 
+    @Override
+    public List<Order> updateFoodPackagedFlagByOrderId(String orderId, String foodPackagedFlag) {
+        orderRepository.updateFoodPackagedFlagByOrderId(orderId, foodPackagedFlag);
+        return orderRepository.findByOrderId(orderId);
+    }
+
     OrderProcessingDetails saveOrderProcessingDetails(OrderProcessingDetails detailsOP) {
         logger.info("Saving order process details for orderID = {} and order status = {}.", detailsOP.getOrderId(), detailsOP.getOrderStatus());
         OrderProcessingDetails details = orderProcessingDetailsRepository.save(detailsOP);

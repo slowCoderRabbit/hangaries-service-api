@@ -65,6 +65,8 @@ public class Order implements Serializable {
     private Long customerAddressId;
     @Column(name = "delivery_user_id")
     private String deliveryUserId;
+    @Column(name = "food_packaged_flag")
+    private String foodPackagedFlag = "N";
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;
     @Column(name = "Created_date")

@@ -19,5 +19,6 @@ public class OrderQueryRequest {
     private String mobileNumber;
     private String orderDeliveryType;
     private String deliveryUserId;
+    private String foodPackagedFlag;
 
 }

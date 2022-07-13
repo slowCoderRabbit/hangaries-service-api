@@ -30,4 +30,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "update ORDER_MASTER om set om.delivery_user_id = :deliveryUser where om.order_id = :orderId", nativeQuery = true)
     int updateDeliveryUserByOrderId(@Param("orderId") String orderId, @Param("deliveryUser") String deliveryUser);
 
+    @Modifying
+    @Query(value = "update ORDER_MASTER om set om.food_packaged_flag = :foodPackagedFlag where om.order_id = :orderId", nativeQuery = true)
+    int updateFoodPackagedFlagByOrderId(@Param("orderId") String orderId, @Param("foodPackagedFlag") String foodPackagedFlag);
 }
