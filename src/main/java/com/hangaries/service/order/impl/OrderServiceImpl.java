@@ -185,6 +185,7 @@ public class OrderServiceImpl implements OrderService {
         } else {
             queryString = "SELECT * FROM vOrderMenuIngredientAddress where " + queryString;
         }
+        queryString = queryString + " order by order_id, product_id, sub_product_id";
         logger.info("Querying view using queryString = [{}]", queryString);
         List<OrderMenuIngredientAddressDTO> results = jdbcTemplate.query(queryString, BeanPropertyRowMapper.newInstance(OrderMenuIngredientAddressDTO.class));
         logger.info("queryOrderViewByParams :: Total records returned from DB = [{}].", results.size());
