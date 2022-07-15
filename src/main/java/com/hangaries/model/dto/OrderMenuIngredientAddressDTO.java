@@ -85,6 +85,9 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
     @Column(name = "customer_address_id")
     private Long customerAddressId;
 
+    @Column(name = "food_packaged_flag")
+    private String foodPackagedFlag;
+
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;
 

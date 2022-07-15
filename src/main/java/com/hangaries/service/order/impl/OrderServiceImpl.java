@@ -407,6 +407,7 @@ public class OrderServiceImpl implements OrderService {
         vo.setMobileNumber(result.getMobileNumber());
         vo.setAddress(result.getAddress());
         vo.setDeliveryUserId(result.getDeliveryUserId());
+        vo.setFoodPackagedFlag(result.getFoodPackagedFlag());
         return vo;
 
 

@@ -36,6 +36,7 @@ public class OrderVO {
     private String mobileNumber;
     private String address;
     private String deliveryUserId;
+    private String foodPackagedFlag;
     private String createdBy;
     private Date createdDate;
     private String updatedBy;
