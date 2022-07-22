@@ -1,6 +1,5 @@
 package com.hangaries.service.menuIngridentService.Impl;
 
-import com.hangaries.controller.MenuController;
 import com.hangaries.model.MenuIngrident;
 import com.hangaries.repository.MenuIngridentRepository;
 import com.hangaries.service.menuIngridentService.MenuIngredientService;
@@ -19,17 +18,22 @@ public class MenuIngredientServiceImpl implements MenuIngredientService {
     @Autowired
     private MenuIngridentRepository menuIngridentRepository;
 
-    public List<MenuIngrident> getIngredientsByMenuId(String productId,String restaurantId,String storeId) throws Exception {
+    public List<MenuIngrident> getIngredientsByMenuId(String productId, String restaurantId, String storeId) throws Exception {
 
-        List<MenuIngrident>menuIngridentList=new ArrayList<MenuIngrident>() ;
+        List<MenuIngrident> menuIngridentList = new ArrayList<MenuIngrident>();
         try {
             logger.info("Get ingredients by productId::");
-            menuIngridentList=menuIngridentRepository.getAllIngredientsByMenuId(productId,restaurantId,storeId);
+            menuIngridentList = menuIngridentRepository.getAllIngredientsByMenuId(productId, restaurantId, storeId);
 
         } catch (Exception ex) {
             logger.error("Error while getting menuingredients::");
             throw new Exception(ex);
         }
         return menuIngridentList;
+    }
+
+    @Override
+    public List<MenuIngrident> getAllIngredientsByRestoAndStoreId(String restaurantId, String storeId) throws Exception {
+        return menuIngridentRepository.getAllIngredientsByRestoAndStoreId(restaurantId, storeId);
     }
 }

@@ -1,7 +1,6 @@
 package com.hangaries.controller;
 
 
-import com.hangaries.constants.Status;
 import com.hangaries.model.Customer;
 import com.hangaries.repository.CustomerRepository;
 import com.hangaries.service.customerService.Impl.CustomerServiceImpl;
@@ -33,10 +32,10 @@ public class CustomerController {
 
     @GetMapping("/customer/register")
     public ResponseEntity<Customer> registerCustomer(@RequestParam("mobno") String mobno) {
-        Customer customerRet=null;
+        Customer customerRet = null;
         try {
             logger.info("Register mobile number: " + mobno);
-            customerRet=customerService.registerCustomer(mobno);
+            customerRet = customerService.registerCustomer(mobno);
             return new ResponseEntity<Customer>(customerRet, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while registering customer::" + ex.getMessage());
@@ -46,9 +45,9 @@ public class CustomerController {
 
     @PutMapping("/customer/update")
     public ResponseEntity<Customer> updateCustomer(@Valid @RequestBody Customer newCustomer) {
-        Customer retCustomer=null;
+        Customer retCustomer = null;
         try {
-            retCustomer=customerService.updateCustomerInfo(newCustomer);
+            retCustomer = customerService.updateCustomerInfo(newCustomer);
             return new ResponseEntity<Customer>(retCustomer, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while updating customer infor::" + ex.getMessage());
@@ -59,7 +58,7 @@ public class CustomerController {
     @GetMapping("/customer/loginId")
     ResponseEntity getCustomerByLoginId() {
 
-       // ResponseEntity responseEntity = new ResponseEntity<List<Customer>>(customerRepository.findByLoginId("hungries"), HttpStatus.OK);
+        // ResponseEntity responseEntity = new ResponseEntity<List<Customer>>(customerRepository.findByLoginId("hungries"), HttpStatus.OK);
         return null;
 
     }
@@ -71,9 +70,21 @@ public class CustomerController {
         return customers;
     }
 
+    @GetMapping("getCustomerDtlsByMobNum")
+    @ResponseBody
+    public ResponseEntity<Customer> getCustomerDtlsByMobNum(@RequestParam("mobno") String mobnum) throws Exception {
+        Customer customerList = new Customer();
+        try {
+            customerList = customerService.getCustomerDtlsByMobNum(mobnum);
+            return new ResponseEntity<Customer>(customerList, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<Customer>(customerList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/customer/loginId")
     ResponseEntity deleteCustomerByLoginId(@RequestParam String loginId) {
-       // ResponseEntity responseEntity = new ResponseEntity<List<Customer>>(customerRepository.deleteByLoginId(loginId), HttpStatus.OK);
+        // ResponseEntity responseEntity = new ResponseEntity<List<Customer>>(customerRepository.deleteByLoginId(loginId), HttpStatus.OK);
         return null;
     }
 

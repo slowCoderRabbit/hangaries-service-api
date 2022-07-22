@@ -390,6 +390,7 @@ public class OrderServiceImpl implements OrderService {
         vo.setCustomerId(result.getCustomerId());
         vo.setCustomerName(result.getCustomerName());
         vo.setOrderDeliveryType(result.getOrderDeliveryType());
+        vo.setStoreTableId(result.getStoreTableId());
         vo.setStoreId(result.getStoreId());
         vo.setOrderStatus(result.getOrderStatus());
         vo.setPaymentStatus(result.getPaymentStatus());

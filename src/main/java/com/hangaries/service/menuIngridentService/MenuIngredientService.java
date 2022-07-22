@@ -1,10 +1,12 @@
- package com.hangaries.service.menuIngridentService;
+package com.hangaries.service.menuIngridentService;
 
- import com.hangaries.model.MenuIngrident;
+import com.hangaries.model.MenuIngrident;
 
- import java.util.List;
+import java.util.List;
 
- public interface MenuIngredientService {
+public interface MenuIngredientService {
 
-    List<MenuIngrident>getIngredientsByMenuId(String productId,String restaurantId, String storeId)throws Exception;
+    List<MenuIngrident> getIngredientsByMenuId(String productId, String restaurantId, String storeId) throws Exception;
+
+    List<MenuIngrident> getAllIngredientsByRestoAndStoreId(String restaurantId, String storeId) throws Exception;
 }

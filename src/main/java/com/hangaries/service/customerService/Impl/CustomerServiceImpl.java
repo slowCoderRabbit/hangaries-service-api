@@ -49,6 +49,20 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerRes;
     }
+
+    public Customer getCustomerDtlsByMobNum(String mobnum) throws Exception {
+        Customer customerList = null;
+        try {
+            customerList = customerRepository.getCustomerDtlsByMobNum(mobnum);
+        } catch (Exception ex) {
+            logger.error("Error while retrieving customer details:: ");
+            throw new Exception(ex);
+        }
+        return customerList;
+
+    }
+
+
     public Customer updateCustomerInfo(Customer customer)throws  Exception{
         Customer retCustomer=null;
         try{

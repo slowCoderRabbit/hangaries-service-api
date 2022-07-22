@@ -88,6 +88,21 @@ public class MenuController {
         }
     }
 
+    @GetMapping("getMenuIngredientsByRestoAndStoreId")
+    @ResponseBody
+    public ResponseEntity<List<MenuIngrident>> getMenuIngredientsByRestoAndStoreId(@RequestParam("restaurantId") String restaurantId,
+                                                                                   @RequestParam("storeId") String storeId) throws Exception {
+        List<MenuIngrident> menuIngridentList = new ArrayList<MenuIngrident>();
+        try {
+            logger.info("Get ingredients for restaurantId = {}, storeId = {}. ", restaurantId, storeId);
+            menuIngridentList = menuIngredientService.getAllIngredientsByRestoAndStoreId(restaurantId, storeId);
+            return new ResponseEntity<List<MenuIngrident>>(menuIngridentList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error while getting Ingredients::" + ex.getMessage());
+            return new ResponseEntity<List<MenuIngrident>>(menuIngridentList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("getAllSections")
     @ResponseBody
     public ResponseEntity<List<String>> getSections(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) throws Exception {
