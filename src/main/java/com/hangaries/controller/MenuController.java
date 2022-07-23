@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -130,5 +131,20 @@ public class MenuController {
             return new ResponseEntity<List<String>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("getAllSectionsWithDishes")
+    @ResponseBody
+    public ResponseEntity<Map<String, List<String>>> getAllSectionsWithDishes(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) throws Exception {
+        Map<String, List<String>> sectionWithDishes = null;
+        try {
+            logger.info("Get all sections for restaurantId = {}, storeId = {}.", restaurantId, storeId);
+            sectionWithDishes = menuService.getAllSectionsWithDishes(restaurantId, storeId);
+            return new ResponseEntity<Map<String, List<String>>>(sectionWithDishes, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error while getting Sections::" + ex.getMessage());
+            return new ResponseEntity<Map<String, List<String>>>((Map<String, List<String>>) new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

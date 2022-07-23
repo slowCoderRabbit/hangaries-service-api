@@ -21,4 +21,7 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
 
     @Query(value = "select * from MENU_MASTER where restaurant_id=:restaurantId and store_id=:storeId", nativeQuery = true)
     List<Menu> getMenuItemsByRestroAndStore(String restaurantId, String storeId);
+
+    @Query(value = "select distinct section, dish from MENU_MASTER where restaurant_id =:restaurantId and store_id=:storeId order by section,dish", nativeQuery = true)
+    List<Object[]> getAllSectionsWithDishes(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId);
 }

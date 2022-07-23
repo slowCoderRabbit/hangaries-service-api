@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -88,4 +91,37 @@ public class MenuServiceImpl implements MenuService {
         }
         return dishList;
     }
+
+    @Override
+    public Map<String, List<String>> getAllSectionsWithDishes(String restaurantId, String storeId) {
+        Map<String, List<String>> sectionWithDishes = null;
+        List<Object[]> result = menuRepository.getAllSectionsWithDishes(restaurantId, storeId);
+
+        if (null != result) {
+            logger.info("getAllSectionsWithDishes result from DB = {}", result.size());
+            sectionWithDishes = consolidateResponseToSectionMap(result);
+            logger.info("getAllSectionsWithDishes post transformation to response = {}", sectionWithDishes.size());
+        }
+        return sectionWithDishes;
+    }
+
+    Map<String, List<String>> consolidateResponseToSectionMap(List<Object[]> results) {
+        Map<String, List<String>> sectionMap = new LinkedHashMap<>();
+        for (Object[] result : results) {
+            String section = result[0].toString();
+            String dish = result[1].toString();
+            List<String> exitingList = sectionMap.get(section);
+            if (exitingList == null) {
+                List<String> newList = new ArrayList<>();
+                newList.add(dish);
+                sectionMap.put(section, newList);
+            } else {
+                exitingList.add(dish);
+                sectionMap.put(section, exitingList);
+            }
+        }
+        return sectionMap;
+    }
+
+
 }
