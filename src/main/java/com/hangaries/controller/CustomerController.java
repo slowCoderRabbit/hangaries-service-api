@@ -78,6 +78,7 @@ public class CustomerController {
             customerList = customerService.getCustomerDtlsByMobNum(mobnum);
             return new ResponseEntity<Customer>(customerList, HttpStatus.OK);
         } catch (Exception ex) {
+            logger.error("Error while getCustomerDtlsByMobNum ::" + ex.getMessage());
             return new ResponseEntity<Customer>(customerList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -319,6 +319,41 @@
 			"response": []
 		},
 		{
+			"name": "saveNewOrderTxnRef",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"M\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"paymentMode\": \"COD\",\r\n        \"paymentStatus\": \"Done\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"deliveryCharges\":20.45,\r\n        \"customerAddressId\":289,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveNewOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveNewOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "getOrderById",
 			"protocolProfileBehavior": {
 				"strictSSL": true,
@@ -2697,6 +2732,126 @@
 							"key": "storeId",
 							"value": "S001"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "actuator/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/actuator/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCustomerDtlsByMobNum",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getCustomerDtlsByMobNum?mobno=6584335463",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getCustomerDtlsByMobNum"
+					],
+					"query": [
+						{
+							"key": "mobno",
+							"value": "6584335463"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateMenuItem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {   \r\n     \r\n        \"id\": 194,     \r\n        \"productId\": \"P194\",\r\n        \"restaruantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"section\": \"Chinese\",\r\n        \"dish\": \"Momo's\",\r\n        \"dishCategory\": \"Veg\",\r\n        \"dishSpiceIndicatory\": \"Medium SpicyA\",\r\n        \"dishType\": \"Hot Garlic Dim Sum (Paneer)\",\r\n        \"dishDescriptionId\": \"This is Garlic flavour hot Spicy\",\r\n        \"productSize\": \"Regular\",\r\n        \"price\": 170.0,\r\n        \"imagePath\": \"20210923052450_IMG_0387\",\r\n        \"menuAvailableFlag\": \"Y\",\r\n        \"commonImage\": \"N\"        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveMenuItem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveMenuItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateMenuIngredient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"id\": 38,\r\n        \"storeId\": \"S002\",\r\n        \"restaurantId\": \"R001\",\r\n        \"subProductId\": \"S001\",\r\n        \"ingredientType\": \"Black Olives\",\r\n        \"price\": 20.0,\r\n        \"category\": \"Topping\",\r\n        \"imagePath\": \"IMAGE1\",\r\n        \"createdBy\": \"SYSTEM\",\r\n        \"createdDate\": \"2022-06-08T06:27:06.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-06-08T06:27:06.000+00:00\",\r\n        \"size\": \"Small\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveMenuIngredient",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveMenuIngredient"
 					]
 				}
 			},

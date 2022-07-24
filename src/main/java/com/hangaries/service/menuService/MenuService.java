@@ -13,4 +13,6 @@ public interface MenuService {
     List<String> getDishesBySection(String s, String restaurantId, String section) throws Exception;
 
     Map<String, List<String>> getAllSectionsWithDishes(String restaurantId, String storeId);
+
+    Menu saveMenuItem(Menu menu);
 }

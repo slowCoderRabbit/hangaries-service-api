@@ -105,6 +105,12 @@ public class MenuServiceImpl implements MenuService {
         return sectionWithDishes;
     }
 
+    @Override
+    public Menu saveMenuItem(Menu menu) {
+        menuRepository.save(menu);
+        return menuRepository.getById(menu.getId());
+    }
+
     Map<String, List<String>> consolidateResponseToSectionMap(List<Object[]> results) {
         Map<String, List<String>> sectionMap = new LinkedHashMap<>();
         for (Object[] result : results) {

@@ -49,6 +49,8 @@ public class Order implements Serializable {
     private @NotBlank String paymentStatus;
     @Column(name = "payment_mode")
     private @NotBlank String paymentMode;
+    @Column(name = "payment_txn_reference")
+    private String paymentTxnReference;
     @Column(name = "tax_rule_id")
     private @NotNull Integer taxRuleId;
     @Column(name = "total_price")

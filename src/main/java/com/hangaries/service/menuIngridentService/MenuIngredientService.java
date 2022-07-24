@@ -9,4 +9,7 @@ public interface MenuIngredientService {
     List<MenuIngrident> getIngredientsByMenuId(String productId, String restaurantId, String storeId) throws Exception;
 
     List<MenuIngrident> getAllIngredientsByRestoAndStoreId(String restaurantId, String storeId) throws Exception;
+
+
+    MenuIngrident saveMenuIngredient(MenuIngrident menuIngredient);
 }

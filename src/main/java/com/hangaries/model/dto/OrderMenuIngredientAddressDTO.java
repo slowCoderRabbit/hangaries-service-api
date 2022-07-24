@@ -64,6 +64,9 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
     @Column(name = "payment_mode")
     private @NotBlank String paymentMode;
 
+    @Column(name = "payment_txn_reference")
+    private String paymentTxnReference;
+
     @Column(name = "tax_rule_id")
     private @NotNull Integer taxRuleId;
 

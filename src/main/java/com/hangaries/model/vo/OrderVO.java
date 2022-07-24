@@ -26,6 +26,7 @@ public class OrderVO {
     private String orderStatus;
     private String paymentStatus;
     private String paymentMode;
+    private String paymentTxnReference;
     private Integer taxRuleId;
     private Float totalPrice;
     private Float cgstCalculatedValue;

@@ -146,5 +146,23 @@ public class MenuController {
         }
     }
 
+    @PostMapping("saveMenuItem")
+    @ResponseBody
+    public ResponseEntity<Menu> saveMenuItem(@RequestBody Menu menu) {
+        logger.info("Saving menu item = {}. ", menu);
+        Menu newMenu = menuService.saveMenuItem(menu);
+        return new ResponseEntity<Menu>(newMenu, HttpStatus.OK);
+
+    }
+
+    @PostMapping("saveMenuIngredient")
+    @ResponseBody
+    public ResponseEntity<MenuIngrident> saveUpdateMenuIngredient(@RequestBody MenuIngrident menuIngredient) {
+        logger.info("Saving menu ingredient = {}. ", menuIngredient);
+        MenuIngrident newMenuIngredient = menuIngredientService.saveMenuIngredient(menuIngredient);
+        return new ResponseEntity<MenuIngrident>(newMenuIngredient, HttpStatus.OK);
+
+    }
+
 
 }

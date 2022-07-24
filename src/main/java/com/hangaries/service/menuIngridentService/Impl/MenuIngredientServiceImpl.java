@@ -36,4 +36,10 @@ public class MenuIngredientServiceImpl implements MenuIngredientService {
     public List<MenuIngrident> getAllIngredientsByRestoAndStoreId(String restaurantId, String storeId) throws Exception {
         return menuIngridentRepository.getAllIngredientsByRestoAndStoreId(restaurantId, storeId);
     }
+
+    @Override
+    public MenuIngrident saveMenuIngredient(MenuIngrident menuIngredient) {
+        menuIngridentRepository.save(menuIngredient);
+        return menuIngridentRepository.getById(menuIngredient.getId());
+    }
 }

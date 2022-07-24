@@ -395,6 +395,7 @@ public class OrderServiceImpl implements OrderService {
         vo.setOrderStatus(result.getOrderStatus());
         vo.setPaymentStatus(result.getPaymentStatus());
         vo.setPaymentMode(result.getPaymentMode());
+        vo.setPaymentTxnReference(result.getPaymentTxnReference());
         vo.setTaxRuleId(result.getTaxRuleId());
         vo.setTotalPrice(result.getTotalPrice());
         vo.setCgstCalculatedValue(result.getCgstCalculatedValue());
