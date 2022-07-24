@@ -1,6 +1,8 @@
 package com.hangaries.service.menuIngridentService.Impl;
 
+import com.hangaries.model.MenuIngredientList;
 import com.hangaries.model.MenuIngrident;
+import com.hangaries.repository.MenuIngredientListRepository;
 import com.hangaries.repository.MenuIngridentRepository;
 import com.hangaries.service.menuIngridentService.MenuIngredientService;
 import org.slf4j.Logger;
@@ -17,6 +19,9 @@ public class MenuIngredientServiceImpl implements MenuIngredientService {
 
     @Autowired
     private MenuIngridentRepository menuIngridentRepository;
+
+    @Autowired
+    private MenuIngredientListRepository menuIngredientListRepository;
 
     public List<MenuIngrident> getIngredientsByMenuId(String productId, String restaurantId, String storeId) throws Exception {
 
@@ -41,5 +46,10 @@ public class MenuIngredientServiceImpl implements MenuIngredientService {
     public MenuIngrident saveMenuIngredient(MenuIngrident menuIngredient) {
         menuIngridentRepository.save(menuIngredient);
         return menuIngridentRepository.getById(menuIngredient.getId());
+    }
+
+    public List<MenuIngredientList> getMenuIngredientList() {
+        return menuIngredientListRepository.findAll();
+
     }
 }

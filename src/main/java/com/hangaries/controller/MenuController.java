@@ -2,6 +2,7 @@ package com.hangaries.controller;
 
 
 import com.hangaries.model.Menu;
+import com.hangaries.model.MenuIngredientList;
 import com.hangaries.model.MenuIngrident;
 import com.hangaries.service.menuIngridentService.Impl.MenuIngredientServiceImpl;
 import com.hangaries.service.menuService.Impl.MenuServiceImpl;
@@ -161,6 +162,16 @@ public class MenuController {
         logger.info("Saving menu ingredient = {}. ", menuIngredient);
         MenuIngrident newMenuIngredient = menuIngredientService.saveMenuIngredient(menuIngredient);
         return new ResponseEntity<MenuIngrident>(newMenuIngredient, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getMenuIngredientList")
+    @ResponseBody
+    public ResponseEntity<List<MenuIngredientList>> getMenuIngredientList() {
+        logger.info("getMenuIngredientList !!!!!!!! ");
+        List<MenuIngredientList> newMenuIngredient = menuIngredientService.getMenuIngredientList();
+        logger.info("getMenuIngredientList size = {} ",newMenuIngredient.size());
+        return new ResponseEntity<List<MenuIngredientList>>(newMenuIngredient, HttpStatus.OK);
 
     }
 
