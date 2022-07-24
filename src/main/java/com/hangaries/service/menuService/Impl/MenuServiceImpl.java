@@ -108,7 +108,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Menu saveMenuItem(Menu menu) {
         menuRepository.save(menu);
-        return menuRepository.getById(menu.getId());
+        return menuRepository.getMenuItemById(menu.getId());
     }
 
     Map<String, List<String>> consolidateResponseToSectionMap(List<Object[]> results) {

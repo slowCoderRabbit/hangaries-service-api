@@ -17,4 +17,7 @@ public interface MenuIngridentRepository extends JpaRepository<MenuIngrident, Lo
 
     @Query(value = "select menu.* from hangaries.MENU_INGREDIENT_MASTER menu where menu.restaurant_id =:restaurantId and menu.store_id =:storeId", nativeQuery = true)
     List<MenuIngrident> getAllIngredientsByRestoAndStoreId(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId);
+
+    @Query(value = "select * from MENU_INGREDIENT_MASTER menu where menu.id =:id", nativeQuery = true)
+    MenuIngrident getMenuIngredientById(@Param("id") long id);
 }
