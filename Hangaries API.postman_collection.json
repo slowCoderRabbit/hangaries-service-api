@@ -1325,7 +1325,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{        \r\n        \"orderId\": \"MR001S00120220505000127\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\"\r\n        \r\n}",
+					"raw": "     \r\n       {\r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"S001\",\r\n    \"orderReceivedDate\": \"2022-07-28\",\r\n    \"orderReceivedFromDate\": \"2022-07-26\"\r\n\r\n        \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1430,7 +1430,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{        \r\n            \"orderReceivedDate\": \"2022-05-05\"\r\n        \r\n}",
+					"raw": "{        \r\n    \"orderReceivedFromDate\": \"2022-05-26\",\r\n    \"orderReceivedDate\": \"2022-08-05\"\r\n            \r\n        \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -2888,6 +2888,41 @@
 					"path": [
 						"api",
 						"getMenuIngredientList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "queryOrderViewByParams3_orderReceivedFromDate",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "     \r\n       {\r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"S001\",    \r\n    \"orderReceivedFromDate\": \"2022-07-26\"\r\n\r\n        \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/queryOrderViewByParams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"queryOrderViewByParams"
 					]
 				}
 			},
