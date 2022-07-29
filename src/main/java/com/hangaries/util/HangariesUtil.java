@@ -41,11 +41,6 @@ public class HangariesUtil {
             queryString.append(AND);
         }
 
-        if (!StringUtils.isBlank(orderRequest.getOrderReceivedDate())) {
-            queryString.append("DATE(order_received_date_time) = DATE('" + orderRequest.getOrderReceivedDate() + "')");
-            queryString.append(AND);
-        }
-
         if (!StringUtils.isBlank(orderRequest.getOrderDeliveryType())) {
             queryString.append("order_delivery_type = '" + orderRequest.getOrderDeliveryType() + "'");
             queryString.append(AND);
@@ -61,6 +56,8 @@ public class HangariesUtil {
             queryString.append(AND);
         }
 
+        handleDates(orderRequest, queryString);
+
         if (!StringUtils.isBlank(queryString)) {
             finalQuery = queryString.substring(0, queryString.lastIndexOf(AND));
         }
@@ -68,6 +65,19 @@ public class HangariesUtil {
         logger.info("finalQuery = {}", finalQuery);
 
         return finalQuery;
+    }
+
+    static void handleDates(OrderQueryRequest orderRequest, StringBuilder queryString) {
+        if (!StringUtils.isBlank(orderRequest.getOrderReceivedFromDate()) && !StringUtils.isBlank(orderRequest.getOrderReceivedDate())) {
+            queryString.append("DATE(order_received_date_time) BETWEEN DATE('" + orderRequest.getOrderReceivedFromDate() + "') AND DATE('" + orderRequest.getOrderReceivedDate() + "') ");
+            queryString.append(AND);
+        } else if (!StringUtils.isBlank(orderRequest.getOrderReceivedFromDate()) && StringUtils.isBlank(orderRequest.getOrderReceivedDate())) {
+            queryString.append("DATE(order_received_date_time) BETWEEN DATE('" + orderRequest.getOrderReceivedFromDate() + "') AND curdate() ");
+            queryString.append(AND);
+        } else if (StringUtils.isBlank(orderRequest.getOrderReceivedFromDate()) && !StringUtils.isBlank(orderRequest.getOrderReceivedDate())) {
+            queryString.append("DATE(order_received_date_time) = DATE('" + orderRequest.getOrderReceivedDate() + "') ");
+            queryString.append(AND);
+        }
     }
 
     public static void main(String[] args) {

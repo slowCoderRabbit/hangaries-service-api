@@ -14,6 +14,7 @@ public class OrderQueryRequest {
     private String restaurantId;
     private String storeId;
     private String orderReceivedDate;
+    private String orderReceivedFromDate;
     private String orderStatus;
     private String paymentStatus;
     private String mobileNumber;
