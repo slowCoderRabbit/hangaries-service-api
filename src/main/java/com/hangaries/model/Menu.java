@@ -3,6 +3,8 @@ package com.hangaries.model;
 import javax.persistence.*;
 import java.util.Date;
 
+import static com.hangaries.constants.HangariesConstants.SYSTEM;
+
 /**
  * Menu master entity
  */
@@ -10,7 +12,7 @@ import java.util.Date;
 @Table(name = "MENU_MASTER")
 public class Menu {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
     @Column(name = "product_id")
@@ -47,13 +49,13 @@ public class Menu {
     @Column(name = "kds_routing_name")
     private String kdsRoutingName;
     @Column(name = "Created_by")
-    private String createdBy;
+    private String createdBy = SYSTEM;
     @Column(name = "Created_date")
-    private Date createdDate;
+    private Date createdDate = new Date();
     @Column(name = "Updated_by")
-    private String updatedBy;
+    private String updatedBy = SYSTEM;
     @Column(name = "Updated_date")
-    private Date updatedDate;
+    private Date updatedDate = new Date();
 
     public long getId() {
         return id;

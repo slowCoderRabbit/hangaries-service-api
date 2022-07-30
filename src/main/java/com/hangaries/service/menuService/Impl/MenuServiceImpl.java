@@ -1,8 +1,11 @@
 package com.hangaries.service.menuService.Impl;
 
 import com.hangaries.model.Menu;
+import com.hangaries.model.Product;
 import com.hangaries.repository.MenuRepository;
 import com.hangaries.service.menuService.MenuService;
+import com.hangaries.service.product.impl.ProductServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private MenuRepository menuRepository;
+
+    @Autowired
+    private ProductServiceImpl productService;
 
     /**
      * Get all menuItems
@@ -107,8 +113,35 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu saveMenuItem(Menu menu) {
-        menuRepository.save(menu);
-        return menuRepository.getById(menu.getId());
+
+        if (menu.getId() == 0 && StringUtils.isBlank(menu.getProductId())) {
+            logger.info("Menu ID and Product ID are missing hence treating this request as new Product request!");
+            Product newProduct = new Product();
+            newProduct.setSection(menu.getSection());
+            newProduct.setDish(menu.getDish());
+            newProduct.setDishCategory(menu.getDishCategory());
+            newProduct.setDishType(menu.getDishType());
+            newProduct.setProductSize(menu.getProductSize());
+            logger.info("Calling save new product service for [{}]", newProduct);
+            Product savedProduct = productService.saveProduct(newProduct);
+            logger.info("Saved product = [{}]", savedProduct);
+            menu.setProductId(savedProduct.getProductId());
+
+        } else {
+            logger.info("Updating existing Menu and Product! ");
+            Product product = new Product();
+            product.setProductId(menu.getProductId());
+            product.setSection(menu.getSection());
+            product.setDish(menu.getDish());
+            product.setDishCategory(menu.getDishCategory());
+            product.setDishType(menu.getDishType());
+            product.setProductSize(menu.getProductSize());
+            Product updatedProduct = productService.updatedProduct(product);
+            logger.info("Product updated successfully  = [{}]", updatedProduct);
+
+        }
+
+        return menuRepository.save(menu);
     }
 
     Map<String, List<String>> consolidateResponseToSectionMap(List<Object[]> results) {

@@ -4,8 +4,10 @@ package com.hangaries.controller;
 import com.hangaries.model.Menu;
 import com.hangaries.model.MenuIngredientList;
 import com.hangaries.model.MenuIngrident;
+import com.hangaries.model.Product;
 import com.hangaries.service.menuIngridentService.Impl.MenuIngredientServiceImpl;
 import com.hangaries.service.menuService.Impl.MenuServiceImpl;
+import com.hangaries.service.product.impl.ProductServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class MenuController {
     private MenuServiceImpl menuService;
     @Autowired
     private MenuIngredientServiceImpl menuIngredientService;
+
+    @Autowired
+    private ProductServiceImpl productService;
 
     /**
      * Get all menuItems
@@ -170,8 +175,26 @@ public class MenuController {
     public ResponseEntity<List<MenuIngredientList>> getMenuIngredientList() {
         logger.info("getMenuIngredientList !!!!!!!! ");
         List<MenuIngredientList> newMenuIngredient = menuIngredientService.getMenuIngredientList();
-        logger.info("getMenuIngredientList size = {} ",newMenuIngredient.size());
+        logger.info("getMenuIngredientList size = {} ", newMenuIngredient.size());
         return new ResponseEntity<List<MenuIngredientList>>(newMenuIngredient, HttpStatus.OK);
+
+    }
+
+    @PostMapping("saveProduct")
+    @ResponseBody
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+        logger.info("Saving Product = {}. ", product);
+        Product newProduct = productService.saveProduct(product);
+        return new ResponseEntity<Product>(newProduct, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getAllProduct")
+    @ResponseBody
+    public ResponseEntity<List<Product>> getAllProduct() {
+        logger.info("Getting list of all products,menu items.");
+        List<Product> products = productService.getAllProduct();
+        return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
 
     }
 

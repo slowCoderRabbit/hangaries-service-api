@@ -2927,6 +2927,84 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "AddNewMenuItem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {           \r\n        \"restaruantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"section\": \"Chinese\",\r\n        \"dish\": \"Momo'sTest5\",\r\n        \"dishCategory\": \"Veg\",\r\n        \"dishSpiceIndicatory\": \"Medium Spicyy\",\r\n        \"dishType\": \"Hot Garlic Dim Sum (Paneer)\",\r\n        \"dishDescriptionId\": \"This is Garlic flavour hot Spicy\",\r\n        \"productSize\": \"Regular\",\r\n        \"price\": 170.0,\r\n        \"imagePath\": \"20210923052450_IMG_0387\",\r\n        \"menuAvailableFlag\": \"Y\",\r\n        \"commonImage\": \"N\"        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveMenuItem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveMenuItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"section\": \"ChineseTesttt\",\r\n    \"dish\": \"Momo's\",\r\n    \"dishCategory\": \"Veg\",\r\n    \"dishType\": \"Hot Garlic Dim Sum (Paneer)\",\r\n    \"productSize\": \"Regular\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllProduct",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllProduct"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

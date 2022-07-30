@@ -44,8 +44,7 @@ public class MenuIngredientServiceImpl implements MenuIngredientService {
 
     @Override
     public MenuIngrident saveMenuIngredient(MenuIngrident menuIngredient) {
-        menuIngridentRepository.save(menuIngredient);
-        return menuIngridentRepository.getById(menuIngredient.getId());
+        return menuIngridentRepository.save(menuIngredient);
     }
 
     public List<MenuIngredientList> getMenuIngredientList() {
