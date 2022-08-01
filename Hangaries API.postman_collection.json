@@ -3005,6 +3005,76 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "saveCouponNew",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{           \r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"couponCode\": \"20OFF\",\r\n\t\t\"discountPercentage\": 20,\r\n\t\t\"description\": \"Test coupon 2\",\r\n\t\t\"effectiveStartDate\": \"2022-05-26\", \r\n\t\t\"effectiveEndDate\": \"2022-12-26\",\r\n\t\t\"activeFlag\": \"Y\"\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveCoupon",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveCoupon"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveCouponUpdate",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \"id\": 1,\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"couponCode\": \"10.5OFF\",\r\n\t\t\"discountPercentage\": 10.5,\r\n\t\t\"description\": \"Test coupon\",\r\n\t\t\"effectiveStartDate\": \"2022-05-26\", \r\n\t\t\"effectiveEndDate\": \"2022-12-26\",\r\n\t\t\"activeFlag\": \"Y\"\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveCoupon",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveCoupon"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

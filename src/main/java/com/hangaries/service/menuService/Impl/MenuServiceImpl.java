@@ -129,15 +129,11 @@ public class MenuServiceImpl implements MenuService {
 
         } else {
             logger.info("Updating existing Menu and Product! ");
-            Product product = new Product();
-            product.setProductId(menu.getProductId());
-            product.setSection(menu.getSection());
-            product.setDish(menu.getDish());
-            product.setDishCategory(menu.getDishCategory());
-            product.setDishType(menu.getDishType());
-            product.setProductSize(menu.getProductSize());
-            Product updatedProduct = productService.updatedProduct(product);
+            Product updatedProduct = productService.updatedProduct(menu.getProductId(),menu.getSection(), menu.getDish(), menu.getDishCategory(), menu.getDishType(), menu.getProductSize());
             logger.info("Product updated successfully  = [{}]", updatedProduct);
+            logger.info("Updating menu master for Product Id = [{}]", menu.getProductId());
+            int result = menuRepository.updatedProductColumns(menu.getProductId(),menu.getSection(), menu.getDish(), menu.getDishCategory(), menu.getDishType(), menu.getProductSize());
+            logger.info("[{}] records update in menu master for product id = [{}]",result, menu.getProductId());
 
         }
 

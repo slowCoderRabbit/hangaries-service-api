@@ -2,10 +2,12 @@ package com.hangaries.repository;
 
 import com.hangaries.model.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -26,5 +28,11 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     List<Object[]> getAllSectionsWithDishes(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId);
 
     @Query(value = "select * from MENU_MASTER where id=:id", nativeQuery = true)
-    Menu getMenuItemById(@Param("id") long id );
+    Menu getMenuItemById(@Param("id") long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update MENU_MASTER set section=:section, dish=:dish, dish_category=:dishCategory, dish_type=:dishType, product_size=:productSize  where product_id=:productId", nativeQuery = true)
+    int updatedProductColumns(String productId, String section, String dish, String dishCategory, String dishType, String productSize);
+
 }

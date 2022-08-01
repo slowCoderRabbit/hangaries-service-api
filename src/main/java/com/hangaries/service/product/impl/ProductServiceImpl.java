@@ -32,8 +32,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updatedProduct(Product product) {
-        return productRepository.save(product);
+    public Product updatedProduct(String productId, String section, String dish, String dishCategory, String dishType, String productSize) {
+        int result = productRepository.updatedProduct(productId, section, dish, dishCategory, dishType, productSize);
+        logger.info("Result of update product = {}. ", result);
+        return productRepository.findByProductId(productId);
     }
 
     @Override
