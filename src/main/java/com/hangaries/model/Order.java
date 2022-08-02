@@ -61,6 +61,10 @@ public class Order implements Serializable {
     private Float sgstCalculatedValue;
     @Column(name = "delivery_charges")
     private Float deliveryCharges;
+    @Column(name = "coupon_code")
+    private String couponCode;
+    @Column(name = "discount_percentage")
+    private Float discountPercentage;
     @Column(name = "overall_price_with_tax")
     private Float overallPriceWithTax;
     @Column(name = "customer_address_id")

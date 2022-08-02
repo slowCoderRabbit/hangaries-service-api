@@ -411,6 +411,8 @@ public class OrderServiceImpl implements OrderService {
         vo.setAddress(result.getAddress());
         vo.setDeliveryUserId(result.getDeliveryUserId());
         vo.setFoodPackagedFlag(result.getFoodPackagedFlag());
+        vo.setCouponCode(result.getCouponCode());
+        vo.setDiscountPercentage(result.getDiscountPercentage());
         return vo;
 
 

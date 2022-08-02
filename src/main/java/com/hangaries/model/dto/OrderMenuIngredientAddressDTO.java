@@ -141,5 +141,11 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
     @Column(name = "kds_routing_name")
     private String kdsRoutingName;
 
+    @Column(name = "coupon_code")
+    private String couponCode;
+
+    @Column(name = "discount_percentage")
+    private Float discountPercentage;
+
 
 }

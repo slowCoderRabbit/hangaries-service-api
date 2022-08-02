@@ -1,6 +1,7 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.Coupon;
+import com.hangaries.model.CouponResponse;
 import com.hangaries.service.coupon.impl.CouponServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,4 +28,14 @@ public class CouponController {
         return new ResponseEntity<Coupon>(newCoupon, HttpStatus.OK);
 
     }
+
+    @PostMapping("validateCoupon")
+    @ResponseBody
+    public ResponseEntity<CouponResponse> validateCoupon(@RequestParam String couponCode) {
+        logger.info("Validating coupon code = {}. ", couponCode);
+        CouponResponse couponResponse = couponService.validateCoupon(couponCode);
+        return new ResponseEntity<CouponResponse>(couponResponse, HttpStatus.OK);
+
+    }
+
 }

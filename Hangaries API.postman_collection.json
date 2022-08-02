@@ -3075,6 +3075,41 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "validateCoupon",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/validateCoupon?couponCode=20OFF1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"validateCoupon"
+					],
+					"query": [
+						{
+							"key": "couponCode",
+							"value": "20OFF1"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
