@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.hangaries.constants.HangariesConstants.Y;
 
 @Service
@@ -39,5 +41,10 @@ public class CouponServiceImpl implements CouponService {
         }
         logger.info("Coupon validation result = [{}]", response);
         return response;
+    }
+
+    @Override
+    public List<Coupon> getCouponsByRestroAndStore(String restaurantId, String storeId) {
+        return couponRepository.getCouponsByRestroAndStore(restaurantId, storeId);
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
@@ -35,6 +37,16 @@ public class CouponController {
         logger.info("Validating coupon code = {}. ", couponCode);
         CouponResponse couponResponse = couponService.validateCoupon(couponCode);
         return new ResponseEntity<CouponResponse>(couponResponse, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getCouponsByRestroAndStore")
+    @ResponseBody
+    public ResponseEntity<List<Coupon>> getCouponsByRestroAndStore(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) {
+        logger.info("Getting coupons for restaurantId = {} and storeId = {}. ", restaurantId, storeId);
+        List<Coupon> couponList = couponService.getCouponsByRestroAndStore(restaurantId, storeId);
+        logger.info("{} coupons found for restaurantId = {} and storeId = {}.", couponList.size(), restaurantId, storeId);
+        return new ResponseEntity<List<Coupon>>(couponList, HttpStatus.OK);
 
     }
 

@@ -41,4 +41,5 @@ public class MenuIngrident {
     @Column(name = "size")
     private String size;
 
+
 }

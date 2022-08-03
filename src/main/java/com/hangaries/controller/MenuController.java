@@ -1,10 +1,7 @@
 package com.hangaries.controller;
 
 
-import com.hangaries.model.Menu;
-import com.hangaries.model.MenuIngredientList;
-import com.hangaries.model.MenuIngrident;
-import com.hangaries.model.Product;
+import com.hangaries.model.*;
 import com.hangaries.service.menuIngridentService.Impl.MenuIngredientServiceImpl;
 import com.hangaries.service.menuService.Impl.MenuServiceImpl;
 import com.hangaries.service.product.impl.ProductServiceImpl;
@@ -195,6 +192,15 @@ public class MenuController {
         logger.info("Getting list of all products,menu items.");
         List<Product> products = productService.getAllProduct();
         return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+
+    }
+
+    @PostMapping("saveSubProduct")
+    @ResponseBody
+    public ResponseEntity<SubProduct> saveSubProduct(@RequestBody SubProduct subProduct) {
+        logger.info("Saving Sub Product = {}. ", subProduct);
+        SubProduct newSubProduct = productService.saveSubProduct(subProduct);
+        return new ResponseEntity<SubProduct>(newSubProduct, HttpStatus.OK);
 
     }
 
