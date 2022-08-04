@@ -5,6 +5,7 @@ import com.hangaries.model.dto.OrderMenuIngredientAddressDTO;
 import com.hangaries.model.vo.OrderDetailsVO;
 import com.hangaries.model.vo.OrderVO;
 import com.hangaries.repository.*;
+import com.hangaries.service.config.impl.ConfigServiceImpl;
 import com.hangaries.service.order.OrderService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -51,10 +52,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderMenuIngredientAddressRepository orderMenuIngredientAddressRepository;
-
+    @Autowired
+    ConfigServiceImpl configService;
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
 
     @Override
     public String getNewOrderId(OrderIdInput orderIdInput) {
@@ -137,6 +138,12 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrderDetailStatus(order.getOrderStatus());
 
         }
+        BusinessDate businessDate = configService.getBusinessDate(order.getRestaurantId(), order.getStoreId());
+        if (null != businessDate) {
+            order.setOrderReceivedDateTime(businessDate.getBusinessDate());
+            logger.info("Setting order setOrderReceivedDateTime = [{}].", order.getOrderReceivedDateTime());
+        }
+
         Order savedOrder = orderRepository.save(order);
         logger.info("Order saved for new orderID = {}. Updating OrderProcessingDetails....!!!", newOrderId);
         OrderProcessingDetails detailsOP = getNewOrderProcessingDetails(order);
@@ -413,6 +420,7 @@ public class OrderServiceImpl implements OrderService {
         vo.setFoodPackagedFlag(result.getFoodPackagedFlag());
         vo.setCouponCode(result.getCouponCode());
         vo.setDiscountPercentage(result.getDiscountPercentage());
+        vo.setOrderReceivedDateTime(result.getOrderReceivedDateTime());
         return vo;
 
 

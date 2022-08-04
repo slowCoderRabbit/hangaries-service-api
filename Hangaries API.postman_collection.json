@@ -3185,6 +3185,155 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getBusinessDateByRestroAndStore",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getBusinessDateByRestroAndStore?restaurantId=R001&storeId=S001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getBusinessDateByRestroAndStore"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveBusinessDate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"id\": 745,\r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"S002\",\r\n    \"previousBusinessDate\": \"2022-07-07T16:00:00.000+00:00\",\r\n    \"businessDate\": \"2022-08-08T16:00:00.000+00:00\",\r\n    \"nextBusinessDate\": \"2022-10-08T16:00:00.000+00:00\",\r\n    \"createdBy\": \"Aniket\",\r\n    \"createdDate\": \"2022-08-07T16:00:00.000+00:00\",\r\n    \"updatedBy\": \"Aniket\",\r\n    \"updatedDate\": \"2022-08-07T16:00:00.000+00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveBusinessDate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveBusinessDate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "performEndOfDay",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/performEndOfDay?restaurantId=R001&storeId=S002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"performEndOfDay"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateBusinessDate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"S002\",\r\n    \"businessDate\" : \"2022-07-27\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updateBusinessDate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateBusinessDate"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

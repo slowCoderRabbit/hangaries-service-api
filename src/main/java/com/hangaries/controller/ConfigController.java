@@ -1,6 +1,8 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.AppDetails;
+import com.hangaries.model.BusinessDate;
+import com.hangaries.model.BusinessDateRequest;
 import com.hangaries.model.ConfigMaster;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,5 +70,47 @@ public class ConfigController {
             return new ResponseEntity<List<AppDetails>>(appDetails, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//    @PostMapping("saveBusinessDate")
+//    public ResponseEntity<BusinessDate> updateBusinessDate(@RequestBody BusinessDate businessDate) {
+//        logger.info("Saving business date = {} for restaurantId = {} and storeId = {}.", businessDate.getBusinessDate(), businessDate.getRestaurantId(), businessDate.getStoreId());
+//
+//        BusinessDate businessDateNew = configService.updateBusinessDate(businessDate);
+//        return new ResponseEntity<BusinessDate>(businessDateNew, HttpStatus.OK);
+//
+//    }
+
+    @PostMapping("updateBusinessDate")
+    public ResponseEntity<BusinessDate> updateBusinessDate(@Valid @RequestBody BusinessDateRequest request) throws ParseException {
+        logger.info("Updating business date = [{}] for restaurantId = [{}] and storeId = [{}].", request.getBusinessDate(), request.getRestaurantId(), request.getStoreId());
+        BusinessDate businessDate = configService.updateBusinessDate(request);
+        logger.info("Business date update to = [{}] for restaurantId = [{}] and storeId = [{}].", businessDate.getBusinessDate(), businessDate.getRestaurantId(), businessDate.getStoreId());
+        return new ResponseEntity<BusinessDate>(businessDate, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getBusinessDateByRestroAndStore")
+    public ResponseEntity<BusinessDate> getBusinessDateByRestroAndStore(@RequestParam("restaurantId") String restaurantId,
+                                                                        @RequestParam("storeId") String storeId) {
+        logger.info("Getting business date for restaurantId = [{}] and storeId = [{}].", restaurantId, storeId);
+
+        BusinessDate businessDate = configService.getBusinessDate(restaurantId, storeId);
+        logger.info("Business date = [{}] for restaurantId = [{}] and storeId = [{}].", businessDate.getBusinessDate(), businessDate.getRestaurantId(), businessDate.getStoreId());
+        return new ResponseEntity<BusinessDate>(businessDate, HttpStatus.OK);
+
+    }
+
+    @PostMapping("performEndOfDay")
+    public ResponseEntity<BusinessDate> performEndOfDay(@RequestParam("restaurantId") String restaurantId,
+                                                        @RequestParam("storeId") String storeId) {
+        logger.info("Performing EOD for restaurantId = [{}] and storeId = [{}].", restaurantId, storeId);
+
+        BusinessDate businessDateNew = configService.performEndOfDay(restaurantId, storeId);
+
+        logger.info("Business date update to = [{}] for restaurantId = [{}] and storeId = [{}].", businessDateNew.getBusinessDate(), businessDateNew.getRestaurantId(), businessDateNew.getStoreId());
+        return new ResponseEntity<BusinessDate>(businessDateNew, HttpStatus.OK);
+
+    }
+
 
 }

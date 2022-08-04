@@ -11,4 +11,6 @@ public interface ConfigService {
     ConfigMaster addConfigDetailsByCriteria(ConfigMaster configMaster);
 
     List<AppDetails> getAppDetails();
+
+
 }
