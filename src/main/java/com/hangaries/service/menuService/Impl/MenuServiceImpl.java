@@ -1,7 +1,9 @@
 package com.hangaries.service.menuService.Impl;
 
+import com.hangaries.model.DishToppingMapping;
 import com.hangaries.model.Menu;
 import com.hangaries.model.Product;
+import com.hangaries.repository.DishToppingRepository;
 import com.hangaries.repository.MenuRepository;
 import com.hangaries.service.menuService.MenuService;
 import com.hangaries.service.product.impl.ProductServiceImpl;
@@ -16,6 +18,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.hangaries.constants.HangariesConstants.DELETED;
+
 @Service
 public class MenuServiceImpl implements MenuService {
     private static final Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
@@ -25,6 +29,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private ProductServiceImpl productService;
+
+    @Autowired
+    private DishToppingRepository dishToppingRepository;
 
     /**
      * Get all menuItems
@@ -79,7 +86,7 @@ public class MenuServiceImpl implements MenuService {
     /**
      * Get dishses by section
      *
-     * @param s
+     * @param
      * @param restaurantId
      * @param section
      * @return
@@ -129,11 +136,11 @@ public class MenuServiceImpl implements MenuService {
 
         } else {
             logger.info("Updating existing Menu and Product! ");
-            Product updatedProduct = productService.updatedProduct(menu.getProductId(),menu.getSection(), menu.getDish(), menu.getDishCategory(), menu.getDishType(), menu.getProductSize());
+            Product updatedProduct = productService.updatedProduct(menu.getProductId(), menu.getSection(), menu.getDish(), menu.getDishCategory(), menu.getDishType(), menu.getProductSize());
             logger.info("Product updated successfully  = [{}]", updatedProduct);
             logger.info("Updating menu master for Product Id = [{}]", menu.getProductId());
-            int result = menuRepository.updatedProductColumns(menu.getProductId(),menu.getSection(), menu.getDish(), menu.getDishCategory(), menu.getDishType(), menu.getProductSize());
-            logger.info("[{}] records update in menu master for product id = [{}]",result, menu.getProductId());
+            int result = menuRepository.updatedProductColumns(menu.getProductId(), menu.getSection(), menu.getDish(), menu.getDishCategory(), menu.getDishType(), menu.getProductSize());
+            logger.info("[{}] records update in menu master for product id = [{}]", result, menu.getProductId());
 
         }
 
@@ -159,4 +166,22 @@ public class MenuServiceImpl implements MenuService {
     }
 
 
+    public DishToppingMapping mapDishToTopping(DishToppingMapping dishToppingMapping) {
+        return dishToppingRepository.save(dishToppingMapping);
+
+    }
+
+    public String deleteDishToTopping(DishToppingMapping dishToppingMapping) {
+        dishToppingRepository.deleteById(dishToppingMapping.getId());
+        return DELETED;
+    }
+
+    public List<DishToppingMapping> getDishToppingsByRestoAndStore(String restaurantId, String storeId) {
+        return dishToppingRepository.getDishToppingsByRestoAndStore(restaurantId, storeId);
+    }
+
+    public List<DishToppingMapping> getAllDishToppingMapping() {
+
+        return dishToppingRepository.findAll();
+    }
 }

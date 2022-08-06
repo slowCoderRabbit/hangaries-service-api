@@ -95,4 +95,8 @@ public class ConfigServiceImpl implements ConfigService {
 
 
     }
+
+    public List<BusinessDate> getAllBusinessDates() {
+        return businessDateRepository.findAll();
+    }
 }

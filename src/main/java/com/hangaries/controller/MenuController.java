@@ -204,5 +204,45 @@ public class MenuController {
 
     }
 
+    @PostMapping("saveDishToToppingMapping")
+    @ResponseBody
+    public ResponseEntity<DishToppingMapping> saveDishToTopping(@RequestBody DishToppingMapping dishToppingMapping) {
+        logger.info("Saving mapping for dish and topping [{}].", dishToppingMapping);
+        DishToppingMapping result = menuService.mapDishToTopping(dishToppingMapping);
+        return new ResponseEntity<DishToppingMapping>(result, HttpStatus.OK);
+
+    }
+
+    @DeleteMapping("deleteDishToToppingMapping")
+    @ResponseBody
+    public ResponseEntity<String> deleteDishToTopping(@RequestBody DishToppingMapping dishToppingMapping) {
+        logger.info("Deleting mapping for dish and topping [{}].", dishToppingMapping);
+        String result = menuService.deleteDishToTopping(dishToppingMapping);
+        return new ResponseEntity<String>(result, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getDishToppingMappingByRestoAndStore")
+    @ResponseBody
+    public ResponseEntity<List<DishToppingMapping>> getDishToppingMappingByRestoAndStore(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) {
+
+        logger.info("Getting mapping for dish and topping for restaurantId = {}, storeId = {}.", restaurantId, storeId);
+        List<DishToppingMapping> result = menuService.getDishToppingsByRestoAndStore(restaurantId, storeId);
+
+        logger.info("[{}] mappings found for dish and topping for restaurantId = {}, storeId = {}.", result.size(), restaurantId, storeId);
+        return new ResponseEntity<List<DishToppingMapping>>(result, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getAllDishToppingMapping")
+    @ResponseBody
+    public ResponseEntity<List<DishToppingMapping>> getAllDishToppingMapping() {
+        logger.info("Get all mapping for dish and toppings!!!!!");
+        List<DishToppingMapping> result = menuService.getAllDishToppingMapping();
+        logger.info("Total [{}] mappings found for dish and toppings!!!!!", result.size());
+        return new ResponseEntity<List<DishToppingMapping>>(result, HttpStatus.OK);
+
+    }
+
 
 }

@@ -100,6 +100,16 @@ public class ConfigController {
 
     }
 
+    @GetMapping("getAllBusinessDates")
+    public ResponseEntity<List<BusinessDate>> getAllBusinessDates() {
+        logger.info("Getting all Business Dates...!");
+
+        List<BusinessDate> businessDates = configService.getAllBusinessDates();
+        logger.info("Returning [{}] records for business dates.", businessDates.size());
+        return new ResponseEntity<List<BusinessDate>>(businessDates, HttpStatus.OK);
+
+    }
+
     @PostMapping("performEndOfDay")
     public ResponseEntity<BusinessDate> performEndOfDay(@RequestParam("restaurantId") String restaurantId,
                                                         @RequestParam("storeId") String storeId) {
