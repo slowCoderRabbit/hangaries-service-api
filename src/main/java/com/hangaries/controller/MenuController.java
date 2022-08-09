@@ -244,5 +244,43 @@ public class MenuController {
 
     }
 
+    @GetMapping("getAllSectionsFromMaster")
+    @ResponseBody
+    public ResponseEntity<List<Section>> getAllSectionsFromMaster() {
+        logger.info("Getting all sections for the menu!!!!!");
+        List<Section> result = menuService.getAllSectionsFromMaster();
+        logger.info("Total [{}] sections found !!!!!", result.size());
+        return new ResponseEntity<List<Section>>(result, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getAllDishesFromMaster")
+    @ResponseBody
+    public ResponseEntity<List<Dish>> getAllDishesFromMaster() {
+        logger.info("Getting all dishes for the menu!!!!!");
+        List<Dish> result = menuService.getAllDishesFromMaster();
+        logger.info("Total [{}] dishes found !!!!!", result.size());
+        return new ResponseEntity<List<Dish>>(result, HttpStatus.OK);
+
+    }
+
+    @PostMapping("saveSection")
+    @ResponseBody
+    public ResponseEntity<Section> saveSection(@RequestBody Section section) {
+        logger.info("Saving Section [{}].", section);
+        Section result = menuService.saveSection(section);
+        return new ResponseEntity<Section>(result, HttpStatus.OK);
+
+    }
+
+    @PostMapping("saveDish")
+    @ResponseBody
+    public ResponseEntity<Dish> saveDish(@RequestBody Dish dish) {
+        logger.info("Saving Dish [{}].", dish);
+        Dish result = menuService.saveDish(dish);
+        return new ResponseEntity<Dish>(result, HttpStatus.OK);
+
+    }
+
 
 }

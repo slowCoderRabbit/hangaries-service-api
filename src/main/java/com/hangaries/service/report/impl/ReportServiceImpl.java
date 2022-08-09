@@ -34,6 +34,9 @@ public class ReportServiceImpl implements ReportService {
     @Autowired
     RDCSummaryRepository rdcSummaryRepository;
 
+    @Autowired
+    RCSRepository rcsRepository;
+
     @Override
     public ReportResult getReports(Report report) throws ParseException {
 
@@ -58,6 +61,9 @@ public class ReportServiceImpl implements ReportService {
 
             List<ReportDishConsumptionSummary> rDCSummary = rdcSummaryRepository.getReport();
             reportResult.setReportDishConsumptionSummary(rDCSummary);
+
+            List<ReportCashierSummery> rcs = rcsRepository.getReport();
+            reportResult.setReportCashierSummery(rcs);
 
 
         } catch (Exception e) {

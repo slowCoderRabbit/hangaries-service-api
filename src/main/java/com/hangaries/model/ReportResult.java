@@ -16,6 +16,7 @@ public class ReportResult {
     List<RSSOrderSource> salesSummeryByOrderSource;
     List<RSSPaymentMode> salesSummeryByPaymentMode;
     List<ReportDishConsumptionSummary> reportDishConsumptionSummary;
+    List<ReportCashierSummery> reportCashierSummery;
 
 
 }

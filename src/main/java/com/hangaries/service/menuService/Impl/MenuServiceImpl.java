@@ -1,10 +1,10 @@
 package com.hangaries.service.menuService.Impl;
 
-import com.hangaries.model.DishToppingMapping;
-import com.hangaries.model.Menu;
-import com.hangaries.model.Product;
+import com.hangaries.model.*;
+import com.hangaries.repository.DishRepository;
 import com.hangaries.repository.DishToppingRepository;
 import com.hangaries.repository.MenuRepository;
+import com.hangaries.repository.SectionRepository;
 import com.hangaries.service.menuService.MenuService;
 import com.hangaries.service.product.impl.ProductServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +32,12 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private DishToppingRepository dishToppingRepository;
+
+    @Autowired
+    private SectionRepository sectionRepository;
+
+    @Autowired
+    private DishRepository dishRepository;
 
     /**
      * Get all menuItems
@@ -183,5 +189,24 @@ public class MenuServiceImpl implements MenuService {
     public List<DishToppingMapping> getAllDishToppingMapping() {
 
         return dishToppingRepository.findAll();
+    }
+
+    public List<Section> getAllSectionsFromMaster() {
+
+        return sectionRepository.findAll();
+
+    }
+
+    public List<Dish> getAllDishesFromMaster() {
+
+        return dishRepository.findAll();
+    }
+
+    public Section saveSection(Section section) {
+        return sectionRepository.save(section);
+    }
+
+    public Dish saveDish(Dish dish) {
+        return dishRepository.save(dish);
     }
 }
