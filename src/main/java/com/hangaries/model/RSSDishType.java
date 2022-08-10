@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor
@@ -26,17 +28,8 @@ public class RSSDishType {
     @Column(name = "product_id")
     private String productId;
 
-    @Column(name = "order_date")
-    private Date orderDate;
-
     @Column(name = "restaurant_name")
     private String restaurantName;
-
-    @Column(name = "month")
-    private String month;
-
-    @Column(name = "year")
-    private Integer year;
 
     @Column(name = "dish_type")
     private String dishType;
@@ -49,9 +42,6 @@ public class RSSDishType {
 
     @Column(name = "order_value")
     private Float orderValue;
-
-    @Transient
-    private String reportName = "SalesSummeryByDishType";
 
 
 }

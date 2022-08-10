@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -39,14 +38,10 @@ public class ReportDishConsumptionSummary implements Serializable {
     @Column(name = "size")
     private String size;
 
-    @Column(name = "order_date")
-    private Date orderDate;
-
     @Column(name = "total_qty")
     private Integer totalQty;
 
     @Column(name = "total_price")
     private Float totalPrice;
-
 
 }

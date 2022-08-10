@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Data
@@ -28,21 +31,11 @@ public class RSSDate {
     @Column(name = "restaurant_name")
     private String restaurantName;
 
-    @Column(name = "month")
-    private String month;
-
-    @Column(name = "year")
-    private Integer year;
-
     @Column(name = "no_of_orders")
     private Integer noOfOrders;
 
     @Id
     @Column(name = "order_value")
     private Float orderValue;
-
-    @Transient
-    private String reportName = "SalesSummeryByDate";
-
 
 }

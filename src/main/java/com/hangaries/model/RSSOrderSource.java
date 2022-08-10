@@ -5,8 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor
@@ -22,17 +24,8 @@ public class RSSOrderSource {
     @Column(name = "store_id")
     private String storeId;
 
-    @Column(name = "order_date")
-    private Date orderDate;
-
     @Column(name = "restaurant_name")
     private String restaurantName;
-
-    @Column(name = "month")
-    private String month;
-
-    @Column(name = "year")
-    private Integer year;
 
     @Column(name = "no_of_orders")
     private Integer noOfOrders;
@@ -43,9 +36,5 @@ public class RSSOrderSource {
     @Id
     @Column(name = "order_value")
     private Float orderValue;
-
-    @Transient
-    private String reportName = "SalesSummeryByOrderSource";
-
 
 }
