@@ -121,6 +121,21 @@ public class OrderController {
         }
     }
 
+    @PostMapping("updatePaymentModeByOrderId")
+    public ResponseEntity<List<Order>> updatePaymentModeByOrderId(@RequestParam("orderId") String orderId, @RequestParam("paymentMode") String paymentMode,
+                                                                  @RequestParam("paymentStatus") String paymentStatus, @RequestParam("orderStatus") String orderStatus) {
+        logger.info("Updating order Id = {} with payment mode = {}, payment status = {} and order status = {}. ", orderId, paymentMode, paymentStatus, orderStatus);
+
+        List<Order> orderList = new ArrayList<>();
+        try {
+            orderList = orderService.updatePaymentModeByOrderId(orderId, paymentMode, paymentStatus, orderStatus);
+            return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
+            return new ResponseEntity<List<Order>>(orderList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("saveNewOrder")
     public ResponseEntity<List<OrderVO>> saveNewOrder(@Valid @RequestBody Order orderRequest) {
         logger.info("New Order received ", orderRequest);

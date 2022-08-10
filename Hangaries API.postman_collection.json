@@ -1109,7 +1109,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"restaurantId\": \"AL\",\r\n        \"storeId\": \"AL\",\r\n        \"fromDate\":\"2021-05-01\",\r\n        \"toDate\": \"2022-12-06\"\r\n}",
+					"raw": "{\r\n        \"restaurantId\": \"ALL\",\r\n        \"storeId\": \"ALL\",\r\n        \"fromDate\":\"2021-05-01\",\r\n        \"toDate\": \"2022-12-06\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3694,6 +3694,59 @@
 					"path": [
 						"api",
 						"saveDish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePaymentModeByOrderId",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"M\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"paymentMode\": \"COD\",\r\n        \"paymentStatus\": \"Done\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"deliveryCharges\":20.45,\r\n        \"customerAddressId\":289,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updatePaymentModeByOrderId?orderId=SDR001S00120220810000761&paymentMode=PayTm&paymentStatus=paid&orderStatus=Delivered",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updatePaymentModeByOrderId"
+					],
+					"query": [
+						{
+							"key": "orderId",
+							"value": "SDR001S00120220810000761"
+						},
+						{
+							"key": "paymentMode",
+							"value": "PayTm"
+						},
+						{
+							"key": "paymentStatus",
+							"value": "paid"
+						},
+						{
+							"key": "orderStatus",
+							"value": "Delivered"
+						}
 					]
 				}
 			},

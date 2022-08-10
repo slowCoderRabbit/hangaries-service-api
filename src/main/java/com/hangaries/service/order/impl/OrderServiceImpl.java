@@ -105,6 +105,16 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.updateOrderStatus(orderId, status);
         }
 
+        return updateOrderProcessing(orderId);
+    }
+
+    public List<Order> updatePaymentModeByOrderId(String orderId, String paymentMode, String paymentStatus, String orderStatus) {
+
+        orderRepository.updatePaymentModeByOrderId(orderId, paymentMode, paymentStatus, orderStatus);
+        return updateOrderProcessing(orderId);
+    }
+
+    private List<Order> updateOrderProcessing(String orderId) {
         List<Order> savedOrders = orderRepository.findByOrderId(orderId);
         logger.info("Order status updated for orderID = {}. Updating OrderProcessingDetails....!!!", orderId);
         for (Order order : savedOrders) {
