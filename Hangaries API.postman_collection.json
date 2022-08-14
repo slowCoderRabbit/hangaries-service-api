@@ -3751,6 +3751,42 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getPaymentModes",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getPaymentModes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getPaymentModes"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

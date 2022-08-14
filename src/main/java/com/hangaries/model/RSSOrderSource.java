@@ -33,6 +33,9 @@ public class RSSOrderSource {
     @Column(name = "order_source")
     private String orderSource;
 
+    @Column(name = "order_source_description")
+    private String orderSourceDescription;
+
     @Id
     @Column(name = "order_value")
     private Float orderValue;

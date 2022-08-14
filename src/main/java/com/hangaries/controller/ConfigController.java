@@ -1,9 +1,6 @@
 package com.hangaries.controller;
 
-import com.hangaries.model.AppDetails;
-import com.hangaries.model.BusinessDate;
-import com.hangaries.model.BusinessDateRequest;
-import com.hangaries.model.ConfigMaster;
+import com.hangaries.model.*;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,6 +116,16 @@ public class ConfigController {
 
         logger.info("Business date update to = [{}] for restaurantId = [{}] and storeId = [{}].", businessDateNew.getBusinessDate(), businessDateNew.getRestaurantId(), businessDateNew.getStoreId());
         return new ResponseEntity<BusinessDate>(businessDateNew, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getPaymentModes")
+    public ResponseEntity<List<PaymentMode>> getPaymentModes() {
+        logger.info("Getting list of payment modes.");
+        List<PaymentMode> paymentModeList = new ArrayList<>();
+        paymentModeList = configService.getPaymentModes();
+        logger.info("Payment modes list size = [{}].", paymentModeList.size());
+        return new ResponseEntity<List<PaymentMode>>(paymentModeList, HttpStatus.OK);
 
     }
 

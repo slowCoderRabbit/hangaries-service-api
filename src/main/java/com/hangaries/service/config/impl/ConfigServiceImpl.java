@@ -1,9 +1,6 @@
 package com.hangaries.service.config.impl;
 
-import com.hangaries.model.AppDetails;
-import com.hangaries.model.BusinessDate;
-import com.hangaries.model.BusinessDateRequest;
-import com.hangaries.model.ConfigMaster;
+import com.hangaries.model.*;
 import com.hangaries.repository.ApplicationRepository;
 import com.hangaries.repository.BusinessDateRepository;
 import com.hangaries.repository.ConfigMasterRepository;
@@ -13,10 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import static com.hangaries.constants.HangariesConstants.SYSTEM;
 
@@ -98,5 +92,18 @@ public class ConfigServiceImpl implements ConfigService {
 
     public List<BusinessDate> getAllBusinessDates() {
         return businessDateRepository.findAll();
+    }
+
+    public List<PaymentMode> getPaymentModes() {
+
+        List<Object[]> results = configMasterRepository.getPaymentModes();
+        List<PaymentMode> paymentModes = new ArrayList<>();
+        for (Object[] result : results) {
+            String value = result[0].toString();
+            String description = result[1].toString();
+            paymentModes.add(new PaymentMode(value, description));
+
+        }
+        return paymentModes;
     }
 }

@@ -33,6 +33,9 @@ public class RSSPaymentMode {
     @Column(name = "payment_mode")
     private String paymentMode;
 
+    @Column(name = "payment_mode_description")
+    private String paymentModeDescription;
+
     @Id
     @Column(name = "order_value")
     private Float orderValue;
