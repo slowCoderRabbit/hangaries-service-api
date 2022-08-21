@@ -210,6 +210,7 @@ public class OrderServiceImpl implements OrderService {
         logger.info("queryOrderViewByParams :: Result consolidated in to = [{}].", orderMap.size());
         List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
         logger.info("queryOrderViewByParams :: Final order list created of size = [{}].", orderList.size());
+        Collections.sort(orderList, Comparator.comparing(OrderVO::getCreatedDate));
         return orderList;
     }
 
