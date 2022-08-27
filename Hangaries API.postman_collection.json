@@ -3753,6 +3753,42 @@
 			"response": []
 		},
 		{
+			"name": "uploadFile",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": "/C:/Users/anike/Pictures/testImage.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/uploadFile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"uploadFile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "getPaymentModes",
 			"protocolProfileBehavior": {
 				"strictSSL": true,
