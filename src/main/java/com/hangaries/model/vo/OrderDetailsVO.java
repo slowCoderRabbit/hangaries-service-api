@@ -19,4 +19,5 @@ public class OrderDetailsVO {
     private String remarks;
     private String orderDetailStatus;
     private String kdsRoutingName;
+    private String orderDetailFoodPackagedFlag;
 }

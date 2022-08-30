@@ -147,5 +147,8 @@ public class OrderMenuIngredientAddressDTO implements Serializable {
     @Column(name = "discount_percentage")
     private Float discountPercentage;
 
+    @Column(name = "order_detail_food_packaged_flag")
+    private String orderDetailFoodPackagedFlag;
+
 
 }

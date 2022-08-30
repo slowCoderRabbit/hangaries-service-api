@@ -394,6 +394,7 @@ public class OrderServiceImpl implements OrderService {
         orderDetailsVO.setRemarks(result.getRemarks());
         orderDetailsVO.setOrderDetailStatus(result.getOrderDetailStatus());
         orderDetailsVO.setKdsRoutingName(result.getKdsRoutingName());
+        orderDetailsVO.setOrderDetailFoodPackagedFlag(result.getOrderDetailFoodPackagedFlag());
         return orderDetailsVO;
     }
 
