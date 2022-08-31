@@ -443,4 +443,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    public List<Order> updateFoodPackagedFlagForOrderItem(String orderId, String productId, String subProductId, String foodPackagedFlag) {
+        orderDetailRepository.updateFoodPackagedFlagForOrderItem(orderId, productId, subProductId, foodPackagedFlag);
+        return orderRepository.findByOrderId(orderId);
+    }
 }

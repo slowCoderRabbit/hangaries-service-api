@@ -24,6 +24,13 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
     @Query(value = "update ORDER_DETAILS om set om.order_detail_status = :status where om.order_id = :orderId and om.product_id = :productId and om.sub_product_Id = :subProductId ", nativeQuery = true)
     int updateOrderDetailsStatusBySubProductId(@Param("orderId") String orderId, @Param("productId") String productId,
                                                @Param("subProductId") String subProductId, @Param("status") String status);
+
     @Query(value = "select * from ORDER_DETAILS om where om.order_id = :orderId and om.product_id = :productId and om.sub_product_Id = :subProductId", nativeQuery = true)
     OrderDetail getOrderDetailsStatusBySubProductId(@Param("orderId") String orderId, @Param("productId") String productId, @Param("subProductId") String subProductId);
+
+    @Modifying
+    @Query(value = "update ORDER_DETAILS om set om.food_packaged_flag = :foodPackagedFlag where om.product_id = :productId \n" +
+            "and sub_product_Id = :subProductId and  om.order_id = :orderId", nativeQuery = true)
+    int updateFoodPackagedFlagForOrderItem(@Param("orderId") String orderId, @Param("productId") String productId,
+                                           @Param("subProductId") String subProductId, @Param("foodPackagedFlag") String foodPackagedFlag);
 }

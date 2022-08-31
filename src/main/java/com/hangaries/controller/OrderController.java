@@ -263,6 +263,17 @@ public class OrderController {
 
     }
 
+    @PostMapping("updateFoodPackagedFlagForOrderItem")
+    public ResponseEntity<List<Order>> updateFoodPackagedFlagForOrderItem(@RequestParam("orderId") String orderId, @RequestParam("productId") String productId,
+                                                                          @RequestParam("subProductId") String subProductId, @RequestParam("foodPackagedFlag") String foodPackagedFlag) {
+        logger.info("Updating Order Item with order Id = {}, productId = {}, subProductId = {} and food packaged flag = {}. ", orderId, productId, subProductId, foodPackagedFlag);
+
+        List<Order> orderList = new ArrayList<>();
+        orderList = orderService.updateFoodPackagedFlagForOrderItem(orderId, productId, subProductId, foodPackagedFlag);
+        return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
+
+    }
+
 //    @GetMapping("queryOrderViewByRequestParam")
 //    public ResponseEntity<List<OrderVO>> queryOrderViewByRequestParam(@RequestParam("orderStatus") String orderStatus) {
 //        logger.info("queryOrderViewByRequestParam 1 :: Get Order Details by = [{}]", orderStatus);
