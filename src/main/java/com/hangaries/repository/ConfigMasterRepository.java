@@ -16,7 +16,7 @@ public interface ConfigMasterRepository extends JpaRepository<ConfigMaster, Long
 
 
     @Query(value = "SELECT config_criteria_value, config_criteria_description\n" +
-            "  FROM hangaries.CONFIG_MASTER \n" +
+            "  FROM CONFIG_MASTER \n" +
             " WHERE config_criteria = 'PAYMENT_MODE'\n" +
             "   AND restaurant_id = 'R001'\n" +
             "   AND store_id = 'ALL'\n" +

@@ -18,7 +18,7 @@ public interface CustomerDtlsRepository extends JpaRepository<CustomerDtls, Long
     @Query(value = "select * from CUSTOMER_ADDRESS_DETAILS where mobile_number=:mobnumber and customer_address_type=:type and active=:status", nativeQuery = true)
     CustomerDtls getCustometDtlsById(@Param("mobnumber") String mobnumber, @Param("type") String type, @Param("status") String status) throws Exception;
 
-    @Query(value = "select * from hangaries.CUSTOMER_ADDRESS_DETAILS where mobile_number=:mobnumber and active=:status", nativeQuery = true)
+    @Query(value = "select * from CUSTOMER_ADDRESS_DETAILS where mobile_number=:mobnumber and active=:status", nativeQuery = true)
     List<CustomerDtls> getCustomerAddressDtlsByMobNum(@Param("mobnumber") String mobnumber, @Param("status") String status) throws Exception;
 
     @Modifying
