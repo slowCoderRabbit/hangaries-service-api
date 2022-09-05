@@ -96,13 +96,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> updateOrderStatus(String orderId, String status) {
+    public List<Order> updateOrderStatus(String orderId, String status, String updatedBy) {
 
         String paymentStatus = autoUpdatePaymentStatus(status);
         if (!StringUtils.isBlank(paymentStatus)) {
-            orderRepository.updateOrderAndPaymentStatus(orderId, status, paymentStatus);
+            orderRepository.updateOrderAndPaymentStatus(orderId, status, paymentStatus, updatedBy, new Date());
         } else {
-            orderRepository.updateOrderStatus(orderId, status);
+            orderRepository.updateOrderStatus(orderId, status, updatedBy, new Date());
         }
 
         return updateOrderProcessing(orderId);
@@ -159,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
         OrderProcessingDetails detailsOP = getNewOrderProcessingDetails(order);
         saveOrderProcessingDetails(detailsOP);
         if (isAutoAcceptOrdrSource(order)) {
-            orderRepository.updateOrderStatus(newOrderId, ACCEPTED);
+            orderRepository.updateOrderStatus(newOrderId, ACCEPTED, SYSTEM, new Date());
             orderDetailRepository.updateOrderDetailsStatus(newOrderId, ACCEPTED);
             detailsOP.setOrderStatus(ACCEPTED);
             Instant later = Instant.now().plusSeconds(1);

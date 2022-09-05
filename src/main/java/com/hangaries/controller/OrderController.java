@@ -108,12 +108,12 @@ public class OrderController {
 
 
     @PostMapping("updateStatusByOrderId")
-    public ResponseEntity<List<Order>> updateStatusByOrderId(@RequestParam("orderId") String orderId, @RequestParam("orderStatus") String orderStatus) {
+    public ResponseEntity<List<Order>> updateStatusByOrderId(@RequestParam("orderId") String orderId, @RequestParam("orderStatus") String orderStatus, @RequestParam("updatedBy") String updatedBy) {
         logger.info("Updating order Id = {} with order status = {}. ", orderId, orderStatus);
 
         List<Order> orderList = new ArrayList<>();
         try {
-            orderList = orderService.updateOrderStatus(orderId, orderStatus);
+            orderList = orderService.updateOrderStatus(orderId, orderStatus, updatedBy);
             return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());

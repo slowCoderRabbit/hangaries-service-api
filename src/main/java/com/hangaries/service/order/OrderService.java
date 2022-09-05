@@ -12,7 +12,7 @@ public interface OrderService {
 
     List<Order> getOrderById(String OrderId);
 
-    List<Order> updateOrderStatus(String orderId, String status);
+    List<Order> updateOrderStatus(String orderId, String status, String updatedBy);
 
     Order saveOrder(Order order);
 

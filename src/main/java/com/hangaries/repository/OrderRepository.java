@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -19,12 +20,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByCustomerId(int customerId);
 
     @Modifying
-    @Query(value = "update ORDER_MASTER om set om.order_status = :status where om.order_id = :orderId", nativeQuery = true)
-    int updateOrderStatus(@Param("orderId") String orderId, @Param("status") String status);
+    @Query(value = "update ORDER_MASTER om set om.order_status = :status,om.updated_by =:updatedBy, updated_date =:updatedOn where om.order_id = :orderId", nativeQuery = true)
+    int updateOrderStatus(@Param("orderId") String orderId, @Param("status") String status, @Param("updatedBy") String updatedBy, @Param("updatedOn") Date updatedOn);
 
     @Modifying
-    @Query(value = "update ORDER_MASTER om set om.order_status = :status, om.payment_status = :paymentStatus where om.order_id = :orderId", nativeQuery = true)
-    int updateOrderAndPaymentStatus(@Param("orderId") String orderId, @Param("status") String status, @Param("paymentStatus") String paymentStatus);
+    @Query(value = "update ORDER_MASTER om set om.order_status = :status, om.payment_status = :paymentStatus, om.updated_by =:updatedBy,updated_date =:updatedOn where om.order_id = :orderId", nativeQuery = true)
+    int updateOrderAndPaymentStatus(@Param("orderId") String orderId, @Param("status") String status, @Param("paymentStatus") String paymentStatus, @Param("updatedBy") String updatedBy, @Param("updatedOn") Date updatedOn);
 
     @Modifying
     @Query(value = "update ORDER_MASTER om set om.delivery_user_id = :deliveryUser where om.order_id = :orderId", nativeQuery = true)
