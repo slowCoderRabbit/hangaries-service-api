@@ -108,9 +108,9 @@ public class OrderServiceImpl implements OrderService {
         return updateOrderProcessing(orderId);
     }
 
-    public List<Order> updatePaymentModeByOrderId(String orderId, String paymentMode, String paymentStatus, String orderStatus) {
+    public List<Order> updatePaymentModeByOrderId(String orderId, String paymentMode, String paymentStatus, String orderStatus, String updatedBy) {
 
-        orderRepository.updatePaymentModeByOrderId(orderId, paymentMode, paymentStatus, orderStatus);
+        orderRepository.updatePaymentModeByOrderId(orderId, paymentMode, paymentStatus, orderStatus, updatedBy, new Date());
         return updateOrderProcessing(orderId);
     }
 
@@ -233,14 +233,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> updateDeliveryUserByOrderId(String orderId, String deliveryUser) {
-        orderRepository.updateDeliveryUserByOrderId(orderId, deliveryUser);
+    public List<Order> updateDeliveryUserByOrderId(String orderId, String deliveryUser, String updatedBy) {
+        orderRepository.updateDeliveryUserByOrderId(orderId, deliveryUser, updatedBy, new Date());
         return orderRepository.findByOrderId(orderId);
     }
 
     @Override
-    public List<Order> updateFoodPackagedFlagByOrderId(String orderId, String foodPackagedFlag) {
-        orderRepository.updateFoodPackagedFlagByOrderId(orderId, foodPackagedFlag);
+    public List<Order> updateFoodPackagedFlagByOrderId(String orderId, String foodPackagedFlag, String updatedBy) {
+        orderRepository.updateFoodPackagedFlagByOrderId(orderId, foodPackagedFlag, updatedBy, new Date());
         return orderRepository.findByOrderId(orderId);
     }
 

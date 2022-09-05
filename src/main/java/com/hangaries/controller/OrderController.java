@@ -123,12 +123,12 @@ public class OrderController {
 
     @PostMapping("updatePaymentModeByOrderId")
     public ResponseEntity<List<Order>> updatePaymentModeByOrderId(@RequestParam("orderId") String orderId, @RequestParam("paymentMode") String paymentMode,
-                                                                  @RequestParam("paymentStatus") String paymentStatus, @RequestParam("orderStatus") String orderStatus) {
+                                                                  @RequestParam("paymentStatus") String paymentStatus, @RequestParam("orderStatus") String orderStatus, @RequestParam("updatedBy") String updatedBy) {
         logger.info("Updating order Id = {} with payment mode = {}, payment status = {} and order status = {}. ", orderId, paymentMode, paymentStatus, orderStatus);
 
         List<Order> orderList = new ArrayList<>();
         try {
-            orderList = orderService.updatePaymentModeByOrderId(orderId, paymentMode, paymentStatus, orderStatus);
+            orderList = orderService.updatePaymentModeByOrderId(orderId, paymentMode, paymentStatus, orderStatus, updatedBy);
             return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
@@ -240,12 +240,12 @@ public class OrderController {
     }
 
     @PostMapping("updateDeliveryUserByOrderId")
-    public ResponseEntity<List<Order>> updateDeliveryUserByOrderId(@RequestParam("orderId") String orderId, @RequestParam("deliveryUser") String deliveryUser) {
+    public ResponseEntity<List<Order>> updateDeliveryUserByOrderId(@RequestParam("orderId") String orderId, @RequestParam("deliveryUser") String deliveryUser, @RequestParam("updatedBy") String updatedBy) {
         logger.info("Updating order Id = {} with deliveryUser = {}. ", orderId, deliveryUser);
 
         List<Order> orderList = new ArrayList<>();
         try {
-            orderList = orderService.updateDeliveryUserByOrderId(orderId, deliveryUser);
+            orderList = orderService.updateDeliveryUserByOrderId(orderId, deliveryUser, updatedBy);
             return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
@@ -254,11 +254,11 @@ public class OrderController {
     }
 
     @PostMapping("updateFoodPackagedFlagByOrderId")
-    public ResponseEntity<List<Order>> updateFoodPackagedFlagByOrderId(@RequestParam("orderId") String orderId, @RequestParam("foodPackagedFlag") String foodPackagedFlag) {
+    public ResponseEntity<List<Order>> updateFoodPackagedFlagByOrderId(@RequestParam("orderId") String orderId, @RequestParam("foodPackagedFlag") String foodPackagedFlag, @RequestParam("updatedBy") String updatedBy) {
         logger.info("Updating order Id = {} with food packaged flag = {}. ", orderId, foodPackagedFlag);
 
         List<Order> orderList = new ArrayList<>();
-        orderList = orderService.updateFoodPackagedFlagByOrderId(orderId, foodPackagedFlag);
+        orderList = orderService.updateFoodPackagedFlagByOrderId(orderId, foodPackagedFlag, updatedBy);
         return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
 
     }

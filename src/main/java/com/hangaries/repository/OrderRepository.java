@@ -28,14 +28,14 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     int updateOrderAndPaymentStatus(@Param("orderId") String orderId, @Param("status") String status, @Param("paymentStatus") String paymentStatus, @Param("updatedBy") String updatedBy, @Param("updatedOn") Date updatedOn);
 
     @Modifying
-    @Query(value = "update ORDER_MASTER om set om.delivery_user_id = :deliveryUser where om.order_id = :orderId", nativeQuery = true)
-    int updateDeliveryUserByOrderId(@Param("orderId") String orderId, @Param("deliveryUser") String deliveryUser);
+    @Query(value = "update ORDER_MASTER om set om.delivery_user_id = :deliveryUser, om.updated_by =:updatedBy,updated_date =:updatedOn where om.order_id = :orderId", nativeQuery = true)
+    int updateDeliveryUserByOrderId(@Param("orderId") String orderId, @Param("deliveryUser") String deliveryUser, @Param("updatedBy") String updatedBy, @Param("updatedOn") Date updatedOn);
 
     @Modifying
-    @Query(value = "update ORDER_MASTER om set om.food_packaged_flag = :foodPackagedFlag where om.order_id = :orderId", nativeQuery = true)
-    int updateFoodPackagedFlagByOrderId(@Param("orderId") String orderId, @Param("foodPackagedFlag") String foodPackagedFlag);
+    @Query(value = "update ORDER_MASTER om set om.food_packaged_flag = :foodPackagedFlag, om.updated_by =:updatedBy,updated_date =:updatedOn where om.order_id = :orderId", nativeQuery = true)
+    int updateFoodPackagedFlagByOrderId(@Param("orderId") String orderId, @Param("foodPackagedFlag") String foodPackagedFlag, @Param("updatedBy") String updatedBy, @Param("updatedOn") Date updatedOn);
 
     @Modifying
-    @Query(value = "update ORDER_MASTER om set om.payment_mode=:paymentMode, om.payment_status = :paymentStatus,om.order_status = :status where om.order_id = :orderId", nativeQuery = true)
-    int updatePaymentModeByOrderId(@Param("orderId") String orderId, @Param("paymentMode") String paymentMode, @Param("paymentStatus") String paymentStatus, @Param("status") String status);
+    @Query(value = "update ORDER_MASTER om set om.payment_mode=:paymentMode, om.payment_status = :paymentStatus,om.order_status = :status, om.updated_by =:updatedBy,updated_date =:updatedOn where om.order_id = :orderId", nativeQuery = true)
+    int updatePaymentModeByOrderId(@Param("orderId") String orderId, @Param("paymentMode") String paymentMode, @Param("paymentStatus") String paymentStatus, @Param("status") String status, @Param("updatedBy") String updatedBy, @Param("updatedOn") Date updatedOn);
 }

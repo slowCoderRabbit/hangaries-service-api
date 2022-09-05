@@ -36,7 +36,7 @@ public interface OrderService {
 
     List<OrderVO> updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status);
 
-    List<Order> updateDeliveryUserByOrderId(String orderId, String deliveryUser);
+    List<Order> updateDeliveryUserByOrderId(String orderId, String deliveryUser, String updateOn);
 
-    List<Order> updateFoodPackagedFlagByOrderId(String orderId, String foodPackagedFlag);
+    List<Order> updateFoodPackagedFlagByOrderId(String orderId, String foodPackagedFlag, String updateOn);
 }

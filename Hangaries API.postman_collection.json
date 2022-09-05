@@ -259,7 +259,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/updateStatusByOrderId?orderId=1&orderStatus=TestNew",
+					"raw": "http://localhost:8080/api/updateStatusByOrderId?orderId=SDR001S00120220905000873&orderStatus=DELIVERED&updatedBy=ANIKET",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -272,11 +272,15 @@
 					"query": [
 						{
 							"key": "orderId",
-							"value": "1"
+							"value": "SDR001S00120220905000873"
 						},
 						{
 							"key": "orderStatus",
-							"value": "TestNew"
+							"value": "DELIVERED"
+						},
+						{
+							"key": "updatedBy",
+							"value": "ANIKET"
 						}
 					]
 				}
@@ -2035,7 +2039,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/updateDeliveryUserByOrderId?orderId=MR001S00120220505000122&deliveryUser='Aniket'",
+					"raw": "http://localhost:8080/api/updateDeliveryUserByOrderId?orderId=SDR001S00120220905000873&deliveryUser=Aniket&updatedBy=ANIKET",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2048,11 +2052,15 @@
 					"query": [
 						{
 							"key": "orderId",
-							"value": "MR001S00120220505000122"
+							"value": "SDR001S00120220905000873"
 						},
 						{
 							"key": "deliveryUser",
-							"value": "'Aniket'"
+							"value": "Aniket"
+						},
+						{
+							"key": "updatedBy",
+							"value": "ANIKET"
 						}
 					]
 				}
@@ -2575,7 +2583,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/updateFoodPackagedFlagByOrderId?orderId=MR001S00120220604000335&foodPackagedFlag=Y",
+					"raw": "http://localhost:8080/api/updateFoodPackagedFlagByOrderId?orderId=SDR001S00120220905000873&foodPackagedFlag=N&updatedBy=ANIKET",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2588,11 +2596,15 @@
 					"query": [
 						{
 							"key": "orderId",
-							"value": "MR001S00120220604000335"
+							"value": "SDR001S00120220905000873"
 						},
 						{
 							"key": "foodPackagedFlag",
-							"value": "Y"
+							"value": "N"
+						},
+						{
+							"key": "updatedBy",
+							"value": "ANIKET"
 						}
 					]
 				}
@@ -3720,7 +3732,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/updatePaymentModeByOrderId?orderId=SDR001S00120220810000761&paymentMode=PayTm&paymentStatus=paid&orderStatus=Delivered",
+					"raw": "http://localhost:8080/api/updatePaymentModeByOrderId?orderId=SDR001S00120220905000873&paymentMode=PayTm&paymentStatus=paid&orderStatus=Delivered&updatedBy=ANIKET",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -3733,7 +3745,7 @@
 					"query": [
 						{
 							"key": "orderId",
-							"value": "SDR001S00120220810000761"
+							"value": "SDR001S00120220905000873"
 						},
 						{
 							"key": "paymentMode",
@@ -3746,6 +3758,10 @@
 						{
 							"key": "orderStatus",
 							"value": "Delivered"
+						},
+						{
+							"key": "updatedBy",
+							"value": "ANIKET"
 						}
 					]
 				}
