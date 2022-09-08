@@ -56,22 +56,27 @@ public class ReportServiceImpl implements ReportService {
             String result = reportRepository.getReports(report.getRestaurantId(), report.getStoreId(), report.getFromDate(), report.getToDate());
             logger.info("Result of reports table refresh {}", result);
 
-            List<RSSDate> rssDate = rssDateRepository.getReport();
+//            List<RSSDate> rssDate = rssDateRepository.getReport();
+            List<RSSDate> rssDate = jdbcTemplate.query("select * from REPORT_SALES_SUMMARY_BY_DATE", BeanPropertyRowMapper.newInstance(RSSDate.class));
             reportResult.setSalesSummeryByDateList(rssDate);
 
-            List<RSSDishType> rssDishTypes = rssDishTypeRepository.getReport();
+//            List<RSSDishType> rssDishTypes = rssDishTypeRepository.getReport();
+            List<RSSDishType> rssDishTypes = jdbcTemplate.query("select * from REPORT_SALES_SUMMARY_BY_DISH_TYPE", BeanPropertyRowMapper.newInstance(RSSDishType.class));
             reportResult.setSalesSummeryByDishType(rssDishTypes);
 
-            List<RSSOrderSource> rssOrderSources = rssOrderSourceRepository.getReport();
+//            List<RSSOrderSource> rssOrderSources = rssOrderSourceRepository.getReport();
+            List<RSSOrderSource> rssOrderSources = jdbcTemplate.query("select * from REPORT_SALES_SUMMARY_BY_ORDER_SOURCE", BeanPropertyRowMapper.newInstance(RSSOrderSource.class));
             reportResult.setSalesSummeryByOrderSource(rssOrderSources);
 
-            List<RSSPaymentMode> rSSPaymentMode = rssPayModeRepository.getReport();
+//            List<RSSPaymentMode> rSSPaymentMode = rssPayModeRepository.getReport();
+            List<RSSPaymentMode> rSSPaymentMode = jdbcTemplate.query("select * from REPORT_SALES_SUMMARY_BY_PAYMENT_MODE", BeanPropertyRowMapper.newInstance(RSSPaymentMode.class));
             reportResult.setSalesSummeryByPaymentMode(rSSPaymentMode);
 
-            List<ReportDishConsumptionSummary> rDCSummary = rdcSummaryRepository.getReport();
+//            List<ReportDishConsumptionSummary> rDCSummary = rdcSummaryRepository.getReport();
+            List<ReportDishConsumptionSummary> rDCSummary = jdbcTemplate.query("select * from REPORT_DISH_CONSUMPTION_SUMMARY", BeanPropertyRowMapper.newInstance(ReportDishConsumptionSummary.class));
             reportResult.setReportDishConsumptionSummary(rDCSummary);
 
-            List<ReportCashierSummery> results = jdbcTemplate.query("SELECT * FROM hangaries.REPORT_CASHIER_SUMMARY order by cashier_name,store_name,type_of_data,category", BeanPropertyRowMapper.newInstance(ReportCashierSummery.class));
+            List<ReportCashierSummery> results = jdbcTemplate.query("SELECT * FROM REPORT_CASHIER_SUMMARY order by cashier_name,store_name,type_of_data,category", BeanPropertyRowMapper.newInstance(ReportCashierSummery.class));
             logger.info("ReportCashierSummery records from DB = {}", results.size());
             List<ReportCashierSummeryResponse> response = transformData(groupCollectionByCashier(results));
             logger.info("ReportCashierSummery post data transformation records = {}", response.size());
