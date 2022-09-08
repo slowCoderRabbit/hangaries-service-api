@@ -159,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
         OrderProcessingDetails detailsOP = getNewOrderProcessingDetails(order);
         saveOrderProcessingDetails(detailsOP);
         if (isAutoAcceptOrdrSource(order)) {
-            orderRepository.updateOrderStatus(newOrderId, ACCEPTED, SYSTEM, new Date());
+            orderRepository.updateOrderStatus(newOrderId, ACCEPTED, order.getUpdatedBy(), new Date());
             orderDetailRepository.updateOrderDetailsStatus(newOrderId, ACCEPTED);
             detailsOP.setOrderStatus(ACCEPTED);
             Instant later = Instant.now().plusSeconds(1);
