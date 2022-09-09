@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.*;
-import java.util.function.Predicate;
 
 import static com.hangaries.constants.HangariesConstants.*;
 import static com.hangaries.util.HangariesUtil.generatorQueryString;
@@ -267,19 +266,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+//    User getRoleCategoryByOrderSource(Order order) {
+//
+//        Predicate<ConfigMaster> isOnlineOrderSource = s -> s.getConfigCriteriaValue().equals(order.getOrderSource());
+//        List<ConfigMaster> configDetails = getConfigMasterList(order);
+//
+//        boolean isOnlineSource = configDetails.stream().anyMatch(isOnlineOrderSource);
+//
+//        if (isOnlineSource) {
+//            return userRepository.findByLoginId(SYSTEM);
+//        } else {
+//            return userRepository.findByLoginId("STORE MANGER");
+//        }
+//
+//    }
+
     User getRoleCategoryByOrderSource(Order order) {
-
-        Predicate<ConfigMaster> isOnlineOrderSource = s -> s.getConfigCriteriaValue().equals(order.getOrderSource());
-        List<ConfigMaster> configDetails = getConfigMasterList(order);
-
-        boolean isOnlineSource = configDetails.stream().anyMatch(isOnlineOrderSource);
-
-        if (isOnlineSource) {
-            return userRepository.findByLoginId(SYSTEM);
-        } else {
-            return userRepository.findByLoginId("STORE MANGER");
-        }
-
+        return userRepository.findByLoginId(order.getCreatedBy());
     }
 
     private List<ConfigMaster> getConfigMasterList(Order order) {
