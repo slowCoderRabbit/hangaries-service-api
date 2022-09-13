@@ -42,24 +42,8 @@ public class CustomerDtlsServiceImpl implements CustomerDtlsService {
     }
 
     public CustomerDtls updateCustomerDtls(CustomerDtls customerDtls) throws Exception {
-        CustomerDtls retCustomerDtls = null;
-        CustomerDtls customerDtlsUpdate = null;
-        try {
-            logger.debug("update customer details::");
-            customerDtlsUpdate = customerDtlsRepository.getCustometDtlsById(customerDtls.getMobileNumber(), customerDtls.getCustomerAddressType(), STATUS_Y);
-            customerDtlsUpdate.setAddress1(customerDtls.getAddress1());
-            customerDtlsUpdate.setAddress2(customerDtls.getAddress2());
-            customerDtlsUpdate.setLandmark(customerDtls.getLandmark());
-            customerDtlsUpdate.setCity(customerDtls.getCity());
-            customerDtlsUpdate.setUpdatedDate(new Date());
-            customerDtlsUpdate.setZipCode(customerDtls.getZipCode());
-            customerDtlsUpdate.setState(customerDtls.getState());
-            retCustomerDtls = customerDtlsRepository.save(customerDtlsUpdate);
-        } catch (Exception ex) {
-            logger.error("Error while save customer details::");
-            throw new Exception(ex);
-        }
-        return retCustomerDtls;
+        customerDtls.setUpdatedDate(new Date());
+        return customerDtlsRepository.save(customerDtls);
     }
 
     public List<CustomerDtls> getCustomerAddressDtlsByMobNum(String mobnum) throws Exception {

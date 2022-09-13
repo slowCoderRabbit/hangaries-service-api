@@ -28,14 +28,9 @@ public class CustomerDtlsController {
     @PostMapping("saveCustomerDtls")
     @ResponseBody
     public ResponseEntity<CustomerDtls> saveCustomerDtls(@RequestBody CustomerDtls customerDtls) throws Exception {
-        CustomerDtls retCustomerDtls = null;
-        try {
-            logger.info("save customer details::");
-            retCustomerDtls = customerDtlsService.saveCustomerDtls(customerDtls);
-            return new ResponseEntity<CustomerDtls>(retCustomerDtls, HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<CustomerDtls>(retCustomerDtls, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        logger.info("Save customer details : {}", customerDtls);
+        CustomerDtls retCustomerDtls = customerDtlsService.saveCustomerDtls(customerDtls);
+        return new ResponseEntity<CustomerDtls>(retCustomerDtls, HttpStatus.OK);
     }
 
     @GetMapping("getCustomerAddressDtlsByMobNum")

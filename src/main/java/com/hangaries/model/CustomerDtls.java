@@ -1,11 +1,14 @@
 package com.hangaries.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.Date;
 
 import static com.hangaries.constants.HangariesConstants.SYSTEM;
 
 @Entity
+@ToString
 @Table(name = "CUSTOMER_ADDRESS_DETAILS")
 public class CustomerDtls {
 
