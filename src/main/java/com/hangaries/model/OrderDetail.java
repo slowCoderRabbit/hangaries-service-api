@@ -1,6 +1,5 @@
 package com.hangaries.model;
 
-import com.hangaries.model.keys.OrderDetailId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,19 +15,20 @@ import java.io.Serializable;
 @NoArgsConstructor
 @ToString
 @Entity
-@IdClass(OrderDetailId.class)
 @Table(name = "ORDER_DETAILS")
 public class OrderDetail implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
     @Column(name = "order_id")
     private String orderId;
 
-    @Id
     @Column(name = "product_id")
     private @NotBlank String productId;
 
-    @Id
     @Column(name = "sub_product_Id")
     private @NotBlank String subProductId;
 
