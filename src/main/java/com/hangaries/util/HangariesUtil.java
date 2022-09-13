@@ -36,6 +36,10 @@ public class HangariesUtil {
             queryString.append("order_status = '" + orderRequest.getOrderStatus() + "'");
             queryString.append(AND);
         }
+        if (!StringUtils.isBlank(orderRequest.getOrderSource())) {
+            queryString.append("order_source = '" + orderRequest.getOrderSource() + "'");
+            queryString.append(AND);
+        }
         if (!StringUtils.isBlank(orderRequest.getPaymentStatus())) {
             queryString.append("payment_status = '" + orderRequest.getPaymentStatus() + "'");
             queryString.append(AND);
