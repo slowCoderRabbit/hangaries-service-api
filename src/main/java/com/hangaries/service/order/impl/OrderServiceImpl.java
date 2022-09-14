@@ -201,7 +201,7 @@ public class OrderServiceImpl implements OrderService {
         } else {
             queryString = "SELECT * FROM vOrderMenuIngredientAddress where " + queryString;
         }
-        queryString = queryString + " order by order_id, product_id, sub_product_id";
+        queryString = queryString + " order by created_date desc, order_id, product_id, sub_product_id";
         logger.info("Querying view using queryString = [{}]", queryString);
         List<OrderMenuIngredientAddressDTO> results = jdbcTemplate.query(queryString, BeanPropertyRowMapper.newInstance(OrderMenuIngredientAddressDTO.class));
         logger.info("queryOrderViewByParams :: Total records returned from DB = [{}].", results.size());
@@ -209,7 +209,7 @@ public class OrderServiceImpl implements OrderService {
         logger.info("queryOrderViewByParams :: Result consolidated in to = [{}].", orderMap.size());
         List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
         logger.info("queryOrderViewByParams :: Final order list created of size = [{}].", orderList.size());
-        Collections.sort(orderList, Comparator.comparing(OrderVO::getCreatedDate));
+        //Collections.sort(orderList, Comparator.comparing(OrderVO::getCreatedDate));
         return orderList;
     }
 
