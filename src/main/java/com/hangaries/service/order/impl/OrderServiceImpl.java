@@ -27,6 +27,7 @@ public class OrderServiceImpl implements OrderService {
 
     public static final String ORDER_SOURCE = "ORDER_SOURCE";
     public static final String SYSTEM = "SYSTEM";
+    public static final String ORDER_BY_CREATED_DATE = " order by created_date";
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
     @Autowired
     OrderIdRepository orderIdRepository;
@@ -201,7 +202,11 @@ public class OrderServiceImpl implements OrderService {
         } else {
             queryString = "SELECT * FROM vOrderMenuIngredientAddress where " + queryString;
         }
-        queryString = queryString + " order by created_date desc, order_id, product_id, sub_product_id";
+        queryString = queryString + ORDER_BY_CREATED_DATE;
+        if (orderRequest.isDescending()) {
+            queryString = queryString + " desc";
+        }
+        queryString = queryString + ", order_id, product_id, sub_product_id";
         logger.info("Querying view using queryString = [{}]", queryString);
         List<OrderMenuIngredientAddressDTO> results = jdbcTemplate.query(queryString, BeanPropertyRowMapper.newInstance(OrderMenuIngredientAddressDTO.class));
         logger.info("queryOrderViewByParams :: Total records returned from DB = [{}].", results.size());
