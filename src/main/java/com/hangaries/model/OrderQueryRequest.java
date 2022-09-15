@@ -22,5 +22,6 @@ public class OrderQueryRequest {
     private String deliveryUserId;
     private String foodPackagedFlag;
     private String orderSource;
+    private boolean descending = false;
 
 }
