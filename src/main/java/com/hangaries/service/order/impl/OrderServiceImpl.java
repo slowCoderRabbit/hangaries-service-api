@@ -203,7 +203,7 @@ public class OrderServiceImpl implements OrderService {
             queryString = "SELECT * FROM vOrderMenuIngredientAddress where " + queryString;
         }
         queryString = queryString + ORDER_BY_CREATED_DATE;
-        if (orderRequest.isDescending()) {
+        if (!orderRequest.isDescending()) {
             queryString = queryString + " desc";
         }
         queryString = queryString + ", order_id, product_id, sub_product_id";
