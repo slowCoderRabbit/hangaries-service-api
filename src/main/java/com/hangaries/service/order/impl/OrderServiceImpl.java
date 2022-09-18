@@ -266,6 +266,8 @@ public class OrderServiceImpl implements OrderService {
         User user = getRoleCategoryByOrderSource(order);
         detailsOP.setRoleCategory(user.getRoleCategory());
         detailsOP.setUserSeqNo(user.getUserSeqNo());
+        detailsOP.setCreatedBy(user.getLoginId());
+        detailsOP.setUpdatedBy(user.getLoginId());
 
         return detailsOP;
     }
