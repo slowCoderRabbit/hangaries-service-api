@@ -287,7 +287,7 @@ public class OrderServiceImpl implements OrderService {
 //    }
 
     User getRoleCategoryByOrderSource(Order order) {
-        return userRepository.findByLoginId(order.getCreatedBy());
+        return userRepository.findByLoginId(order.getUpdatedBy());
     }
 
     private List<ConfigMaster> getConfigMasterList(Order order) {
