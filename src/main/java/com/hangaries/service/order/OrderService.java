@@ -32,9 +32,9 @@ public interface OrderService {
 
     List<OrderVO> queryOrderViewByParams(OrderQueryRequest orderRequest);
 
-    List<OrderDetail> updateOrderDetailsStatus(String orderId, String orderStatus);
+    List<OrderDetail> updateOrderDetailsStatus(String orderId, String orderStatus, String updatedBy);
 
-    List<OrderVO> updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status);
+    List<OrderVO> updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status, String updatedBy);
 
     List<Order> updateDeliveryUserByOrderId(String orderId, String deliveryUser, String updateOn);
 

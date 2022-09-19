@@ -29,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
     public static final String SYSTEM = "SYSTEM";
     public static final String ORDER_BY_CREATED_DATE = " order by created_date";
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
+
     @Autowired
     OrderIdRepository orderIdRepository;
 
@@ -160,7 +161,7 @@ public class OrderServiceImpl implements OrderService {
         saveOrderProcessingDetails(detailsOP);
         if (isAutoAcceptOrdrSource(order)) {
             orderRepository.updateOrderStatus(newOrderId, ACCEPTED, order.getUpdatedBy(), new Date());
-            orderDetailRepository.updateOrderDetailsStatus(newOrderId, ACCEPTED);
+            orderDetailRepository.updateOrderDetailsStatus(newOrderId, ACCEPTED, order.getUpdatedBy(), new Date());
             detailsOP.setOrderStatus(ACCEPTED);
             Instant later = Instant.now().plusSeconds(1);
             Date date = Date.from(later);
@@ -219,21 +220,36 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDetail> updateOrderDetailsStatus(String orderId, String orderStatus) {
-        orderDetailRepository.updateOrderDetailsStatus(orderId, orderStatus);
-
+    public List<OrderDetail> updateOrderDetailsStatus(String orderId, String orderStatus, String updatedBy) {
+        orderDetailRepository.updateOrderDetailsStatus(orderId, orderStatus, updatedBy, new Date());
+        checkForOrderStatusUpdate(orderId, updatedBy);
         return orderDetailRepository.findByOrderId(orderId);
 
     }
 
     @Override
-    public List<OrderVO> updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status) {
-        orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status);
+    public List<OrderVO> updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status, String updatedBy) {
+        orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status, updatedBy, new Date());
+        if (FOOD_READY.equals(status)) {
+            checkForOrderStatusUpdate(orderId, updatedBy);
+        }
         List<OrderMenuIngredientAddressDTO> results = orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressViewByOrderId(orderId);
         Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
         List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
         return orderList;
 
+    }
+
+    private void checkForOrderStatusUpdate(String orderId, String updatedBy) {
+        if (isFoodReadyAndPacked(orderId)) {
+            orderRepository.updateOrderStatus(orderId, FOOD_READY, updatedBy, new Date());
+        }
+    }
+
+    private boolean isFoodReadyAndPacked(String orderId) {
+        int result = orderDetailRepository.isFoodReadyAndPacked(orderId);
+        logger.info("isFoodReadyAndPacked = [{}] for orderID = [{}].", result, orderId);
+        return 0 == result;
     }
 
     @Override
@@ -453,8 +469,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public List<Order> updateFoodPackagedFlagForOrderItem(String orderId, String productId, String subProductId, String foodPackagedFlag) {
-        orderDetailRepository.updateFoodPackagedFlagForOrderItem(orderId, productId, subProductId, foodPackagedFlag);
+    public List<Order> updateFoodPackagedFlagForOrderItem(String orderId, String productId, String subProductId, String foodPackagedFlag, String updatedBy) {
+        orderDetailRepository.updateFoodPackagedFlagForOrderItem(orderId, productId, subProductId, foodPackagedFlag, updatedBy, new Date());
+        if (Y.equals(foodPackagedFlag)) {
+            checkForOrderStatusUpdate(orderId, updatedBy);
+        }
         return orderRepository.findByOrderId(orderId);
     }
 }

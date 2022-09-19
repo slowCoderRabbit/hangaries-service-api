@@ -9,6 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
+
+import static com.hangaries.constants.HangariesConstants.SYSTEM;
 
 @Getter
 @Setter
@@ -46,6 +49,15 @@ public class OrderDetail implements Serializable {
 
     @Column(name = "food_packaged_flag")
     private String foodPackagedFlag;
+
+    @Column(name = "Created_by")
+    private String createdBy = SYSTEM;
+    @Column(name = "Created_date")
+    private Date createdDate = new Date();
+    @Column(name = "Updated_by")
+    private String updatedBy = SYSTEM;
+    @Column(name = "Updated_date")
+    private Date updatedDate = new Date();
 
 
 }

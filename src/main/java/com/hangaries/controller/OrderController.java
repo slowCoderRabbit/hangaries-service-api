@@ -1,6 +1,9 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.*;
+import com.hangaries.model.request.UpdateFoodPackagedFlagForOrderItemReq;
+import com.hangaries.model.request.UpdateOrderDetailsStatusByOrderIdReq;
+import com.hangaries.model.request.UpdateOrderDetailsStatusBySubProductIdReq;
 import com.hangaries.model.vo.OrderVO;
 import com.hangaries.service.order.impl.OrderServiceImpl;
 import org.slf4j.Logger;
@@ -211,30 +214,31 @@ public class OrderController {
 
 
     @PostMapping("updateOrderDetailsStatusByOrderId")
-    public ResponseEntity<List<OrderDetail>> updateOrderDetailsStatusByOrderId(@RequestParam("orderId") String orderId, @RequestParam("status") String status) {
-        logger.info("Updating order Id = {} with order status = {}. ", orderId, status);
+    public ResponseEntity<List<OrderDetail>> updateOrderDetailsStatusByOrderId(@RequestBody UpdateOrderDetailsStatusByOrderIdReq request) {
+        logger.info("Updating order Id = {} with order status = {} and updatedBy = {}. ", request.getOrderId(), request.getStatus(), request.getUpdatedBy());
 
         List<OrderDetail> orderDetailList = new ArrayList<>();
         try {
-            orderDetailList = orderService.updateOrderDetailsStatus(orderId, status);
+            orderDetailList = orderService.updateOrderDetailsStatus(request.getOrderId(), request.getStatus(), request.getUpdatedBy());
             return new ResponseEntity<List<OrderDetail>>(orderDetailList, HttpStatus.OK);
         } catch (Exception ex) {
-            logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
+            logger.error("Error getting order by Id = {} :: {}", request.getOrderId(), ex.getMessage());
             return new ResponseEntity<List<OrderDetail>>(orderDetailList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("updateOrderDetailsStatusBySubProductId")
-    public ResponseEntity<List<OrderVO>> updateOrderDetailsStatusBySubProductId(@RequestParam("orderId") String orderId, @RequestParam("status") String status,
-                                                                                @RequestParam("productId") String productId, @RequestParam("subProductId") String subProductId) {
-        logger.info("Updating orderId = [{}], productId  = [{}], subProductId  = [{}],   with order status = {}. ", orderId, productId, subProductId, status);
+    public ResponseEntity<List<OrderVO>> updateOrderDetailsStatusBySubProductId(@RequestBody UpdateOrderDetailsStatusBySubProductIdReq request) {
+        logger.info("Updating orderId = [{}], productId  = [{}], subProductId  = [{}],   with order status = {} and updatedBy = {}. ", request.getOrderId(), request.getProductId(),
+                request.getSubProductId(), request.getStatus(), request.getUpdatedBy());
 
         List<OrderVO> orderDetailList = new ArrayList<>();
         try {
-            orderDetailList = orderService.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status);
+            orderDetailList = orderService.updateOrderDetailsStatusBySubProductId(request.getOrderId(), request.getProductId(),
+                    request.getSubProductId(), request.getStatus(), request.getUpdatedBy());
             return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.OK);
         } catch (Exception ex) {
-            logger.error("Error getting order by Id = {} :: {}", orderId, ex.getMessage());
+            logger.error("Error getting order by Id = {} :: {}", request.getOrderId(), ex.getMessage());
             return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -264,12 +268,13 @@ public class OrderController {
     }
 
     @PostMapping("updateFoodPackagedFlagForOrderItem")
-    public ResponseEntity<List<Order>> updateFoodPackagedFlagForOrderItem(@RequestParam("orderId") String orderId, @RequestParam("productId") String productId,
-                                                                          @RequestParam("subProductId") String subProductId, @RequestParam("foodPackagedFlag") String foodPackagedFlag) {
-        logger.info("Updating Order Item with order Id = {}, productId = {}, subProductId = {} and food packaged flag = {}. ", orderId, productId, subProductId, foodPackagedFlag);
+    public ResponseEntity<List<Order>> updateFoodPackagedFlagForOrderItem(@RequestBody UpdateFoodPackagedFlagForOrderItemReq request) {
+        logger.info("Updating Order Item with order Id = {}, productId = {}, subProductId = {}, food packaged flag = {} and updatedBy = {}. ", request.getOrderId(), request.getProductId()
+                , request.getSubProductId(), request.getFoodPackagedFlag(), request.getUpdatedBy());
 
         List<Order> orderList = new ArrayList<>();
-        orderList = orderService.updateFoodPackagedFlagForOrderItem(orderId, productId, subProductId, foodPackagedFlag);
+        orderList = orderService.updateFoodPackagedFlagForOrderItem(request.getOrderId(), request.getProductId()
+                , request.getSubProductId(), request.getFoodPackagedFlag(), request.getUpdatedBy());
         return new ResponseEntity<List<Order>>(orderList, HttpStatus.OK);
 
     }
