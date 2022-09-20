@@ -242,7 +242,8 @@ public class OrderServiceImpl implements OrderService {
 
     private void checkForOrderStatusUpdate(String orderId, String updatedBy) {
         if (isFoodReadyAndPacked(orderId)) {
-            orderRepository.updateOrderStatus(orderId, FOOD_READY, updatedBy, new Date());
+            orderRepository.updateFoodPackagedFlagByOrderId(orderId, Y, updatedBy, new Date());
+            updateOrderStatus(orderId, FOOD_READY, updatedBy);
         }
     }
 
