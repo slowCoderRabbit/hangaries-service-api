@@ -51,21 +51,21 @@ public class ConfigServiceImpl implements ConfigService {
 
     public BusinessDate performEndOfDay(String restaurantId, String storeId) {
 
-        BusinessDate businessDate = businessDateRepository.getBusinessDate(restaurantId, storeId);
+//        BusinessDate businessDate = businessDateRepository.getBusinessDate(restaurantId, storeId);
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(businessDate.getBusinessDate());
+//        businessDate.setPreviousBusinessDate(businessDate.getBusinessDate());
+//        calendar.add(Calendar.DATE, 1);
+//        businessDate.setBusinessDate(calendar.getTime());
+//        calendar.add(Calendar.DATE, 1);
+//        businessDate.setNextBusinessDate(calendar.getTime());
+//        businessDate.getBusinessDate();
+//        businessDate.setUpdatedDate(new Date());
+//        businessDate.setUpdatedBy(SYSTEM);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(businessDate.getBusinessDate());
-        businessDate.setPreviousBusinessDate(businessDate.getBusinessDate());
-        calendar.add(Calendar.DATE, 1);
-        businessDate.setBusinessDate(calendar.getTime());
-        calendar.add(Calendar.DATE, 1);
-        businessDate.setNextBusinessDate(calendar.getTime());
-        businessDate.getBusinessDate();
-        businessDate.setUpdatedDate(new Date());
-        businessDate.setUpdatedBy(SYSTEM);
-
-
-        return businessDateRepository.save(businessDate);
+        String result = businessDateRepository.performEndOfDay(restaurantId,storeId);
+        return businessDateRepository.getBusinessDate(restaurantId,storeId);
 
 
     }
