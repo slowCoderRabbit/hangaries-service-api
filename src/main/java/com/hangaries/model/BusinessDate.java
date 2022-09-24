@@ -40,4 +40,7 @@ public class BusinessDate {
     private String updatedBy = SYSTEM;
     @Column(name = "updated_date")
     private Date updatedDate = new Date();
+    @Transient
+    private String result;
+
 }
