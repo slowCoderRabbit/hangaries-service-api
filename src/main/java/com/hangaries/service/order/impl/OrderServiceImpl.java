@@ -207,7 +207,7 @@ public class OrderServiceImpl implements OrderService {
         if (!orderRequest.isDescending()) {
             queryString = queryString + " desc";
         }
-        queryString = queryString + ", order_id, id, product_id, sub_product_id";
+        queryString = queryString + ", order_id, id desc, product_id, sub_product_id";
         logger.info("Querying view using queryString = [{}]", queryString);
         List<OrderMenuIngredientAddressDTO> results = jdbcTemplate.query(queryString, BeanPropertyRowMapper.newInstance(OrderMenuIngredientAddressDTO.class));
         logger.info("queryOrderViewByParams :: Total records returned from DB = [{}].", results.size());
