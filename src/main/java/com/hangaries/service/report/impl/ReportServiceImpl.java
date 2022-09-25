@@ -26,24 +26,6 @@ public class ReportServiceImpl implements ReportService {
     ReportRepository reportRepository;
 
     @Autowired
-    RSSDateRepository rssDateRepository;
-
-    @Autowired
-    RSSPayModeRepository rssPayModeRepository;
-
-    @Autowired
-    RSSDishTypeRepository rssDishTypeRepository;
-
-    @Autowired
-    RSSOrderSourceRepository rssOrderSourceRepository;
-
-    @Autowired
-    RDCSummaryRepository rdcSummaryRepository;
-
-    @Autowired
-    RCSRepository rcsRepository;
-
-    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
@@ -53,7 +35,7 @@ public class ReportServiceImpl implements ReportService {
         ReportResult reportResult = new ReportResult();
 
         try {
-            String result = reportRepository.getReports(report.getRestaurantId(), report.getStoreId(), report.getFromDate(), report.getToDate());
+            String result = reportRepository.getReports(report.getRestaurantId(), report.getStoreId(), report.getFromDate(), report.getToDate(), report.getReportName());
             logger.info("Result of reports table refresh {}", result);
 
 //            List<RSSDate> rssDate = rssDateRepository.getReport();
