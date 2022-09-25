@@ -1,6 +1,6 @@
 package com.hangaries.controller;
 
-import com.hangaries.model.User;
+import com.hangaries.model.wera.request.WeraUploadMenu;
 import com.hangaries.service.wera.WERAMenuServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +20,10 @@ public class WERAController {
     WERAMenuServiceImpl weraMenuService;
 
     @GetMapping("uploadMenuToWeraFoods")
-    String uploadMenuToWeraFoods(@RequestParam("restaurantId") String restaurantId,
-                                     @RequestParam("storeId") String storeId) {
-        logger.info("Getting menu to upload for restaurantId = {}, storeId = {}.", restaurantId,storeId);
-        return weraMenuService.uploadMenuToWeraFoods(restaurantId,storeId);
+    List<WeraUploadMenu> uploadMenuToWeraFoods(@RequestParam("restaurantId") String restaurantId,
+                                               @RequestParam("storeId") String storeId) {
+        logger.info("Getting menu to upload for restaurantId = {}, storeId = {}.", restaurantId, storeId);
+        return weraMenuService.uploadMenuToWeraFoods(restaurantId, storeId);
 
     }
 
