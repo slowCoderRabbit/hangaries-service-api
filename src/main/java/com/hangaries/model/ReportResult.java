@@ -1,5 +1,6 @@
 package com.hangaries.model;
 
+import com.hangaries.model.vo.OrderVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class ReportResult {
     List<RSSPaymentMode> salesSummeryByPaymentMode;
     List<ReportDishConsumptionSummary> reportDishConsumptionSummary;
     List<ReportCashierSummeryResponse> reportCashierSummery;
-    List<ReportOrderData> reportOrderData;
+    List<OrderVO> reportOrderData;
 
 
 }
