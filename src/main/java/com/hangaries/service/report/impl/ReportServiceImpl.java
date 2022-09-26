@@ -2,7 +2,7 @@ package com.hangaries.service.report.impl;
 
 import com.hangaries.model.*;
 import com.hangaries.model.dto.OrderMenuIngredientAddressDTO;
-import com.hangaries.repository.*;
+import com.hangaries.repository.ReportRepository;
 import com.hangaries.service.report.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +63,9 @@ public class ReportServiceImpl implements ReportService {
             List<ReportCashierSummeryResponse> response = transformData(groupCollectionByCashier(results));
             logger.info("ReportCashierSummery post data transformation records = {}", response.size());
             reportResult.setReportCashierSummery(response);
+
+            List<ReportOrderData> reportOrderDataList = jdbcTemplate.query("select * from REPORT_ORDER_DATA", BeanPropertyRowMapper.newInstance(ReportOrderData.class));
+            reportResult.setReportOrderData(reportOrderDataList);
 
 
         } catch (Exception e) {
