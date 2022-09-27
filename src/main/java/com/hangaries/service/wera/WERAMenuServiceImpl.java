@@ -4,28 +4,42 @@ import com.hangaries.model.wera.dto.WeraMenuUploadDTO;
 import com.hangaries.model.wera.request.WeraMenu;
 import com.hangaries.model.wera.request.WeraMenuAddons;
 import com.hangaries.model.wera.request.WeraUploadMenu;
+import com.hangaries.model.wera.response.WeraMenuUploadResponse;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.hangaries.constants.HangariesConstants.SUCCESS;
+
 @Service
 public class WERAMenuServiceImpl {
+
 
     private static final Logger logger = LoggerFactory.getLogger(WERAMenuServiceImpl.class);
 
     @Value("${wera.menu.upload.url}")
     private String menuUploadURL;
+    @Value("${wera.api.key}")
+    private String werAPIKey;
+    @Value("${wera.api.value}")
+    private String werAPIValue;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -36,11 +50,38 @@ public class WERAMenuServiceImpl {
         if (!weraMenuUploadDTOList.isEmpty()) {
             Map<String, List<WeraMenuUploadDTO>> consolidateResponse = consolidateResponse(weraMenuUploadDTOList);
             logger.info("[{}] records after consolidateResponse for restaurantId = {} and storeId = {}", consolidateResponse.size(), restaurantId, storeId);
-           requestList = generateWERAUploadMenuRequest(consolidateResponse);
+            requestList = generateWERAUploadMenuRequest(consolidateResponse);
 
         }
+        callWERAUploadMenuAPI(requestList);
         return requestList;
     }
+
+    String callWERAUploadMenuAPI(List<WeraUploadMenu> requestList) {
+        logger.info("################## WERA MENU UPLOAD - INITIATING!!! ##################");
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set(werAPIKey, werAPIValue);
+        int index = 0;
+        for (WeraUploadMenu request : requestList) {
+            index = ++index;
+            logger.info("[{}] WERA MENU UPLOAD REQUEST = [{}]", index, request);
+            HttpEntity<WeraUploadMenu> httpRequest = new HttpEntity<>(request, headers);
+            try {
+                ResponseEntity<WeraMenuUploadResponse> response = restTemplate.postForEntity(menuUploadURL, httpRequest, WeraMenuUploadResponse.class);
+                logger.info("[{}] WERA MENU UPLOAD RESPONSE = [{}]", index, response.getBody());
+            } catch (Exception ex) {
+                logger.error(ex.getMessage());
+                return "Error while uploading menu items. Please check the logs!!!";
+            }
+        }
+
+        logger.info("################## WERA MENU UPLOAD - FINISHED!!! ##################");
+
+        return SUCCESS;
+    }
+
 
     private List<WeraUploadMenu> generateWERAUploadMenuRequest(Map<String, List<WeraMenuUploadDTO>> consolidateResponse) {
 
