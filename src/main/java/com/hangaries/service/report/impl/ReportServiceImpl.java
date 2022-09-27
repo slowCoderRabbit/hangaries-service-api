@@ -44,7 +44,7 @@ public class ReportServiceImpl implements ReportService {
                 List<RSSDate> rssDate = jdbcTemplate.query("select * from REPORT_SALES_SUMMARY_BY_DATE", BeanPropertyRowMapper.newInstance(RSSDate.class));
                 reportResult.setSalesSummeryByDateList(rssDate);
             } else if (report.getReportName().equals("SALES_BY_DISH_ITEM")) {
-                List<RSSDishType> rssDishTypes = jdbcTemplate.query("select * from REPORT_SALES_SUMMARY_BY_DISH_TYPE", BeanPropertyRowMapper.newInstance(RSSDishType.class));
+                List<RSSDishType> rssDishTypes = jdbcTemplate.query("select * from REPORT_DISH_CONSUMPTION_SUMMARY", BeanPropertyRowMapper.newInstance(RSSDishType.class));
                 reportResult.setSalesSummeryByDishType(rssDishTypes);
             } else if (report.getReportName().equals("SALES_SUMMARY_BY_ORDER_SOURCE")) {
                 List<RSSOrderSource> rssOrderSources = jdbcTemplate.query("select * from REPORT_SALES_SUMMARY_BY_ORDER_SOURCE", BeanPropertyRowMapper.newInstance(RSSOrderSource.class));
