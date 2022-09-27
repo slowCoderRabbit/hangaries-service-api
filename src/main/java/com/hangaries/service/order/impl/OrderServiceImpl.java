@@ -187,9 +187,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderVO> saveOrderAndGetOrderView(Order orderRequest) {
         Order savedOrder = saveOrder(orderRequest);
-        List<OrderMenuIngredientAddressDTO> results = orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressViewByOrderId(savedOrder.getOrderId());
-        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
-        List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
+        OrderQueryRequest orderQueryRequest = new OrderQueryRequest();
+        orderQueryRequest.setOrderId(savedOrder.getOrderId());
+        List<OrderVO> orderList = queryOrderViewByParams(orderQueryRequest);
         return orderList;
 
     }
@@ -207,7 +207,7 @@ public class OrderServiceImpl implements OrderService {
         if (!orderRequest.isDescending()) {
             queryString = queryString + " desc";
         }
-        queryString = queryString + ", order_id, product_id, sub_product_id";
+        queryString = queryString + ", order_id, id desc, product_id, sub_product_id";
         logger.info("Querying view using queryString = [{}]", queryString);
         List<OrderMenuIngredientAddressDTO> results = jdbcTemplate.query(queryString, BeanPropertyRowMapper.newInstance(OrderMenuIngredientAddressDTO.class));
         logger.info("queryOrderViewByParams :: Total records returned from DB = [{}].", results.size());
@@ -233,11 +233,10 @@ public class OrderServiceImpl implements OrderService {
         if (FOOD_READY.equals(status)) {
             checkForOrderStatusUpdate(orderId, updatedBy);
         }
-        List<OrderMenuIngredientAddressDTO> results = orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressViewByOrderId(orderId);
-        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
-        List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
+        OrderQueryRequest orderQueryRequest = new OrderQueryRequest();
+        orderQueryRequest.setOrderId(orderId);
+        List<OrderVO> orderList = queryOrderViewByParams(orderQueryRequest);
         return orderList;
-
     }
 
     private void checkForOrderStatusUpdate(String orderId, String updatedBy) {

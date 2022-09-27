@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface ReportRepository extends JpaRepository<RootEntity, Integer> {
 
     @Procedure(procedureName = "sp_orderSummary", outputParameterName = "oErrorDescription")
-    String getReports(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("fromDate") String fromDate, @Param("toDate") String toDate);
+    String getReports(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("fromDate") String fromDate, @Param("toDate") String toDate,@Param("reportName") String reportName);
 
 }

@@ -17,5 +17,6 @@ public class Report implements Serializable {
     private @NotBlank String storeId;
     private @NotBlank String fromDate;
     private @NotBlank String toDate;
+    private @NotBlank String reportName;
 
 }
