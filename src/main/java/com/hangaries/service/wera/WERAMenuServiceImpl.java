@@ -1,10 +1,15 @@
 package com.hangaries.service.wera;
 
+import com.hangaries.model.Customer;
+import com.hangaries.model.CustomerDtls;
+import com.hangaries.model.Order;
 import com.hangaries.model.OrderIdInput;
 import com.hangaries.model.wera.dto.*;
 import com.hangaries.model.wera.request.*;
 import com.hangaries.model.wera.response.WeraMenuUploadResponse;
 import com.hangaries.model.wera.response.WeraOrderResponse;
+import com.hangaries.repository.CustomerDtlsRepository;
+import com.hangaries.repository.CustomerRepository;
 import com.hangaries.repository.wera.*;
 import com.hangaries.service.order.impl.OrderServiceImpl;
 import org.apache.commons.lang3.BooleanUtils;
@@ -22,20 +27,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static com.hangaries.constants.HangariesConstants.SUCCESS;
+import static com.hangaries.constants.HangariesConstants.*;
 
 @Service
 public class WERAMenuServiceImpl {
 
 
     private static final Logger logger = LoggerFactory.getLogger(WERAMenuServiceImpl.class);
+
     @Autowired
     WeraOrderJSONDumpRepository weraOrderJSONDumpRepository;
+    @Autowired
+    CustomerRepository customerRepository;
+    @Autowired
+    CustomerDtlsRepository customerDtlsRepository;
     @Value("${wera.menu.upload.url}")
     private String menuUploadURL;
     @Value("${wera.api.key}")
@@ -50,13 +57,10 @@ public class WERAMenuServiceImpl {
     private OrderServiceImpl orderService;
     @Autowired
     private WeraOrderItemDiscountDtlsRepository weraOrderItemDiscountDtlsRepository;
-
     @Autowired
     private WeraOrderSizeRepository weraOrderSizeRepository;
-
     @Autowired
     private WeraOrderDetailsRepository weraOrderDetailsRepository;
-
     @Autowired
     private WeraOrderMasterRepository weraOrderMasterRepository;
 
@@ -196,10 +200,14 @@ public class WERAMenuServiceImpl {
             logger.info("New orderId = [{}] generated for order request[{}].", newOrderId, weraOrder.getOrder_id());
 
             WeraOrderMasterDTO weraOrderMasterDTO = getWeraOrderMasterFromWeraOrder(weraOrder, newOrderId);
-
             logger.info("Saving order to DB for orderId = [{}]. ", newOrderId);
             weraOrderMasterRepository.save(weraOrderMasterDTO);
             logger.info("Order saved successfully for orderId = [{}]. ", newOrderId);
+
+            updateCustomerMaster(weraOrderMasterDTO);
+
+            updateCustomerAddress(weraOrderMasterDTO);
+
 
             if (!weraOrder.getOrder_items().isEmpty()) {
                 List<WeraOrderDetailsDTO> weraOrderDetailsDTOList = getWeraOrderDetailsFromWeraOrder(weraOrder, newOrderId);
@@ -230,7 +238,7 @@ public class WERAMenuServiceImpl {
                 logger.info("Discount details saved successfully for orderId = [{}]. ", newOrderId);
             }
 
-//            Order order = getOrderFromWeraOrderDetails(weraOrder);
+            Order order = getOrderFromWeraOrderDetails(weraOrder, orderIdInput, newOrderId);
 //            orderService.saveOrderAndGetOrderView(order);
         } catch (Exception ex) {
             logger.error("Exception occurred while processing WERA order!!!!", ex);
@@ -238,6 +246,70 @@ public class WERAMenuServiceImpl {
 
 
         return null;
+    }
+
+    private void updateCustomerAddress(WeraOrderMasterDTO weraOrderMasterDTO) throws Exception {
+        CustomerDtls existingCustomerDtls = customerDtlsRepository.getCustometDtlsById(weraOrderMasterDTO.getPhone_number(), ONLINE, STATUS_Y);
+        if (null == existingCustomerDtls) {
+            CustomerDtls newCustomerDtls = new CustomerDtls();
+            newCustomerDtls.setCustomerAddressType(ONLINE);
+            newCustomerDtls.setMobileNumber(weraOrderMasterDTO.getPhone_number());
+            newCustomerDtls.setAddress1(weraOrderMasterDTO.getAddress());
+            newCustomerDtls.setLandmark(weraOrderMasterDTO.getDelivery_area());
+            newCustomerDtls.setCity(NA);
+            newCustomerDtls.setState(NA);
+            newCustomerDtls.setZipCode(000000);
+            newCustomerDtls.setActive(STATUS_Y);
+            newCustomerDtls.setCreatedBy(AGGREGATOR);
+            newCustomerDtls.setUpdatedBy(AGGREGATOR);
+            customerDtlsRepository.save(newCustomerDtls);
+
+        } else {
+            existingCustomerDtls.setAddress1(weraOrderMasterDTO.getAddress());
+            existingCustomerDtls.setLandmark(weraOrderMasterDTO.getDelivery_area());
+            existingCustomerDtls.setActive(STATUS_Y);
+            existingCustomerDtls.setUpdatedBy(AGGREGATOR);
+            existingCustomerDtls.setUpdatedDate(new Date());
+            customerDtlsRepository.save(existingCustomerDtls);
+
+        }
+    }
+
+    private void updateCustomerMaster(WeraOrderMasterDTO weraOrderMasterDTO) {
+        List<Customer> customers = customerRepository.findByMobileNumber(weraOrderMasterDTO.getPhone_number());
+        if (customers.isEmpty()) {
+            Customer newCustomer = new Customer();
+            newCustomer.setFirstName(weraOrderMasterDTO.getCustomer_name());
+            newCustomer.setEmailId(weraOrderMasterDTO.getEmail());
+            newCustomer.setMobileNumber(weraOrderMasterDTO.getPhone_number());
+            newCustomer.setCreatedBy(AGGREGATOR);
+            newCustomer.setUpdatedBy(AGGREGATOR);
+            customerRepository.save(newCustomer);
+
+        } else {
+            for (Customer customer : customers) {
+                customer.setFirstName(weraOrderMasterDTO.getCustomer_name());
+                customer.setEmailId(weraOrderMasterDTO.getEmail());
+                customer.setLastName(BLANK);
+                customer.setLastName(BLANK);
+                customer.setMiddleName(BLANK);
+                customer.setUpdatedBy(AGGREGATOR);
+                customer.setUpdatedDate(new Date());
+                customerRepository.save(customer);
+            }
+        }
+    }
+
+    private Order getOrderFromWeraOrderDetails(WeraOrder weraOrder, OrderIdInput orderIdInput, String newOrderId) {
+
+        Order order = new Order();
+        order.setOrderId(newOrderId);
+        order.setRestaurantId(orderIdInput.getRestaurantId());
+        order.setStoreId(orderIdInput.getStoreId());
+        order.setOrderSource(orderIdInput.getOrderSource());
+
+        return order;
+
     }
 
     private WeraOrderMasterDTO getWeraOrderMasterFromWeraOrder(WeraOrder weraOrder, String newOrderId) {
@@ -271,6 +343,7 @@ public class WERAMenuServiceImpl {
             weraOrderMasterDTO.setPhone_number(weraOrder.getCustomer_details().getPhone_number());
             weraOrderMasterDTO.setEmail(weraOrder.getCustomer_details().getEmail());
             weraOrderMasterDTO.setAddress(weraOrder.getCustomer_details().getAddress());
+            weraOrderMasterDTO.setDelivery_area(weraOrder.getCustomer_details().getDelivery_area());
             weraOrderMasterDTO.setAddress_instructions(weraOrder.getCustomer_details().getAddress_instructions());
         }
         return weraOrderMasterDTO;

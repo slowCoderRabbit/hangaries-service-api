@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
@@ -26,4 +28,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select * from CUSTOMER_MASTER where mobile_number=:mobnumber", nativeQuery = true)
     Customer getCustomerDtlsByMobNum(@Param("mobnumber") String mobnumber) throws Exception;
 
+    List<Customer> findByMobileNumber(String phone_number);
 }

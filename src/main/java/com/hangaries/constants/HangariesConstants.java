@@ -5,6 +5,9 @@ public class HangariesConstants {
     public static final String STATUS_N = "N";
     public static final String STATUS_Y = "Y";
     public static final String FOOD_READY = "FOOD READY";
+    public static final String AGGREGATOR = "AGGREGATOR_API";
+    public static final String ONLINE = "Online";
+    public static final String NA = "NA";
 
     public static String SYSTEM = "SYSTEM";
     public static String ACCEPTED = "ACCEPTED";
@@ -20,6 +23,7 @@ public class HangariesConstants {
     public static String DELIVERED = "DELIVERED";
     public static String PAID = "PAID";
     public static String BLANK_OR_INCORRECT_PASSWORD = "BLANK_OR_INCORRECT_PASSWORD";
+    public static String BLANK = "";
 
 
 }
