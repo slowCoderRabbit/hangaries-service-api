@@ -44,7 +44,7 @@ public class IndexController {
             "</html>";
 
     @PostMapping("savePayUResponse")
-    public String sayHello2(@RequestBody Map<String, Object> payload) {
+    public String sayHello2(@ModelAttribute String string) {
         return STRING;
     }
 
