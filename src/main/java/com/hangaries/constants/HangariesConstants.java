@@ -24,6 +24,7 @@ public class HangariesConstants {
     public static String PAID = "PAID";
     public static String BLANK_OR_INCORRECT_PASSWORD = "BLANK_OR_INCORRECT_PASSWORD";
     public static String BLANK = "";
+    public static final String SUBMITTED = "SUBMITTED";
 
 
 }
