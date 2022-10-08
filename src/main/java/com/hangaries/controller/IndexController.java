@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class IndexController {
-    static final String url = "http://localhost:5080/new-checkout?";
+    static final String url = "https://client-app-uumgqhekpa-el.a.run.app/new-checkout?";
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     private static final String queryParam = "page=success&";
     static String htmlPart1Success = "<!DOCTYPE html>\n" +
