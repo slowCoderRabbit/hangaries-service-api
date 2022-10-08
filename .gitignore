@@ -2,3 +2,10 @@
 *.class
 target/
 .idea/uiDesigner.xml
+.idea/qaplug_profiles.xml
+.idea/misc.xml
+.idea/misc.xml
+.idea/misc.xml
+.idea/misc.xml
+.idea/misc.xml
+src/main/java/com/hangaries/service/file/GoogleCloudFileUpload.java

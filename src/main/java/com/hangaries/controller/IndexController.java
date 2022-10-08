@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class IndexController {
-    static final String url = "https://client-app-uumgqhekpa-el.a.run.app/new-checkout?";
+    static final String url = "http://localhost:5080/new-checkout?";
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     private static final String queryParam = "page=success&";
     static String htmlPart1Success = "<!DOCTYPE html>\n" +
@@ -31,9 +31,9 @@ public class IndexController {
             "        }, 3000);\n" +
             "      }\n" +
             "    </script>\n" +
-            "    <div>\n" +
-            "      <h1>Sample Invoice</h1>\n" +
-            "      <h3>Success Page</h3>\n" +
+            "    <div style=\"background-color: #39e75f; padding: 50px\">\n" +
+            "      <h1>Payment Success!</h1>\n" +
+            "      <h3>Thank You!</h3>\n" +
             "      <h3>\n" +
             "        Browser will stay 3 seconds in this page and automatically redirect you\n" +
             "        to the Client APP\n" +
@@ -63,9 +63,9 @@ public class IndexController {
             "        }, 3000);\n" +
             "      }\n" +
             "    </script>\n" +
-            "    <div>\n" +
-            "      <h1>Sample Invoice</h1>\n" +
-            "      <h3>Failure Page</h3>\n" +
+            "    <div style=\"background-color: #ff726f; padding: 50px\">\n" +
+            "      <h1>Payment Failed!</h1>\n" +
+            "      <h3>Please Try Again!</h3>\n" +
             "      <h3>\n" +
             "        Browser will stay 3 seconds in this page and automatically redirect you\n" +
             "        to the Client APP\n" +
@@ -108,7 +108,7 @@ public class IndexController {
             "  </body>\n" +
             "</html>\n";
 
-    private static String generateQueryParam(PayUResponse response) {
+    private static String generateQueryParam(PayUResponse response, String token) {
         StringBuilder qp = new StringBuilder(queryParam);
         qp.append("status=");
         qp.append(response.getStatus());
@@ -117,7 +117,7 @@ public class IndexController {
         qp.append(response.getTxnid());
         qp.append("&");
         qp.append("hash=");
-        qp.append(response.getHash());
+        qp.append(token);
         qp.append("&");
         qp.append("error_Message=");
         qp.append(response.getError_Message());
@@ -125,9 +125,10 @@ public class IndexController {
     }
 
     @PostMapping("savePayUResponseSuccess")
-    public String savePayUResponseSuccess(@ModelAttribute PayUResponse response) {
+    @ResponseBody
+    public String savePayUResponseSuccess(@ModelAttribute PayUResponse response, @RequestParam("token") String token) {
         logger.info("PayU transaction successful :: [{}]", response);
-        String result = generateQueryParam(response);
+        String result = generateQueryParam(response, token);
         String responseHTML = htmlPart1Success + url + result + htmlPart2Success;
         logger.info("Success response HTML = [{}]", responseHTML);
         return responseHTML;
@@ -136,7 +137,7 @@ public class IndexController {
     @PostMapping("savePayUResponseFailure")
     public String savePayUResponseFailure(@ModelAttribute PayUResponse response) {
         logger.info("PayU transaction failed :: [{}]", response);
-        String result = generateQueryParam(response);
+        String result = generateQueryParam(response, null);
         String responseHTML = htmlPart1Failure + url + result + htmlPart2Failure;
         logger.info("Failure response HTML = [{}]", responseHTML);
         return responseHTML;
