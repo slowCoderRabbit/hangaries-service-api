@@ -12,4 +12,5 @@ public class PayUResponse {
     private String txnid;
     private String error_Message;
     private String hash;
+    private String mode;
 }

@@ -1,16 +1,25 @@
 package com.hangaries.controller;
 
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import com.hangaries.model.payu.PayUResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
 public class IndexController {
-    static final String url = "https://client-app-uumgqhekpa-el.a.run.app/new-checkout?";
+
+    @Value("${payu.response.url}")
+    private static final String url = "https://client-app-uumgqhekpa-el.a.run.app/new-checkout?";
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     private static final String queryParam = "page=success&";
     static String htmlPart1Success = "<!DOCTYPE html>\n" +
@@ -121,7 +130,30 @@ public class IndexController {
         qp.append("&");
         qp.append("error_Message=");
         qp.append(response.getError_Message());
+        qp.append("&");
+        qp.append("res=");
+        qp.append(generateHashedPayUResponse(response));
         return qp.toString();
+    }
+
+    private static String generateHashedPayUResponse(PayUResponse response){
+        try {
+            Map<String,String> data = new HashMap<String,String>();
+            data.put("status", response.getStatus());
+            data.put("txnid", response.getTxnid());
+            data.put("error_Message", response.getError_Message());
+            data.put("hash", response.getHash());
+            data.put("mode", response.getMode());
+
+
+            Algorithm algorithm = Algorithm.HMAC256("burgersecret");
+            return JWT.create()
+                    .withIssuer("auth0").withPayload(data)
+                    .sign(algorithm);
+        } catch (JWTCreationException exception){
+            //Invalid Signing configuration / Couldn't convert Claims.
+            return null;
+        }
     }
 
     @PostMapping("savePayUResponseSuccess")
