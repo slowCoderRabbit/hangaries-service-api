@@ -5,6 +5,9 @@ public class HangariesConstants {
     public static final String STATUS_N = "N";
     public static final String STATUS_Y = "Y";
     public static final String FOOD_READY = "FOOD READY";
+    public static final String WERA = "WERA";
+    public static final String ONLINE = "Online";
+    public static final String NA = "NA";
 
     public static String SYSTEM = "SYSTEM";
     public static String ACCEPTED = "ACCEPTED";
@@ -20,6 +23,11 @@ public class HangariesConstants {
     public static String DELIVERED = "DELIVERED";
     public static String PAID = "PAID";
     public static String BLANK_OR_INCORRECT_PASSWORD = "BLANK_OR_INCORRECT_PASSWORD";
+    public static String BLANK = "";
+    public static final String SUBMITTED = "SUBMITTED";
+    public static final String ROO1 = "R001";
+    public static final String WERA_ACCEPT_ORDER_FLAG = "WERA_ACCEPT_ORDER_FLAG";
+    public static final String ORDER_SOURCE = "WD";
 
 
 }

@@ -36,7 +36,7 @@ public class Order implements Serializable {
     @Column(name = "order_source")
     private @NotBlank String orderSource;
     @Column(name = "customer_id")
-    private @NotNull Integer customerId;
+    private @NotNull Long customerId;
     @Column(name = "order_received_date_time")
     private @NotNull Date orderReceivedDateTime;
     @Column(name = "order_delivery_type")
