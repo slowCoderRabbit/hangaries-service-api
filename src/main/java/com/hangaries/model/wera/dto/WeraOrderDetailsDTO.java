@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 import static com.hangaries.constants.HangariesConstants.SYSTEM;
+import static com.hangaries.constants.HangariesConstants.WERA;
 
 @Data
 @NoArgsConstructor
@@ -76,13 +77,13 @@ public class WeraOrderDetailsDTO {
     private float packaging_sgst_percent;
 
     @Column(name = "Created_by")
-    private String createdBy = SYSTEM;
+    private String createdBy = WERA;
 
     @Column(name = "Created_date")
     private Date createdDate = new Date();
 
     @Column(name = "Updated_by")
-    private String updatedBy = SYSTEM;
+    private String updatedBy = WERA;
 
     @Column(name = "Updated_date")
     private Date updatedDate = new Date();

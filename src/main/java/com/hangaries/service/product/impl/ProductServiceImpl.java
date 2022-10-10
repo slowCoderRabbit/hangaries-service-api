@@ -68,6 +68,11 @@ public class ProductServiceImpl implements ProductService {
         return subProductRepository.findBySubProductId(subProductId);
     }
 
+
+    public List<SubProduct> getAllSubProduct() {
+        return subProductRepository.findAll(Sort.by(Sort.Direction.ASC, "subProductId"));
+    }
+
     private String getPaddedString(int maxId) {
         return String.format("%03d", maxId);
     }

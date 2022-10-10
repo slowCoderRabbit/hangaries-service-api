@@ -195,6 +195,15 @@ public class MenuController {
 
     }
 
+    @GetMapping("getAllSubProduct")
+    @ResponseBody
+    public ResponseEntity<List<SubProduct>> getAllSubProduct() {
+        logger.info("Getting list of all products,menu items.");
+        List<SubProduct> products = productService.getAllSubProduct();
+        return new ResponseEntity<List<SubProduct>>(products, HttpStatus.OK);
+
+    }
+
     @PostMapping("saveSubProduct")
     @ResponseBody
     public ResponseEntity<SubProduct> saveSubProduct(@RequestBody SubProduct subProduct) {
