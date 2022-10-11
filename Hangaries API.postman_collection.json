@@ -314,7 +314,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"SD\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"paymentMode\": \"COD\",\r\n        \"paymentStatus\": \"Done\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"deliveryCharges\":20.45,\r\n        \"customerAddressId\":289,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"couponCode\": \"TestcouponCode\",\r\n        \"discountPercentage\": 10.5,\r\n        \"updatedBy\": \"aniket\",        \r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\",\r\n        \"foodPackagedFlag\" : \"N\",\r\n        \"createdBy\": \"aniket\",\r\n        \"updatedBy\": \"aniket\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\",\r\n        \"foodPackagedFlag\" : \"N\",\r\n        \"createdBy\": \"aniket\",\r\n        \"updatedBy\": \"aniket\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
+					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"SD\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2022-09-24\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"paymentMode\": \"COD\",\r\n        \"paymentStatus\": \"Done\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"deliveryCharges\":20.45,\r\n        \"customerAddressId\":289,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"couponCode\": \"TestcouponCode\",\r\n        \"discountPercentage\": 10.5,\r\n        \"updatedBy\": \"aniket\",        \r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\",\r\n        \"foodPackagedFlag\" : \"N\",\r\n        \"createdBy\": \"aniket\",\r\n        \"updatedBy\": \"aniket\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\",\r\n        \"foodPackagedFlag\" : \"N\",\r\n        \"createdBy\": \"aniket\",\r\n        \"updatedBy\": \"aniket\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1127,7 +1127,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"restaurantId\": \"ALL\",\r\n        \"storeId\": \"ALL\",\r\n        \"fromDate\":\"2021-05-01\",\r\n        \"toDate\": \"2022-12-06\"\r\n}",
+					"raw": "{\r\n        \"restaurantId\": \"ALL\",\r\n        \"storeId\": \"ALL\",\r\n        \"fromDate\":\"2021-06-01\",\r\n        \"toDate\": \"2022-12-12\",\r\n        \"reportName\" :\"SALES_BY_DISH_ITEM\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1853,59 +1853,6 @@
 			"response": []
 		},
 		{
-			"name": "updateOrderDetailsStatusBySubProductId",
-			"protocolProfileBehavior": {
-				"strictSSL": true
-			},
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"M\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2012-04-05T16:00:00.000+00:00\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"paymentMode\": \"COD\",\r\n        \"paymentStatus\": \"Done\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"deliveryCharges\":20.45,\r\n        \"customerAddressId\":289,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/updateOrderDetailsStatusBySubProductId?orderId=MR001S00120220604000335&productId=P001&subProductId=S001&status=STATION23",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"updateOrderDetailsStatusBySubProductId"
-					],
-					"query": [
-						{
-							"key": "orderId",
-							"value": "MR001S00120220604000335"
-						},
-						{
-							"key": "productId",
-							"value": "P001"
-						},
-						{
-							"key": "subProductId",
-							"value": "S001"
-						},
-						{
-							"key": "status",
-							"value": "STATION23"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "getMenuIngredientsByMenuId",
 			"protocolProfileBehavior": {
 				"strictSSL": true,
@@ -2280,7 +2227,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getConfigDetailsByCriteria?restaurantId=R001&storeId=All&criteria=KDS_ROUTING_NAME",
+					"raw": "http://localhost:8080/api/getConfigDetailsByCriteria?restaurantId=R001&storeId=ALL&criteria=REPORTS",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2297,11 +2244,11 @@
 						},
 						{
 							"key": "storeId",
-							"value": "All"
+							"value": "ALL"
 						},
 						{
 							"key": "criteria",
-							"value": "KDS_ROUTING_NAME"
+							"value": "REPORTS"
 						}
 					]
 				}
@@ -3144,7 +3091,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n    \"ingredientType\": \"OnionT\",\r\n    \"category\": \"Topping\",\r\n    \"size\": \"Small\"\r\n}",
+					"raw": "{    \r\n    \"ingredientType\": \"OnionT2\",\r\n    \"category\": \"Topping\",\r\n    \"size\": \"Small\",\r\n     \"price\": 6.8,\r\n    \"imagePath\": \"Testpath\",\r\n    \"subProductStatus\": \"N\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -4039,7 +3986,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{        \r\n        \"orderId\": \"SDR001S00120220919001005\",\r\n        \"status\":\"FOOD READY\",\r\n        \"updatedBy\": \"ANIKET\"\r\n}      ",
+					"raw": "{        \r\n        \"orderId\": \"SDR001S00120220920001027\",\r\n        \"status\":\"FOOD READY\",\r\n        \"updatedBy\": \"aniket\"\r\n}      ",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -4126,6 +4073,193 @@
 					"path": [
 						"api",
 						"updateOrderDetailsStatusBySubProductId"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savePayUResponse",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://192.168.10.122:8080/api/savePayUResponseSuccess?status=asdfads&token=ttt",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"10",
+						"122"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"savePayUResponseSuccess"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "asdfads"
+						},
+						{
+							"key": "token",
+							"value": "ttt"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllSuppliers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllSuppliers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllSuppliers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveSupplier",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \r\n        \"supplierName\" :\"supplierName\",\r\n        \"supplierAddress\": \"Hinjiwadi\",        \r\n        \"supplierCity\" :\"Pune\", \r\n        \"supplierState\": \"MH\",\r\n        \"supplierZipCode\": 444444,\r\n        \"supplierMobileNumber\": \"9999999999\",\r\n        \"supplierEmailId\" : \"aniket@gmail.com\",\r\n        \"supplierFaxNumber\" :\"66666666\",\r\n        \"supplierGstNumber\" :\"GST123456\",\r\n        \"supplierTANNumber\" :\"TAN098765\",\r\n        \"supplierCategory\" :\"internal\",\r\n        \"supplierStatus\" :\"ACTIVE\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveSupplier",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveSupplier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateSupplier",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"supplierName\": \"supplierName2\",\r\n    \"supplierAddress\": \"Hinjiwadi\",\r\n    \"supplierCity\": \"Pune\",\r\n    \"supplierState\": \"MH\",\r\n    \"supplierZipCode\": 444444,\r\n    \"supplierMobileNumber\": \"9999999999\",\r\n    \"supplierEmailId\": \"aniket@gmail.com\",\r\n    \"supplierFaxNumber\": \"66666666\",\r\n    \"supplierGstNumber\": \"GST123456\",\r\n    \"supplierTANNumber\": \"TAN098765\",\r\n    \"supplierCategory\": \"internal\",\r\n    \"supplierStatus\": \"ACTIVE\",\r\n    \"createdBy\": \"SYSTEM\",\r\n    \"createdDate\": \"2022-10-11T13:45:37.295+00:00\",\r\n    \"updatedBy\": \"SYSTEM\",\r\n    \"updatedDate\": \"2022-10-11T13:45:37.295+00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveSupplier",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveSupplier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllActiveSuppliers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllActiveSuppliers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllActiveSuppliers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveSupplierStatus",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,  \r\n    \"supplierStatus\": \"INACTIVTest\",\r\n    \"updatedBy\" : \"AniketP\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveSupplierStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveSupplierStatus"
 					]
 				}
 			},
