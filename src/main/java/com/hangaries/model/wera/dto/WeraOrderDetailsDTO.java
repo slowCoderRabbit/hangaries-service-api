@@ -3,9 +3,11 @@ package com.hangaries.model.wera.dto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import static com.hangaries.constants.HangariesConstants.SYSTEM;
 import static com.hangaries.constants.HangariesConstants.WERA;
 
 @Data
@@ -15,7 +17,15 @@ import static com.hangaries.constants.HangariesConstants.WERA;
 @EqualsAndHashCode
 @Entity
 @Table(name = "WERA_ORDER_DETAILS")
-public class WeraOrderDetailsDTO {
+public class WeraOrderDetailsDTO implements Serializable {
+
+    @OneToMany(targetEntity = WeraOrderAddonDTO.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "wera_order_id", referencedColumnName = "wera_order_id")
+    List<WeraOrderAddonDTO> weraOrderAddons = new ArrayList<>();
+
+    @OneToMany(targetEntity = WeraOrderItemDiscountDtlsDTO.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "wera_order_id", referencedColumnName = "wera_order_id")
+    List<WeraOrderItemDiscountDtlsDTO> weraOrderItemDiscounts = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

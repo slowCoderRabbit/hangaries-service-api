@@ -3,20 +3,42 @@ package com.hangaries.service.store.impl;
 import com.hangaries.model.Store;
 import com.hangaries.repository.StoreRepository;
 import com.hangaries.service.store.StoreService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StoreServiceImpl implements StoreService {
 
     private static final Logger logger = LoggerFactory.getLogger(StoreServiceImpl.class);
 
+    private static final Map<String, Store> weraMerchantToStoreMapping = new HashMap<>();
     @Autowired
     StoreRepository storeRepository;
+
+    public static Map<String, Store> getWeraMerchantToStoreMapping() {
+        return Collections.unmodifiableMap(weraMerchantToStoreMapping);
+    }
+
+    @Bean(initMethod = "init")
+    private void populateWeraMerchantToStoreMapping() {
+        logger.info("Loading WERA merchant to store mapping......");
+        List<Store> stores = getAllStores();
+        for (Store store : stores) {
+            if (null != store.getWeraMerchantId() && !StringUtils.isBlank(store.getWeraMerchantId())) {
+                weraMerchantToStoreMapping.put(store.getWeraMerchantId(), store);
+            }
+        }
+        logger.info("WERA merchant to store mapping loaded. [{}]", weraMerchantToStoreMapping);
+    }
 
     @Override
     public List<Store> getAllStores() {
@@ -36,5 +58,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public long deleteStoreByStoreId(String storeId) {
         return storeRepository.deleteByStoreId(storeId);
+    }
+
+    public Store getStoreDetailsByWeraMerchantId(String weraMerchantId) {
+        logger.info("Getting store details for weraMerchantId = [{}]", weraMerchantId);
+        return storeRepository.findByWeraMerchantId(weraMerchantId);
     }
 }

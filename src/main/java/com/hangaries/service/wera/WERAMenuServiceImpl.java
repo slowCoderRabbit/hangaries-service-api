@@ -1,6 +1,7 @@
 package com.hangaries.service.wera;
 
 import com.hangaries.model.*;
+import com.hangaries.model.vo.OrderVO;
 import com.hangaries.model.wera.dto.*;
 import com.hangaries.model.wera.request.*;
 import com.hangaries.model.wera.response.WeraMenuUploadResponse;
@@ -10,6 +11,7 @@ import com.hangaries.repository.CustomerRepository;
 import com.hangaries.repository.wera.*;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import com.hangaries.service.order.impl.OrderServiceImpl;
+import com.hangaries.service.store.impl.StoreServiceImpl;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,6 +27,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import static com.hangaries.constants.HangariesConstants.*;
@@ -32,14 +37,18 @@ import static com.hangaries.constants.HangariesConstants.*;
 @Service
 public class WERAMenuServiceImpl {
 
+    public static final String PIPE = "|";
+    public static final String EQUAL = "=";
     private static final Logger logger = LoggerFactory.getLogger(WERAMenuServiceImpl.class);
-
     @Autowired
     WeraOrderJSONDumpRepository weraOrderJSONDumpRepository;
     @Autowired
     CustomerRepository customerRepository;
     @Autowired
     CustomerDtlsRepository customerDtlsRepository;
+
+    @Autowired
+    StoreServiceImpl storeService;
 
     @Autowired
     ConfigServiceImpl configService;
@@ -215,7 +224,8 @@ public class WERAMenuServiceImpl {
 
     public WeraOrderResponse placeOrder(WeraOrder weraOrder) {
 
-        List<ConfigMaster> configMasterList = configService.getConfigDetailsByCriteria(ROO1, ALL, WERA_ACCEPT_ORDER_FLAG);
+        WeraOrderResponse weraOrderResponse = new WeraOrderResponse();
+        List<ConfigMaster> configMasterList = configService.getConfigDetailsByCriteria(RESTAURANT_ID, ALL, WERA_ACCEPT_ORDER_FLAG);
         boolean acceptWERAOrder = false;
         if (!configMasterList.isEmpty()) {
             acceptWERAOrder = configMasterList.get(0).getConfigCriteriaValue().equalsIgnoreCase(Y);
@@ -224,28 +234,32 @@ public class WERAMenuServiceImpl {
 
             try {
                 saveOrderDetailsJSON(weraOrder);
+                String weraMerchantId = weraOrder.getRestaurant_id() + "";
+                String weraOrderId = weraOrder.getOrder_id() + "";
+                Store storeDetails = StoreServiceImpl.getWeraMerchantToStoreMapping().get(weraMerchantId);
+                logger.info("Wera MerchantId = [{}] returned Store Details = [{}]", weraMerchantId, storeDetails);
 
-//                OrderIdInput orderIdInput = getOrderIdInput();
+//                OrderIdInput orderIdInput = getOrderIdInput(RESTAURANT_ID,storeDetails.getStoreId(),ORDER_SOURCE);
 //                logger.info("Getting new orderId for order request [{}] by passing values = [{}].", weraOrder.getOrder_id(), orderIdInput);
 //                String newOrderId = orderService.getNewOrderId(orderIdInput);
 //                logger.info("New orderId = [{}] generated for order request[{}].", newOrderId, weraOrder.getOrder_id());
-//
-//                WeraOrderMasterDTO weraOrderMasterDTO = getWeraOrderMasterFromWeraOrder(weraOrder, newOrderId);
-//                logger.info("Saving order to DB for orderId = [{}]. ", newOrderId);
-//                weraOrderMasterRepository.save(weraOrderMasterDTO);
-//                logger.info("Order saved successfully for orderId = [{}]. ", newOrderId);
-//
-//                Customer customer = updateCustomerMaster(weraOrderMasterDTO);
-//                CustomerDtls customerDtls = updateCustomerAddress(weraOrderMasterDTO);
-//
-//
-//                if (!weraOrder.getOrder_items().isEmpty()) {
-//                    List<WeraOrderDetailsDTO> weraOrderDetailsDTOList = getWeraOrderDetailsFromWeraOrder(weraOrder, newOrderId);
-//                    logger.info("Saving order details to DB for orderId = [{}]. ", newOrderId);
-//                    weraOrderDetailsRepository.saveAll(weraOrderDetailsDTOList);
-//                    logger.info("Order details saved successfully for orderId = [{}]. ", newOrderId);
-//
-//                }
+
+                WeraOrderMasterDTO weraOrderMasterDTO = getWeraOrderMasterFromWeraOrder(weraOrder);
+                weraOrderMasterDTO.setStore_id(storeDetails.getStoreId());
+                logger.info("Saving order to DB for orderId = [{}] and storeId = [{}]. ", weraOrderId, weraOrderMasterDTO.getStore_id());
+                WeraOrderMasterDTO savedWeraOrderMasterDTO = weraOrderMasterRepository.save(weraOrderMasterDTO);
+                logger.info("Order saved successfully for orderId = [{}]. ", weraOrderMasterDTO.getWera_order_id());
+
+                Customer customer = updateCustomerMaster(weraOrderMasterDTO);
+                CustomerDtls customerDtls = updateCustomerAddress(weraOrderMasterDTO);
+
+                if (!weraOrder.getOrder_items().isEmpty()) {
+                    List<WeraOrderDetailsDTO> weraOrderDetailsDTOList = getWeraOrderDetailsFromWeraOrder(weraOrder);
+                    logger.info("Saving order details to DB for orderId = [{}]. ", weraOrderId);
+                    List<WeraOrderDetailsDTO> savedWeraOrderDetailsDTOList = weraOrderDetailsRepository.saveAll(weraOrderDetailsDTOList);
+                    logger.info("Order details saved successfully for orderId = [{}]. ", weraOrderId);
+
+                }
 
 //                if (!weraOrder.getAddons().isEmpty()) {
 //                    List<WeraOrderAddonDTO> weraOrderAddonDTOList = getWeraOrderAddonFromWeraOrder(weraOrder, newOrderId);
@@ -268,17 +282,27 @@ public class WERAMenuServiceImpl {
 //                    logger.info("Discount details saved successfully for orderId = [{}]. ", newOrderId);
 //                }
 
-//                Order order = getOrderFromWeraOrderDetails(weraOrder, orderIdInput, newOrderId, customer);
-//                orderService.saveOrderAndGetOrderView(order);
+                Order order = getOrderFromWeraOrderDetails(weraOrder, getOrderIdInput(RESTAURANT_ID, storeDetails.getStoreId(), ORDER_SOURCE), customer, customerDtls);
+                List<OrderVO> result = orderService.saveOrderAndGetOrderView(order);
+                logger.info("WERA order saved successfully!!! [{}] ", result);
+
+                weraOrderResponse.setOrder_id(result.stream().findFirst().get().getOrderId());
+                weraOrderResponse.setMessage("OK");
+                weraOrderResponse.setStatus(200);
 
             } catch (Exception ex) {
                 logger.error("Exception occurred while processing WERA order!!!!", ex);
+                weraOrderResponse.setOrder_id("");
+                weraOrderResponse.setMessage("Internal Server Error");
+                weraOrderResponse.setStatus(500);
             }
 
-
-            return null;
+            return weraOrderResponse;
         }
-        return null;
+        weraOrderResponse.setOrder_id("");
+        weraOrderResponse.setMessage("Service Unavailable");
+        weraOrderResponse.setStatus(503);
+        return weraOrderResponse;
     }
 
     private CustomerDtls updateCustomerAddress(WeraOrderMasterDTO weraOrderMasterDTO) throws Exception {
@@ -293,7 +317,7 @@ public class WERAMenuServiceImpl {
             newCustomerDtls.setState(NA);
             newCustomerDtls.setZipCode(000000);
             newCustomerDtls.setActive(STATUS_Y);
-            newCustomerDtls.setCreatedBy(WERA); /// TODO : WERA
+            newCustomerDtls.setCreatedBy(WERA);
             newCustomerDtls.setUpdatedBy(WERA);
             return customerDtlsRepository.save(newCustomerDtls);
 
@@ -334,62 +358,104 @@ public class WERAMenuServiceImpl {
         return customers.get(0);
     }
 
-    private Order getOrderFromWeraOrderDetails(WeraOrder weraOrder, OrderIdInput orderIdInput, String newOrderId, Customer customer) {
+    private Order getOrderFromWeraOrderDetails(WeraOrder weraOrder, OrderIdInput orderIdInput, Customer customer, CustomerDtls customerDtls) {
 
         Order order = new Order();
-        order.setOrderId(newOrderId);
         order.setRestaurantId(orderIdInput.getRestaurantId());
         order.setStoreId(orderIdInput.getStoreId());
         order.setOrderSource(orderIdInput.getOrderSource());
         order.setCustomerId(customer.getId());
-        //TODO - Once the date format is confirmed will convert to date.
-        order.setOrderReceivedDateTime(new Date());
+        order.setCustomerAddressId(customerDtls.getId());
+        order.setOrderReceivedDateTime(getDateFromEpoch(weraOrder.getOrder_date_time()));
         order.setOrderDeliveryType(weraOrder.getOrder_type());
         order.setOrderStatus(SUBMITTED);
         order.setPaymentStatus(PAID);
-        order.setPaymentMode(weraOrder.getOrder_from()); /// //TODO Inter mapping with order from
-        //TODO - Tax. This will be nullable
-        // order.setTaxRuleId(1);
+        order.setPaymentMode(weraOrder.getPayment_mode());
         order.setTotalPrice(weraOrder.getNet_amount());
         order.setOverallPriceWithTax(weraOrder.getGross_amount());
         order.setCgstCalculatedValue(weraOrder.getCgst());
         order.setSgstCalculatedValue(weraOrder.getSgst());
         order.setDeliveryCharges(weraOrder.getDelivery_charge());
         //TODO convert list to single value
-//        order.setCouponCode(weraOrder.);
-//        order.setDiscountPercentage(weraOrder.);
-        List<OrderDetail> orderDetailList = getOrderDetailsFromWERAOrder(weraOrder, newOrderId);
-        order.setOrderDetails(orderDetailList);
+        String formattedCouponCode = getFormattedCouponCode(weraOrder);
+        order.setCouponCode(formattedCouponCode.substring(0, Math.min(formattedCouponCode.length(), 99)));
+        List<OrderDetail> orderDetailList = getOrderDetailsFromWERAOrder(weraOrder);
+        if (!orderDetailList.isEmpty()) {
+            order.setOrderDetails(orderDetailList);
+        }
         return order;
 
     }
 
-    private List<OrderDetail> getOrderDetailsFromWERAOrder(WeraOrder weraOrder, String newOrderId) {
-        List<OrderDetail> orderDetails = new ArrayList<>();
-//        for (WeraOrderAddon addon : weraOrder.getAddons()) {
-//            OrderDetail orderDetail = new OrderDetail();
-//            orderDetail.setOrderId(newOrderId);
-//            orderDetail.setProductId("P033");
-//            orderDetail.setSubProductId("S013");
-//            orderDetail.setPrice(addon.getPrice());
-//            orderDetail.setQuantity(1);
-//            orderDetails.add(orderDetail);
+    private String getFormattedCouponCode(WeraOrder weraOrder) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (WeraOrderItem item : weraOrder.getOrder_items()) {
+            if (null != item.getItem_discounts()) {
+                for (WeraOrderDiscount discount : item.getItem_discounts()) {
+                    stringBuilder.append(discount.getType());
+                    stringBuilder.append(EQUAL);
+                    stringBuilder.append(discount.getAmount());
+                    stringBuilder.append(PIPE);
+                }
+
+            }
+
+        }
+        return stringBuilder.toString();
+    }
+
+    private Date getDateFromEpoch(String orderDateTime) {
+        LocalDate localDate = Instant.ofEpochMilli(Long.parseLong(orderDateTime)).atZone(ZoneId.of("Asia/Kolkata")).toLocalDate();
+        logger.info("For Epoch = [{}] localDate = [{}]", orderDateTime, localDate);
+        Date date = Date.from(localDate.atStartOfDay(ZoneId.of("Asia/Kolkata")).toInstant());
+        logger.info("For Epoch = [{}] date = [{}]", orderDateTime, date);
+        return date;
+    }
+
+//    private LocalDate getDateTimeFromEpoch(String orderDateTime) {
+//        LocalDate localDate =  Instant.ofEpochMilli(Long.parseLong(orderDateTime)).atZone(ZoneId.of("Asia/Kolkata")).toLocalDate();
+//        logger.info("For Epoch = [{}] localDate = [{}]",orderDateTime,localDate);
 //
-//        }
+//    }
+
+    private List<OrderDetail> getOrderDetailsFromWERAOrder(WeraOrder weraOrder) {
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (WeraOrderItem item : weraOrder.getOrder_items()) {
+            orderDetails.add(getDefaultOrderDetail(item));
+            if (null != item.getAddons()) {
+                for (WeraOrderAddon addon : item.getAddons()) {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setProductId(item.getItem_id());
+                    orderDetail.setSubProductId(addon.getAddon_id());
+                    orderDetail.setPrice(addon.getPrice());
+                    orderDetail.setQuantity(1);
+                }
+            }
+        }
         return orderDetails;
     }
 
-    private WeraOrderMasterDTO getWeraOrderMasterFromWeraOrder(WeraOrder weraOrder, String newOrderId) {
-        logger.info("Extracting order master details from WERA order for orderId = [{}].", newOrderId);
+    private OrderDetail getDefaultOrderDetail(WeraOrderItem weraOrderItem) {
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setProductId(weraOrderItem.getItem_id());
+        orderDetail.setSubProductId(NAA);
+        orderDetail.setPrice(weraOrderItem.getItem_unit_price());
+        orderDetail.setQuantity(1);
+        return orderDetail;
+    }
+
+    private WeraOrderMasterDTO getWeraOrderMasterFromWeraOrder(WeraOrder weraOrder) {
+        logger.info("Extracting order master details from WERA order for wera orderId = [{}].", weraOrder.getOrder_id());
         WeraOrderMasterDTO weraOrderMasterDTO = new WeraOrderMasterDTO();
-        weraOrderMasterDTO.setOrder_id(newOrderId);
         weraOrderMasterDTO.setWera_order_id(weraOrder.getOrder_id() + "");
         weraOrderMasterDTO.setExternal_order_id(weraOrder.getExternal_order_id());
         weraOrderMasterDTO.setWera_outlet_id(weraOrder.getRestaurant_id());
-        weraOrderMasterDTO.setRestaurant_id(weraOrder.getRestaurant_id() + "");
+        weraOrderMasterDTO.setRestaurant_id(RESTAURANT_ID);
         weraOrderMasterDTO.setStore_id(weraOrder.getRestaurant_id() + "");
         weraOrderMasterDTO.setOrder_from(weraOrder.getOrder_from());
-        weraOrderMasterDTO.setOrder_date_time(weraOrder.getOrder_date_time());
+        weraOrderMasterDTO.setOrder_date(getDateFromEpoch(weraOrder.getOrder_date_time()));
+//        weraOrderMasterDTO.setOrder_date_time(weraOrder.getOrder_date_time());
         weraOrderMasterDTO.setEnable_delivery(weraOrder.getEnable_delivery());
         weraOrderMasterDTO.setNet_amount(weraOrder.getNet_amount());
         weraOrderMasterDTO.setGross_amount(weraOrder.getGross_amount());
@@ -416,13 +482,12 @@ public class WERAMenuServiceImpl {
         return weraOrderMasterDTO;
     }
 
-    private List<WeraOrderDetailsDTO> getWeraOrderDetailsFromWeraOrder(WeraOrder weraOrder, String newOrderId) {
+    private List<WeraOrderDetailsDTO> getWeraOrderDetailsFromWeraOrder(WeraOrder weraOrder) {
 
-        logger.info("Extracting order item details from WERA order for orderId = [{}].", newOrderId);
+        logger.info("Extracting order item details from WERA order for wera orderId = [{}].", weraOrder.getOrder_id());
         List<WeraOrderDetailsDTO> weraOrderDetailsDTOList = new ArrayList<>();
         for (WeraOrderItem item : weraOrder.getOrder_items()) {
             WeraOrderDetailsDTO weraOrderDetailsDTO = new WeraOrderDetailsDTO();
-            weraOrderDetailsDTO.setOrder_id(newOrderId);
             weraOrderDetailsDTO.setWera_order_id(weraOrder.getOrder_id() + "");
             weraOrderDetailsDTO.setWera_item_id(item.getWera_item_id());
             weraOrderDetailsDTO.setItem_id(item.getItem_id());
@@ -441,9 +506,15 @@ public class WERAMenuServiceImpl {
             weraOrderDetailsDTO.setPackaging_cgst_percent(item.getPackaging_cgst_percent());
             weraOrderDetailsDTO.setPackaging_sgst_percent(item.getPackaging_sgst_percent());
             weraOrderDetailsDTOList.add(weraOrderDetailsDTO);
+            if (null != item.getAddons()) {
+                weraOrderDetailsDTO.setWeraOrderAddons(getWeraOrderAddonFromWeraOrder(item));
+            }
+            if (null != item.getItem_discounts()) {
+                weraOrderDetailsDTO.setWeraOrderItemDiscounts(getWeraOrderItemDiscountDtlsFromWeraOrder(item));
+            }
 
         }
-        logger.info("Extracted [{}] order item details from WERA order for orderId = [{}].", weraOrderDetailsDTOList.size(), newOrderId);
+        logger.info("Extracted [{}] order item details from WERA order for wera orderId = [{}].", weraOrderDetailsDTOList.size(), weraOrder.getOrder_id());
         return weraOrderDetailsDTOList;
 
     }
@@ -469,46 +540,46 @@ public class WERAMenuServiceImpl {
 
     }
 
-    private List<WeraOrderItemDiscountDtlsDTO> getWeraOrderItemDiscountDtlsFromWeraOrder(WeraOrder weraOrder, String newOrderId) {
-        logger.info("Extracting discount details from WERA order for orderId = [{}].", newOrderId);
+    private List<WeraOrderItemDiscountDtlsDTO> getWeraOrderItemDiscountDtlsFromWeraOrder(WeraOrderItem weraOrderItem) {
+        String weraItemId = weraOrderItem.getWera_item_id() + "";
+        logger.info("Extracting discount details from WERA order for orderId = [{}].", weraItemId);
         List<WeraOrderItemDiscountDtlsDTO> weraOrderItemDiscountDtlsDTOList = new ArrayList<>();
-//        for (WeraOrderDiscount discount : weraOrder.getItem_discounts()) {
-//            WeraOrderItemDiscountDtlsDTO weraOrderItemDiscountDtlsDTO = new WeraOrderItemDiscountDtlsDTO();
-//            weraOrderItemDiscountDtlsDTO.setOrder_id(newOrderId);
-//            weraOrderItemDiscountDtlsDTO.setWera_order_id(weraOrder.getOrder_id() + "");
-//            weraOrderItemDiscountDtlsDTO.setItem_discount_type(discount.getType());
-//            weraOrderItemDiscountDtlsDTO.setItem_discount_amount(discount.getAmount());
-//            weraOrderItemDiscountDtlsDTOList.add(weraOrderItemDiscountDtlsDTO);
-//        }
-        logger.info("Extracted [{}] discount details from WERA order for orderId = [{}].", weraOrderItemDiscountDtlsDTOList.size(), newOrderId);
+        for (WeraOrderDiscount discount : weraOrderItem.getItem_discounts()) {
+            WeraOrderItemDiscountDtlsDTO weraOrderItemDiscountDtlsDTO = new WeraOrderItemDiscountDtlsDTO();
+            weraOrderItemDiscountDtlsDTO.setWera_order_id(weraItemId);
+            weraOrderItemDiscountDtlsDTO.setItem_discount_type(discount.getType());
+            weraOrderItemDiscountDtlsDTO.setItem_discount_amount(discount.getAmount());
+            weraOrderItemDiscountDtlsDTOList.add(weraOrderItemDiscountDtlsDTO);
+        }
+        logger.info("Extracted [{}] discount details from WERA order for orderId = [{}].", weraOrderItemDiscountDtlsDTOList.size(), weraItemId);
         return weraOrderItemDiscountDtlsDTOList;
     }
 
-    private OrderIdInput getOrderIdInput() {
+    private OrderIdInput getOrderIdInput(String restaurantId, String storeId, String orderSource) {
         OrderIdInput orderIdInput = new OrderIdInput();
-        orderIdInput.setRestaurantId(ROO1);
-        orderIdInput.setStoreId("S001"); /// TODO ---> Lookup 1800 -> Storid
-        orderIdInput.setOrderSource(ORDER_SOURCE);
+        orderIdInput.setRestaurantId(restaurantId);
+        orderIdInput.setStoreId(storeId);
+        orderIdInput.setOrderSource(orderSource);
         return orderIdInput;
     }
 
-    private List<WeraOrderAddonDTO> getWeraOrderAddonFromWeraOrder(WeraOrder weraOrder, String newOrderId) {
-        logger.info("Extracting addon details from WERA order for orderId = [{}].", newOrderId);
+    private List<WeraOrderAddonDTO> getWeraOrderAddonFromWeraOrder(WeraOrderItem weraOrderItem) {
+        String weraItemId = weraOrderItem.getWera_item_id() + "";
+        logger.info("Extracting addon details from WERA order for wera orderId = [{}].", weraItemId);
         List<WeraOrderAddonDTO> weraOrderAddonDTOList = new ArrayList<>();
-//        for (WeraOrderAddon addon : weraOrder.getAddons()) {
-//            WeraOrderAddonDTO addonDTO = new WeraOrderAddonDTO();
-//            addonDTO.setOrder_id(newOrderId);
-//            addonDTO.setWera_order_id(weraOrder.getOrder_id() + "");
-//            addonDTO.setAddon_id(addon.getAddon_id());
-//            addonDTO.setName(addon.getName());
-//            addonDTO.setPrice(addon.getPrice());
-//            addonDTO.setCgst(addon.getCgst());
-//            addonDTO.setSgst(addon.getSgst());
-//            addonDTO.setCgst_percent(addon.getCgst_percent());
-//            addonDTO.setSgst_percent(addon.getSgst_percent());
-//            weraOrderAddonDTOList.add(addonDTO);
-//        }
-        logger.info("Extracted [{}] addon details from WERA order for orderId = [{}].", weraOrderAddonDTOList.size(), newOrderId);
+        for (WeraOrderAddon addon : weraOrderItem.getAddons()) {
+            WeraOrderAddonDTO addonDTO = new WeraOrderAddonDTO();
+            addonDTO.setWera_order_id(weraItemId);
+            addonDTO.setAddon_id(addon.getAddon_id());
+            addonDTO.setName(addon.getName());
+            addonDTO.setPrice(addon.getPrice());
+            addonDTO.setCgst(addon.getCgst());
+            addonDTO.setSgst(addon.getSgst());
+            addonDTO.setCgst_percent(addon.getCgst_percent());
+            addonDTO.setSgst_percent(addon.getSgst_percent());
+            weraOrderAddonDTOList.add(addonDTO);
+        }
+        logger.info("Extracted [{}] addon details from WERA order for wera orderId = [{}].", weraOrderAddonDTOList.size(), weraItemId);
         return weraOrderAddonDTOList;
     }
 

@@ -52,23 +52,23 @@ public class Order implements Serializable {
     @Column(name = "payment_txn_reference")
     private String paymentTxnReference;
     @Column(name = "tax_rule_id")
-    private @NotNull Integer taxRuleId;
+    private int taxRuleId;
     @Column(name = "total_price")
-    private @NotNull Float totalPrice;
+    private float totalPrice;
     @Column(name = "cgst_calculated_value")
-    private Float cgstCalculatedValue;
+    private float cgstCalculatedValue;
     @Column(name = "sgst_calculated_value")
-    private Float sgstCalculatedValue;
+    private float sgstCalculatedValue;
     @Column(name = "delivery_charges")
-    private Float deliveryCharges;
+    private float deliveryCharges;
     @Column(name = "coupon_code")
     private String couponCode;
     @Column(name = "discount_percentage")
     private Float discountPercentage;
     @Column(name = "overall_price_with_tax")
-    private Float overallPriceWithTax;
+    private float overallPriceWithTax;
     @Column(name = "customer_address_id")
-    private Long customerAddressId;
+    private long customerAddressId;
     @Column(name = "delivery_user_id")
     private String deliveryUserId;
     @Column(name = "food_packaged_flag")

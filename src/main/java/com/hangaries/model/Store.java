@@ -68,6 +68,9 @@ public class Store {
     @Column(name = "store_available_for_delivery")
     private String storeAvailableForDelivery;
 
+    @Column(name = "wera_merchant_id")
+    private String weraMerchantId;
+
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;
 
