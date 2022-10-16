@@ -4,6 +4,7 @@ import com.hangaries.model.*;
 import com.hangaries.model.vo.OrderVO;
 import com.hangaries.model.wera.dto.*;
 import com.hangaries.model.wera.request.*;
+import com.hangaries.model.wera.response.WERAOrderAcceptResponse;
 import com.hangaries.model.wera.response.WeraMenuUploadResponse;
 import com.hangaries.model.wera.response.WeraOrderResponse;
 import com.hangaries.repository.CustomerDtlsRepository;
@@ -35,11 +36,11 @@ import java.util.*;
 import static com.hangaries.constants.HangariesConstants.*;
 
 @Service
-public class WERAMenuServiceImpl {
+public class WERAServiceImpl {
 
     public static final String PIPE = "|";
     public static final String EQUAL = "=";
-    private static final Logger logger = LoggerFactory.getLogger(WERAMenuServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(WERAServiceImpl.class);
     @Autowired
     WeraOrderJSONDumpRepository weraOrderJSONDumpRepository;
     @Autowired
@@ -48,12 +49,12 @@ public class WERAMenuServiceImpl {
     CustomerDtlsRepository customerDtlsRepository;
 
     @Autowired
-    StoreServiceImpl storeService;
-
-    @Autowired
     ConfigServiceImpl configService;
     @Value("${wera.menu.upload.url}")
     private String menuUploadURL;
+
+//    @Value("${wera.order.accept.url}")
+//    private String orderAcceptURL;
     @Value("${wera.api.key}")
     private String werAPIKey;
     @Value("${wera.api.value}")
@@ -110,6 +111,26 @@ public class WERAMenuServiceImpl {
         logger.info("################## WERA MENU UPLOAD - FINISHED!!! ##################");
 
         return SUCCESS;
+    }
+
+    public ResponseEntity<WERAOrderAcceptResponse> callWERAOrderAcceptAPI(WERAOrderAcceptRequest request) {
+        logger.info("################## WERA ACCEPT ORDER - INITIATING!!! ##################");
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set(werAPIKey, werAPIValue);
+
+        HttpEntity<WERAOrderAcceptRequest> httpRequest = new HttpEntity<>(request, headers);
+        ResponseEntity<WERAOrderAcceptResponse> response = null;
+//        try {
+//            response = restTemplate.postForEntity(orderAcceptURL, httpRequest, WERAOrderAcceptResponse.class);
+//            logger.info("WERA ACCEPT ORDER RESPONSE = [{}]", response.getBody());
+//        } catch (Exception ex) {
+//            logger.error(ex.getMessage());
+//            logger.error("Error while accepting wera order [{}]", request.getOrder_id(), ex.getMessage());
+//        }
+
+        return response;
     }
 
 
