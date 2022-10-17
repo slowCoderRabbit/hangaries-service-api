@@ -53,7 +53,7 @@ public class WERAServiceImpl {
     @Value("${wera.menu.upload.url}")
     private String menuUploadURL;
 
-//    @Value("${wera.order.accept.url}")
+    //    @Value("${wera.order.accept.url}")
 //    private String orderAcceptURL;
     @Value("${wera.api.key}")
     private String werAPIKey;
@@ -451,6 +451,7 @@ public class WERAServiceImpl {
                     orderDetail.setSubProductId(addon.getAddon_id());
                     orderDetail.setPrice(addon.getPrice());
                     orderDetail.setQuantity(1);
+                    orderDetail.setFoodPackagedFlag(STATUS_N);
                 }
             }
         }
@@ -463,6 +464,7 @@ public class WERAServiceImpl {
         orderDetail.setSubProductId(NAA);
         orderDetail.setPrice(weraOrderItem.getItem_unit_price());
         orderDetail.setQuantity(1);
+        orderDetail.setFoodPackagedFlag(STATUS_N);
         return orderDetail;
     }
 

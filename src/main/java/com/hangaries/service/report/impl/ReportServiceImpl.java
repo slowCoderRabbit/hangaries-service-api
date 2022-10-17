@@ -79,7 +79,9 @@ public class ReportServiceImpl implements ReportService {
                 List<ReportDishConsumptionSummary> rDCSummary = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportDishConsumptionSummary.class));
                 reportResult.setReportDishConsumptionSummary(rDCSummary);
             } else if (report.getReportName().equals("CASH_SALES_REPORT")) {
-                List<ReportCashierSummery> results = jdbcTemplate.query("SELECT * FROM REPORT_CASHIER_SUMMARY order by cashier_name,store_name,type_of_data,category", BeanPropertyRowMapper.newInstance(ReportCashierSummery.class));
+                String query = "select * from REPORT_CASHIER_SUMMARY" + queryBuilder + " order by cashier_name,store_name,type_of_data,category";
+                logger.info("REPORT_CASHIER_SUMMARY SQL = [{}]", query);
+                List<ReportCashierSummery> results = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportCashierSummery.class));
                 logger.info("ReportCashierSummery records from DB = {}", results.size());
                 List<ReportCashierSummeryResponse> response = transformData(groupCollectionByCashier(results));
                 logger.info("ReportCashierSummery post data transformation records = {}", response.size());
