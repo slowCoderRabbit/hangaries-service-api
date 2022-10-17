@@ -12,6 +12,7 @@ import com.hangaries.repository.wera.*;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import com.hangaries.service.order.impl.OrderServiceImpl;
 import com.hangaries.service.store.impl.StoreServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.hangaries.constants.HangariesConstants.*;
 
@@ -70,7 +72,6 @@ public class WERAOrderServiceImpl {
     @Autowired
     private WeraOrderMasterRepository weraOrderMasterRepository;
 
-
     public ResponseEntity<WERAOrderAcceptResponse> callWERAOrderAcceptAPI(WERAOrderAcceptRequest request) {
         logger.info("################## WERA ACCEPT ORDER - INITIATING!!! ##################");
         RestTemplate restTemplate = new RestTemplate();
@@ -93,71 +94,84 @@ public class WERAOrderServiceImpl {
 
     public WeraOrderResponse placeOrder(WeraOrder weraOrder) {
 
+        String serviceMessage = "Service Unavailable";
+        int status = 503;
+
         WeraOrderResponse weraOrderResponse = new WeraOrderResponse();
-        List<ConfigMaster> configMasterList = configService.getConfigDetailsByCriteria(RESTAURANT_ID, ALL, WERA_ACCEPT_ORDER_FLAG);
+        List<ConfigMaster> configWERAAcceptOrder = configService.getConfigDetailsByCriteria(RESTAURANT_ID, ALL, WERA_ACCEPT_ORDER_FLAG);
         boolean acceptWERAOrder = false;
-        if (!configMasterList.isEmpty()) {
-            acceptWERAOrder = configMasterList.get(0).getConfigCriteriaValue().equalsIgnoreCase(Y);
+        if (!configWERAAcceptOrder.isEmpty()) {
+            acceptWERAOrder = configWERAAcceptOrder.get(0).getConfigCriteriaValue().equalsIgnoreCase(Y);
         }
         if (acceptWERAOrder) {
+            Map<String, String> orderSourceMap = ConfigServiceImpl.getOrderSourceMap();
+            if (!orderSourceMap.isEmpty()) {
+                String orderSource = orderSourceMap.get(weraOrder.getOrder_from());
+                if (StringUtils.isNotBlank(orderSource)) {
 
-            try {
-                WeraOrderJSONDumpDTO savedWeraOrderJSONDumpDTO = saveOrderDetailsJSON(weraOrder);
-                String weraMerchantId = weraOrder.getRestaurant_id() + "";
-                String weraOrderId = weraOrder.getOrder_id() + "";
-                Store storeDetails = StoreServiceImpl.getWeraMerchantToStoreMapping().get(weraMerchantId);
-                logger.info("Wera MerchantId = [{}] returned Store Details = [{}]", weraMerchantId, storeDetails);
+                    try {
+                        WeraOrderJSONDumpDTO savedWeraOrderJSONDumpDTO = saveOrderDetailsJSON(weraOrder);
+                        String weraMerchantId = weraOrder.getRestaurant_id() + "";
+                        String weraOrderId = weraOrder.getOrder_id() + "";
+                        Store storeDetails = StoreServiceImpl.getWeraMerchantToStoreMapping().get(weraMerchantId);
+                        logger.info("Wera MerchantId = [{}] returned Store Details = [{}]", weraMerchantId, storeDetails);
 
-//                OrderIdInput orderIdInput = getOrderIdInput(RESTAURANT_ID,storeDetails.getStoreId(),ORDER_SOURCE);
-//                logger.info("Getting new orderId for order request [{}] by passing values = [{}].", weraOrder.getOrder_id(), orderIdInput);
-//                String newOrderId = orderService.getNewOrderId(orderIdInput);
-//                logger.info("New orderId = [{}] generated for order request[{}].", newOrderId, weraOrder.getOrder_id());
+                        WeraOrderMasterDTO weraOrderMasterDTO = getWeraOrderMasterFromWeraOrder(weraOrder);
+                        weraOrderMasterDTO.setStore_id(storeDetails.getStoreId());
+                        logger.info("Saving order to DB for orderId = [{}] and storeId = [{}]. ", weraOrderId, weraOrderMasterDTO.getStore_id());
+                        WeraOrderMasterDTO savedWeraOrderMasterDTO = weraOrderMasterRepository.save(weraOrderMasterDTO);
+                        logger.info("Order saved successfully for orderId = [{}]. ", weraOrderMasterDTO.getWera_order_id());
 
-                WeraOrderMasterDTO weraOrderMasterDTO = getWeraOrderMasterFromWeraOrder(weraOrder);
-                weraOrderMasterDTO.setStore_id(storeDetails.getStoreId());
-                logger.info("Saving order to DB for orderId = [{}] and storeId = [{}]. ", weraOrderId, weraOrderMasterDTO.getStore_id());
-                WeraOrderMasterDTO savedWeraOrderMasterDTO = weraOrderMasterRepository.save(weraOrderMasterDTO);
-                logger.info("Order saved successfully for orderId = [{}]. ", weraOrderMasterDTO.getWera_order_id());
+                        Customer customer = updateCustomerMaster(weraOrderMasterDTO);
+                        CustomerDtls customerDtls = updateCustomerAddress(weraOrderMasterDTO);
 
-                Customer customer = updateCustomerMaster(weraOrderMasterDTO);
-                CustomerDtls customerDtls = updateCustomerAddress(weraOrderMasterDTO);
+                        List<WeraOrderDetailsDTO> savedWeraOrderDetailsDTOList = null;
+                        if (!weraOrder.getOrder_items().isEmpty()) {
+                            List<WeraOrderDetailsDTO> weraOrderDetailsDTOList = getWeraOrderDetailsFromWeraOrder(weraOrder);
+                            logger.info("Saving order details to DB for orderId = [{}]. ", weraOrderId);
+                            savedWeraOrderDetailsDTOList = weraOrderDetailsRepository.saveAll(weraOrderDetailsDTOList);
+                            logger.info("Order details saved successfully for orderId = [{}]. ", weraOrderId);
 
-                List<WeraOrderDetailsDTO> savedWeraOrderDetailsDTOList = null;
-                if (!weraOrder.getOrder_items().isEmpty()) {
-                    List<WeraOrderDetailsDTO> weraOrderDetailsDTOList = getWeraOrderDetailsFromWeraOrder(weraOrder);
-                    logger.info("Saving order details to DB for orderId = [{}]. ", weraOrderId);
-                    savedWeraOrderDetailsDTOList = weraOrderDetailsRepository.saveAll(weraOrderDetailsDTOList);
-                    logger.info("Order details saved successfully for orderId = [{}]. ", weraOrderId);
+                        }
+
+                        Order order = getOrderFromWeraOrderDetails(weraOrder, getOrderIdInput(RESTAURANT_ID, storeDetails.getStoreId(), orderSource), customer, customerDtls);
+                        List<OrderVO> result = orderService.saveOrderAndGetOrderView(order);
+                        logger.info("WERA order saved successfully!!! [{}] ", result);
+
+                        String newOrderId = result.stream().findFirst().get().getOrderId();
+                        weraOrderResponse.setOrder_id(newOrderId);
+                        weraOrderResponse.setMessage("OK");
+                        weraOrderResponse.setStatus(200);
+
+                        try {
+                            updateOrderIdInWERATables(newOrderId, result, savedWeraOrderMasterDTO, savedWeraOrderDetailsDTOList);
+                        } catch (Exception ex) {
+                            logger.error("Error updating OrderId In WERA Tables", ex);
+                        }
+
+                    } catch (Exception ex) {
+                        logger.error("Exception occurred while processing WERA order!!!!", ex);
+                        weraOrderResponse.setOrder_id("");
+                        weraOrderResponse.setMessage("Internal Server Error");
+                        weraOrderResponse.setStatus(500);
+                    }
+
+                    return weraOrderResponse;
+                } else {
+                    logger.warn("Order source not found in config table!!! Rejecting Order = [{}]", weraOrder);
+                    serviceMessage = "Order Source Not Configured";
+                    status = 400;
 
                 }
-
-                Order order = getOrderFromWeraOrderDetails(weraOrder, getOrderIdInput(RESTAURANT_ID, storeDetails.getStoreId(), ORDER_SOURCE), customer, customerDtls);
-                List<OrderVO> result = orderService.saveOrderAndGetOrderView(order);
-                logger.info("WERA order saved successfully!!! [{}] ", result);
-
-                String newOrderId = result.stream().findFirst().get().getOrderId();
-                weraOrderResponse.setOrder_id(newOrderId);
-                weraOrderResponse.setMessage("OK");
-                weraOrderResponse.setStatus(200);
-
-                try {
-                    updateOrderIdInWERATables(newOrderId, result, savedWeraOrderMasterDTO, savedWeraOrderDetailsDTOList);
-                } catch (Exception ex) {
-                    logger.error("Error in updateOrderIdInWERATables", ex);
-                }
-
-            } catch (Exception ex) {
-                logger.error("Exception occurred while processing WERA order!!!!", ex);
-                weraOrderResponse.setOrder_id("");
-                weraOrderResponse.setMessage("Internal Server Error");
-                weraOrderResponse.setStatus(500);
+            } else {
+                logger.warn("ZERO order source configured in config table!!! Rejecting Order = [{}]", weraOrder);
+                serviceMessage = "Order Source Not Configured";
+                status = 400;
             }
-
-            return weraOrderResponse;
         }
         weraOrderResponse.setOrder_id("");
-        weraOrderResponse.setMessage("Service Unavailable");
-        weraOrderResponse.setStatus(503);
+        weraOrderResponse.setMessage(serviceMessage);
+        weraOrderResponse.setStatus(status);
         return weraOrderResponse;
     }
 

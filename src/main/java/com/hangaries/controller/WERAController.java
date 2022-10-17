@@ -6,6 +6,7 @@ import com.hangaries.model.wera.request.WeraUploadMenu;
 import com.hangaries.model.wera.response.WERAOrderAcceptResponse;
 import com.hangaries.model.wera.response.WeraOrderResponse;
 import com.hangaries.service.wera.WERAMenuServiceImpl;
+import com.hangaries.service.wera.WERAOrderServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class WERAController {
     @Autowired
     WERAMenuServiceImpl weraMenuService;
 
+    @Autowired
+    WERAOrderServiceImpl weraOrderService;
+
     @GetMapping("uploadMenuToWeraFoods")
     List<WeraUploadMenu> uploadMenuToWeraFoods(@RequestParam("restaurantId") String restaurantId,
                                                @RequestParam("storeId") String storeId) {
@@ -35,13 +39,13 @@ public class WERAController {
     @PostMapping("placeWeraOrder")
     WeraOrderResponse placeOrder(@RequestBody WeraOrder order) {
         logger.info("Wera order received  = [{}].", order);
-        return weraMenuService.placeOrder(order);
+        return weraOrderService.placeOrder(order);
     }
 
     @PostMapping("acceptWeraOrder")
     ResponseEntity<WERAOrderAcceptResponse> acceptOrder(@RequestBody WERAOrderAcceptRequest request) {
         logger.info("Accept WERA order details  = [{}].", request);
-        return weraMenuService.callWERAOrderAcceptAPI(request);
+        return weraOrderService.callWERAOrderAcceptAPI(request);
     }
 
 

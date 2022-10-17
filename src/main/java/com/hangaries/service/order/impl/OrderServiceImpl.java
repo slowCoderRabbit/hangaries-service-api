@@ -309,7 +309,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private List<ConfigMaster> getConfigMasterList(Order order) {
-        List<ConfigMaster> configDetails = configMasterRepository.getDetailsFromConfigMaster(order.getRestaurantId(), "ALL", ORDER_SOURCE);
+        List<ConfigMaster> configDetails = configMasterRepository.getDetailsFromConfigMaster(order.getRestaurantId(), ALL, ORDER_SOURCE);
         return configDetails;
     }
 

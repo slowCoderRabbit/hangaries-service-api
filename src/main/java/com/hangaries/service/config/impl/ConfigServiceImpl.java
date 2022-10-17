@@ -5,17 +5,25 @@ import com.hangaries.repository.ApplicationRepository;
 import com.hangaries.repository.BusinessDateRepository;
 import com.hangaries.repository.ConfigMasterRepository;
 import com.hangaries.service.config.ConfigService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.hangaries.constants.HangariesConstants.SYSTEM;
+import static com.hangaries.constants.HangariesConstants.*;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConfigServiceImpl.class);
+
+    private static final Map<String, String> orderSourceMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+
 
     @Autowired
     ConfigMasterRepository configMasterRepository;
@@ -25,6 +33,21 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Autowired
     BusinessDateRepository businessDateRepository;
+
+    public static Map<String, String> getOrderSourceMap() {
+        return Collections.unmodifiableMap(orderSourceMap);
+    }
+
+    @Bean(initMethod = "init")
+    private void populateOrderSourceMappingFromConfig() {
+        logger.info("Loading order source mapping from config table......");
+        List<ConfigMaster> configMasterList = configMasterRepository.getDetailsFromConfigMaster(RESTAURANT_ID, ALL, ORDER_SOURCE);
+
+        for (ConfigMaster configMaster : configMasterList) {
+            orderSourceMap.put(configMaster.getConfigCriteriaDesc(), configMaster.getConfigCriteriaValue());
+        }
+        logger.info("Loaded order source mapping!!! Map size = [{}]", orderSourceMap.size());
+    }
 
     @Override
     public List<ConfigMaster> getConfigDetailsByCriteria(String restaurantId, String storeId, String criteria) {

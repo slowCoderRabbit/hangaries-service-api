@@ -11,7 +11,7 @@ public class HangariesConstants {
     public static final String SUBMITTED = "SUBMITTED";
     public static final String RESTAURANT_ID = "R001";
     public static final String WERA_ACCEPT_ORDER_FLAG = "WERA_ACCEPT_ORDER_FLAG";
-    public static final String ORDER_SOURCE = "WD";
+    public static final String WD = "WD";
     public static final String INACTIVE = "INACTIVE";
     public static String SYSTEM = "SYSTEM";
     public static String ACCEPTED = "ACCEPTED";
@@ -29,6 +29,8 @@ public class HangariesConstants {
     public static String BLANK_OR_INCORRECT_PASSWORD = "BLANK_OR_INCORRECT_PASSWORD";
     public static String BLANK = "";
     public static String NAA = "NAA";
+
+    public static String ORDER_SOURCE = "ORDER_SOURCE";
 
 
 }
