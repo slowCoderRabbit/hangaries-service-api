@@ -6,7 +6,7 @@ public class HangariesConstants {
     public static final String STATUS_Y = "Y";
     public static final String FOOD_READY = "FOOD READY";
     public static final String WERA = "WERA";
-    public static final String ONLINE = "Online";
+    public static final String ONLINE = "ONLINE";
     public static final String NA = "NA";
     public static final String SUBMITTED = "SUBMITTED";
     public static final String RESTAURANT_ID = "R001";
@@ -31,6 +31,7 @@ public class HangariesConstants {
     public static String NAA = "NAA";
 
     public static String ORDER_SOURCE = "ORDER_SOURCE";
+    public static String ADMIN = "ADMIN";
 
 
 }

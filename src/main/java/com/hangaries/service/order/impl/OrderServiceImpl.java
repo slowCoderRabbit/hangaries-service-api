@@ -144,6 +144,7 @@ public class OrderServiceImpl implements OrderService {
         input.setOrderSource(order.getOrderSource());
         String newOrderId = getNewOrderId(input);
         order.setOrderId(newOrderId);
+        order.setOrderChannel(getOrderChannelFromOrder(order));
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setOrderId(newOrderId);
             orderDetail.setOrderDetailStatus(order.getOrderStatus());
@@ -172,6 +173,16 @@ public class OrderServiceImpl implements OrderService {
 
         }
         return savedOrder;
+    }
+
+    private String getOrderChannelFromOrder(Order order) {
+        String orderChannel = ADMIN;
+        if (StringUtils.isNotBlank(order.getOrderChannel())) {
+            return order.getOrderChannel();
+        } else if (StringUtils.isNotBlank(order.getOrderSource()) && order.getOrderSource().equalsIgnoreCase(WD)) {
+            orderChannel = ONLINE;
+        }
+        return orderChannel;
     }
 
     private boolean isAutoAcceptOrdrSource(Order order) {

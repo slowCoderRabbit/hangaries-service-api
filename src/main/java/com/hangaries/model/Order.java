@@ -29,6 +29,14 @@ public class Order implements Serializable {
     @Id
     @Column(name = "order_id")
     private @NotBlank String orderId;
+
+    @Column(name = "external_order_id")
+    private String externalOrderId;
+    @Column(name = "aggregator_order_id")
+    private String aggregatorOrderId;
+    @Column(name = "order_channel")
+    private String orderChannel;
+
     @Column(name = "restaurant_id")
     private @NotBlank String restaurantId;
     @Column(name = "store_Id")
@@ -61,6 +69,10 @@ public class Order implements Serializable {
     private float sgstCalculatedValue;
     @Column(name = "delivery_charges")
     private float deliveryCharges;
+
+    @Column(name = "packaging_charges")
+    private float packagingCharges;
+
     @Column(name = "coupon_code")
     private String couponCode;
     @Column(name = "discount_percentage")

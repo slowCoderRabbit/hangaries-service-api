@@ -143,11 +143,11 @@ public class WERAOrderServiceImpl {
                         weraOrderResponse.setMessage("OK");
                         weraOrderResponse.setStatus(200);
 
-                        try {
-                            updateOrderIdInWERATables(newOrderId, result, savedWeraOrderMasterDTO, savedWeraOrderDetailsDTOList);
-                        } catch (Exception ex) {
-                            logger.error("Error updating OrderId In WERA Tables", ex);
-                        }
+//                        try {
+//                            updateOrderIdInWERATables(newOrderId, result, savedWeraOrderMasterDTO, savedWeraOrderDetailsDTOList);
+//                        } catch (Exception ex) {
+//                            logger.error("Error updating OrderId In WERA Tables", ex);
+//                        }
 
                     } catch (Exception ex) {
                         logger.error("Exception occurred while processing WERA order!!!!", ex);
@@ -263,6 +263,9 @@ public class WERAOrderServiceImpl {
         order.setRestaurantId(orderIdInput.getRestaurantId());
         order.setStoreId(orderIdInput.getStoreId());
         order.setOrderSource(orderIdInput.getOrderSource());
+        order.setAggregatorOrderId(weraOrder.getOrder_id() + "");
+        order.setExternalOrderId(weraOrder.getExternal_order_id());
+        order.setOrderChannel(WERA);
         order.setCustomerId(customer.getId());
         order.setCustomerAddressId(customerDtls.getId());
         order.setOrderReceivedDateTime(getDateFromEpoch(weraOrder.getOrder_date_time()));
@@ -275,6 +278,7 @@ public class WERAOrderServiceImpl {
         order.setCgstCalculatedValue(weraOrder.getCgst());
         order.setSgstCalculatedValue(weraOrder.getSgst());
         order.setDeliveryCharges(weraOrder.getDelivery_charge());
+        order.setPackagingCharges(weraOrder.getOrder_packaging());
         order.setCreatedBy(weraOrder.getOrder_from());
         String formattedCouponCode = getFormattedCouponCode(weraOrder);
         order.setCouponCode(formattedCouponCode.substring(0, Math.min(formattedCouponCode.length(), 99)));
