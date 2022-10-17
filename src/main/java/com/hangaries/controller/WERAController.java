@@ -5,7 +5,7 @@ import com.hangaries.model.wera.request.WeraOrder;
 import com.hangaries.model.wera.request.WeraUploadMenu;
 import com.hangaries.model.wera.response.WERAOrderAcceptResponse;
 import com.hangaries.model.wera.response.WeraOrderResponse;
-import com.hangaries.service.wera.WERAServiceImpl;
+import com.hangaries.service.wera.WERAMenuServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class WERAController {
     private static final Logger logger = LoggerFactory.getLogger(WERAController.class);
 
     @Autowired
-    WERAServiceImpl weraMenuService;
+    WERAMenuServiceImpl weraMenuService;
 
     @GetMapping("uploadMenuToWeraFoods")
     List<WeraUploadMenu> uploadMenuToWeraFoods(@RequestParam("restaurantId") String restaurantId,
