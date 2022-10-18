@@ -18,5 +18,7 @@ public class WeraMenu {
     private float cgst;
     private float sgst;
     private int type;
+    private List<WeraMenuVariants> variants;
+    private List<WeraMenuAddons> addons;
 
 }

@@ -11,7 +11,6 @@ import com.hangaries.repository.wera.*;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import com.hangaries.service.order.impl.OrderServiceImpl;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.hangaries.constants.HangariesConstants.NAA;
 import static com.hangaries.constants.HangariesConstants.SUCCESS;
 
 @Service
@@ -143,13 +143,14 @@ public class WERAMenuServiceImpl {
             weraUploadMenu = new WeraUploadMenu();
             weraUploadMenuList = new ArrayList<>();
             ArrayList<WeraMenuAddons> weraMenuAddonsList = new ArrayList<>();
+            ArrayList<WeraMenu> weraMenuList = null;
             for (int i = 0; i < dtoList.size(); i++) {
+                weraMenuList = new ArrayList<>();
                 if (i == 0) {
                     weraUploadMenu.setMerchant_id(dtoList.get(i).getMerchant_id());
                     weraMenu = populateWERAMenu(dtoList.get(i));
-                    ArrayList<WeraMenu> weraMenuList = new ArrayList<>();
-                    weraMenuList.add(weraMenu);
-                    weraUploadMenu.setMenu(weraMenuList);
+//                    weraMenuList.add(weraMenu);
+//                    weraUploadMenu.setMenu(weraMenuList);
                 }
                 weraMenuAddons = populateWERAAddon(dtoList.get(i));
                 if (null != weraMenuAddons) {
@@ -157,11 +158,10 @@ public class WERAMenuServiceImpl {
                 }
 
             }
-            if (!weraMenuAddonsList.isEmpty()) {
-                weraUploadMenu.setAddons(weraMenuAddonsList);
-            }
+            weraMenu.setAddons(weraMenuAddonsList);
+            weraMenuList.add(weraMenu);
+            weraUploadMenu.setMenu(weraMenuList);
             menuList.add(weraUploadMenu);
-
         }
         return menuList;
     }
@@ -174,18 +174,18 @@ public class WERAMenuServiceImpl {
         weraMenu.setActive(BooleanUtils.toBoolean(weraMenuUploadDTO.getActive()));
         weraMenu.setCgst(weraMenuUploadDTO.getZomato_product_cgst());
         weraMenu.setSgst(weraMenuUploadDTO.getZomato_product_sgst());
+
         return weraMenu;
     }
 
     private WeraMenuAddons populateWERAAddon(WeraMenuUploadDTO weraMenuUploadDTO) {
         WeraMenuAddons weraMenuAddons = null;
-        if (StringUtils.isNotBlank(weraMenuUploadDTO.getAddon_name())) {
+        if (null != weraMenuUploadDTO.getAddon_name() && !weraMenuUploadDTO.getAddon_name().equals(NAA)) {
             weraMenuAddons = new WeraMenuAddons();
             weraMenuAddons.setAddon_name(weraMenuUploadDTO.getAddon_name());
             weraMenuAddons.setAddon_id(weraMenuUploadDTO.getAddon_id());
             weraMenuAddons.setPrice(weraMenuUploadDTO.getZomato_subproduct_price());
         }
-
         return weraMenuAddons;
     }
 

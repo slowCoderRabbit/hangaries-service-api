@@ -210,8 +210,8 @@ public class WERAOrderServiceImpl {
             CustomerDtls newCustomerDtls = new CustomerDtls();
             newCustomerDtls.setCustomerAddressType(ONLINE);
             newCustomerDtls.setMobileNumber(weraOrderMasterDTO.getPhone_number());
-            newCustomerDtls.setAddress1(weraOrderMasterDTO.getAddress());
-            newCustomerDtls.setLandmark(weraOrderMasterDTO.getDelivery_area());
+            newCustomerDtls.setAddress1(weraOrderMasterDTO.getAddress().trim());
+            newCustomerDtls.setLandmark(weraOrderMasterDTO.getDelivery_area().trim());
             newCustomerDtls.setCity(NA);
             newCustomerDtls.setState(NA);
             newCustomerDtls.setZipCode(000000);
@@ -221,8 +221,8 @@ public class WERAOrderServiceImpl {
             return customerDtlsRepository.save(newCustomerDtls);
 
         } else {
-            existingCustomerDtls.setAddress1(weraOrderMasterDTO.getAddress());
-            existingCustomerDtls.setLandmark(weraOrderMasterDTO.getDelivery_area());
+            existingCustomerDtls.setAddress1(weraOrderMasterDTO.getAddress().trim());
+            existingCustomerDtls.setLandmark(weraOrderMasterDTO.getDelivery_area().trim());
             existingCustomerDtls.setActive(STATUS_Y);
             existingCustomerDtls.setUpdatedBy(WERA);
             existingCustomerDtls.setUpdatedDate(new Date());
@@ -272,7 +272,7 @@ public class WERAOrderServiceImpl {
         order.setOrderDeliveryType(weraOrder.getOrder_type());
         order.setOrderStatus(SUBMITTED);
         order.setPaymentStatus(PAID);
-        order.setPaymentMode(weraOrder.getPayment_mode());
+        order.setPaymentMode(weraOrder.getOrder_from());
         order.setTotalPrice(weraOrder.getNet_amount());
         order.setOverallPriceWithTax(weraOrder.getGross_amount());
         order.setCgstCalculatedValue(weraOrder.getCgst());
@@ -337,6 +337,7 @@ public class WERAOrderServiceImpl {
                     orderDetail.setQuantity(1);
                     orderDetail.setFoodPackagedFlag(STATUS_N);
                     orderDetail.setCreatedBy(weraOrder.getOrder_from());
+                    orderDetails.add(orderDetail);
                 }
             }
         }
