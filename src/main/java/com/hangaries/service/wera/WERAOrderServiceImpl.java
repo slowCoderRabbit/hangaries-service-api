@@ -219,7 +219,8 @@ public class WERAOrderServiceImpl {
     }
 
     private CustomerDtls populateCustomerAddressCommonFields(WeraOrderMasterDTO weraOrderMasterDTO, CustomerDtls customerDtls) {
-        customerDtls.setAddress1(weraOrderMasterDTO.getAddress() + ", " + weraOrderMasterDTO.getDelivery_area());
+        customerDtls.setAddress1(weraOrderMasterDTO.getAddress());
+        customerDtls.setAddress2(weraOrderMasterDTO.getDelivery_area());
         customerDtls.setActive(STATUS_Y);
         customerDtls.setUpdatedBy(WERA);
         customerDtls.setUpdatedDate(new Date());
