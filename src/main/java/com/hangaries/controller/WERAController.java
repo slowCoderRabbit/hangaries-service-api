@@ -1,9 +1,11 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.wera.request.WERAOrderAcceptRequest;
+import com.hangaries.model.wera.request.WERAOrderFoodReadyRequest;
 import com.hangaries.model.wera.request.WeraOrder;
 import com.hangaries.model.wera.request.WeraUploadMenu;
 import com.hangaries.model.wera.response.WERAOrderAcceptResponse;
+import com.hangaries.model.wera.response.WERAOrderFoodReadyResponse;
 import com.hangaries.model.wera.response.WeraOrderResponse;
 import com.hangaries.service.wera.WERACallbackServiceImpl;
 import com.hangaries.service.wera.WERAMenuServiceImpl;
@@ -50,6 +52,12 @@ public class WERAController {
     ResponseEntity<WERAOrderAcceptResponse> acceptOrder(@RequestBody WERAOrderAcceptRequest request) {
         logger.info("Accept WERA order details  = [{}].", request);
         return weraCallbackService.callWERAOrderAcceptAPI(request);
+    }
+
+    @PostMapping("foodReadyWeraOrder")
+    ResponseEntity<WERAOrderFoodReadyResponse> foodReadyWeraOrder(@RequestBody WERAOrderFoodReadyRequest request) {
+        logger.info("Food Ready WERA order details  = [{}].", request);
+        return weraCallbackService.callWERAOrderFoodReadyAPI(request);
     }
 
 

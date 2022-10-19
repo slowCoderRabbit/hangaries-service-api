@@ -345,7 +345,7 @@ public class WERAOrderServiceImpl {
         orderDetail.setProductId(weraOrderItem.getItem_id());
         orderDetail.setSubProductId(NAA);
         orderDetail.setPrice(weraOrderItem.getItem_unit_price());
-        orderDetail.setQuantity(1);
+        orderDetail.setQuantity(weraOrderItem.getItem_quantity());
         orderDetail.setFoodPackagedFlag(STATUS_N);
         return orderDetail;
     }

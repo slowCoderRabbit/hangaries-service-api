@@ -33,5 +33,7 @@ public class HangariesConstants {
     public static String ORDER_SOURCE = "ORDER_SOURCE";
     public static String ADMIN = "ADMIN";
 
+    public static String PROCESSING = "PROCESSING";
+
 
 }
