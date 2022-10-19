@@ -7,9 +7,8 @@ import com.hangaries.model.wera.request.WeraUploadMenu;
 import com.hangaries.model.wera.response.WeraMenuUploadResponse;
 import com.hangaries.repository.CustomerDtlsRepository;
 import com.hangaries.repository.CustomerRepository;
-import com.hangaries.repository.wera.*;
+import com.hangaries.repository.wera.WeraOrderJSONDumpRepository;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
-import com.hangaries.service.order.impl.OrderServiceImpl;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,26 +47,13 @@ public class WERAMenuServiceImpl {
     @Value("${wera.menu.upload.url}")
     private String menuUploadURL;
 
-    //    @Value("${wera.order.accept.url}")
-//    private String orderAcceptURL;
     @Value("${wera.api.key}")
     private String werAPIKey;
     @Value("${wera.api.value}")
     private String werAPIValue;
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private WeraOrderAddonRepository weraOrderAddonRepository;
-    @Autowired
-    private OrderServiceImpl orderService;
-    @Autowired
-    private WeraOrderItemDiscountDtlsRepository weraOrderItemDiscountDtlsRepository;
-    @Autowired
-    private WeraOrderSizeRepository weraOrderSizeRepository;
-    @Autowired
-    private WeraOrderDetailsRepository weraOrderDetailsRepository;
-    @Autowired
-    private WeraOrderMasterRepository weraOrderMasterRepository;
+
 
     public List<WeraUploadMenu> uploadMenuToWeraFoods(String restaurantId, String storeId) {
         WeraUploadMenu request;

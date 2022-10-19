@@ -3,8 +3,10 @@ package com.hangaries.service.wera;
 import com.hangaries.model.*;
 import com.hangaries.model.vo.OrderVO;
 import com.hangaries.model.wera.dto.*;
-import com.hangaries.model.wera.request.*;
-import com.hangaries.model.wera.response.WERAOrderAcceptResponse;
+import com.hangaries.model.wera.request.WeraOrder;
+import com.hangaries.model.wera.request.WeraOrderAddon;
+import com.hangaries.model.wera.request.WeraOrderDiscount;
+import com.hangaries.model.wera.request.WeraOrderItem;
 import com.hangaries.model.wera.response.WeraOrderResponse;
 import com.hangaries.repository.CustomerDtlsRepository;
 import com.hangaries.repository.CustomerRepository;
@@ -16,14 +18,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -50,13 +46,6 @@ public class WERAOrderServiceImpl {
 
     @Autowired
     ConfigServiceImpl configService;
-
-    //    @Value("${wera.order.accept.url}")
-//    private String orderAcceptURL;
-    @Value("${wera.api.key}")
-    private String werAPIKey;
-    @Value("${wera.api.value}")
-    private String werAPIValue;
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -72,25 +61,30 @@ public class WERAOrderServiceImpl {
     @Autowired
     private WeraOrderMasterRepository weraOrderMasterRepository;
 
-    public ResponseEntity<WERAOrderAcceptResponse> callWERAOrderAcceptAPI(WERAOrderAcceptRequest request) {
-        logger.info("################## WERA ACCEPT ORDER - INITIATING!!! ##################");
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set(werAPIKey, werAPIValue);
-
-        HttpEntity<WERAOrderAcceptRequest> httpRequest = new HttpEntity<>(request, headers);
-        ResponseEntity<WERAOrderAcceptResponse> response = null;
-//        try {
-//            response = restTemplate.postForEntity(orderAcceptURL, httpRequest, WERAOrderAcceptResponse.class);
-//            logger.info("WERA ACCEPT ORDER RESPONSE = [{}]", response.getBody());
-//        } catch (Exception ex) {
-//            logger.error(ex.getMessage());
-//            logger.error("Error while accepting wera order [{}]", request.getOrder_id(), ex.getMessage());
-//        }
-
-        return response;
-    }
+//    public ResponseEntity<WERAOrderAcceptResponse> callWERAOrderAcceptAPI(WERAOrderAcceptRequest request) {
+//        logger.info("################## WERA ACCEPT ORDER - INITIATING!!! ##################");
+//        RestTemplate restTemplate = new RestTemplate();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        headers.set(werAPIKey, werAPIValue);
+//
+//        HttpEntity<WERAOrderAcceptRequest> httpRequest = new HttpEntity<>(request, headers);
+//        ResponseEntity<WERAOrderAcceptResponse> response = null;
+////        try {
+////            response = restTemplate.postForEntity(orderAcceptURL, httpRequest, WERAOrderAcceptResponse.class);
+////            logger.info("WERA ACCEPT ORDER RESPONSE = [{}]", response.getBody());
+////        } catch (Exception ex) {
+////            logger.error(ex.getMessage());
+////            logger.error("Error while accepting wera order [{}]", request.getOrder_id(), ex.getMessage());
+////        }
+//
+//        return response;
+//    }
+//
+//    public ResponseEntity<WERAOrderAcceptResponse> callWERAOrderAcceptAPI(String orderId) {
+//        WERAOrderAcceptRequest request = null;
+//        return callWERAOrderAcceptAPI(request);
+//    }
 
     public WeraOrderResponse placeOrder(WeraOrder weraOrder) {
 
@@ -210,25 +204,26 @@ public class WERAOrderServiceImpl {
             CustomerDtls newCustomerDtls = new CustomerDtls();
             newCustomerDtls.setCustomerAddressType(ONLINE);
             newCustomerDtls.setMobileNumber(weraOrderMasterDTO.getPhone_number());
-            newCustomerDtls.setAddress1(weraOrderMasterDTO.getAddress().trim());
-            newCustomerDtls.setLandmark(weraOrderMasterDTO.getDelivery_area().trim());
+            newCustomerDtls = populateCustomerAddressCommonFields(weraOrderMasterDTO, newCustomerDtls);
             newCustomerDtls.setCity(NA);
             newCustomerDtls.setState(NA);
             newCustomerDtls.setZipCode(000000);
-            newCustomerDtls.setActive(STATUS_Y);
             newCustomerDtls.setCreatedBy(WERA);
-            newCustomerDtls.setUpdatedBy(WERA);
             return customerDtlsRepository.save(newCustomerDtls);
 
         } else {
-            existingCustomerDtls.setAddress1(weraOrderMasterDTO.getAddress().trim());
-            existingCustomerDtls.setLandmark(weraOrderMasterDTO.getDelivery_area().trim());
-            existingCustomerDtls.setActive(STATUS_Y);
-            existingCustomerDtls.setUpdatedBy(WERA);
-            existingCustomerDtls.setUpdatedDate(new Date());
+            existingCustomerDtls = populateCustomerAddressCommonFields(weraOrderMasterDTO, existingCustomerDtls);
             return customerDtlsRepository.save(existingCustomerDtls);
 
         }
+    }
+
+    private CustomerDtls populateCustomerAddressCommonFields(WeraOrderMasterDTO weraOrderMasterDTO, CustomerDtls customerDtls) {
+        customerDtls.setAddress1(weraOrderMasterDTO.getAddress() + ", " + weraOrderMasterDTO.getDelivery_area());
+        customerDtls.setActive(STATUS_Y);
+        customerDtls.setUpdatedBy(WERA);
+        customerDtls.setUpdatedDate(new Date());
+        return customerDtls;
     }
 
     private Customer updateCustomerMaster(WeraOrderMasterDTO weraOrderMasterDTO) {
@@ -325,9 +320,6 @@ public class WERAOrderServiceImpl {
     private List<OrderDetail> getOrderDetailsFromWERAOrder(WeraOrder weraOrder) {
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (WeraOrderItem item : weraOrder.getOrder_items()) {
-            OrderDetail detail = getDefaultOrderDetail(item);
-            detail.setCreatedBy(weraOrder.getOrder_from());
-            orderDetails.add(detail);
             if (null != item.getAddons()) {
                 for (WeraOrderAddon addon : item.getAddons()) {
                     OrderDetail orderDetail = new OrderDetail();
@@ -340,6 +332,9 @@ public class WERAOrderServiceImpl {
                     orderDetails.add(orderDetail);
                 }
             }
+            OrderDetail detail = getDefaultOrderDetail(item);
+            detail.setCreatedBy(weraOrder.getOrder_from());
+            orderDetails.add(detail);
         }
         return orderDetails;
     }

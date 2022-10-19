@@ -4,9 +4,12 @@ import com.hangaries.model.*;
 import com.hangaries.model.dto.OrderMenuIngredientAddressDTO;
 import com.hangaries.model.vo.OrderDetailsVO;
 import com.hangaries.model.vo.OrderVO;
+import com.hangaries.model.wera.request.WERAOrderAcceptRequest;
 import com.hangaries.repository.*;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import com.hangaries.service.order.OrderService;
+import com.hangaries.service.store.impl.StoreServiceImpl;
+import com.hangaries.service.wera.WERACallbackServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +58,8 @@ public class OrderServiceImpl implements OrderService {
     OrderMenuIngredientAddressRepository orderMenuIngredientAddressRepository;
     @Autowired
     ConfigServiceImpl configService;
+    @Autowired
+    WERACallbackServiceImpl weraCallbackService;
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -106,7 +111,53 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.updateOrderStatus(orderId, status, updatedBy, new Date());
         }
 
+        performWERAAction(orderId, status, updatedBy);
+
         return updateOrderProcessing(orderId);
+    }
+
+    private void performWERAAction(String orderId, String status, String updatedBy) {
+        try {
+            logger.info("Checking order status for WERA processing [{}]", status);
+            if ("PROCESSING".equals(status)) {
+                acceptWERAOrder(orderId);
+            }
+
+        } catch (Exception ex) {
+            logger.error("Exception in performWERAAction!!", ex);
+        }
+    }
+
+    private boolean acceptWERAOrder(String orderId) {
+        boolean isWERAOrder = false;
+        String storeId = "";
+
+        List<Order> order = orderRepository.findByOrderId(orderId);
+        if (null != order && !order.isEmpty()) {
+            isWERAOrder = order.stream().findFirst().get().getOrderChannel().equalsIgnoreCase(WERA);
+            storeId = order.stream().findFirst().get().getStoreId();
+        }
+        logger.info("isWERAOrder = [{}] for order ID [{}].", isWERAOrder, orderId);
+        logger.info("storeId = [{}] for order ID [{}].", storeId, orderId);
+        if (isWERAOrder) {
+            Map<String, Store> storeDetailMap = StoreServiceImpl.getWeraMerchantToStoreMapping();
+            String weraMerchantId = "";
+            for (Map.Entry<String, Store> entry : storeDetailMap.entrySet()) {
+                if (entry.getValue().getStoreId().equals(storeId)) {
+                    weraMerchantId = entry.getKey();
+                }
+            }
+
+            if (StringUtils.isNotBlank(weraMerchantId)) {
+                WERAOrderAcceptRequest request = new WERAOrderAcceptRequest();
+                request.setOrder_id(order.stream().findFirst().get().getAggregatorOrderId());
+                request.setMerchant_id(weraMerchantId);
+                request.setPreparation_time(30);
+                weraCallbackService.callWERAOrderAcceptAPI(request);
+            }
+
+        }
+        return false;
     }
 
     public List<Order> updatePaymentModeByOrderId(String orderId, String paymentMode, String paymentStatus, String orderStatus, String updatedBy) {
