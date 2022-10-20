@@ -327,7 +327,7 @@ public class WERAOrderServiceImpl {
                     orderDetail.setProductId(item.getItem_id());
                     orderDetail.setSubProductId(addon.getAddon_id());
                     orderDetail.setPrice(addon.getPrice());
-                    orderDetail.setQuantity(1);
+                    orderDetail.setQuantity(item.getItem_quantity());
                     orderDetail.setFoodPackagedFlag(STATUS_N);
                     orderDetail.setCreatedBy(weraOrder.getOrder_from());
                     orderDetails.add(orderDetail);
