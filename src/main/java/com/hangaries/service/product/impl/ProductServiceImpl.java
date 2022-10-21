@@ -1,7 +1,7 @@
 package com.hangaries.service.product.impl;
 
-import com.hangaries.model.Product;
-import com.hangaries.model.SubProduct;
+import com.hangaries.model.*;
+import com.hangaries.repository.MenuRepository;
 import com.hangaries.repository.ProductRepository;
 import com.hangaries.repository.SubProductRepository;
 import com.hangaries.service.product.ProductService;
@@ -12,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.hangaries.constants.HangariesConstants.RESTAURANT_ID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -25,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     SubProductRepository subProductRepository;
+
+    @Autowired
+    private MenuRepository menuRepository;
 
     @Override
     public Product saveProduct(Product product) {
@@ -75,5 +80,56 @@ public class ProductServiceImpl implements ProductService {
 
     private String getPaddedString(int maxId) {
         return String.format("%03d", maxId);
+    }
+
+    public List<Menu> saveProductMenuMapping(ProductMenuMappingRequestList requestList) {
+
+        if (!requestList.getMappings().isEmpty()) {
+            for (ProductMenuMappingRequest mapping : requestList.getMappings()) {
+                List<Menu> menuList = getProductMappedToMenuMaster(mapping);
+                if (menuList.isEmpty()) {
+                    logger.info("Menu mapping NOT found for [{}]. Creating!!!", mapping);
+                    Product product = productRepository.findByProductId(mapping.getProductId());
+                    if (null != product) {
+                        Menu menu = getMenuFromProduct(product, mapping);
+                        menu.setMenuAvailableFlag(mapping.getMenuAvailable());
+                        menuRepository.save(menu);
+                    }
+                } else {
+                    logger.info("Menu mapping found for [{}]. Updating!!!", mapping);
+                    for (Menu menu : menuList) {
+                        menu.setMenuAvailableFlag(mapping.getMenuAvailable());
+                        menuRepository.save(menu);
+                    }
+                }
+            }
+        }
+        return menuRepository.getMenuItemsByRestroAndStore(RESTAURANT_ID, requestList.getMappings().stream().findFirst().get().getStoreId());
+
+    }
+
+    private Menu getMenuFromProduct(Product product, ProductMenuMappingRequest mapping) {
+        Menu newMenu = new Menu();
+        newMenu.setRestaruantId(RESTAURANT_ID);
+        newMenu.setStoreId(mapping.getStoreId());
+        newMenu.setProductId(product.getProductId());
+        newMenu.setSection(product.getSection());
+        newMenu.setDish(product.getDish());
+        newMenu.setDishSpiceIndicatory(product.getDishSpiceIndicator());
+        newMenu.setDishCategory(product.getDishCategory());
+        newMenu.setDishType(product.getDishType());
+        newMenu.setDishDescriptionId(product.getDishDescriptionId());
+        newMenu.setProductSize(product.getProductSize());
+        newMenu.setImagePath(product.getImagePath());
+        newMenu.setCommonImage(product.getCommonImage());
+        newMenu.setPrice((double) product.getPrice());
+        newMenu.setMenuAvailableFlag(product.getMenuAvailableFlag());
+        newMenu.setIngredientExistsFlag(product.getIngredientExistFlag());
+        newMenu.setKdsRoutingName(product.getKdsRoutingName());
+        return newMenu;
+    }
+
+    private List<Menu> getProductMappedToMenuMaster(ProductMenuMappingRequest mapping) {
+        return menuRepository.getProductMappedToMenuMaster(mapping.getProductId(), mapping.getStoreId());
     }
 }

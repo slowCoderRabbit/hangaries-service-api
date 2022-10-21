@@ -209,4 +209,8 @@ public class MenuServiceImpl implements MenuService {
     public Dish saveDish(Dish dish) {
         return dishRepository.save(dish);
     }
+
+//    public List<Menu> isProductMappedToMenuMaster(String productId,String storeId) {
+//       return menuRepository.getProductMappedToMenuMaster(productId,storeId);
+//    }
 }
