@@ -53,7 +53,7 @@ public class Menu {
     @Column(name = "Common_image")
     private String commonImage;
     @Column(name = "ingredient_exists_flag")
-    private String ingredientExistsFlag;
+    private String ingredientExistsFalg;
     @Column(name = "kds_routing_name")
     private String kdsRoutingName;
     @Column(name = "Created_by")

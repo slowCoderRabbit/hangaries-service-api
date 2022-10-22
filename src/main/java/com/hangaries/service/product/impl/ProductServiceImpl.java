@@ -124,7 +124,7 @@ public class ProductServiceImpl implements ProductService {
         newMenu.setCommonImage(product.getCommonImage());
         newMenu.setPrice((double) product.getPrice());
         newMenu.setMenuAvailableFlag(product.getMenuAvailableFlag());
-        newMenu.setIngredientExistsFlag(product.getIngredientExistFlag());
+        newMenu.setIngredientExistsFalg(product.getIngredientExistFlag());
         newMenu.setKdsRoutingName(product.getKdsRoutingName());
         return newMenu;
     }
