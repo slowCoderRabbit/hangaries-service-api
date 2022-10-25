@@ -19,7 +19,7 @@ import java.util.Map;
 public class IndexController {
 
     @Value("${payu.response.url}")
-    private static String url;
+    private String url;
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
     private static final String queryParam = "page=success&";
     static String htmlPart1Success = "<!DOCTYPE html>\n" +
