@@ -71,6 +71,12 @@ public class Store {
     @Column(name = "wera_merchant_id")
     private String weraMerchantId;
 
+    @Column(name = "wera_api_key")
+    private String weraAPIKey;
+
+    @Column(name = "wera_api_value")
+    private String weraAPIValue;
+
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;
 

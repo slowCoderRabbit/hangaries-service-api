@@ -312,12 +312,6 @@ public class WERAOrderServiceImpl {
         return date;
     }
 
-//    private LocalDate getDateTimeFromEpoch(String orderDateTime) {
-//        LocalDate localDate =  Instant.ofEpochMilli(Long.parseLong(orderDateTime)).atZone(ZoneId.of("Asia/Kolkata")).toLocalDate();
-//        logger.info("For Epoch = [{}] localDate = [{}]",orderDateTime,localDate);
-//
-//    }
-
     private List<OrderDetail> getOrderDetailsFromWERAOrder(WeraOrder weraOrder) {
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (WeraOrderItem item : weraOrder.getOrder_items()) {

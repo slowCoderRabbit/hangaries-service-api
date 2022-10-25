@@ -1,5 +1,6 @@
 package com.hangaries.service.wera;
 
+import com.hangaries.model.Store;
 import com.hangaries.model.wera.dto.WeraMenuUploadDTO;
 import com.hangaries.model.wera.request.WeraMenu;
 import com.hangaries.model.wera.request.WeraMenuAddons;
@@ -9,6 +10,7 @@ import com.hangaries.repository.CustomerDtlsRepository;
 import com.hangaries.repository.CustomerRepository;
 import com.hangaries.repository.wera.WeraOrderJSONDumpRepository;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
+import com.hangaries.service.store.impl.StoreServiceImpl;
 import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +25,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.hangaries.constants.HangariesConstants.NAA;
 import static com.hangaries.constants.HangariesConstants.SUCCESS;
@@ -46,11 +45,6 @@ public class WERAMenuServiceImpl {
     ConfigServiceImpl configService;
     @Value("${wera.menu.upload.url}")
     private String menuUploadURL;
-
-    @Value("${wera.api.key}")
-    private String werAPIKey;
-    @Value("${wera.api.value}")
-    private String werAPIValue;
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -58,6 +52,11 @@ public class WERAMenuServiceImpl {
     public List<WeraUploadMenu> uploadMenuToWeraFoods(String restaurantId, String storeId) {
         WeraUploadMenu request;
         List<WeraUploadMenu> requestList = null;
+        Optional<Store> storeDetails = StoreServiceImpl.getStoreDetailsFromStoreIdCache(storeId);
+        if (!storeDetails.isPresent()) {
+            logger.info("Store details not found for storeId = [{}]", storeId);
+            return requestList;
+        }
         List<WeraMenuUploadDTO> weraMenuUploadDTOList = getWeraMenuUploadViewDetails(restaurantId, storeId);
         if (!weraMenuUploadDTOList.isEmpty()) {
             Map<String, List<WeraMenuUploadDTO>> consolidateResponse = consolidateResponse(weraMenuUploadDTOList);
@@ -65,12 +64,13 @@ public class WERAMenuServiceImpl {
             requestList = generateWERAUploadMenuRequest(consolidateResponse);
 
         }
-        callWERAUploadMenuAPI(requestList);
+        callWERAUploadMenuAPI(requestList, storeDetails.get().getWeraAPIKey(), storeDetails.get().getWeraAPIValue());
         return requestList;
     }
 
-    String callWERAUploadMenuAPI(List<WeraUploadMenu> requestList) {
+    String callWERAUploadMenuAPI(List<WeraUploadMenu> requestList, String werAPIKey, String werAPIValue) {
         logger.info("################## WERA MENU UPLOAD - INITIATING!!! ##################");
+        logger.info("werAPIKey = [{}], werAPIValue=[{}]", werAPIKey, werAPIValue);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -90,33 +90,9 @@ public class WERAMenuServiceImpl {
         }
 
         logger.info("################## WERA MENU UPLOAD - FINISHED!!! ##################");
-
         return SUCCESS;
     }
 
-
-//    private List<WeraUploadMenu> generateWERAUploadMenuRequest(Map<String, List<WeraMenuUploadDTO>> consolidateResponse) {
-//
-//        List<WeraUploadMenu> weraUploadMenuList;
-//        WeraUploadMenu weraUploadMenu;
-//        WeraMenu weraMenu = null;
-//        WeraMenuAddons weraMenuAddons;
-//        List<WeraUploadMenu> menuList = new ArrayList<>();
-//        for (List<WeraMenuUploadDTO> dtoList : consolidateResponse.values()) {
-//            weraUploadMenu = new WeraUploadMenu();
-//            weraUploadMenuList = new ArrayList<>();
-//            ArrayList<WeraMenuAddons> weraMenuAddonsList = new ArrayList<>();
-//            for (WeraMenuUploadDTO weraMenuUploadDTO : dtoList) {
-//                weraUploadMenu.setMerchant_id(weraMenuUploadDTO.getMerchant_id());
-//                weraUploadMenu.setMenu();
-//
-//            }
-//
-//            menuList.add(weraUploadMenu);
-//
-//        }
-//        return menuList;
-//    }
 
     private List<WeraUploadMenu> generateWERAUploadMenuRequest(Map<String, List<WeraMenuUploadDTO>> consolidateResponse) {
 

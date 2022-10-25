@@ -1,9 +1,11 @@
 package com.hangaries.service.wera;
 
+import com.hangaries.model.Store;
 import com.hangaries.model.wera.request.WERAOrderAcceptRequest;
 import com.hangaries.model.wera.request.WERAOrderFoodReadyRequest;
 import com.hangaries.model.wera.response.WERAOrderAcceptResponse;
 import com.hangaries.model.wera.response.WERAOrderFoodReadyResponse;
+import com.hangaries.service.store.impl.StoreServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Service
 public class WERACallbackServiceImpl {
 
@@ -21,20 +25,25 @@ public class WERACallbackServiceImpl {
 
     @Value("${wera.order.accept.url}")
     private String orderAcceptURL;
-    @Value("${wera.api.key}")
-    private String werAPIKey;
-    @Value("${wera.api.value}")
-    private String werAPIValue;
 
     @Value("${wera.order.food.ready.url}")
     private String foodReadyURL;
 
     public ResponseEntity<WERAOrderAcceptResponse> callWERAOrderAcceptAPI(WERAOrderAcceptRequest request) {
         logger.info("################## WERA ACCEPT ORDER - INITIATING!!! ##################");
+
+        Store storeDetails = StoreServiceImpl.getWeraMerchantToStoreMapping().get(request.getMerchant_id());
+        if (null == storeDetails) {
+            logger.info("Store details not found for MerchantId = [{}]", request.getMerchant_id());
+            return null;
+        }else{
+            logger.info("werAPIKey = [{}], werAPIValue=[{}]", storeDetails.getWeraAPIKey(), storeDetails.getWeraAPIValue());
+        }
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set(werAPIKey, werAPIValue);
+        headers.set(storeDetails.getWeraAPIKey(), storeDetails.getWeraAPIValue());
 
         HttpEntity<WERAOrderAcceptRequest> httpRequest = new HttpEntity<>(request, headers);
         ResponseEntity<WERAOrderAcceptResponse> response = null;
@@ -52,10 +61,19 @@ public class WERACallbackServiceImpl {
 
     public ResponseEntity<WERAOrderFoodReadyResponse> callWERAOrderFoodReadyAPI(WERAOrderFoodReadyRequest request) {
         logger.info("################## WERA ORDER FOOD READY - INITIATING!!! ##################");
+
+        Store storeDetails = StoreServiceImpl.getWeraMerchantToStoreMapping().get(request.getMerchant_id());
+        if (null == storeDetails) {
+            logger.info("Store details not found for MerchantId = [{}]", request.getMerchant_id());
+            return null;
+        }else{
+            logger.info("werAPIKey = [{}], werAPIValue=[{}]", storeDetails.getWeraAPIKey(), storeDetails.getWeraAPIValue());
+        }
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set(werAPIKey, werAPIValue);
+        headers.set(storeDetails.getWeraAPIKey(), storeDetails.getWeraAPIValue());
 
         HttpEntity<WERAOrderFoodReadyRequest> httpRequest = new HttpEntity<>(request, headers);
         ResponseEntity<WERAOrderFoodReadyResponse> response = null;

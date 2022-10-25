@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -26,6 +23,15 @@ public class StoreServiceImpl implements StoreService {
 
     public static Map<String, Store> getWeraMerchantToStoreMapping() {
         return Collections.unmodifiableMap(weraMerchantToStoreMapping);
+    }
+
+    public static Optional<Store> getStoreDetailsFromStoreIdCache(String storeId) {
+        logger.info("Getting store details for StoreId = [{}]", storeId);
+        if (StringUtils.isBlank(storeId)) {
+            return null;
+        }
+        return weraMerchantToStoreMapping.entrySet().stream().filter(e -> storeId.equals(e.getValue().getStoreId())).map(Map.Entry::getValue).findFirst();
+
     }
 
     @Bean(initMethod = "init")
@@ -64,4 +70,5 @@ public class StoreServiceImpl implements StoreService {
         logger.info("Getting store details for weraMerchantId = [{}]", weraMerchantId);
         return storeRepository.findByWeraMerchantId(weraMerchantId);
     }
+
 }
