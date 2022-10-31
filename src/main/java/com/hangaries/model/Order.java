@@ -79,6 +79,10 @@ public class Order implements Serializable {
     private Float discountPercentage;
     @Column(name = "overall_price_with_tax")
     private float overallPriceWithTax;
+
+    @Column(name = "discount_amount")
+    private float discountAmount;
+
     @Column(name = "customer_address_id")
     private long customerAddressId;
     @Column(name = "delivery_user_id")

@@ -271,10 +271,11 @@ public class WERAOrderServiceImpl {
         order.setPaymentMode(weraOrder.getOrder_from());
         order.setTotalPrice(weraOrder.getNet_amount());
         order.setOverallPriceWithTax(weraOrder.getGross_amount());
-        order.setCgstCalculatedValue(weraOrder.getCgst());
-        order.setSgstCalculatedValue(weraOrder.getSgst());
+//        order.setCgstCalculatedValue(weraOrder.getCgst());
+//        order.setSgstCalculatedValue(weraOrder.getSgst());
         order.setDeliveryCharges(weraOrder.getDelivery_charge());
         order.setPackagingCharges(weraOrder.getOrder_packaging());
+        order.setDiscountAmount(weraOrder.getDiscount());
         order.setCreatedBy(weraOrder.getOrder_from());
         String formattedCouponCode = getFormattedCouponCode(weraOrder);
         order.setCouponCode(formattedCouponCode.substring(0, Math.min(formattedCouponCode.length(), 99)));
