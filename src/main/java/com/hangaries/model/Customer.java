@@ -25,7 +25,7 @@ public class Customer {
     @Column(name = "customer_last_name")
     private String lastName;
 
-    @Column(name = "mobile_number", nullable = false)
+    @Column(name = "mobile_number")
     private  String mobileNumber;
 
     @Column(name = "email_id")
