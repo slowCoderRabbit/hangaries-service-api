@@ -26,7 +26,6 @@ public class Customer {
     private String lastName;
 
     @Column(name = "mobile_number", nullable = false)
-    @Min(value = 10, message = "Mobile Number should not be less than 10")
     private  String mobileNumber;
 
     @Column(name = "email_id")
