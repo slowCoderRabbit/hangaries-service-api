@@ -49,9 +49,9 @@ public class WERAMenuServiceImpl {
     private JdbcTemplate jdbcTemplate;
 
 
-    public List<WeraUploadMenu> uploadMenuToWeraFoods(String restaurantId, String storeId) {
+    public WeraUploadMenu uploadMenuToWeraFoods(String restaurantId, String storeId) {
         WeraUploadMenu request;
-        List<WeraUploadMenu> requestList = null;
+        WeraUploadMenu requestList = null;
         Optional<Store> storeDetails = StoreServiceImpl.getStoreDetailsFromStoreIdCache(storeId);
         if (!storeDetails.isPresent()) {
             logger.info("Store details not found for storeId = [{}]", storeId);
@@ -68,25 +68,22 @@ public class WERAMenuServiceImpl {
         return requestList;
     }
 
-    String callWERAUploadMenuAPI(List<WeraUploadMenu> requestList, String werAPIKey, String werAPIValue) {
+    String callWERAUploadMenuAPI(WeraUploadMenu request, String werAPIKey, String werAPIValue) {
         logger.info("################## WERA MENU UPLOAD - INITIATING!!! ##################");
         logger.info("werAPIKey = [{}], werAPIValue=[{}]", werAPIKey, werAPIValue);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set(werAPIKey, werAPIValue);
-        int index = 0;
-        for (WeraUploadMenu request : requestList) {
-            index = ++index;
-            logger.info("[{}] WERA MENU UPLOAD REQUEST = [{}]", index, request);
-            HttpEntity<WeraUploadMenu> httpRequest = new HttpEntity<>(request, headers);
-            try {
-                ResponseEntity<WeraMenuUploadResponse> response = restTemplate.postForEntity(menuUploadURL, httpRequest, WeraMenuUploadResponse.class);
-                logger.info("[{}] WERA MENU UPLOAD RESPONSE = [{}]", index, response.getBody());
-            } catch (Exception ex) {
-                logger.error(ex.getMessage());
-                return "Error while uploading menu items. Please check the logs!!!";
-            }
+        int index = 1;
+        logger.info("[{}] WERA MENU UPLOAD REQUEST = [{}]", index, request);
+        HttpEntity<WeraUploadMenu> httpRequest = new HttpEntity<>(request, headers);
+        try {
+            ResponseEntity<WeraMenuUploadResponse> response = restTemplate.postForEntity(menuUploadURL, httpRequest, WeraMenuUploadResponse.class);
+            logger.info("[{}] WERA MENU UPLOAD RESPONSE = [{}]", index, response.getBody());
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            return "Error while uploading menu items. Please check the logs!!!";
         }
 
         logger.info("################## WERA MENU UPLOAD - FINISHED!!! ##################");
@@ -94,39 +91,61 @@ public class WERAMenuServiceImpl {
     }
 
 
-    private List<WeraUploadMenu> generateWERAUploadMenuRequest(Map<String, List<WeraMenuUploadDTO>> consolidateResponse) {
+    private WeraUploadMenu generateWERAUploadMenuRequest(Map<String, List<WeraMenuUploadDTO>> consolidateResponse) {
 
-        List<WeraUploadMenu> weraUploadMenuList;
-        WeraUploadMenu weraUploadMenu;
+        WeraUploadMenu weraUploadMenu = new WeraUploadMenu();
         WeraMenu weraMenu = null;
-        WeraMenuAddons weraMenuAddons;
-        List<WeraUploadMenu> menuList = new ArrayList<>();
+        ArrayList<WeraMenu> weraMenuList = new ArrayList<>();
         for (List<WeraMenuUploadDTO> dtoList : consolidateResponse.values()) {
-            weraUploadMenu = new WeraUploadMenu();
-            weraUploadMenuList = new ArrayList<>();
+            weraUploadMenu.setMerchant_id(dtoList.stream().findFirst().get().getMerchant_id());
             ArrayList<WeraMenuAddons> weraMenuAddonsList = new ArrayList<>();
-            ArrayList<WeraMenu> weraMenuList = null;
             for (int i = 0; i < dtoList.size(); i++) {
-                weraMenuList = new ArrayList<>();
-                if (i == 0) {
-                    weraUploadMenu.setMerchant_id(dtoList.get(i).getMerchant_id());
-                    weraMenu = populateWERAMenu(dtoList.get(i));
-//                    weraMenuList.add(weraMenu);
-//                    weraUploadMenu.setMenu(weraMenuList);
-                }
-                weraMenuAddons = populateWERAAddon(dtoList.get(i));
+                weraMenu = populateWERAMenu(dtoList.get(i));
+                WeraMenuAddons weraMenuAddons = populateWERAAddon(dtoList.get(i));
                 if (null != weraMenuAddons) {
                     weraMenuAddonsList.add(weraMenuAddons);
                 }
-
+                weraMenu.setAddons(weraMenuAddonsList);
             }
-            weraMenu.setAddons(weraMenuAddonsList);
             weraMenuList.add(weraMenu);
-            weraUploadMenu.setMenu(weraMenuList);
-            menuList.add(weraUploadMenu);
         }
-        return menuList;
+        weraUploadMenu.setMenu(weraMenuList);
+        return weraUploadMenu;
     }
+
+//    private List<WeraUploadMenu> generateWERAUploadMenuRequestBkp(Map<String, List<WeraMenuUploadDTO>> consolidateResponse) {
+//
+//        List<WeraUploadMenu> weraUploadMenuList;
+//        WeraUploadMenu weraUploadMenu;
+//        WeraMenu weraMenu = null;
+//        WeraMenuAddons weraMenuAddons;
+//        List<WeraUploadMenu> menuList = new ArrayList<>();
+//        for (List<WeraMenuUploadDTO> dtoList : consolidateResponse.values()) {
+//            weraUploadMenu = new WeraUploadMenu();
+//            weraUploadMenuList = new ArrayList<>();
+//            ArrayList<WeraMenuAddons> weraMenuAddonsList = new ArrayList<>();
+//            ArrayList<WeraMenu> weraMenuList = null;
+//            for (int i = 0; i < dtoList.size(); i++) {
+//                weraMenuList = new ArrayList<>();
+//                if (i == 0) {
+//                    weraUploadMenu.setMerchant_id(dtoList.get(i).getMerchant_id());
+//                    weraMenu = populateWERAMenu(dtoList.get(i));
+////                    weraMenuList.add(weraMenu);
+////                    weraUploadMenu.setMenu(weraMenuList);
+//                }
+//                weraMenuAddons = populateWERAAddon(dtoList.get(i));
+//                if (null != weraMenuAddons) {
+//                    weraMenuAddonsList.add(weraMenuAddons);
+//                }
+//
+//            }
+//            weraMenu.setAddons(weraMenuAddonsList);
+//            weraMenuList.add(weraMenu);
+//            weraUploadMenu.setMenu(weraMenuList);
+//            menuList.add(weraUploadMenu);
+//        }
+//        return menuList;
+//    }
 
     private WeraMenu populateWERAMenu(WeraMenuUploadDTO weraMenuUploadDTO) {
         WeraMenu weraMenu = new WeraMenu();

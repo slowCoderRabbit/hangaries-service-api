@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
@@ -35,8 +33,8 @@ public class WERAController {
     WERACallbackServiceImpl weraCallbackService;
 
     @GetMapping("uploadMenuToWeraFoods")
-    List<WeraUploadMenu> uploadMenuToWeraFoods(@RequestParam("restaurantId") String restaurantId,
-                                               @RequestParam("storeId") String storeId) {
+    WeraUploadMenu uploadMenuToWeraFoods(@RequestParam("restaurantId") String restaurantId,
+                                         @RequestParam("storeId") String storeId) {
         logger.info("Getting menu to upload for restaurantId = {}, storeId = {}.", restaurantId, storeId);
         return weraMenuService.uploadMenuToWeraFoods(restaurantId, storeId);
 
