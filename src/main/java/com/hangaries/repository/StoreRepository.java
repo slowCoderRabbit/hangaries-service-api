@@ -2,6 +2,8 @@ package com.hangaries.repository;
 
 import com.hangaries.model.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -16,4 +18,9 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     long deleteByStoreId(String storeId);
 
     Store findByWeraMerchantId(String weraMerchantId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update STORE_MASTER set store_active_flag=:storeActiveFlag where store_Id=:storeId", nativeQuery = true)
+    int updateStoreActiveFlag(String storeId, String storeActiveFlag);
 }

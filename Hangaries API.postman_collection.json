@@ -630,7 +630,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"storeId\": \"S0040\",\r\n        \"restaurantId\": \"R001\",\r\n        \"resturantName\": \"Hangries Yamunanagar\",\r\n        \"country\": \"India\",\r\n        \"city\": \"YamumaNagar\",\r\n        \"zipCode\": null,\r\n        \"storeStartTime\": \"9:00\",\r\n        \"storeEndTime\": \"11:00\",\r\n        \"storeGstNumber\": \"06ABCCS2473H1ZD\",\r\n        \"address1\": \"Nehru Park Road, Near Raman Hotel\",\r\n        \"address2\": \"Model Town\",\r\n        \"address3\": \"Yamunanagar\",\r\n        \"storeAvailableForPickup\": \"Y\",\r\n        \"storeAvailableForDelivery\": \"N\"\r\n        \r\n    }",
+					"raw": "{\r\n        \"storeId\": \"S051\",\r\n        \"restaurantId\": \"R001\",\r\n        \"resturantName\": \"Hangries AmritsarTest\",\r\n        \"country\": \"India\",\r\n        \"city\": \"Amritsar\",\r\n        \"storeActiveFlag\": \"N\",\r\n        \"zipCode\": null,\r\n        \"storeStartTime\": \"9:00\",\r\n        \"storeEndTime\": \"11:00\",\r\n        \"storeGstNumber\": \"03AAXFG0778J1ZX\",\r\n        \"address1\": \"167/13A, Garh Road\",\r\n        \"address2\": \"Opp. Vishal Mega Mart\",\r\n        \"address3\": \"Meerut\",\r\n        \"storeAvailableForPickup\": \"Y\",\r\n        \"storeAvailableForDelivery\": \"Y\"        \r\n        \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -638,7 +638,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/addStore",
+					"raw": "http://localhost:8080/api/saveStore",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -646,7 +646,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"addStore"
+						"saveStore"
 					]
 				}
 			},
@@ -661,7 +661,7 @@
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "DELETE",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -673,7 +673,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/deleteStoreByStoreId?storeId=S0022",
+					"raw": "http://localhost:8080/api/deleteStoreByStoreId?storeId=S051",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -686,7 +686,7 @@
 					"query": [
 						{
 							"key": "storeId",
-							"value": "S0022"
+							"value": "S051"
 						}
 					]
 				}
@@ -4387,6 +4387,161 @@
 					"path": [
 						"api",
 						"saveProductMenuMapping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllRecipes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllRecipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllRecipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveRecipe",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{        \r\n        \"restaurantId\": \"R001\",\r\n        \"productId\": \"P002\",\r\n        \"itemId\": \"I0008\",\r\n        \"itemQty\": 0.03,\r\n        \"itemCost\": \"0.66\",\r\n        \"itemUOM\": \"KG\",\r\n        \"itemStatus\": \"ACTIVE\",\r\n        \"createdBy\": \"Gurmeet\",\r\n        \"createdDate\": \"2022-04-23T22:39:58.000+00:00\",\r\n        \"updatedBy\": \"Gurmeet\",\r\n        \"updatedDate\": \"2022-04-23T22:39:58.000+00:00\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveRecipe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveRecipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllActiveRecipes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllActiveRecipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllActiveRecipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveRecipeStatus",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 19,  \r\n    \"itemStatus\": \"ACTIVE\",\r\n    \"updatedBy\" : \"Aniket\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveRecipeStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveRecipeStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateStoreActiveFlag",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updateStoreActiveFlag?storeId=S051&storeActiveFlag=Y",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateStoreActiveFlag"
+					],
+					"query": [
+						{
+							"key": "storeId",
+							"value": "S051"
+						},
+						{
+							"key": "storeActiveFlag",
+							"value": "Y"
+						}
 					]
 				}
 			},

@@ -61,14 +61,15 @@ public class StoreServiceImpl implements StoreService {
         return storeRepository.save(newStore);
     }
 
-    @Override
-    public long deleteStoreByStoreId(String storeId) {
-        return storeRepository.deleteByStoreId(storeId);
-    }
 
     public Store getStoreDetailsByWeraMerchantId(String weraMerchantId) {
         logger.info("Getting store details for weraMerchantId = [{}]", weraMerchantId);
         return storeRepository.findByWeraMerchantId(weraMerchantId);
     }
 
+    public List<Store> updateStoreActiveFlag(String storeId, String storeActiveFlag) {
+        int result = storeRepository.updateStoreActiveFlag(storeId, storeActiveFlag);
+        logger.info("updateStoreActiveFlag result = [{}]", result);
+        return storeRepository.findByStoreId(storeId);
+    }
 }
