@@ -4546,6 +4546,148 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getAllPurchaseOrders",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllPurchaseOrders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllPurchaseOrders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPurchaseOrdersByStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getPurchaseOrdersByStatus?status=CLOSED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getPurchaseOrdersByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savePurchaseOrderStatus",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 10,  \r\n    \"itemStatus\": \"CLOSED\",\r\n    \"updatedBy\" : \"Aniket\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/savePurchaseOrderStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"savePurchaseOrderStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "savePurchaseOrder",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"S001\",\r\n    \"supplierId\": 1,\r\n    \"purchaseDate\": \"2022-10-01T16:00:00.000+00:00\",\r\n    \"billNumber\": \"12345\",\r\n    \"itemId\": \"I0008\",\r\n    \"purchaseQty\": 100.0,\r\n    \"wastageQty\": 0.0,\r\n    \"netQty\": 100.0,\r\n    \"quotedPurchasePrice\": 100.0,\r\n    \"discountAmount\": 0.0,\r\n    \"netPurchasePrice\": 100.0,\r\n    \"gstAmount\": 5.0,\r\n    \"purchaseCategory\": \"EXTERNAL\",\r\n    \"purchaseOrderStatus\": \"CLOSED\",\r\n    \"createdBy\": \"SYSTEM\",\r\n    \"createdDate\": \"2022-10-16T01:39:22.000+00:00\",\r\n    \"updatedBy\": \"Aniket\",\r\n    \"updatedDate\": \"2022-11-07T00:40:39.000+00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/savePurchaseOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"savePurchaseOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPurchaseOrdersExcludingStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getPurchaseOrdersExcludingStatus?status=CLOSED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getPurchaseOrdersExcludingStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "CLOSED"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
