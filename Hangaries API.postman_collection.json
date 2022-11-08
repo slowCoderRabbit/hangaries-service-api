@@ -4688,6 +4688,157 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getAllItems",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllItems",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllItems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getItemsByStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getItemsByStatus?status=ACTIVE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getItemsByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveItem",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \r\n        \"itemId\": \"I0001\",\r\n        \"itemName\": \"1000 ML BOXTest\",\r\n        \"itemCategory\": \"DISPOSABLE\",\r\n        \"itemUOM\": \"NOS\",\r\n        \"itemGstPercentage\": 5.0,\r\n        \"itemTrackingFlag\": \"Y\",\r\n        \"itemStatus\": \"ACTIVE\",\r\n        \"createdBy\": \"SYSTEM\",\r\n        \"createdDate\": \"2022-10-31T18:55:34.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-10-31T18:55:34.000+00:00\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveItem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveItemStatus",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 241,  \r\n    \"itemStatus\": \"INACTIVE\",\r\n    \"updatedBy\" : \"Aniket\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveItemStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveItemStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatesaveItem",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 241,\r\n    \"itemId\": \"I0001\",\r\n    \"itemName\": \"1000 ML BOXTest123\",\r\n    \"itemCategory\": \"DISPOSABLE\",\r\n    \"itemUOM\": \"NOS\",\r\n    \"itemGstPercentage\": 5.0,\r\n    \"itemTrackingFlag\": \"Y\",\r\n    \"itemStatus\": \"ACTIVE\",\r\n    \"createdBy\": \"SYSTEM\",\r\n    \"createdDate\": \"2022-10-31T18:55:34.000+00:00\",\r\n    \"updatedBy\": \"SYSTEM\",\r\n    \"updatedDate\": \"2022-10-31T18:55:34.000+00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveItem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveItem"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
