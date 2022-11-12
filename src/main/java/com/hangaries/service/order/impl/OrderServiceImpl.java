@@ -292,6 +292,9 @@ public class OrderServiceImpl implements OrderService {
         } else {
             queryString = "SELECT * FROM vOrderMenuIngredientAddress where " + queryString;
         }
+        if (orderRequest.isDescending()) {
+            queryString = queryString + " and order_status <> 'CANCELLED' ";
+        }
         queryString = queryString + ORDER_BY_CREATED_DATE;
         if (!orderRequest.isDescending()) {
             queryString = queryString + " desc";

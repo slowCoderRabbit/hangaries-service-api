@@ -3,10 +3,7 @@ package com.hangaries.service.wera;
 import com.hangaries.model.*;
 import com.hangaries.model.vo.OrderVO;
 import com.hangaries.model.wera.dto.*;
-import com.hangaries.model.wera.request.WeraOrder;
-import com.hangaries.model.wera.request.WeraOrderAddon;
-import com.hangaries.model.wera.request.WeraOrderDiscount;
-import com.hangaries.model.wera.request.WeraOrderItem;
+import com.hangaries.model.wera.request.*;
 import com.hangaries.model.wera.response.WeraOrderResponse;
 import com.hangaries.repository.CustomerDtlsRepository;
 import com.hangaries.repository.CustomerRepository;
@@ -46,6 +43,8 @@ public class WERAOrderServiceImpl {
 
     @Autowired
     ConfigServiceImpl configService;
+    @Autowired
+    WERACallbackServiceImpl weraCallbackService;
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
@@ -137,11 +136,15 @@ public class WERAOrderServiceImpl {
                         weraOrderResponse.setMessage("OK");
                         weraOrderResponse.setStatus(200);
 
-//                        try {
-//                            updateOrderIdInWERATables(newOrderId, result, savedWeraOrderMasterDTO, savedWeraOrderDetailsDTOList);
-//                        } catch (Exception ex) {
-//                            logger.error("Error updating OrderId In WERA Tables", ex);
-//                        }
+                        try {
+                            WERAOrderAcceptRequest request = new WERAOrderAcceptRequest();
+                            request.setOrder_id(weraOrderId);
+                            request.setMerchant_id(weraMerchantId);
+                            request.setPreparation_time(30);
+                            weraCallbackService.callWERAOrderAcceptAPI(request);
+                        } catch (Exception ex) {
+                            logger.error("Error Accepting WERA OrderId [{}]", weraOrderId, ex);
+                        }
 
                     } catch (Exception ex) {
                         logger.error("Exception occurred while processing WERA order!!!!", ex);

@@ -41,6 +41,9 @@ public class Store {
     @Column(name = "store_active_flag")
     private @NotBlank String storeActiveFlag = "Y";
 
+    @Column(name = "store_kot_print_flag")
+    private String storeKOTPrintFlag;
+
     @Column(name = "zip_code")
     private String zipCode;
 
