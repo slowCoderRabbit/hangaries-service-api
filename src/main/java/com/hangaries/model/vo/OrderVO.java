@@ -40,6 +40,8 @@ public class OrderVO {
     private String foodPackagedFlag;
     private String couponCode;
     private Float discountPercentage;
+    private Float discountAmount;
+    private Float packagingCharges;
     private String createdBy;
     private Date createdDate;
     private String updatedBy;

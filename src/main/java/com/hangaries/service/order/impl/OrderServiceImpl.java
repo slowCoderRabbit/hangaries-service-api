@@ -551,6 +551,8 @@ public class OrderServiceImpl implements OrderService {
         vo.setCouponCode(result.getCouponCode());
         vo.setDiscountPercentage(result.getDiscountPercentage());
         vo.setOrderReceivedDateTime(result.getOrderReceivedDateTime());
+        vo.setDiscountAmount(result.getDiscountAmount());
+        vo.setPackagingCharges(result.getPackagingCharges());
         return vo;
 
 
