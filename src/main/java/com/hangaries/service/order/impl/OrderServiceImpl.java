@@ -10,6 +10,7 @@ import com.hangaries.model.wera.request.WeraOrderRequestDetail;
 import com.hangaries.repository.*;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import com.hangaries.service.order.OrderService;
+import com.hangaries.service.sse.SSEServiceImpl;
 import com.hangaries.service.store.impl.StoreServiceImpl;
 import com.hangaries.service.wera.WERACallbackServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -62,6 +63,8 @@ public class OrderServiceImpl implements OrderService {
     ConfigServiceImpl configService;
     @Autowired
     WERACallbackServiceImpl weraCallbackService;
+    @Autowired
+    SSEServiceImpl sseService;
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -250,6 +253,15 @@ public class OrderServiceImpl implements OrderService {
 
 
         }
+
+        try {
+            logger.info("Calling event dispatch service for orderId=[{}] for storeId=[{}]", savedOrder.getOrderId(), savedOrder.getStoreId());
+            sseService.dispatchOrderEvents(savedOrder);
+        } catch (Exception e) {
+            logger.error("Error occurred while dispatching order event {}.", e);
+
+        }
+
         return savedOrder;
     }
 
