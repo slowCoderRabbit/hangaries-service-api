@@ -200,11 +200,15 @@ public class OrderController {
 
     @PostMapping("queryOrderViewByParams")
     public ResponseEntity<List<OrderVO>> queryOrderViewByParams(@RequestBody OrderQueryRequest orderRequest) {
+        long startTime = System.nanoTime();
         logger.info("queryOrderViewByParams :: Get Order Details by = [{}]", orderRequest);
 
         List<OrderVO> orderDetailList = new ArrayList<>();
         try {
             orderDetailList = orderService.queryOrderViewByParams(orderRequest);
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime) / 1000000;
+            logger.info("queryOrderViewByParams :: Response processing took [{}] ms.", duration);
             return new ResponseEntity<List<OrderVO>>(orderDetailList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error getting order by params = {} :: {}", orderRequest, ex.getMessage());

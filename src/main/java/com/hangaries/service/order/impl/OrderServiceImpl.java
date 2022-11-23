@@ -26,7 +26,7 @@ import java.time.Instant;
 import java.util.*;
 
 import static com.hangaries.constants.HangariesConstants.*;
-import static com.hangaries.util.HangariesUtil.generatorQueryString;
+import static com.hangaries.util.HangariesUtil.generatorQueryStringForSQL;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -95,7 +95,6 @@ public class OrderServiceImpl implements OrderService {
         return stringBuilder.toString();
 
     }
-
 
     private boolean isStrNullOrEmpty(String string) {
         return string == null || string.isEmpty() || string.trim().isEmpty();
@@ -254,13 +253,13 @@ public class OrderServiceImpl implements OrderService {
 
         }
 
-        try {
-            logger.info("Calling event dispatch service for orderId=[{}] for storeId=[{}]", savedOrder.getOrderId(), savedOrder.getStoreId());
-            sseService.dispatchOrderEvents(savedOrder);
-        } catch (Exception e) {
-            logger.error("Error occurred while dispatching order event {}.", e);
-
-        }
+//        try {
+//            logger.info("Calling event dispatch service for orderId=[{}] for storeId=[{}]", savedOrder.getOrderId(), savedOrder.getStoreId());
+//            sseService.dispatchOrderEvents(savedOrder);
+//        } catch (Exception e) {
+//            logger.error("Error occurred while dispatching order event {}.", e);
+//
+//        }
 
         return savedOrder;
     }
@@ -298,11 +297,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderVO> queryOrderViewByParams(OrderQueryRequest orderRequest) {
 
-        String queryString = generatorQueryString(orderRequest);
+//        String queryString = generatorQueryString(orderRequest);
+        String queryString = generatorQueryStringForSQL(orderRequest);
+
         if (StringUtils.isBlank(queryString)) {
-            queryString = "SELECT * FROM vOrderMenuIngredientAddress";
+            queryString = ORDER_MENU_INGREDIENT_ADDRESS_VIEW_SQL;
         } else {
-            queryString = "SELECT * FROM vOrderMenuIngredientAddress where " + queryString;
+            queryString = ORDER_MENU_INGREDIENT_ADDRESS_VIEW_SQL + " AND " + queryString;
         }
         if (orderRequest.isDescending()) {
             queryString = queryString + " and order_status <> 'CANCELLED' ";

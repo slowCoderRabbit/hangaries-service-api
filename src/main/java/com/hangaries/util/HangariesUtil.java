@@ -71,6 +71,66 @@ public class HangariesUtil {
         return finalQuery;
     }
 
+    public static String generatorQueryStringForSQL(OrderQueryRequest orderRequest) {
+
+        StringBuilder queryString = new StringBuilder();
+        String finalQuery = null;
+
+        if (!StringUtils.isBlank(orderRequest.getOrderId())) {
+            queryString.append("a.order_id = '" + orderRequest.getOrderId() + "'");
+            queryString.append(AND);
+        }
+        if (!StringUtils.isBlank(orderRequest.getRestaurantId())) {
+            queryString.append("g.restaurant_id = '" + orderRequest.getRestaurantId() + "'");
+            queryString.append(AND);
+        }
+        if (!StringUtils.isBlank(orderRequest.getStoreId())) {
+            queryString.append("h.store_Id = '" + orderRequest.getStoreId() + "'");
+            queryString.append(AND);
+        }
+        if (!StringUtils.isBlank(orderRequest.getMobileNumber())) {
+            queryString.append("e.mobile_number = '" + orderRequest.getMobileNumber() + "'");
+            queryString.append(AND);
+        }
+        if (!StringUtils.isBlank(orderRequest.getOrderStatus())) {
+            queryString.append("a.order_status = '" + orderRequest.getOrderStatus() + "'");
+            queryString.append(AND);
+        }
+        if (!StringUtils.isBlank(orderRequest.getOrderSource())) {
+            queryString.append("a.order_source = '" + orderRequest.getOrderSource() + "'");
+            queryString.append(AND);
+        }
+        if (!StringUtils.isBlank(orderRequest.getPaymentStatus())) {
+            queryString.append("a.payment_status = '" + orderRequest.getPaymentStatus() + "'");
+            queryString.append(AND);
+        }
+
+        if (!StringUtils.isBlank(orderRequest.getOrderDeliveryType())) {
+            queryString.append("a.order_delivery_type = '" + orderRequest.getOrderDeliveryType() + "'");
+            queryString.append(AND);
+        }
+
+        if (!StringUtils.isBlank(orderRequest.getDeliveryUserId())) {
+            queryString.append("a.delivery_user_id = '" + orderRequest.getDeliveryUserId() + "'");
+            queryString.append(AND);
+        }
+
+        if (!StringUtils.isBlank(orderRequest.getFoodPackagedFlag())) {
+            queryString.append("a.food_packaged_flag = '" + orderRequest.getFoodPackagedFlag() + "'");
+            queryString.append(AND);
+        }
+
+        handleDates(orderRequest, queryString);
+
+        if (!StringUtils.isBlank(queryString)) {
+            finalQuery = queryString.substring(0, queryString.lastIndexOf(AND));
+        }
+
+        logger.info("finalQuery = {}", finalQuery);
+
+        return finalQuery;
+    }
+
     static void handleDates(OrderQueryRequest orderRequest, StringBuilder queryString) {
         if (!StringUtils.isBlank(orderRequest.getOrderReceivedFromDate()) && !StringUtils.isBlank(orderRequest.getOrderReceivedDate())) {
             queryString.append("DATE(order_received_date_time) BETWEEN DATE('" + orderRequest.getOrderReceivedFromDate() + "') AND DATE('" + orderRequest.getOrderReceivedDate() + "') ");
