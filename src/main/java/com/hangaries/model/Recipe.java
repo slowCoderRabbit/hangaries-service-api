@@ -37,7 +37,7 @@ public class Recipe {
     private String itemCost;
 
     @Column(name = "item_uom")
-    private String itemUOM;
+    private String itemUom;
 
     @Column(name = "item_status")
     private String itemStatus;

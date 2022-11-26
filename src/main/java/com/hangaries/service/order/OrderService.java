@@ -26,8 +26,6 @@ public interface OrderService {
 
     List<OrderWithCustomerDetail> getOrderAndCustomerDetailsByCustomerId(int parseInt);
 
-    List<OrderVO> getOrderMenuIngredientAddressView(String restaurantId, String storeId, String mobileNumber);
-
     List<OrderVO> saveOrderAndGetOrderView(Order orderRequest);
 
     List<OrderVO> queryOrderViewByParams(OrderQueryRequest orderRequest);

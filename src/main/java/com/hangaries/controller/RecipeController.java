@@ -1,6 +1,7 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.Recipe;
+import com.hangaries.model.RecipeWithName;
 import com.hangaries.model.inventory.request.RecipeStatusRequest;
 import com.hangaries.service.inventory.supplier.RecipeServiceImpl;
 import org.slf4j.Logger;
@@ -24,21 +25,21 @@ public class RecipeController {
     private RecipeServiceImpl recipeService;
 
     @GetMapping("getAllRecipes")
-    public ResponseEntity<List<Recipe>> getAllRecipes() {
-        List<Recipe> recipes = new ArrayList<>();
+    public ResponseEntity<List<RecipeWithName>> getAllRecipes() {
+        List<RecipeWithName> recipes = new ArrayList<>();
         logger.info("Getting list of all recipes.");
         recipes = recipeService.getAllRecipes();
         logger.info("[{}] recipes found.", recipes.size());
-        return new ResponseEntity<List<Recipe>>(recipes, HttpStatus.OK);
+        return new ResponseEntity<List<RecipeWithName>>(recipes, HttpStatus.OK);
     }
 
     @GetMapping("getAllActiveRecipes")
-    public ResponseEntity<List<Recipe>> getAllActiveRecipes() {
-        List<Recipe> recipes = new ArrayList<>();
+    public ResponseEntity<List<RecipeWithName>> getAllActiveRecipes() {
+        List<RecipeWithName> recipes = new ArrayList<>();
         logger.info("Getting list of all active recipes.");
         recipes = recipeService.getAllActiveRecipes();
         logger.info("[{}] active recipes found.", recipes.size());
-        return new ResponseEntity<List<Recipe>>(recipes, HttpStatus.OK);
+        return new ResponseEntity<List<RecipeWithName>>(recipes, HttpStatus.OK);
     }
 
     @PostMapping("saveRecipe")

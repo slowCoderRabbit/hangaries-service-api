@@ -10,7 +10,6 @@ import com.hangaries.model.wera.request.WeraOrderRequestDetail;
 import com.hangaries.repository.*;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import com.hangaries.service.order.OrderService;
-import com.hangaries.service.sse.SSEServiceImpl;
 import com.hangaries.service.store.impl.StoreServiceImpl;
 import com.hangaries.service.wera.WERACallbackServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +25,7 @@ import java.time.Instant;
 import java.util.*;
 
 import static com.hangaries.constants.HangariesConstants.*;
+import static com.hangaries.constants.QueryStringConstants.ORDER_MENU_INGREDIENT_ADDRESS_VIEW_SQL;
 import static com.hangaries.util.HangariesUtil.generatorQueryStringForSQL;
 
 @Service
@@ -58,13 +58,10 @@ public class OrderServiceImpl implements OrderService {
     CustomerDtlsRepository customerDtlsRepository;
 
     @Autowired
-    OrderMenuIngredientAddressRepository orderMenuIngredientAddressRepository;
-    @Autowired
     ConfigServiceImpl configService;
     @Autowired
     WERACallbackServiceImpl weraCallbackService;
-    @Autowired
-    SSEServiceImpl sseService;
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -456,22 +453,22 @@ public class OrderServiceImpl implements OrderService {
         return details;
     }
 
-    @Override
-    public List<OrderVO> getOrderMenuIngredientAddressView(String restaurantId, String storeId, String mobileNumber) {
-        long startTime = System.nanoTime();
-        logger.info("getOrderMenuIngredientAddressView :: Request received at [{}].", new Date());
-        List<OrderMenuIngredientAddressDTO> results = orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressView(restaurantId, storeId, mobileNumber);
-        logger.info("getOrderMenuIngredientAddressView :: Total records returned from DB = [{}].", results.size());
-        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
-        logger.info("getOrderMenuIngredientAddressView :: Result consolidated in to = [{}].", orderMap.size());
-        List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
-        logger.info("getOrderMenuIngredientAddressView :: Final order list created of size = [{}].", orderList.size());
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime) / 1000000;
-        logger.info("getOrderMenuIngredientAddressView :: Response generated at [{}].", new Date());
-        logger.info("getOrderMenuIngredientAddressView :: Response processing took [{}] ms.", duration);
-        return orderList;
-    }
+//    @Override
+//    public List<OrderVO> getOrderMenuIngredientAddressView(String restaurantId, String storeId, String mobileNumber) {
+//        long startTime = System.nanoTime();
+//        logger.info("getOrderMenuIngredientAddressView :: Request received at [{}].", new Date());
+//        List<OrderMenuIngredientAddressDTO> results = orderMenuIngredientAddressRepository.getOrderMenuIngredientAddressView(restaurantId, storeId, mobileNumber);
+//        logger.info("getOrderMenuIngredientAddressView :: Total records returned from DB = [{}].", results.size());
+//        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = consolidateResponseToOrderedMapByOrderId(results);
+//        logger.info("getOrderMenuIngredientAddressView :: Result consolidated in to = [{}].", orderMap.size());
+//        List<OrderVO> orderList = convertOrderDTOMapTOOrderVOList(orderMap);
+//        logger.info("getOrderMenuIngredientAddressView :: Final order list created of size = [{}].", orderList.size());
+//        long endTime = System.nanoTime();
+//        long duration = (endTime - startTime) / 1000000;
+//        logger.info("getOrderMenuIngredientAddressView :: Response generated at [{}].", new Date());
+//        logger.info("getOrderMenuIngredientAddressView :: Response processing took [{}] ms.", duration);
+//        return orderList;
+//    }
 
 
     private List<OrderVO> convertOrderDTOMapTOOrderVOList(Map<String, List<OrderMenuIngredientAddressDTO>> orderMap) {

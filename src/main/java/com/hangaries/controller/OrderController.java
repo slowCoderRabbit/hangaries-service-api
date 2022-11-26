@@ -79,22 +79,6 @@ public class OrderController {
         }
     }
 
-    @GetMapping("getOrderMenuIngredientAddressView")
-    public ResponseEntity<List<OrderVO>> getOrderMenuIngredientAddressView(@RequestParam("restaurantId") String restaurantId,
-                                                                           @RequestParam("storeId") String storeId,
-                                                                           @RequestParam("mobileNumber") String mobileNumber) {
-        logger.info("Get OrderMenuIngredientAddress view details for restaurantId = {}, storeId = {}, mobileNumber = {}", restaurantId, storeId, mobileNumber);
-
-        List<OrderVO> orders = new ArrayList<>();
-        try {
-            orders = orderService.getOrderMenuIngredientAddressView(restaurantId, storeId, mobileNumber);
-            return new ResponseEntity<List<OrderVO>>(orders, HttpStatus.OK);
-        } catch (Exception ex) {
-            logger.error("Error getting order by mobileNumber = {} :: {}", mobileNumber, ex.getMessage());
-            return new ResponseEntity<List<OrderVO>>(orders, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("getOrderProcessingDetailsByOrderId")
     public ResponseEntity<List<OrderProcessingDetails>> getOrderProcessingDetailsByOrderId(@RequestParam("orderId") String orderId) {
         logger.info("Get Order Processing Details by Id = {}", orderId);
