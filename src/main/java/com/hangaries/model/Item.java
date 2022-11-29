@@ -17,12 +17,9 @@ import static com.hangaries.constants.HangariesConstants.SYSTEM;
 public class Item {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "item_id")
-    private String itemId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long itemId;
 
     @Column(name = "item_name")
     private String itemName;

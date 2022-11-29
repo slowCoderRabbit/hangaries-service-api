@@ -17,9 +17,9 @@ import static com.hangaries.constants.HangariesConstants.SYSTEM;
 public class PurchaseOrder {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "purchase_order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long purchaseOrderId;
 
     @Column(name = "restaurant_id")
     private String restaurantId;

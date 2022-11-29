@@ -21,8 +21,8 @@ public class Supplier implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "supplier_id")
+    private long supplierId;
 
     @Column(name = "supplier_name")
     private String supplierName;
