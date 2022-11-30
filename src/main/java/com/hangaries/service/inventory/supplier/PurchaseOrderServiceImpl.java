@@ -26,9 +26,9 @@ public class PurchaseOrderServiceImpl {
     }
 
     public PurchaseOrder savePurchaseOrderStatus(PurchaseOrderStatusRequest request) {
-        int result = purchaseOrderRepository.savePurchaseOrderStatus(request.getId(), request.getItemStatus(), request.getUpdatedBy(), new Date());
+        int result = purchaseOrderRepository.savePurchaseOrderStatus(request.getPurchaseOrderId(), request.getItemStatus(), request.getUpdatedBy(), new Date());
         logger.info("savePurchaseOrderStatus result = [{}]", result);
-        return purchaseOrderRepository.getPurchaseOrderById(request.getId());
+        return purchaseOrderRepository.getPurchaseOrderById(request.getPurchaseOrderId());
     }
 
     public List<PurchaseOrder> getAllPurchaseOrders() {

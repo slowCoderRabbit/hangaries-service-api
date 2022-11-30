@@ -34,8 +34,8 @@ public class SupplierServiceImpl {
     }
 
     public Supplier saveSupplierStatus(SupplierStatusRequest request) {
-        int result = supplierRepository.saveSupplierStatus(request.getId(), request.getSupplierStatus(), request.getUpdatedBy(), new Date());
+        int result = supplierRepository.saveSupplierStatus(request.getSupplierId(), request.getSupplierStatus(), request.getUpdatedBy(), new Date());
         logger.info("saveSupplierStatus result = [{}]", result);
-        return supplierRepository.getSupplierById(request.getId());
+        return supplierRepository.getSupplierById(request.getSupplierId());
     }
 }

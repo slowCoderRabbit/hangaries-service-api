@@ -14,15 +14,15 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    @Query(value = "select * from ITEM_MASTER where item_status=:status order by id", nativeQuery = true)
+    @Query(value = "select * from ITEM_MASTER where item_status=:status order by item_id", nativeQuery = true)
     List<Item> getItemsByStatus(@Param("status") String status);
 
     @Modifying
     @Transactional
-    @Query(value = "update ITEM_MASTER set item_status=:status, updated_by=:updatedBy,updated_date=:updatedDate where id=:id", nativeQuery = true)
+    @Query(value = "update ITEM_MASTER set item_status=:status, updated_by=:updatedBy,updated_date=:updatedDate where item_id=:id", nativeQuery = true)
     int saveItemOrderStatus(@Param("id") long id, @Param("status") String status, @Param("updatedBy") String updatedBy, @Param("updatedDate") Date updatedDate);
 
-    @Query(value = "select * from ITEM_MASTER where id=:id", nativeQuery = true)
+    @Query(value = "select * from ITEM_MASTER where item_id=:id", nativeQuery = true)
     Item getItemById(@Param("id") long id);
 
 }

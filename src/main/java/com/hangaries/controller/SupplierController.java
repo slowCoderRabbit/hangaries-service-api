@@ -49,7 +49,7 @@ public class SupplierController {
 
     @PostMapping("saveSupplierStatus")
     public Supplier saveSupplierStatus(@RequestBody SupplierStatusRequest request) {
-        logger.info("Saving suppliers status = [{}] for supplier id = [{}].", request.getSupplierStatus(), request.getId());
+        logger.info("Saving suppliers status = [{}] for supplier id = [{}].", request.getSupplierStatus(), request.getSupplierId());
         return supplierService.saveSupplierStatus(request);
     }
 }

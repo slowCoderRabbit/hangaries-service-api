@@ -9,7 +9,7 @@ import lombok.*;
 @EqualsAndHashCode
 public class ItemStatusRequest {
 
-    private long id;
+    private long itemId;
     private String itemStatus;
     private String updatedBy;
 }

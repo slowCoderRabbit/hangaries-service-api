@@ -58,7 +58,7 @@ public class PurchaseOrderController {
 
     @PostMapping("savePurchaseOrderStatus")
     public PurchaseOrder savePurchaseOrderStatus(@RequestBody PurchaseOrderStatusRequest request) {
-        logger.info("Saving purchase order status = [{}] for id = [{}].", request.getItemStatus(), request.getId());
+        logger.info("Saving purchase order status = [{}] for id = [{}].", request.getItemStatus(), request.getPurchaseOrderId());
         return purchaseOrderService.savePurchaseOrderStatus(request);
     }
 }

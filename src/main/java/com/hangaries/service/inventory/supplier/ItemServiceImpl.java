@@ -1,11 +1,8 @@
 package com.hangaries.service.inventory.supplier;
 
 import com.hangaries.model.Item;
-import com.hangaries.model.PurchaseOrder;
 import com.hangaries.model.inventory.request.ItemStatusRequest;
-import com.hangaries.model.inventory.request.PurchaseOrderStatusRequest;
 import com.hangaries.repository.inventory.ItemRepository;
-import com.hangaries.repository.inventory.PurchaseOrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-
-import static com.hangaries.constants.HangariesConstants.ACTIVE;
 
 @Service
 public class ItemServiceImpl {
@@ -37,8 +32,8 @@ public class ItemServiceImpl {
     }
 
     public Item saveItemStatus(ItemStatusRequest request) {
-        int result = itemRepository.saveItemOrderStatus(request.getId(), request.getItemStatus(), request.getUpdatedBy(), new Date());
+        int result = itemRepository.saveItemOrderStatus(request.getItemId(), request.getItemStatus(), request.getUpdatedBy(), new Date());
         logger.info("savePurchaseOrderStatus result = [{}]", result);
-        return itemRepository.getItemById(request.getId());
+        return itemRepository.getItemById(request.getItemId());
     }
 }

@@ -14,14 +14,14 @@ import java.util.List;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
-    @Query(value = "select * from SUPPLIER_MASTER where supplier_status=:status order by id", nativeQuery = true)
+    @Query(value = "select * from SUPPLIER_MASTER where supplier_status=:status order by supplier_id", nativeQuery = true)
     List<Supplier> getAllActiveSuppliers(@Param("status") String status);
 
     @Modifying
     @Transactional
-    @Query(value = "update SUPPLIER_MASTER set supplier_status=:status, updated_by=:updatedBy,updated_date=:updatedDate where id=:id", nativeQuery = true)
-    int saveSupplierStatus(@Param("id") long id, @Param("status") String status, @Param("updatedBy") String updatedBy, @Param("updatedDate") Date updatedDate);
+    @Query(value = "update SUPPLIER_MASTER set supplier_status=:status, updated_by=:updatedBy,updated_date=:updatedDate where supplier_id=:supplierId", nativeQuery = true)
+    int saveSupplierStatus(@Param("supplierId") long supplierId, @Param("status") String status, @Param("updatedBy") String updatedBy, @Param("updatedDate") Date updatedDate);
 
-    @Query(value = "select * from SUPPLIER_MASTER where id=:id", nativeQuery = true)
-    Supplier getSupplierById(@Param("id") long id);
+    @Query(value = "select * from SUPPLIER_MASTER where supplier_id=:supplierId", nativeQuery = true)
+    Supplier getSupplierById(@Param("supplierId") long supplierId);
 }

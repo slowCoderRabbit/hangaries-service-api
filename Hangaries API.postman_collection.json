@@ -4328,7 +4328,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 2,  \r\n    \"supplierStatus\": \"INACTIVTest\",\r\n    \"updatedBy\" : \"AniketP\"\r\n    \r\n}",
+					"raw": "{\r\n    \"supplierId\": 17,  \r\n    \"supplierStatus\": \"ACTIVE\",\r\n    \"updatedBy\" : \"AniketP\"\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -4642,7 +4642,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 10,  \r\n    \"itemStatus\": \"CLOSED\",\r\n    \"updatedBy\" : \"Aniket\"\r\n    \r\n}",
+					"raw": "{\r\n    \"purchaseOrderId\": 3,  \r\n    \"itemStatus\": \"CLOSED\",\r\n    \"updatedBy\" : \"Aniket\"\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -4819,7 +4819,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 241,  \r\n    \"itemStatus\": \"INACTIVE\",\r\n    \"updatedBy\" : \"Aniket\"\r\n    \r\n}",
+					"raw": "{\r\n    \"itemId\": 241,  \r\n    \"itemStatus\": \"INACTIVE\",\r\n    \"updatedBy\" : \"Aniket\"\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

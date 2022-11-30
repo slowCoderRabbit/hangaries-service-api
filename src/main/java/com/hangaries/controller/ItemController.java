@@ -49,7 +49,7 @@ public class ItemController {
 
     @PostMapping("saveItemStatus")
     public Item saveItemStatus(@RequestBody ItemStatusRequest request) {
-        logger.info("Saving item status = [{}] for id = [{}].", request.getItemStatus(), request.getId());
+        logger.info("Saving item status = [{}] for id = [{}].", request.getItemStatus(), request.getItemId());
         return itemService.saveItemStatus(request);
     }
 }
