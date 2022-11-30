@@ -2,9 +2,9 @@ package com.hangaries.constants;
 
 public class QueryStringConstants {
 
-    public static final String RECIPES_WITH_NAME = "SELECT im.item_name as itemName, rm.* FROM ITEM_MASTER im, RECIPE_MASTER rm where im.item_id = rm.id";
+    public static final String RECIPES_WITH_NAME = "SELECT im.item_name as itemName, rm.* FROM ITEM_MASTER im, RECIPE_MASTER rm where im.item_id = rm.item_id";
 
-    public static final String ACTIVE_RECIPES_WITH_NAME = "SELECT im.item_name as itemName, rm.* FROM ITEM_MASTER im, RECIPE_MASTER rm where rm.item_status = 'ACTIVE' and im.item_id = rm.id ";
+    public static final String ACTIVE_RECIPES_WITH_NAME = "SELECT im.item_name as itemName, rm.* FROM ITEM_MASTER im, RECIPE_MASTER rm where rm.item_status = 'ACTIVE' and im.item_id = rm.item_id ";
 
     public static final String ORDER_MENU_INGREDIENT_ADDRESS_VIEW_SQL = "SELECT a.order_id order_id, b.id, a.restaurant_id, \n" +
             "       g.restaurant_name, h.resturant_name as store_name, a.store_Id, \n" +

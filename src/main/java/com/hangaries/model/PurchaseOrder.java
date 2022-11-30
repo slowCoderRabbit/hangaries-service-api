@@ -37,7 +37,7 @@ public class PurchaseOrder {
     private String billNumber;
 
     @Column(name = "item_id")
-    private String itemId;
+    private long itemId;
 
     @Column(name = "purchase_qty")
     private float purchaseQty;

@@ -4461,7 +4461,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{        \r\n        \"restaurantId\": \"R001\",\r\n        \"productId\": \"P002\",\r\n        \"itemId\": \"I0008\",\r\n        \"itemQty\": 0.03,\r\n        \"itemCost\": \"0.66\",\r\n        \"itemUOM\": \"KG\",\r\n        \"itemStatus\": \"ACTIVE\",\r\n        \"createdBy\": \"Gurmeet\",\r\n        \"createdDate\": \"2022-04-23T22:39:58.000+00:00\",\r\n        \"updatedBy\": \"Gurmeet\",\r\n        \"updatedDate\": \"2022-04-23T22:39:58.000+00:00\"\r\n    }",
+					"raw": "{        \r\n        \"restaurantId\": \"R001\",\r\n        \"productId\": \"P002\",\r\n        \"itemId\": 88,\r\n        \"itemQty\": 0.03,\r\n        \"itemCost\": \"0.66\",\r\n        \"itemUom\": \"KG\",\r\n        \"itemStatus\": \"ACTIVE\",\r\n        \"createdBy\": \"Gurmeet\",\r\n        \"createdDate\": \"2022-04-23T22:39:58.000+00:00\",\r\n        \"updatedBy\": \"Gurmeet\",\r\n        \"updatedDate\": \"2022-04-23T22:39:58.000+00:00\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -4677,7 +4677,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"S001\",\r\n    \"supplierId\": 15,\r\n    \"purchaseDate\": \"2022-10-01T16:00:00.000+00:00\",\r\n    \"billNumber\": \"12345\",\r\n    \"itemId\": \"I0008\",\r\n    \"purchaseQty\": 100.0,\r\n    \"wastageQty\": 0.0,\r\n    \"netQty\": 100.0,\r\n    \"quotedPurchasePrice\": 100.0,\r\n    \"discountAmount\": 0.0,\r\n    \"netPurchasePrice\": 100.0,\r\n    \"gstAmount\": 5.0,\r\n    \"purchaseCategory\": \"EXTERNAL\",\r\n    \"purchaseOrderStatus\": \"CLOSED\",\r\n    \"createdBy\": \"SYSTEM\",\r\n    \"createdDate\": \"2022-10-16T01:39:22.000+00:00\",\r\n    \"updatedBy\": \"Aniket\",\r\n    \"updatedDate\": \"2022-11-07T00:40:39.000+00:00\"\r\n}",
+					"raw": "{    \r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"S001\",\r\n    \"supplierId\": 15,\r\n    \"purchaseDate\": \"2022-10-01T16:00:00.000+00:00\",\r\n    \"billNumber\": \"12345\",\r\n    \"itemId\": 8,\r\n    \"purchaseQty\": 100.0,\r\n    \"wastageQty\": 0.0,\r\n    \"netQty\": 100.0,\r\n    \"quotedPurchasePrice\": 100.0,\r\n    \"discountAmount\": 0.0,\r\n    \"netPurchasePrice\": 100.0,\r\n    \"gstAmount\": 5.0,\r\n    \"purchaseCategory\": \"EXTERNAL\",\r\n    \"purchaseOrderStatus\": \"CLOSED\",\r\n    \"createdBy\": \"SYSTEM\",\r\n    \"createdDate\": \"2022-10-16T01:39:22.000+00:00\",\r\n    \"updatedBy\": \"Aniket\",\r\n    \"updatedDate\": \"2022-11-07T00:40:39.000+00:00\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

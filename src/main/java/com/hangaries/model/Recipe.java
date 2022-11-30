@@ -28,7 +28,7 @@ public class Recipe {
     private String productId;
 
     @Column(name = "item_id")
-    private String itemId;
+    private long itemId;
 
     @Column(name = "item_qty")
     private float itemQty;
