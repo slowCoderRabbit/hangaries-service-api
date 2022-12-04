@@ -112,12 +112,12 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.updateOrderStatus(orderId, status, updatedBy, new Date());
         }
 
-        performWERAAction(orderId, status, updatedBy);
+        performAuxiliaryActions(orderId, status);
 
         return updateOrderProcessing(orderId);
     }
 
-    private void performWERAAction(String orderId, String status, String updatedBy) {
+    private void performAuxiliaryActions(String orderId, String status) {
         try {
             logger.info("Checking order status for WERA processing [{}]", status);
             if (PROCESSING.equals(status)) {
@@ -334,11 +334,20 @@ public class OrderServiceImpl implements OrderService {
         orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status, updatedBy, new Date());
         if (FOOD_READY.equals(status)) {
             checkForOrderStatusUpdate(orderId, updatedBy);
+            callSPUpdateOrderToConsumption(productId, orderId);
         }
         OrderQueryRequest orderQueryRequest = new OrderQueryRequest();
         orderQueryRequest.setOrderId(orderId);
         List<OrderVO> orderList = queryOrderViewByParams(orderQueryRequest);
         return orderList;
+    }
+
+    private void callSPUpdateOrderToConsumption(String productId, String orderId) {
+
+        logger.info("Calling sp_updateOrdertoConsumption for productId = [{}] and orderId = [{}].", productId, orderId);
+        String result = orderDetailRepository.updateOrderToConsumption(productId, orderId);
+        logger.info("sp_updateOrdertoConsumption result = [{}]", result);
+
     }
 
     private void checkForOrderStatusUpdate(String orderId, String updatedBy) {

@@ -22,7 +22,15 @@ public class PurchaseOrderServiceImpl {
     PurchaseOrderRepository purchaseOrderRepository;
 
     public PurchaseOrder savePurchaseOrder(PurchaseOrder purchaseOrder) {
-        return purchaseOrderRepository.save(purchaseOrder);
+        PurchaseOrder newPurchaseOrder = purchaseOrderRepository.save(purchaseOrder);
+        callSPUpdatePOtoConsumption(newPurchaseOrder);
+        return newPurchaseOrder;
+    }
+
+    private void callSPUpdatePOtoConsumption(PurchaseOrder newPurchaseOrder) {
+        logger.info("Calling sp_updatePOtoConsumption for restaurant_id = [{}], store_id = [{}] and purchaseOrder_Id = [{}].", newPurchaseOrder.getRestaurantId(), newPurchaseOrder.getStoreId(), newPurchaseOrder.getPurchaseOrderId());
+        String result = purchaseOrderRepository.updatePOtoConsumption(newPurchaseOrder.getRestaurantId(), newPurchaseOrder.getStoreId(), newPurchaseOrder.getPurchaseOrderId() + "");
+        logger.info("Calling sp_updatePOtoConsumption result = [{}] for purchaseOrder_Id = [{}].", result, newPurchaseOrder.getPurchaseOrderId());
     }
 
     public PurchaseOrder savePurchaseOrderStatus(PurchaseOrderStatusRequest request) {

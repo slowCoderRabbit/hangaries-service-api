@@ -4,6 +4,7 @@ import com.hangaries.model.OrderDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -40,4 +41,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
             "and order_detail_status = 'FOOD READY' and food_packaged_flag='Y')\n" +
             "as total_count", nativeQuery = true)
     int isFoodReadyAndPacked(@Param("orderId") String orderId);
+
+    @Procedure(procedureName = "sp_updatePOtoConsumption", outputParameterName = "oErrorDescription")
+    String updateOrderToConsumption(@Param("productId") String productId, @Param("orderId") String orderId);
 }

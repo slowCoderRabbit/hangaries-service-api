@@ -4,6 +4,7 @@ import com.hangaries.model.PurchaseOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -28,4 +29,7 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
 
     @Query(value = "select * from PURCHASE_ORDER where purchase_order_status<>:status order by purchase_order_id", nativeQuery = true)
     List<PurchaseOrder> getPurchaseOrdersExcludingStatus(@Param("status") String status);
+
+    @Procedure(procedureName = "sp_updatePOtoConsumption", outputParameterName = "oErrorDescription")
+    String updatePOtoConsumption(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("purchaseOrderId") String purchaseOrderId);
 }
