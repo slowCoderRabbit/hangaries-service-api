@@ -1,7 +1,9 @@
 package com.hangaries.service.inventory.supplier;
 
 import com.hangaries.model.Item;
+import com.hangaries.model.ItemConsumptionSummery;
 import com.hangaries.model.inventory.request.ItemStatusRequest;
+import com.hangaries.repository.inventory.ItemConsumptionSummeryRepository;
 import com.hangaries.repository.inventory.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,9 @@ public class ItemServiceImpl {
     @Autowired
     ItemRepository itemRepository;
 
+    @Autowired
+    ItemConsumptionSummeryRepository itemConsumptionSummeryRepository;
+
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
@@ -35,5 +40,13 @@ public class ItemServiceImpl {
         int result = itemRepository.saveItemOrderStatus(request.getItemId(), request.getItemStatus(), request.getUpdatedBy(), new Date());
         logger.info("savePurchaseOrderStatus result = [{}]", result);
         return itemRepository.getItemById(request.getItemId());
+    }
+
+    public List<ItemConsumptionSummery> getItemConsumptionSummery() {
+        return itemConsumptionSummeryRepository.findAll();
+    }
+
+    public ItemConsumptionSummery saveItemConsumptionSummery(ItemConsumptionSummery item) {
+        return itemConsumptionSummeryRepository.save(item);
     }
 }

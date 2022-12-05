@@ -1,6 +1,7 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.Item;
+import com.hangaries.model.ItemConsumptionSummery;
 import com.hangaries.model.inventory.request.ItemStatusRequest;
 import com.hangaries.service.inventory.supplier.ItemServiceImpl;
 import org.slf4j.Logger;
@@ -42,7 +43,7 @@ public class ItemController {
     }
 
     @PostMapping("saveItem")
-    public Item savePurchaseOrder(@RequestBody Item item) {
+    public Item saveItem(@RequestBody Item item) {
         logger.info("Saving item with details = [{}].", item);
         return itemService.saveItem(item);
     }
@@ -52,4 +53,20 @@ public class ItemController {
         logger.info("Saving item status = [{}] for id = [{}].", request.getItemStatus(), request.getItemId());
         return itemService.saveItemStatus(request);
     }
+
+    @GetMapping("getItemConsumptionSummery")
+    public ResponseEntity<List<ItemConsumptionSummery>> getItemConsumptionSummery() {
+        List<ItemConsumptionSummery> items = new ArrayList<>();
+        logger.info("Getting Item Consumption Summery.");
+        items = itemService.getItemConsumptionSummery();
+        logger.info("[{}] items found.", items.size());
+        return new ResponseEntity<List<ItemConsumptionSummery>>(items, HttpStatus.OK);
+    }
+
+    @PostMapping("saveItemConsumptionSummery")
+    public ItemConsumptionSummery saveItemConsumptionSummery(@RequestBody ItemConsumptionSummery item) {
+        logger.info("Saving Item Consumption Summery with details = [{}].", item);
+        return itemService.saveItemConsumptionSummery(item);
+    }
+
 }
