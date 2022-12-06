@@ -42,6 +42,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
             "as total_count", nativeQuery = true)
     int isFoodReadyAndPacked(@Param("orderId") String orderId);
 
-    @Procedure(procedureName = "sp_updatePOtoConsumption", outputParameterName = "oErrorDescription")
+    @Procedure(procedureName = "sp_updateOrdertoConsumption", outputParameterName = "oErrorDescription")
     String updateOrderToConsumption(@Param("productId") String productId, @Param("orderId") String orderId);
 }

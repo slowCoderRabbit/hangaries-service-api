@@ -4930,6 +4930,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "performInventoryUpdateEOD",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/performInventoryUpdateEOD?restaurantId=R001&storeId=S009",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"performInventoryUpdateEOD"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S009"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

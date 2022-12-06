@@ -49,4 +49,9 @@ public class ItemServiceImpl {
     public ItemConsumptionSummery saveItemConsumptionSummery(ItemConsumptionSummery item) {
         return itemConsumptionSummeryRepository.save(item);
     }
+
+
+    public String performInventoryUpdateEOD(String restaurantId, String storeId) {
+        return itemConsumptionSummeryRepository.inventoryUpdateEOD(restaurantId, storeId);
+    }
 }
