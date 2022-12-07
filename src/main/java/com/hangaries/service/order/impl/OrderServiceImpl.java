@@ -334,7 +334,7 @@ public class OrderServiceImpl implements OrderService {
         orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status, updatedBy, new Date());
         if (FOOD_READY.equals(status)) {
             checkForOrderStatusUpdate(orderId, updatedBy);
-            callSPUpdateOrderToConsumption(productId, orderId);
+            callSPUpdateOrderToConsumption(productId, subProductId, orderId);
         }
         OrderQueryRequest orderQueryRequest = new OrderQueryRequest();
         orderQueryRequest.setOrderId(orderId);
@@ -342,12 +342,21 @@ public class OrderServiceImpl implements OrderService {
         return orderList;
     }
 
-    private void callSPUpdateOrderToConsumption(String productId, String orderId) {
+    private void callSPUpdateOrderToConsumption(String productId, String subProductId, String orderId) {
 
-        logger.info("Calling sp_updateOrdertoConsumption for productId = [{}] and orderId = [{}].", productId, orderId);
-        String result = orderDetailRepository.updateOrderToConsumption(productId, orderId);
+        logger.info("callSPUpdateOrderToConsumption :: productId = [{}], subProductId = [{}] and orderId = [{}].", productId, subProductId, orderId);
+        String productIdOrSubProductId = decideProductIdOrSubProductId(productId, subProductId);
+        logger.info("Calling sp_updateOrdertoConsumption for productIdOrSubProductId = [{}] and orderId = [{}].", productIdOrSubProductId, orderId);
+        String result = orderDetailRepository.updateOrderToConsumption(productIdOrSubProductId, orderId);
         logger.info("sp_updateOrdertoConsumption result = [{}]", result);
 
+    }
+
+    private String decideProductIdOrSubProductId(String productId, String subProductId) {
+        if (subProductId.equals(NAA)) {
+            return productId;
+        }
+        return subProductId;
     }
 
     private void checkForOrderStatusUpdate(String orderId, String updatedBy) {

@@ -69,6 +69,12 @@ public class ItemController {
         return itemService.saveItemConsumptionSummery(item);
     }
 
+    @PostMapping("saveAllItemConsumptionSummery")
+    public List<ItemConsumptionSummery> saveAllItemConsumptionSummery(@RequestBody List<ItemConsumptionSummery> items) {
+        logger.info("Saving All Item Consumption Summery of size = [{}] ", items.size());
+        return itemService.saveAllItemConsumptionSummery(items);
+    }
+
     @GetMapping("performInventoryUpdateEOD")
     public ResponseEntity<String> performInventoryUpdateEOD(@RequestParam("restaurantId") String restaurantId,
                                                             @RequestParam("storeId") String storeId) {

@@ -4937,7 +4937,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/performInventoryUpdateEOD?restaurantId=R001&storeId=S009",
+					"raw": "http://localhost:8080/api/performInventoryUpdateEOD?restaurantId=R001&storeId=S001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4954,8 +4954,43 @@
 						},
 						{
 							"key": "storeId",
-							"value": "S009"
+							"value": "S001"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveAllItemConsumptionSummery",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": 575,\r\n        \"itemId\": 484,\r\n        \"itemName\": \"1000 ML BOX\",\r\n        \"itemUom\": \"NOS\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"businessDate\": \"2022-12-05T16:00:00.000+00:00\",\r\n        \"poOpngQty\": 1000.0,\r\n        \"poTodayQty\": 0.0,\r\n        \"poWastageQty\": 0.0,\r\n        \"poNetQty\": 1000.0,\r\n        \"itemCurrConsumptionQty\": 0.0,\r\n        \"itemEodConsumptionQty\": 0.0,\r\n        \"itemConsumptionVarianceQty\": 0.0,\r\n        \"itemConsumptionAmount\": 0.0,\r\n        \"remarks\": \"\",\r\n        \"reconStatus\": \"In-CompleteT1\",\r\n        \"createdBy\": \"SYSTEM\",\r\n        \"createdDate\": \"2022-12-05T16:00:00.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-12-05T16:00:00.000+00:00\"\r\n    },\r\n    {\r\n        \"id\": 576,\r\n        \"itemId\": 485,\r\n        \"itemName\": \"500 ML BOX\",\r\n        \"itemUom\": \"NOS\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"businessDate\": \"2022-12-05T16:00:00.000+00:00\",\r\n        \"poOpngQty\": 1000.0,\r\n        \"poTodayQty\": 0.0,\r\n        \"poWastageQty\": 0.0,\r\n        \"poNetQty\": 1000.0,\r\n        \"itemCurrConsumptionQty\": 0.0,\r\n        \"itemEodConsumptionQty\": 0.0,\r\n        \"itemConsumptionVarianceQty\": 0.0,\r\n        \"itemConsumptionAmount\": 0.0,\r\n        \"remarks\": \"\",\r\n        \"reconStatus\": \"In-CompleteT2\",\r\n        \"createdBy\": \"SYSTEM\",\r\n        \"createdDate\": \"2022-12-05T16:00:00.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-12-05T16:00:00.000+00:00\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveAllItemConsumptionSummery",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveAllItemConsumptionSummery"
 					]
 				}
 			},
