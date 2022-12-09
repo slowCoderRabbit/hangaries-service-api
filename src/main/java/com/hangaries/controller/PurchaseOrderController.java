@@ -1,6 +1,7 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.PurchaseOrder;
+import com.hangaries.model.PurchaseOrderWithName;
 import com.hangaries.model.inventory.request.PurchaseOrderStatusRequest;
 import com.hangaries.service.inventory.supplier.PurchaseOrderServiceImpl;
 import org.slf4j.Logger;
@@ -24,30 +25,30 @@ public class PurchaseOrderController {
     private PurchaseOrderServiceImpl purchaseOrderService;
 
     @GetMapping("getAllPurchaseOrders")
-    public ResponseEntity<List<PurchaseOrder>> getAllPurchaseOrders() {
-        List<PurchaseOrder> purchaseOrders = new ArrayList<>();
+    public ResponseEntity<List<PurchaseOrderWithName>> getAllPurchaseOrders() {
+        List<PurchaseOrderWithName> purchaseOrders = new ArrayList<>();
         logger.info("Getting list of all purchase orders .");
         purchaseOrders = purchaseOrderService.getAllPurchaseOrders();
         logger.info("[{}] purchase orders found.", purchaseOrders.size());
-        return new ResponseEntity<List<PurchaseOrder>>(purchaseOrders, HttpStatus.OK);
+        return new ResponseEntity<List<PurchaseOrderWithName>>(purchaseOrders, HttpStatus.OK);
     }
 
     @GetMapping("getPurchaseOrdersByStatus")
-    public ResponseEntity<List<PurchaseOrder>> getPurchaseOrdersByStatus(@RequestParam String status) {
-        List<PurchaseOrder> purchaseOrders = new ArrayList<>();
+    public ResponseEntity<List<PurchaseOrderWithName>> getPurchaseOrdersByStatus(@RequestParam String status) {
+        List<PurchaseOrderWithName> purchaseOrders = new ArrayList<>();
         logger.info("Getting list of all purchase orders with status = [{}].", status);
         purchaseOrders = purchaseOrderService.getPurchaseOrdersByStatus(status);
         logger.info("[{}] [{}] purchase orders found.", purchaseOrders.size(), status);
-        return new ResponseEntity<List<PurchaseOrder>>(purchaseOrders, HttpStatus.OK);
+        return new ResponseEntity<List<PurchaseOrderWithName>>(purchaseOrders, HttpStatus.OK);
     }
 
     @GetMapping("getPurchaseOrdersExcludingStatus")
-    public ResponseEntity<List<PurchaseOrder>> getPurchaseOrdersExcludingStatus(@RequestParam String status) {
-        List<PurchaseOrder> purchaseOrders = new ArrayList<>();
+    public ResponseEntity<List<PurchaseOrderWithName>> getPurchaseOrdersExcludingStatus(@RequestParam String status) {
+        List<PurchaseOrderWithName> purchaseOrders = new ArrayList<>();
         logger.info("Getting list of all purchase orders status <> [{}].", status);
         purchaseOrders = purchaseOrderService.getPurchaseOrdersExcludingStatus(status);
         logger.info("[{}] <> [{}] purchase orders found.", purchaseOrders.size(), status);
-        return new ResponseEntity<List<PurchaseOrder>>(purchaseOrders, HttpStatus.OK);
+        return new ResponseEntity<List<PurchaseOrderWithName>>(purchaseOrders, HttpStatus.OK);
     }
 
     @PostMapping("savePurchaseOrder")

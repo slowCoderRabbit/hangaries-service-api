@@ -1,17 +1,23 @@
 package com.hangaries.service.inventory.supplier;
 
 import com.hangaries.model.PurchaseOrder;
+import com.hangaries.model.PurchaseOrderWithName;
 import com.hangaries.model.inventory.request.PurchaseOrderStatusRequest;
 import com.hangaries.repository.inventory.PurchaseOrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
 import static com.hangaries.constants.HangariesConstants.ACTIVE;
+import static com.hangaries.constants.QueryStringConstants.*;
 
 @Service
 public class PurchaseOrderServiceImpl {
@@ -20,6 +26,9 @@ public class PurchaseOrderServiceImpl {
 
     @Autowired
     PurchaseOrderRepository purchaseOrderRepository;
+
+    @Autowired
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public PurchaseOrder savePurchaseOrder(PurchaseOrder purchaseOrder) {
         PurchaseOrder newPurchaseOrder = purchaseOrderRepository.save(purchaseOrder);
@@ -39,19 +48,29 @@ public class PurchaseOrderServiceImpl {
         return purchaseOrderRepository.getPurchaseOrderById(request.getPurchaseOrderId());
     }
 
-    public List<PurchaseOrder> getAllPurchaseOrders() {
-        return purchaseOrderRepository.findAll();
+    public List<PurchaseOrderWithName> getAllPurchaseOrders() {
+//        return purchaseOrderRepository.findAll();
+        return namedParameterJdbcTemplate.query(PURCHASE_ORDER_ALL, BeanPropertyRowMapper.newInstance(PurchaseOrderWithName.class));
     }
 
     public List<PurchaseOrder> getAllActivePurchaseOrders() {
         return purchaseOrderRepository.getPurchaseOrdersByStatus(ACTIVE);
     }
 
-    public List<PurchaseOrder> getPurchaseOrdersByStatus(String status) {
-        return purchaseOrderRepository.getPurchaseOrdersByStatus(status);
+    public List<PurchaseOrderWithName> getPurchaseOrdersByStatus(String status) {
+//        return purchaseOrderRepository.getPurchaseOrdersByStatus(status);
+        return getPurchaseOrderWithName(status, PURCHASE_ORDER_WITH_NAME_STATUS);
     }
 
-    public List<PurchaseOrder> getPurchaseOrdersExcludingStatus(String status) {
-        return purchaseOrderRepository.getPurchaseOrdersExcludingStatus(status);
+    public List<PurchaseOrderWithName> getPurchaseOrdersExcludingStatus(String status) {
+//        return purchaseOrderRepository.getPurchaseOrdersExcludingStatus(status);
+        return getPurchaseOrderWithName(status, PURCHASE_ORDER_WITH_NAME_STATUS_EXCLUDING);
+    }
+
+    List<PurchaseOrderWithName> getPurchaseOrderWithName(String status, String sql) {
+        SqlParameterSource parameters = new MapSqlParameterSource("status", status);
+        List<PurchaseOrderWithName> purchaseOrderWithNames = namedParameterJdbcTemplate.query(
+                sql, parameters, BeanPropertyRowMapper.newInstance(PurchaseOrderWithName.class));
+        return purchaseOrderWithNames;
     }
 }
