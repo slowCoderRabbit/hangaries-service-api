@@ -101,6 +101,15 @@ public class ReportServiceImpl implements ReportService {
                 List<OrderVO> orderList = convertMapList(orderMap);
                 logger.info("ReportOrderData :: Final order list created of size = [{}].", orderList.size());
                 reportResult.setReportOrderData(orderList);
+            }else if (report.getReportName().equals("DASHBOARD_SUMMARY")) {
+                String query = "select * from REPORT_DASHBOARD_SUMMARY";
+                logger.info("REPORT_DASHBOARD_SUMMARY SQL = [{}]", query);
+                List<RDSReport> rssOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDSReport.class));
+                query = "select * from REPORT_DASHBOARD_DETAILS";
+                logger.info("REPORT_DASHBOARD_DETAILS SQL = [{}]", query);
+                List<RDDReport> rddOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDDReport.class));
+                rssOrderSources.stream().forEach(o -> o.setReportDashboardDetails(rddOrderSources));
+                reportResult.setReportDashboardSummery(rssOrderSources);
             }
 
 
