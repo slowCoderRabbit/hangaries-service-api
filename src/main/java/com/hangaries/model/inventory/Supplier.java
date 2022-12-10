@@ -27,6 +27,9 @@ public class Supplier implements Serializable {
     @Column(name = "supplier_name")
     private String supplierName;
 
+    @Column(name = "store_id")
+    private String storeId;
+
     @Column(name = "supplier_address")
     private String supplierAddress;
 
