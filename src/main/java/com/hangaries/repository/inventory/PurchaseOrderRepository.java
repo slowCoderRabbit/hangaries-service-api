@@ -31,5 +31,5 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
     List<PurchaseOrder> getPurchaseOrdersExcludingStatus(@Param("status") String status);
 
     @Procedure(procedureName = "sp_updatePOtoConsumption", outputParameterName = "oErrorDescription")
-    String updatePOtoConsumption(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("purchaseOrderId") String purchaseOrderId);
+    String updatePOtoConsumption(@Param("purchaseOrderId") String purchaseOrderId);
 }
