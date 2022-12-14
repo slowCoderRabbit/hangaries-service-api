@@ -49,4 +49,13 @@ public class QueryStringConstants {
     public static final String PURCHASE_ORDER_ALL = "select rm.restaurant_name,stm.resturant_name as store_name ,supm.supplier_name, po.* from PURCHASE_ORDER po, RESTAURANT_MASTER rm, STORE_MASTER stm, \n" +
             "SUPPLIER_MASTER supm where po.restaurant_id=rm.restaurant_id\n" +
             "and po.store_id=stm.store_Id and po.supplier_id=supm.supplier_id order by purchase_order_id";
+
+    public static final String CUSTOMER_REPORT_SQL = "SELECT a.mobile_number, \n" +
+            "\t   concat(ifnull(a.customer_first_name,' '), \" \", ifnull(a.customer_middle_name,' '), \" \", ifnull(a.customer_last_name,' ')) `name`,\n" +
+            "       b.customer_address_type, concat(b.address_1, \",\", address_2, \",\", landmark, \",\", state, \",\", city, \" - \", zip_code) `address`,\n" +
+            "       a.email_id, if(b.active = 'N', 'Address Type Not Active', 'Address Type is Active') `address_type_status`, date(b.created_date) `data_created`\n" +
+            "  FROM CUSTOMER_MASTER a, CUSTOMER_ADDRESS_DETAILS b\n" +
+            " WHERE a.mobile_number = b.mobile_number\n" +
+            "   AND length(a.mobile_number) between 10 and 13\n" +
+            " order by date(b.created_date) desc, a.mobile_number";
 }

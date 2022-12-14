@@ -489,7 +489,7 @@ public class OrderServiceImpl implements OrderService {
 //    }
 
 
-    private List<OrderVO> convertOrderDTOMapTOOrderVOList(Map<String, List<OrderMenuIngredientAddressDTO>> orderMap) {
+    public List<OrderVO> convertOrderDTOMapTOOrderVOList(Map<String, List<OrderMenuIngredientAddressDTO>> orderMap) {
         List<OrderDetailsVO> orderDetailsVOList;
         OrderVO orderVO;
         List<OrderVO> orderList = new ArrayList<>();
@@ -510,7 +510,7 @@ public class OrderServiceImpl implements OrderService {
         return orderList;
     }
 
-    Map<String, List<OrderMenuIngredientAddressDTO>> consolidateResponseToOrderedMapByOrderId(List<OrderMenuIngredientAddressDTO> results) {
+    public Map<String, List<OrderMenuIngredientAddressDTO>> consolidateResponseToOrderedMapByOrderId(List<OrderMenuIngredientAddressDTO> results) {
         Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = new LinkedHashMap<>();
         for (OrderMenuIngredientAddressDTO result : results) {
             List<OrderMenuIngredientAddressDTO> exitingList = orderMap.get(result.getOrderId());
@@ -526,7 +526,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMap;
     }
 
-    private OrderDetailsVO populateOrderDetailsVO(OrderMenuIngredientAddressDTO result) {
+    public OrderDetailsVO populateOrderDetailsVO(OrderMenuIngredientAddressDTO result) {
 
         OrderDetailsVO orderDetailsVO = new OrderDetailsVO();
 

@@ -20,6 +20,8 @@ public class ReportResult {
     List<ReportCashierSummeryResponse> reportCashierSummery;
     List<OrderVO> reportOrderData;
     List<RDSReport> reportDashboardSummery;
+    List<OrderVO> reportCancelledOrderData;
+    List<CustomerReportData> reportCustomerData;
 
 
 }

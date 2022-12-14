@@ -5,6 +5,7 @@ import com.hangaries.model.dto.OrderMenuIngredientAddressDTO;
 import com.hangaries.model.vo.OrderDetailsVO;
 import com.hangaries.model.vo.OrderVO;
 import com.hangaries.repository.ReportRepository;
+import com.hangaries.service.order.impl.OrderServiceImpl;
 import com.hangaries.service.report.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,20 +15,24 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.hangaries.constants.HangariesConstants.ALL;
+import static com.hangaries.constants.QueryStringConstants.CUSTOMER_REPORT_SQL;
+import static com.hangaries.constants.QueryStringConstants.ORDER_MENU_INGREDIENT_ADDRESS_VIEW_SQL;
 
 @Service
 public class ReportServiceImpl implements ReportService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
 
+    private static final List<String> sqlReportList = Arrays.asList("CANCELLED_REPORT", "CUSTOMER_REPORT");
+
     @Autowired
     ReportRepository reportRepository;
+
+    @Autowired
+    OrderServiceImpl orderService;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -35,83 +40,91 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public ReportResult getReports(Report report) throws ParseException {
 
-        logger.info("Refreshing reports table.....");
+        logger.info("getReports.....!!!!");
         ReportResult reportResult = new ReportResult();
 
         try {
-            String result = reportRepository.getReports(report.getRestaurantId(), report.getStoreId(), report.getFromDate(), report.getToDate(), report.getReportName());
-            logger.info("Result of reports table refresh {}", result);
+            if (sqlReportList.contains(report.getReportName())) {
+                if (report.getReportName().equals("CANCELLED_REPORT")) {
+                    reportResult.setReportCancelledOrderData(getCancelledOrderReportData());
+                } else if (report.getReportName().equals("CUSTOMER_REPORT")) {
+                    reportResult.setReportCustomerData(getCustomerReportData());
+                }
+            } else {
+                logger.info("Refreshing reports table.....");
+                String result = reportRepository.getReports(report.getRestaurantId(), report.getStoreId(), report.getFromDate(), report.getToDate(), report.getReportName());
+                logger.info("Result of reports table refresh {}", result);
 
-            StringBuilder queryBuilder = new StringBuilder(" where restaurant_id ='");
-            queryBuilder.append(report.getRestaurantId());
-            queryBuilder.append("' ");
-            if (!report.getStoreId().equals(ALL)) {
-                queryBuilder.append("and store_id ='");
-                queryBuilder.append(report.getStoreId());
+                StringBuilder queryBuilder = new StringBuilder(" where restaurant_id ='");
+                queryBuilder.append(report.getRestaurantId());
                 queryBuilder.append("' ");
+                if (!report.getStoreId().equals(ALL)) {
+                    queryBuilder.append("and store_id ='");
+                    queryBuilder.append(report.getStoreId());
+                    queryBuilder.append("' ");
+                }
+
+
+                if (report.getReportName().equals("SALES_SUMMARY_BY_DATE_LIST")) {
+
+                    StringBuilder queryDateBuilder = new StringBuilder(" and order_date between '");
+                    queryDateBuilder.append(report.getFromDate());
+                    queryDateBuilder.append("' and '");
+                    queryDateBuilder.append(report.getToDate());
+                    queryDateBuilder.append("' ");
+                    String query = "select * from REPORT_SALES_SUMMARY_BY_DATE" + queryBuilder + queryDateBuilder;
+                    logger.info("SALES_SUMMARY_BY_DATE_LIST SQL = [{}]", query);
+                    List<RSSDate> rssDate = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSDate.class));
+                    reportResult.setSalesSummeryByDateList(rssDate);
+                } else if (report.getReportName().equals("SALES_SUMMARY_BY_ORDER_SOURCE")) {
+                    String query = "select * from REPORT_SALES_SUMMARY_BY_ORDER_SOURCE" + queryBuilder;
+                    logger.info("REPORT_SALES_SUMMARY_BY_ORDER_SOURCE SQL = [{}]", query);
+                    List<RSSOrderSource> rssOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSOrderSource.class));
+                    reportResult.setSalesSummeryByOrderSource(rssOrderSources);
+                } else if (report.getReportName().equals("SALES_SUMMARY_BY_PAYMENT_MODE")) {
+                    String query = "select * from REPORT_SALES_SUMMARY_BY_PAYMENT_MODE" + queryBuilder;
+                    logger.info("REPORT_SALES_SUMMARY_BY_PAYMENT_MODE SQL = [{}]", query);
+                    List<RSSPaymentMode> rSSPaymentMode = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSPaymentMode.class));
+                    reportResult.setSalesSummeryByPaymentMode(rSSPaymentMode);
+                } else if (report.getReportName().equals("SALES_BY_DISH_ITEM")) {
+                    String query = "select * from REPORT_DISH_CONSUMPTION_SUMMARY" + queryBuilder;
+                    logger.info("REPORT_DISH_CONSUMPTION_SUMMARY SQL = [{}]", query);
+                    List<ReportDishConsumptionSummary> rDCSummary = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportDishConsumptionSummary.class));
+                    reportResult.setReportDishConsumptionSummary(rDCSummary);
+                } else if (report.getReportName().equals("CASH_SALES_REPORT")) {
+                    String query = "select * from REPORT_CASHIER_SUMMARY" + queryBuilder + " order by cashier_name,store_name,type_of_data,category";
+                    logger.info("REPORT_CASHIER_SUMMARY SQL = [{}]", query);
+                    List<ReportCashierSummery> results = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportCashierSummery.class));
+                    logger.info("ReportCashierSummery records from DB = {}", results.size());
+                    List<ReportCashierSummeryResponse> response = transformData(groupCollectionByCashier(results));
+                    logger.info("ReportCashierSummery post data transformation records = {}", response.size());
+                    reportResult.setReportCashierSummery(response);
+                } else if (report.getReportName().equals("ORDER_REPORT")) {
+                    StringBuilder queryDateBuilder = new StringBuilder(" and order_received_date_time between '");
+                    queryDateBuilder.append(report.getFromDate());
+                    queryDateBuilder.append("' and '");
+                    queryDateBuilder.append(report.getToDate());
+                    queryDateBuilder.append("' ");
+                    String query = "select * from REPORT_ORDER_DATA" + queryBuilder + queryDateBuilder + " order by order_id";
+                    logger.info("ORDER_REPORT SQL = [{}]", query);
+                    List<ReportOrderData> results = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportOrderData.class));
+                    logger.info("ReportOrderData records from DB = {}", results.size());
+                    Map<String, List<ReportOrderData>> orderMap = consolidateResponseByOrderId(results);
+                    logger.info("ReportOrderData post data transformation records = {}", orderMap.size());
+                    List<OrderVO> orderList = convertMapList(orderMap);
+                    logger.info("ReportOrderData :: Final order list created of size = [{}].", orderList.size());
+                    reportResult.setReportOrderData(orderList);
+                } else if (report.getReportName().equals("DASHBOARD_SUMMARY")) {
+                    String query = "select * from REPORT_DASHBOARD_SUMMARY";
+                    logger.info("REPORT_DASHBOARD_SUMMARY SQL = [{}]", query);
+                    List<RDSReport> rssOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDSReport.class));
+                    query = "select * from REPORT_DASHBOARD_DETAILS";
+                    logger.info("REPORT_DASHBOARD_DETAILS SQL = [{}]", query);
+                    List<RDDReport> rddOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDDReport.class));
+                    rssOrderSources.stream().forEach(o -> o.setReportDashboardDetails(rddOrderSources));
+                    reportResult.setReportDashboardSummery(rssOrderSources);
+                }
             }
-
-
-            if (report.getReportName().equals("SALES_SUMMARY_BY_DATE_LIST")) {
-
-                StringBuilder queryDateBuilder = new StringBuilder(" and order_date between '");
-                queryDateBuilder.append(report.getFromDate());
-                queryDateBuilder.append("' and '");
-                queryDateBuilder.append(report.getToDate());
-                queryDateBuilder.append("' ");
-                String query = "select * from REPORT_SALES_SUMMARY_BY_DATE" + queryBuilder + queryDateBuilder;
-                logger.info("SALES_SUMMARY_BY_DATE_LIST SQL = [{}]", query);
-                List<RSSDate> rssDate = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSDate.class));
-                reportResult.setSalesSummeryByDateList(rssDate);
-            } else if (report.getReportName().equals("SALES_SUMMARY_BY_ORDER_SOURCE")) {
-                String query = "select * from REPORT_SALES_SUMMARY_BY_ORDER_SOURCE" + queryBuilder;
-                logger.info("REPORT_SALES_SUMMARY_BY_ORDER_SOURCE SQL = [{}]", query);
-                List<RSSOrderSource> rssOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSOrderSource.class));
-                reportResult.setSalesSummeryByOrderSource(rssOrderSources);
-            } else if (report.getReportName().equals("SALES_SUMMARY_BY_PAYMENT_MODE")) {
-                String query = "select * from REPORT_SALES_SUMMARY_BY_PAYMENT_MODE" + queryBuilder;
-                logger.info("REPORT_SALES_SUMMARY_BY_PAYMENT_MODE SQL = [{}]", query);
-                List<RSSPaymentMode> rSSPaymentMode = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSPaymentMode.class));
-                reportResult.setSalesSummeryByPaymentMode(rSSPaymentMode);
-            } else if (report.getReportName().equals("SALES_BY_DISH_ITEM")) {
-                String query = "select * from REPORT_DISH_CONSUMPTION_SUMMARY" + queryBuilder;
-                logger.info("REPORT_DISH_CONSUMPTION_SUMMARY SQL = [{}]", query);
-                List<ReportDishConsumptionSummary> rDCSummary = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportDishConsumptionSummary.class));
-                reportResult.setReportDishConsumptionSummary(rDCSummary);
-            } else if (report.getReportName().equals("CASH_SALES_REPORT")) {
-                String query = "select * from REPORT_CASHIER_SUMMARY" + queryBuilder + " order by cashier_name,store_name,type_of_data,category";
-                logger.info("REPORT_CASHIER_SUMMARY SQL = [{}]", query);
-                List<ReportCashierSummery> results = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportCashierSummery.class));
-                logger.info("ReportCashierSummery records from DB = {}", results.size());
-                List<ReportCashierSummeryResponse> response = transformData(groupCollectionByCashier(results));
-                logger.info("ReportCashierSummery post data transformation records = {}", response.size());
-                reportResult.setReportCashierSummery(response);
-            } else if (report.getReportName().equals("ORDER_REPORT")) {
-                StringBuilder queryDateBuilder = new StringBuilder(" and order_received_date_time between '");
-                queryDateBuilder.append(report.getFromDate());
-                queryDateBuilder.append("' and '");
-                queryDateBuilder.append(report.getToDate());
-                queryDateBuilder.append("' ");
-                String query = "select * from REPORT_ORDER_DATA" + queryBuilder + queryDateBuilder + " order by order_id";
-                logger.info("ORDER_REPORT SQL = [{}]", query);
-                List<ReportOrderData> results = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportOrderData.class));
-                logger.info("ReportOrderData records from DB = {}", results.size());
-                Map<String, List<ReportOrderData>> orderMap = consolidateResponseByOrderId(results);
-                logger.info("ReportOrderData post data transformation records = {}", orderMap.size());
-                List<OrderVO> orderList = convertMapList(orderMap);
-                logger.info("ReportOrderData :: Final order list created of size = [{}].", orderList.size());
-                reportResult.setReportOrderData(orderList);
-            }else if (report.getReportName().equals("DASHBOARD_SUMMARY")) {
-                String query = "select * from REPORT_DASHBOARD_SUMMARY";
-                logger.info("REPORT_DASHBOARD_SUMMARY SQL = [{}]", query);
-                List<RDSReport> rssOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDSReport.class));
-                query = "select * from REPORT_DASHBOARD_DETAILS";
-                logger.info("REPORT_DASHBOARD_DETAILS SQL = [{}]", query);
-                List<RDDReport> rddOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDDReport.class));
-                rssOrderSources.stream().forEach(o -> o.setReportDashboardDetails(rddOrderSources));
-                reportResult.setReportDashboardSummery(rssOrderSources);
-            }
-
 
         } catch (Exception e) {
             logger.error("Error during reports table refresh {}", e.getMessage());
@@ -120,6 +133,13 @@ public class ReportServiceImpl implements ReportService {
 
         return reportResult;
 
+
+    }
+
+    private List<CustomerReportData> getCustomerReportData() {
+
+        logger.info("CUSTOMER_REPORT SQL = [{}]", CUSTOMER_REPORT_SQL);
+        return jdbcTemplate.query(CUSTOMER_REPORT_SQL, BeanPropertyRowMapper.newInstance(CustomerReportData.class));
 
     }
 
@@ -282,47 +302,16 @@ public class ReportServiceImpl implements ReportService {
         return map;
     }
 
-//    Map<String, List<ReportCashierSummeryResponse>> groupCollectionByCashier(List<ReportCashierSummery> rcs) {
-//        Map<String, ReportCashierSummeryResponse> map =  new LinkedHashMap<>();
-//        ReportCashierSummeryResponse response;
-//        String cashier = null;
-//        for (ReportCashierSummery result : rcs) {
-//            response = map.get(result.getCashierName());
-//            if (null == response) {
-//                response= new ReportCashierSummeryResponse();
-//                response.setCashierName(result.getCashierName());
-//                response.setRestaurantId(result.getRestaurantId());
-//                response.setStoreId(result.getStoreId());
-//                response.setStoreName(result.getStoreName());
-//                populateCashierSummeryData();
-//                map.put(result.getCashierName(),response );
-//            }
-//
-//        }
-//        return null;
-//    }
+    public List<OrderVO> getCancelledOrderReportData() {
 
-//    private void populateCashierSummeryData(ReportCashierSummery result) {
-//        CashierSummeryData data = new CashierSummeryData();
-//
-//        data.setTypeOfData(result.getTypeOfData());
-//
-//        return null;
-//    }
-
-    Map<String, List<OrderMenuIngredientAddressDTO>> consolidateResponseToOrderedMapByOrderId(List<OrderMenuIngredientAddressDTO> results) {
-        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = new LinkedHashMap<>();
-        for (OrderMenuIngredientAddressDTO result : results) {
-            List<OrderMenuIngredientAddressDTO> exitingList = orderMap.get(result.getOrderId());
-            if (exitingList == null) {
-                List<OrderMenuIngredientAddressDTO> newList = new ArrayList<>();
-                newList.add(result);
-                orderMap.put(result.getOrderId(), newList);
-            } else {
-                exitingList.add(result);
-                orderMap.put(result.getOrderId(), exitingList);
-            }
-        }
-        return orderMap;
+        String queryString = ORDER_MENU_INGREDIENT_ADDRESS_VIEW_SQL + "and order_status = 'CANCELLED' ";
+        queryString = queryString + " order by created_date, order_id, id desc, product_id, sub_product_id";
+        logger.info("CANCELLED_REPORT SQL = [{}]", queryString);
+        List<OrderMenuIngredientAddressDTO> results = jdbcTemplate.query(queryString, BeanPropertyRowMapper.newInstance(OrderMenuIngredientAddressDTO.class));
+        Map<String, List<OrderMenuIngredientAddressDTO>> orderMap = orderService.consolidateResponseToOrderedMapByOrderId(results);
+        List<OrderVO> orderList = orderService.convertOrderDTOMapTOOrderVOList(orderMap);
+        return orderList;
     }
+
+
 }

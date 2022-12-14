@@ -54,6 +54,8 @@ public class Menu {
     private String commonImage;
     @Column(name = "ingredient_exists_flag")
     private String ingredientExistsFalg;
+    @Column(name = "online_applicable_flag")
+    private String onlineApplicableFlag;
     @Column(name = "kds_routing_name")
     private String kdsRoutingName;
     @Column(name = "Created_by")
