@@ -29,7 +29,10 @@ public class ItemServiceImpl {
     }
 
     public Item saveItem(Item item) {
-        return itemRepository.save(item);
+        Item newItem = itemRepository.save(item);
+        String result = itemRepository.populateItemConsumption(newItem.getItemId());
+        logger.info("Calling sp_populateItemConsumption result = [{}] for ItemId = [{}].", result, newItem.getItemId());
+        return newItem;
     }
 
     public List<Item> getItemsByStatus(String status) {
