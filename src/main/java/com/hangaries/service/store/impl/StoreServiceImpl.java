@@ -59,7 +59,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store addStore(Store newStore) {
         Store store = storeRepository.save(newStore);
-        logger.info("New Store saved successfully with store Id = [{}].", store.getStoreId());
+        logger.info("Store saved successfully with store Id = [{}].", store.getStoreId());
         logger.info("Calling SP setupNewStore for store Id = [{}].", store.getStoreId());
         String result = storeRepository.setupNewStore(store.getRestaurantId(), store.getStoreId());
         logger.info("SP setupNewStore returned result = [{}] for store Id = [{}].", result, store.getStoreId());

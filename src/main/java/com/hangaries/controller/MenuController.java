@@ -300,5 +300,14 @@ public class MenuController {
 
     }
 
+    @PostMapping("cloneMenu")
+    public ResponseEntity<String> cloneMenu(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) {
+        logger.info("Calling Clone Menu SP for restaurantId = {}, storeId = {}.", restaurantId, storeId);
+        String result = menuService.cloneMenu(restaurantId, storeId);
+        logger.info("Calling Clone Menu SP result = [{}] for restaurantId = {}, storeId = {}.", result, restaurantId, storeId);
+        return new ResponseEntity<String>(result, HttpStatus.OK);
+
+    }
+
 
 }

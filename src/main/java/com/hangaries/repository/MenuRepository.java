@@ -4,6 +4,7 @@ import com.hangaries.model.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -37,4 +38,8 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
 
     @Query(value = "select * from MENU_MASTER where product_id=:productId and store_id=:storeId", nativeQuery = true)
     List<Menu> getProductMappedToMenuMaster(@Param("productId") String productId, @Param("storeId") String storeId);
+
+    @Procedure(procedureName = "sp_CloneMenu", outputParameterName = "oErrorDescription")
+    String cloneMenu(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId);
+
 }

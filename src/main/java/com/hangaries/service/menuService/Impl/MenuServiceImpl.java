@@ -210,7 +210,8 @@ public class MenuServiceImpl implements MenuService {
         return dishRepository.save(dish);
     }
 
-//    public List<Menu> isProductMappedToMenuMaster(String productId,String storeId) {
-//       return menuRepository.getProductMappedToMenuMaster(productId,storeId);
-//    }
+    public String cloneMenu(String restaurantId, String storeId) {
+        return menuRepository.cloneMenu(restaurantId,storeId);
+    }
+
 }

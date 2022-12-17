@@ -80,6 +80,9 @@ public class Store {
     @Column(name = "wera_api_value")
     private String weraAPIValue;
 
+    @Column(name = "menu_clone_flag")
+    private String menuCloneFlag;
+
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;
 
