@@ -83,6 +83,18 @@ public class Store {
     @Column(name = "menu_clone_flag")
     private String menuCloneFlag;
 
+    @Column(name = "online_available_flag")
+    private String onlineAvailableFlag;
+
+    @Column(name = "dinein_available_flag")
+    private String dineinAvailableFlag;
+
+    @Column(name = "longitude")
+    private Float longitude;
+
+    @Column(name = "latitude")
+    private Float latitude;
+
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;
 
