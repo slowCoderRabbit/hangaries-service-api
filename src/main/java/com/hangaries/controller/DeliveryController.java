@@ -1,7 +1,6 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.DeliveryConfig;
-import com.hangaries.model.TaxMaster;
 import com.hangaries.service.delivery.impl.DeliveryServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +26,20 @@ public class DeliveryController {
     public ResponseEntity<List<DeliveryConfig>> getDeliveryConfigByCriteria(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId, @RequestParam("criteria") String criteria) {
         List<DeliveryConfig> deliveryConfig = new ArrayList<>();
         try {
-            logger.info("Get delivery config by restaurantId = {},  storeId = {} and criteria = {}.", restaurantId,storeId,criteria);
-            deliveryConfig = deliveryService.getDeliveryConfigByCriteria(restaurantId,storeId,criteria);
+            logger.info("Get delivery config by restaurantId = {},  storeId = {} and criteria = {}.", restaurantId, storeId, criteria);
+            deliveryConfig = deliveryService.getDeliveryConfigByCriteria(restaurantId, storeId, criteria);
             return new ResponseEntity<List<DeliveryConfig>>(deliveryConfig, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getting tax rule details::" + ex.getMessage());
             return new ResponseEntity<List<DeliveryConfig>>(deliveryConfig, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("saveDeliveryConfigByCriteria")
+    public ResponseEntity<DeliveryConfig> saveDeliveryConfigByCriteria(@RequestBody DeliveryConfig config) {
+        logger.info("Saving delivery config = [{}].", config);
+        DeliveryConfig deliveryConfig = deliveryService.saveDeliveryConfigByCriteria(config);
+        logger.info("Delivery config saved successfully = [{}].", deliveryConfig);
+        return new ResponseEntity<DeliveryConfig>(deliveryConfig, HttpStatus.OK);
     }
 }

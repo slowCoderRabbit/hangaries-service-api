@@ -5,12 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 import static com.hangaries.constants.HangariesConstants.SYSTEM;
@@ -23,9 +19,11 @@ import static com.hangaries.constants.HangariesConstants.SYSTEM;
 @Table(name = "DELIVERY_CONFIG")
 public class DeliveryConfig {
 
-    @Column(name = "delivery_rule_Id")
+
     @Id
-    private @NotNull Integer delivery_rule_Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "delivery_rule_Id")
+    private Long delivery_rule_Id;
 
     @Column(name = "restaurant_id")
     private @NotBlank String restaurantId;
@@ -52,13 +50,13 @@ public class DeliveryConfig {
     private Integer deliveryTimeMins;
 
     @Column(name = "delivery_fee_currency")
-    private @NotBlank String deliveryFeeCurrency;
+    private String deliveryFeeCurrency;
 
     @Column(name = "delivery_fee")
-    private @NotNull Float deliveryFee;
+    private Float deliveryFee;
 
     @Column(name = "rule_status")
-    private @NotBlank String ruleStatus;
+    private String ruleStatus;
 
     @Column(name = "effective_start_date")
     private Date effectiveStartDate;
@@ -67,7 +65,7 @@ public class DeliveryConfig {
     private Date effectiveEndDate;
 
     @Column(name = "default_criteria_flag")
-    private @NotBlank String defaultCriteriaFlag;
+    private String defaultCriteriaFlag;
 
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;

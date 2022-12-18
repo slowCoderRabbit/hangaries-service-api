@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class DeliveryServiceImpl implements DeliveryService {
 
@@ -16,5 +17,9 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     public List<DeliveryConfig> getDeliveryConfigByCriteria(String restaurantId, String storeId, String criteria) {
         return deliveryRepository.getDeliveryConfigByCriteria(restaurantId, storeId, criteria);
+    }
+
+    public DeliveryConfig saveDeliveryConfigByCriteria(DeliveryConfig config) {
+        return deliveryRepository.save(config);
     }
 }

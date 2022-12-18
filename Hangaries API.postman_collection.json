@@ -996,6 +996,42 @@
 			"response": []
 		},
 		{
+			"name": "saveDeliveryConfigByCriteria",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {        \r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"criteria\": \"AMOUNT\",\r\n        \"minDistanceKms\": 2,\r\n        \"maxDistanceKms\": 20,\r\n        \"minAmount\": 0,\r\n        \"maxAmount\": 300,\r\n        \"deliveryTimeMins\": 30,\r\n        \"deliveryFeeCurrency\": \"INR\",\r\n        \"deliveryFee\": 20.0,\r\n        \"ruleStatus\": \"ACTIVE\",\r\n        \"effectiveStartDate\": \"2022-04-21T16:00:00.000+00:00\",\r\n        \"effectiveEndDate\": \"9999-12-30T16:00:00.000+00:00\",\r\n        \"defaultCriteriaFlag\": \"Y\"\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveDeliveryConfigByCriteria",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveDeliveryConfigByCriteria"
+					]
+				},
+				"description": "StartFragment\n\nAPI for get the Delivery Config data based on restaurantId and storeId and Criteria\n\nEndFragment\n\n  \n  \n\nEndFragment"
+			},
+			"response": []
+		},
+		{
 			"name": "saveNewOrderNAA",
 			"protocolProfileBehavior": {
 				"strictSSL": true
