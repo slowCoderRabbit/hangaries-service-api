@@ -54,9 +54,9 @@ public class ItemServiceImpl {
     }
 
 
-    public String performInventoryUpdateEOD(String restaurantId, String storeId) {
-        return itemConsumptionSummeryRepository.inventoryUpdateEOD(restaurantId, storeId);
-    }
+//    public String performInventoryUpdateEOD(String restaurantId, String storeId) {
+//        return itemConsumptionSummeryRepository.inventoryUpdateEOD(restaurantId, storeId);
+//    }
 
     public List<ItemConsumptionSummery> saveAllItemConsumptionSummery(List<ItemConsumptionSummery> items) {
         return itemConsumptionSummeryRepository.saveAll(items);

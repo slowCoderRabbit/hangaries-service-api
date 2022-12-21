@@ -27,11 +27,17 @@ public class Item {
     @Column(name = "item_category")
     private String itemCategory;
 
+    @Column(name = "item_sub_category")
+    private String itemSubCategory;
+
     @Column(name = "item_uom")
-    private String itemUOM;
+    private String itemUom;
+
+    @Column(name = "item_unit_cost")
+    private Float itemUnitCost;
 
     @Column(name = "item_gst_percentage")
-    private float itemGstPercentage;
+    private Float itemGstPercentage;
 
     @Column(name = "item_tracking_flag")
     private String itemTrackingFlag;

@@ -75,14 +75,14 @@ public class ItemController {
         return itemService.saveAllItemConsumptionSummery(items);
     }
 
-    @GetMapping("performInventoryUpdateEOD")
-    public ResponseEntity<String> performInventoryUpdateEOD(@RequestParam("restaurantId") String restaurantId,
-                                                            @RequestParam("storeId") String storeId) {
-
-        logger.info("Performing InventoryUpdateEOD for restaurantId = [{}] and storeId = [{}].", restaurantId, storeId);
-        String result = itemService.performInventoryUpdateEOD(restaurantId, storeId);
-        logger.info("InventoryUpdateEOD result = [{}].", result);
-        return new ResponseEntity<String>(result, HttpStatus.OK);
-    }
+//    @GetMapping("performInventoryUpdateEOD")
+//    public ResponseEntity<String> performInventoryUpdateEOD(@RequestParam("restaurantId") String restaurantId,
+//                                                            @RequestParam("storeId") String storeId) {
+//
+//        logger.info("Performing InventoryUpdateEOD for restaurantId = [{}] and storeId = [{}].", restaurantId, storeId);
+//        String result = itemService.performInventoryUpdateEOD(restaurantId, storeId);
+//        logger.info("InventoryUpdateEOD result = [{}].", result);
+//        return new ResponseEntity<String>(result, HttpStatus.OK);
+//    }
 
 }

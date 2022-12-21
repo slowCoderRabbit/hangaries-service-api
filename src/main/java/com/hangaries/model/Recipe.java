@@ -33,9 +33,6 @@ public class Recipe {
     @Column(name = "item_qty")
     private float itemQty;
 
-    @Column(name = "item_cost")
-    private String itemCost;
-
     @Column(name = "item_uom")
     private String itemUom;
 
