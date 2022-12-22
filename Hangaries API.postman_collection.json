@@ -5076,6 +5076,32 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getItemByItemId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getItemByItemId?itemId=484",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getItemByItemId"
+					],
+					"query": [
+						{
+							"key": "itemId",
+							"value": "484"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

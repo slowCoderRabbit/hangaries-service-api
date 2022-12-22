@@ -75,6 +75,14 @@ public class ItemController {
         return itemService.saveAllItemConsumptionSummery(items);
     }
 
+    @GetMapping("getItemByItemId")
+    public ResponseEntity<Item> getItemByItemId(@RequestParam long itemId) {
+        logger.info("Getting item for item id = [{}].", itemId);
+        Item item = itemService.getItemByItemId(itemId);
+        logger.info("[{}] item found!!", item);
+        return new ResponseEntity<Item>(item, HttpStatus.OK);
+    }
+
 //    @GetMapping("performInventoryUpdateEOD")
 //    public ResponseEntity<String> performInventoryUpdateEOD(@RequestParam("restaurantId") String restaurantId,
 //                                                            @RequestParam("storeId") String storeId) {

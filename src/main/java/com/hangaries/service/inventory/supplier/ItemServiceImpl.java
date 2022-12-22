@@ -61,4 +61,8 @@ public class ItemServiceImpl {
     public List<ItemConsumptionSummery> saveAllItemConsumptionSummery(List<ItemConsumptionSummery> items) {
         return itemConsumptionSummeryRepository.saveAll(items);
     }
+
+    public Item getItemByItemId(long itemId) {
+        return itemRepository.getItemById(itemId);
+    }
 }
