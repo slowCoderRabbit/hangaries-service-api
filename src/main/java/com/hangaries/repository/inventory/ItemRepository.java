@@ -29,4 +29,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Procedure(procedureName = "sp_populateItemConsumption", outputParameterName = "oErrorDescription")
     String populateItemConsumption(@Param("itemId") long itemId);
 
+    @Query(value = "select * from ITEM_MASTER where item_category=:category", nativeQuery = true)
+    List<Item> getItemByItemCategory(@Param("category") String category);
 }

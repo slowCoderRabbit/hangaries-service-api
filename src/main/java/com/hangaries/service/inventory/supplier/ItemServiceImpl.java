@@ -65,4 +65,8 @@ public class ItemServiceImpl {
     public Item getItemByItemId(long itemId) {
         return itemRepository.getItemById(itemId);
     }
+
+    public List<Item> getItemByItemCategory(String category) {
+        return itemRepository.getItemByItemCategory(category);
+    }
 }

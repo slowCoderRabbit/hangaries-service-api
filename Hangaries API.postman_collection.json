@@ -5102,6 +5102,32 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getItemByItemCategory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getItemByItemCategory?category=FOOD",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getItemByItemCategory"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "FOOD"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

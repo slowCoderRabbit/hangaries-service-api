@@ -31,10 +31,13 @@ public class Recipe {
     private long itemId;
 
     @Column(name = "item_qty")
-    private float itemQty;
+    private Float itemQty;
 
     @Column(name = "item_uom")
     private String itemUom;
+
+    @Column(name = "item_cost")
+    private Float itemCost;
 
     @Column(name = "item_status")
     private String itemStatus;

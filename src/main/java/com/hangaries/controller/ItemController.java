@@ -83,14 +83,12 @@ public class ItemController {
         return new ResponseEntity<Item>(item, HttpStatus.OK);
     }
 
-//    @GetMapping("performInventoryUpdateEOD")
-//    public ResponseEntity<String> performInventoryUpdateEOD(@RequestParam("restaurantId") String restaurantId,
-//                                                            @RequestParam("storeId") String storeId) {
-//
-//        logger.info("Performing InventoryUpdateEOD for restaurantId = [{}] and storeId = [{}].", restaurantId, storeId);
-//        String result = itemService.performInventoryUpdateEOD(restaurantId, storeId);
-//        logger.info("InventoryUpdateEOD result = [{}].", result);
-//        return new ResponseEntity<String>(result, HttpStatus.OK);
-//    }
+    @GetMapping("getItemByItemCategory")
+    public ResponseEntity<List<Item>> getItemByItemCategory(@RequestParam("category") String category) {
+        logger.info("Getting item for item category = [{}].", category);
+        List<Item> result = itemService.getItemByItemCategory(category);
+        logger.info("[{}] items found for category = [{}].", result.size(), category);
+        return new ResponseEntity<List<Item>>(result, HttpStatus.OK);
+    }
 
 }
