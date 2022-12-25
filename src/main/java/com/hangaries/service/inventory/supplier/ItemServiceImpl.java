@@ -30,6 +30,11 @@ public class ItemServiceImpl {
 
     public Item saveItem(Item item) {
         Item newItem = itemRepository.save(item);
+        if (null != item.getItemId()) {
+            logger.info("Calling updateRecipeItemCost for ItemId = [{}].", item.getItemId());
+            int updateResult = itemRepository.updateRecipeItemCost(item.getItemId());
+            logger.info("Calling updateRecipeItemCost resulted in update of [{}] row for ItemId = [{}].", updateResult, item.getItemId());
+        }
         String result = itemRepository.populateItemConsumption(newItem.getItemId());
         logger.info("Calling sp_populateItemConsumption result = [{}] for ItemId = [{}].", result, newItem.getItemId());
         return newItem;
