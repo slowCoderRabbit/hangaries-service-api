@@ -5128,6 +5128,87 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getAllOffers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllOffers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllOffers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveOffer",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"offerId\": 1,\r\n    \"offerCode\": \"OC\",\r\n    \"offerDescription\": \"OD\",\r\n    \"offerType\": \"OT\",\r\n    \"daySunday\": \"1\",\r\n    \"dayMonday\": \"1\",\r\n    \"dayTuesday\": \"1\",\r\n    \"dayWednesday\": \"1\",\r\n    \"dayThursday\": \"1\",\r\n    \"dayFriday\": \"1\",\r\n    \"daySaturday\": \"2\",\r\n    \"offerApplicability\": \"OA\",\r\n    \"offerRuleLogic\": \"ORL\",\r\n    \"offerPrice\": 11.11,\r\n    \"offerStatus\": \"ACTIVE\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveOffer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveOffer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOffersByStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getOffersByStatus?status=ACTIVE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getOffersByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
