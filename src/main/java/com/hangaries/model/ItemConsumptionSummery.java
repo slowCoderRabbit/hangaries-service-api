@@ -26,6 +26,10 @@ public class ItemConsumptionSummery {
     private long itemId;
     @Column(name = "item_name")
     private String itemName;
+    @Column(name = "item_category")
+    private String itemCategory;
+    @Column(name = "item_sub_category")
+    private String itemSubCategory;
     @Column(name = "item_uom")
     private String itemUom;
     @Column(name = "restaurant_id")
