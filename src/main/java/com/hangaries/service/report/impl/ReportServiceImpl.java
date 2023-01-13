@@ -12,14 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.*;
 
 import static com.hangaries.constants.HangariesConstants.ALL;
-import static com.hangaries.constants.QueryStringConstants.CUSTOMER_REPORT_SQL;
-import static com.hangaries.constants.QueryStringConstants.ORDER_MENU_INGREDIENT_ADDRESS_VIEW_SQL;
+import static com.hangaries.constants.QueryStringConstants.*;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -33,7 +34,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     OrderServiceImpl orderService;
-
+    @Autowired
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -123,7 +125,13 @@ public class ReportServiceImpl implements ReportService {
                     List<RDDReport> rddOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDDReport.class));
                     rssOrderSources.stream().forEach(o -> o.setReportDashboardDetails(rddOrderSources));
                     reportResult.setReportDashboardSummery(rssOrderSources);
+                } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY")) {
+                    logger.info("REPORT_ITEM_CONSUMPTION_SUMMARY ");
+                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report);
+//                    List<ReportItemConsumptionSummary> rICSummary = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
+                    reportResult.setReportItemConsumptionSummary(rICSummary);
                 }
+
             }
 
         } catch (Exception e) {
@@ -134,6 +142,17 @@ public class ReportServiceImpl implements ReportService {
         return reportResult;
 
 
+    }
+
+    List<ReportItemConsumptionSummary> getReportItemConsumptionSummary(Report report) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("restaurantId", report.getRestaurantId());
+        parameters.addValue("storeId", report.getStoreId());
+        parameters.addValue("fromDate", report.getFromDate());
+        parameters.addValue("toDate", report.getToDate());
+        List<ReportItemConsumptionSummary> itemConsumptionSummary = namedParameterJdbcTemplate.query(
+                ITEM_CONSUMPTION_SUMMARY_SQL, parameters, BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
+        return itemConsumptionSummary;
     }
 
     private List<CustomerReportData> getCustomerReportData() {

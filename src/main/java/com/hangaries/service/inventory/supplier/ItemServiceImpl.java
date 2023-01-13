@@ -8,6 +8,7 @@ import com.hangaries.repository.inventory.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -51,7 +52,7 @@ public class ItemServiceImpl {
     }
 
     public List<ItemConsumptionSummery> getItemConsumptionSummery() {
-        return itemConsumptionSummeryRepository.findAll();
+        return itemConsumptionSummeryRepository.findAll(Sort.by(Sort.Direction.ASC, "itemId"));
     }
 
     public ItemConsumptionSummery saveItemConsumptionSummery(ItemConsumptionSummery item) {

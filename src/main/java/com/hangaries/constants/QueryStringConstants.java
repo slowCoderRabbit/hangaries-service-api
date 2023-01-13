@@ -58,4 +58,9 @@ public class QueryStringConstants {
             " WHERE a.mobile_number = b.mobile_number\n" +
             "   AND length(a.mobile_number) between 10 and 13\n" +
             " order by date(b.created_date) desc, a.mobile_number";
+
+    public static final String ITEM_CONSUMPTION_SUMMARY_SQL = "SELECT item_id, restaurant_id, store_id, item_name, item_category, store_name, sum(opng_qty) as opng_qty, sum(item_ordered) as item_ordered, sum(item_wasted) as item_wasted," +
+            " sum(item_consumed) as item_consumed, sum(item_variance) as item_variance, sum(item_amount) as item_amount, sum(eod_qty) as eod_qty" +
+            " FROM REPORT_ITEM_CONSUMPTION_SUMMARY WHERE restaurant_id =:restaurantId AND store_id =:storeId AND business_date between :fromDate and :toDate" +
+            " GROUP BY item_id, restaurant_id, store_id, item_name, item_category, store_name";
 }
