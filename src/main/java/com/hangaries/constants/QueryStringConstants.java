@@ -63,4 +63,14 @@ public class QueryStringConstants {
             " sum(item_consumed) as item_consumed, sum(item_variance) as item_variance, sum(item_amount) as item_amount, sum(eod_qty) as eod_qty" +
             " FROM REPORT_ITEM_CONSUMPTION_SUMMARY WHERE restaurant_id =:restaurantId AND store_id =:storeId AND business_date between :fromDate and :toDate" +
             " GROUP BY item_id, restaurant_id, store_id, item_name, item_category, store_name";
+
+    public static final String ITEM_CONSUMPTION_SUMMARY_RECIPE_SQL = "SELECT item_id, restaurant_id, store_id, item_name, item_category, business_date, store_name, sum(opng_qty) as opng_qty, sum(item_ordered) as item_ordered, sum(item_wasted) as item_wasted," +
+            " sum(item_consumed) as item_consumed, sum(item_variance) as item_variance, sum(item_amount) as item_amount, sum(eod_qty) as eod_qty" +
+            " FROM REPORT_RECIPE_ITEM_CONSUMPTION_SUMMARY WHERE restaurant_id =:restaurantId AND store_id =:storeId AND business_date between :fromDate and :toDate" +
+            " GROUP BY item_id, restaurant_id, store_id, item_name, item_category, store_name, business_date";
+
+    public static final String ITEM_CONSUMPTION_SUMMARY_NON_RECIPE_SQL = "SELECT item_id, restaurant_id, store_id, item_name, item_category, business_date, store_name, sum(opng_qty) as opng_qty, sum(item_ordered) as item_ordered, sum(item_wasted) as item_wasted," +
+            " sum(item_consumed) as item_consumed, sum(item_variance) as item_variance, sum(item_amount) as item_amount, sum(eod_qty) as eod_qty" +
+            " FROM REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY WHERE restaurant_id =:restaurantId AND store_id =:storeId AND business_date between :fromDate and :toDate" +
+            " GROUP BY item_id, restaurant_id, store_id, item_name, item_category, store_name, business_date";
 }

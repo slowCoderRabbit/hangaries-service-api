@@ -125,10 +125,17 @@ public class ReportServiceImpl implements ReportService {
                     List<RDDReport> rddOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDDReport.class));
                     rssOrderSources.stream().forEach(o -> o.setReportDashboardDetails(rddOrderSources));
                     reportResult.setReportDashboardSummery(rssOrderSources);
-                } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY")) {
-                    logger.info("REPORT_ITEM_CONSUMPTION_SUMMARY ");
-                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report);
-//                    List<ReportItemConsumptionSummary> rICSummary = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
+//                } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY")) {
+//                    logger.info("Getting REPORT_ITEM_CONSUMPTION_SUMMARY ");
+//                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report, ITEM_CONSUMPTION_SUMMARY_SQL);
+//                    reportResult.setReportItemConsumptionSummary(rICSummary);
+                } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY_RECIPE")) {
+                    logger.info("Getting REPORT_RECIPE_ITEM_CONSUMPTION_SUMMARY ");
+                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report, ITEM_CONSUMPTION_SUMMARY_RECIPE_SQL);
+                    reportResult.setReportItemConsumptionSummary(rICSummary);
+                } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY_NONRECIPE")) {
+                    logger.info("Getting REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY ");
+                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report, ITEM_CONSUMPTION_SUMMARY_NON_RECIPE_SQL);
                     reportResult.setReportItemConsumptionSummary(rICSummary);
                 }
 
@@ -144,15 +151,20 @@ public class ReportServiceImpl implements ReportService {
 
     }
 
-    List<ReportItemConsumptionSummary> getReportItemConsumptionSummary(Report report) {
+    List<ReportItemConsumptionSummary> getReportItemConsumptionSummary(Report report, String sql) {
+        MapSqlParameterSource parameters = getMapSqlParameterSource(report);
+        List<ReportItemConsumptionSummary> itemConsumptionSummary = namedParameterJdbcTemplate.query(
+                sql, parameters, BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
+        return itemConsumptionSummary;
+    }
+
+    private MapSqlParameterSource getMapSqlParameterSource(Report report) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("restaurantId", report.getRestaurantId());
         parameters.addValue("storeId", report.getStoreId());
         parameters.addValue("fromDate", report.getFromDate());
         parameters.addValue("toDate", report.getToDate());
-        List<ReportItemConsumptionSummary> itemConsumptionSummary = namedParameterJdbcTemplate.query(
-                ITEM_CONSUMPTION_SUMMARY_SQL, parameters, BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
-        return itemConsumptionSummary;
+        return parameters;
     }
 
     private List<CustomerReportData> getCustomerReportData() {
