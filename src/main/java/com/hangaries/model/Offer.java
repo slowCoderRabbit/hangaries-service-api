@@ -23,14 +23,17 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long offerId;
 
+    @Column(name = "offer_function_type")
+    private String offerFunctionType;
+
     @Column(name = "offer_code")
     private String offerCode;
 
     @Column(name = "offer_description")
     private String offerDescription;
 
-    @Column(name = "offer_type")
-    private String offerType;
+//    @Column(name = "offer_type")
+//    private String offerType;
 
     @Column(name = "day_sunday")
     private String daySunday;
@@ -56,14 +59,29 @@ public class Offer {
     @Column(name = "offer_applicability")
     private String offerApplicability;
 
-    @Column(name = "offer_rule_logic")
-    private String offerRuleLogic;
+//    @Column(name = "offer_rule_logic")
+//    private String offerRuleLogic;
 
     @Column(name = "offer_price")
     private Float offerPrice;
 
     @Column(name = "offer_status")
     private String offerStatus;
+
+    @Column(name = "offer_criteria")
+    private String offerCriteria;
+
+    @Column(name = "offer_section")
+    private String offerSection;
+
+    @Column(name = "offer_dish")
+    private String offerDish;
+
+    @Column(name = "offer_product_list")
+    private String offerProductList;
+
+    @Column(name = "offer_discount")
+    private Float offerDiscount;
 
     @Column(name = "Created_by")
     private String createdBy = SYSTEM;

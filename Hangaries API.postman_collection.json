@@ -1248,7 +1248,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"restaurantId\": \"ALL\",\r\n        \"storeId\": \"ALL\",\r\n        \"fromDate\":\"2021-06-01\",\r\n        \"toDate\": \"2022-12-12\",\r\n        \"reportName\" :\"SALES_BY_DISH_ITEM\"\r\n}",
+					"raw": "{\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"fromDate\":\"2021-06-01\",\r\n        \"toDate\": \"2023-12-12\",\r\n        \"reportName\" :\"ITEM_CONSUMPTION_SUMMARY\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -5162,7 +5162,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"offerId\": 1,\r\n    \"offerCode\": \"OC\",\r\n    \"offerDescription\": \"OD\",\r\n    \"offerType\": \"OT\",\r\n    \"daySunday\": \"1\",\r\n    \"dayMonday\": \"1\",\r\n    \"dayTuesday\": \"1\",\r\n    \"dayWednesday\": \"1\",\r\n    \"dayThursday\": \"1\",\r\n    \"dayFriday\": \"1\",\r\n    \"daySaturday\": \"2\",\r\n    \"offerApplicability\": \"OA\",\r\n    \"offerRuleLogic\": \"ORL\",\r\n    \"offerPrice\": 11.11,\r\n    \"offerStatus\": \"ACTIVE\"\r\n    \r\n}",
+					"raw": "{\r\n    \"offerFunctionType\": \"OFTTest\",\r\n    \"offerCode\": \"OC\",\r\n    \"offerDescription\": \"OD\",\r\n    \"daySunday\": \"1\",\r\n    \"dayMonday\": \"2\",\r\n    \"dayTuesday\": \"3\",\r\n    \"dayWednesday\": \"4\",\r\n    \"dayThursday\": \"5\",\r\n    \"dayFriday\": \"6\",\r\n    \"daySaturday\": \"7\",\r\n    \"offerApplicability\": \"OA\",\r\n    \"offerPrice\": 11.11,\r\n    \"offerStatus\": \"ACTIVE\",\r\n    \"offerCriteria\": \"offerCriteriaTest\",\r\n    \"offerSection\": \"offerSectionTest\",\r\n    \"offerDish\": \"offerDishTest\",\r\n    \"offerProductList\": \"offerProductListTest\",\r\n    \"offerDiscount\": 22.22\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -5199,6 +5199,87 @@
 					"path": [
 						"api",
 						"getOffersByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllOfferDetails",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllOfferDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllOfferDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveOfferDetails",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"offerId\": 2,\r\n    \"offerRuleId\": 3,\r\n    \"ruleOperator\": \"RO\",\r\n    \"productId\": \"P001\",\r\n    \"dishType\": \"DTTest\",\r\n    \"productSize\": \"SmallPZ\",\r\n    \"productOperator\": \"PO\",\r\n    \"ruleStatus\":\"ACTIVE\"\r\n    \r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveOfferDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveOfferDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOfferDetailsByStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getOfferDetailsByStatus?status=ACTIVE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getOfferDetailsByStatus"
 					],
 					"query": [
 						{

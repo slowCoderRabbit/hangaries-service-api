@@ -2,6 +2,7 @@ package com.hangaries.controller;
 
 
 import com.hangaries.model.Offer;
+import com.hangaries.model.OfferDetails;
 import com.hangaries.service.offer.OfferServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +50,35 @@ public class OfferController {
         Offer newOffer = offerService.saveOffer(offer);
         logger.info("[{}] offer returned.", newOffer);
         return new ResponseEntity<Offer>(newOffer, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getAllOfferDetails")
+    public ResponseEntity<List<OfferDetails>> getAllOfferDetails() {
+        List<OfferDetails> offers = new ArrayList<>();
+        logger.info("Getting list of all the offer details");
+        offers = offerService.getAllOfferDetails();
+        logger.info("[{}] offers returned.", offers.size());
+        return new ResponseEntity<List<OfferDetails>>(offers, HttpStatus.OK);
+
+    }
+
+    @GetMapping("getOfferDetailsByStatus")
+    public ResponseEntity<List<OfferDetails>> getOfferDetailsByStatus(@RequestParam String status) {
+        List<OfferDetails> offers = new ArrayList<>();
+        logger.info("Getting list of all the offer details with status = [{}].", status);
+        offers = offerService.getOfferDetailsByStatus(status);
+        logger.info("[{}] offers returned.", offers.size());
+        return new ResponseEntity<List<OfferDetails>>(offers, HttpStatus.OK);
+
+    }
+
+    @PostMapping("saveOfferDetails")
+    public ResponseEntity<OfferDetails> saveOfferDetail(@RequestBody OfferDetails offer) {
+        logger.info("Saving offer details = [{}].", offer);
+        OfferDetails newOffer = offerService.saveOfferDetail(offer);
+        logger.info("[{}] offer returned.", newOffer);
+        return new ResponseEntity<OfferDetails>(newOffer, HttpStatus.OK);
 
     }
 
