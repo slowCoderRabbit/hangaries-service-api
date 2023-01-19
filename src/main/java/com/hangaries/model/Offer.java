@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 import static com.hangaries.constants.HangariesConstants.SYSTEM;
@@ -22,6 +23,12 @@ public class Offer {
     @Column(name = "offer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long offerId;
+
+    @Column(name = "restaurant_id")
+    private @NotBlank String restaurantId;
+
+    @Column(name = "store_Id")
+    private @NotBlank String storeId;
 
     @Column(name = "offer_function_type")
     private String offerFunctionType;
