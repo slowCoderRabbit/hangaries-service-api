@@ -20,7 +20,8 @@ import java.text.ParseException;
 import java.util.*;
 
 import static com.hangaries.constants.HangariesConstants.ALL;
-import static com.hangaries.constants.QueryStringConstants.*;
+import static com.hangaries.constants.QueryStringConstants.CUSTOMER_REPORT_SQL;
+import static com.hangaries.constants.QueryStringConstants.ORDER_MENU_INGREDIENT_ADDRESS_VIEW_SQL;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -130,12 +131,14 @@ public class ReportServiceImpl implements ReportService {
 //                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report, ITEM_CONSUMPTION_SUMMARY_SQL);
 //                    reportResult.setReportItemConsumptionSummary(rICSummary);
                 } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY_RECIPE")) {
-                    logger.info("Getting REPORT_RECIPE_ITEM_CONSUMPTION_SUMMARY ");
-                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report, ITEM_CONSUMPTION_SUMMARY_RECIPE_SQL);
+                    String query = "select * from REPORT_RECIPE_ITEM_CONSUMPTION_SUMMARY";
+                    logger.info("ITEM_CONSUMPTION_SUMMARY_RECIPE SQL = [{}]", query);
+                    List<ReportItemConsumptionSummary> rICSummary = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
                     reportResult.setReportItemConsumptionSummary(rICSummary);
                 } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY_NONRECIPE")) {
-                    logger.info("Getting REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY ");
-                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report, ITEM_CONSUMPTION_SUMMARY_NON_RECIPE_SQL);
+                    String query = "select * from REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY";
+                    logger.info("ITEM_CONSUMPTION_SUMMARY_NONRECIPE SQL = [{}]", query);
+                    List<ReportItemConsumptionSummary> rICSummary = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
                     reportResult.setReportItemConsumptionSummary(rICSummary);
                 }
 

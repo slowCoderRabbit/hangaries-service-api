@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -35,9 +34,6 @@ public class ReportItemConsumptionSummary implements Serializable {
 
     @Column(name = "item_category")
     private String itemCategory;
-
-    @Column(name = "business_date")
-    private Date businessDate;
 
     @Column(name = "store_name")
     private String storeName;
