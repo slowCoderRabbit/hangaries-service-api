@@ -23,6 +23,6 @@ public class ReportResult {
     List<OrderVO> reportCancelledOrderData;
     List<CustomerReportData> reportCustomerData;
     List<ReportItemConsumptionSummary> reportItemConsumptionSummary;
-
+    List<ReportCashierSalesByDish> reportCashierSalesByDish;
 
 }

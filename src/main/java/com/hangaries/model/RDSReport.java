@@ -19,6 +19,7 @@ public class RDSReport {
     private double outstanding_amount;
     private long orders_cancelled;
     private double cancelled_amount;
+    private String user_login_id;
     private List<RDDReport> reportDashboardDetails;
 
 }

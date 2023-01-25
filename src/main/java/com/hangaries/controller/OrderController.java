@@ -125,7 +125,7 @@ public class OrderController {
 
     @PostMapping("saveNewOrder")
     public ResponseEntity<List<OrderVO>> saveNewOrder(@Valid @RequestBody Order orderRequest) {
-        logger.info("New Order received ", orderRequest);
+        logger.info("New Order request received [{}]", orderRequest);
 
         List<OrderVO> newOrder = new ArrayList<>();
         try {

@@ -1248,7 +1248,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"fromDate\":\"2021-06-01\",\r\n        \"toDate\": \"2023-12-12\",\r\n        \"reportName\" :\"ITEM_CONSUMPTION_SUMMARY\"\r\n}",
+					"raw": "{\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"fromDate\":\"2021-06-01\",\r\n        \"toDate\": \"2023-12-12\",\r\n        \"reportName\" :\"CASHIER_SALES_BY_DISH\",\r\n        \"userLoginId\" :\"Aniket\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

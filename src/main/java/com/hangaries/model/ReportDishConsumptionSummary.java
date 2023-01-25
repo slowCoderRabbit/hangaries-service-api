@@ -19,6 +19,9 @@ import java.io.Serializable;
 @Table(name = "REPORT_DISH_CONSUMPTION_SUMMARY")
 public class ReportDishConsumptionSummary implements Serializable {
 
+    @Column(name = "user_login_id")
+    private String userLoginId;
+
     @Column(name = "restaurant_id")
     private String restaurantId;
 
