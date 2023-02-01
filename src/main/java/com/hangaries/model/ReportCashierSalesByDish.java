@@ -1,7 +1,14 @@
 package com.hangaries.model;
 
-import java.io.Serializable;
+import lombok.*;
 
+import java.io.Serializable;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class ReportCashierSalesByDish implements Serializable {
 
     private String user_login_id;

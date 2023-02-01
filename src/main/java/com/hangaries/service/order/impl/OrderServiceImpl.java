@@ -332,10 +332,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderVO> updateOrderDetailsStatusBySubProductId(String orderId, String productId, String subProductId, String status, String updatedBy) {
 //        orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status, updatedBy, new Date());
-        if (FOOD_READY.equals(status)) {
-            checkForOrderStatusUpdate(orderId, updatedBy);
-            callSPUpdateOrderToConsumption(productId, subProductId, orderId);
-        }
+//        if (FOOD_READY.equals(status)) {
+//            checkForOrderStatusUpdate(orderId, updatedBy);
+//            callSPUpdateOrderToConsumption(productId, subProductId, orderId);
+//        }
         orderDetailRepository.updateOrderDetailsStatusBySubProductId(orderId, productId, subProductId, status, updatedBy, new Date());
         OrderQueryRequest orderQueryRequest = new OrderQueryRequest();
         orderQueryRequest.setOrderId(orderId);
