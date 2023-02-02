@@ -93,7 +93,7 @@ public class ReportServiceImpl implements ReportService {
                     reportResult.setSalesSummeryByPaymentMode(rSSPaymentMode);
                 } else if (report.getReportName().equals("SALES_BY_DISH_ITEM")) {
 //                    String query = "select * from REPORT_DISH_CONSUMPTION_SUMMARY" + queryBuilder;
-                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_DISH_CONSUMPTION_SUMMARY",report);
+                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_DISH_CONSUMPTION_SUMMARY", report);
                     logger.info("REPORT_DISH_CONSUMPTION_SUMMARY SQL = [{}]", queryDateBuilder);
                     List<ReportDishConsumptionSummary> rDCSummary = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(ReportDishConsumptionSummary.class));
                     reportResult.setReportDishConsumptionSummary(rDCSummary);
@@ -121,11 +121,11 @@ public class ReportServiceImpl implements ReportService {
                     logger.info("ReportOrderData :: Final order list created of size = [{}].", orderList.size());
                     reportResult.setReportOrderData(orderList);
                 } else if (report.getReportName().equals("DASHBOARD_SUMMARY")) {
-                    String query = "select * from REPORT_DASHBOARD_SUMMARY where user_login_id = '"+report.getUserLoginId()+"'";
+                    String query = "select * from REPORT_DASHBOARD_SUMMARY where user_login_id = '" + report.getUserLoginId() + "'";
                     logger.info("REPORT_DASHBOARD_SUMMARY SQL = [{}]", query);
                     List<RDSReport> rssOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDSReport.class));
 //                    query = "select * from REPORT_DASHBOARD_DETAILS where user_login_id = '";
-                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_DASHBOARD_DETAILS",report);
+                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_DASHBOARD_DETAILS", report);
                     logger.info("REPORT_DASHBOARD_DETAILS SQL = [{}]", queryDateBuilder);
                     List<RDDReport> rddOrderSources = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(RDDReport.class));
                     rssOrderSources.stream().forEach(o -> o.setReportDashboardDetails(rddOrderSources));
@@ -135,19 +135,19 @@ public class ReportServiceImpl implements ReportService {
 //                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report, ITEM_CONSUMPTION_SUMMARY_SQL);
 //                    reportResult.setReportItemConsumptionSummary(rICSummary);
                 } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY_RECIPE")) {
-                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_RECIPE_ITEM_CONSUMPTION_SUMMARY",report);
+                    StringBuilder queryDateBuilder = getQueryWithRestoAndUserId("REPORT_RECIPE_ITEM_CONSUMPTION_SUMMARY", report);
                     logger.info("ITEM_CONSUMPTION_SUMMARY_RECIPE SQL = [{}]", queryDateBuilder);
                     List<ReportItemConsumptionSummary> rICSummary = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
                     reportResult.setReportItemConsumptionSummary(rICSummary);
                 } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY_NONRECIPE")) {
 //                    String query = "select * from REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY";
-                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY",report);
+                    StringBuilder queryDateBuilder = getQueryWithRestoAndUserId("REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY", report);
                     logger.info("ITEM_CONSUMPTION_SUMMARY_NONRECIPE SQL = [{}]", queryDateBuilder);
                     List<ReportItemConsumptionSummary> rICSummary = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
                     reportResult.setReportItemConsumptionSummary(rICSummary);
                 } else if (report.getReportName().equals("CASHIER_SALES_BY_DISH")) {
 //                    String query = "select * from REPORT_CASHIER_SALES_BY_DISH";
-                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_CASHIER_SALES_BY_DISH",report);
+                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_CASHIER_SALES_BY_DISH", report);
                     logger.info("CASHIER_SALES_BY_DISH SQL = [{}]", queryDateBuilder);
                     List<ReportCashierSalesByDish> rICSummary = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(ReportCashierSalesByDish.class));
                     reportResult.setReportCashierSalesByDish(rICSummary);
@@ -166,7 +166,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     private StringBuilder getQueryWithRestoStoreAndUserId(String tableName, Report report) {
-        StringBuilder queryDateBuilder = new StringBuilder("select * from "+tableName+" where restaurant_id = '");
+        StringBuilder queryDateBuilder = new StringBuilder("select * from " + tableName + " where restaurant_id = '");
         queryDateBuilder.append(report.getRestaurantId());
         queryDateBuilder.append("' ");
         if (!report.getStoreId().equals(ALL)) {
@@ -174,6 +174,16 @@ public class ReportServiceImpl implements ReportService {
             queryDateBuilder.append(report.getStoreId());
             queryDateBuilder.append("' ");
         }
+        queryDateBuilder.append(" and user_login_id = '");
+        queryDateBuilder.append(report.getUserLoginId());
+        queryDateBuilder.append("' ");
+        return queryDateBuilder;
+    }
+
+    private StringBuilder getQueryWithRestoAndUserId(String tableName, Report report) {
+        StringBuilder queryDateBuilder = new StringBuilder("select * from " + tableName + " where restaurant_id = '");
+        queryDateBuilder.append(report.getRestaurantId());
+        queryDateBuilder.append("' ");
         queryDateBuilder.append(" and user_login_id = '");
         queryDateBuilder.append(report.getUserLoginId());
         queryDateBuilder.append("' ");
