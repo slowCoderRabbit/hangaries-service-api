@@ -8,11 +8,15 @@ import com.hangaries.repository.inventory.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.hangaries.constants.QueryStringConstants.GET_ITEM_CONSUMPTION_SUMMARY_SQL;
 
 @Service
 public class ItemServiceImpl {
@@ -24,6 +28,9 @@ public class ItemServiceImpl {
 
     @Autowired
     ItemConsumptionSummeryRepository itemConsumptionSummeryRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public List<Item> getAllItems() {
         return itemRepository.findAll();
@@ -52,7 +59,11 @@ public class ItemServiceImpl {
     }
 
     public List<ItemConsumptionSummery> getItemConsumptionSummery() {
-        return itemConsumptionSummeryRepository.findAll(Sort.by(Sort.Direction.ASC, "itemId"));
+        //return itemConsumptionSummeryRepository.findAll(Sort.by(Sort.Direction.ASC, "itemId"));
+        List<ItemConsumptionSummery> results = new ArrayList<>();
+        results = jdbcTemplate.query(GET_ITEM_CONSUMPTION_SUMMARY_SQL, BeanPropertyRowMapper.newInstance(ItemConsumptionSummery.class));
+        logger.info("getItemConsumptionSummery returned [{}] records.", results.size());
+        return results;
     }
 
     public ItemConsumptionSummery saveItemConsumptionSummery(ItemConsumptionSummery item) {
