@@ -74,31 +74,31 @@ public class QueryStringConstants {
             " FROM REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY WHERE restaurant_id =:restaurantId AND store_id =:storeId AND business_date between :fromDate and :toDate" +
             " GROUP BY item_id, restaurant_id, store_id, item_name, item_category, store_name, business_date";
 
-    public static final String GET_ITEM_CONSUMPTION_SUMMARY_SQL = "SELECT a.item_id, a.item_name, a.item_category, a.item_sub_category, a.item_uom, a.restaurant_id, a.store_id, a.business_date, \n" +
-            "        opng_qty, today_qty, wastage_qty, net_qty,\n" +
-            "        CASE WHEN a.item_category = 'RECIPE' THEN round(ifnull(b.consumption_qty,0),2)\n" +
-            "             WHEN a.item_category = 'NON-RECIPE' THEN ifnull(item_curr_consumption_qty,0)\n" +
-            "\t\t\tELSE 0\n" +
-            "        END curr_qty, \n" +
-            "        CASE WHEN a.item_category = 'RECIPE' THEN ifnull(round((a.net_qty - b.consumption_qty),2),0)\n" +
-            "             WHEN a.item_category = 'NON-RECIPE' THEN ifnull(item_eod_consumption_qty,0)\n" +
-            "\t\t\tELSE 0\n" +
-            "        END eod_qty, variance_qty, consumption_amt, remarks, recon_status\n" +
-            "  FROM \n" +
-            "(SELECT x.item_id, x.item_name, x.item_category, x.item_sub_category, x.item_uom, y.restaurant_id, y.store_id, \n" +
-            "\t\ty.business_date, ifnull(y.po_opng_qty,0) opng_qty, ifnull(y.po_today_qty,0) today_qty, \n" +
-            "         ifnull(y.po_wastage_qty,0) wastage_qty, ifnull(y.po_net_qty,0) net_qty, \n" +
-            "         ifnull(y.item_consumption_variance_qty,0) variance_qty, \n" +
-            "\t\tifnull(y.item_consumption_amount,0) consumption_amt,\n" +
-            "         y.remarks, y.recon_status, y.item_eod_consumption_qty, y.item_curr_consumption_qty\n" +
-            "   FROM ITEM_MASTER x LEFT JOIN ITEM_CONSUMPTION_SUMMARY y on x.item_id = y.item_id\n" +
-            "    AND x.item_status = 'ACTIVE') a LEFT JOIN \n" +
-            "(SELECT a.item_id, round(sum(quantity*item_qty), 2) consumption_qty \n" +
-            "   FROM ITEM_MASTER d, RECIPE_MASTER a, ORDER_MASTER b, ORDER_DETAILS c\n" +
-            "  WHERE b.order_id = c.order_id\n" +
-            "\tAND ((a.product_id = c.product_id and c.sub_product_id = 'NAA') or (a.product_id = c.sub_product_id)) \n" +
-            "\t AND a.item_id = d.item_id\n" +
-            "\t AND d.item_category = 'RECIPE'\n" +
-            "   group by a.item_id) b on a.item_id = b.item_id order by a.item_id;";
+    public static final String GET_ITEM_CONSUMPTION_SUMMARY_SQL = "SELECT a.id, a.item_id, a.item_name, a.item_category, a.item_sub_category, a.item_uom, a.restaurant_id, a.store_id, a.business_date, \n" +
+            "opng_qty as poOpngQty, today_qty as poTodayQty, wastage_qty as poWastageQty, net_qty as poNetQty,\n" +
+            "            CASE WHEN a.item_category = 'RECIPE' THEN round(ifnull(b.consumption_qty,0),2)\n" +
+            "                 WHEN a.item_category = 'NON-RECIPE' THEN ifnull(item_curr_consumption_qty,0)\n" +
+            "\t\t\t\tELSE 0\n" +
+            "            END as itemCurrConsumptionQty, \n" +
+            "            CASE WHEN a.item_category = 'RECIPE' THEN ifnull(round((a.net_qty - b.consumption_qty),2),0)\n" +
+            "                 WHEN a.item_category = 'NON-RECIPE' THEN ifnull(item_eod_consumption_qty,0)\n" +
+            "\t\t\t\tELSE 0\n" +
+            "            END as itemEodConsumptionQty, variance_qty as itemConsumptionVarianceQty, consumption_amt as itemConsumptionAmount, remarks, recon_status\n" +
+            "\t  FROM \n" +
+            "\t(SELECT y.id, y.item_id, y.item_name, x.item_category, x.item_sub_category, x.item_uom, y.restaurant_id, y.store_id, \n" +
+            "\t\t\ty.business_date, ifnull(y.po_opng_qty,0) opng_qty, ifnull(y.po_today_qty,0) today_qty, \n" +
+            "             ifnull(y.po_wastage_qty,0) wastage_qty, ifnull(y.po_net_qty,0) net_qty, \n" +
+            "             ifnull(y.item_consumption_variance_qty,0) variance_qty, \n" +
+            "\t\t\tifnull(y.item_consumption_amount,0) consumption_amt,\n" +
+            "             y.remarks, y.recon_status, y.item_eod_consumption_qty, y.item_curr_consumption_qty\n" +
+            "\t   FROM ITEM_MASTER x, ITEM_CONSUMPTION_SUMMARY y \n" +
+            "\t  WHERE x.item_id = y.item_id\n" +
+            "\t    AND x.item_status = 'ACTIVE') a LEFT JOIN \n" +
+            "\t(SELECT a.item_id, round(sum(quantity*item_qty), 2) consumption_qty \n" +
+            "\t   FROM ITEM_MASTER d, RECIPE_MASTER a, ORDER_DETAILS c\n" +
+            "\t  WHERE ((a.product_id = c.product_id and c.sub_product_id = 'NAA') or (a.product_id = c.sub_product_id)) \n" +
+            "\t\t AND a.item_id = d.item_id\n" +
+            "\t\t AND d.item_category = 'RECIPE'\n" +
+            "\t   group by a.item_id) b on a.item_id = b.item_id order by a.store_id, a.item_id;";
 
 }
