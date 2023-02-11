@@ -350,7 +350,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"orderSource\": \"SD\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2022-09-24\",\r\n        \"orderDeliveryType\": \"pickup\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"paymentMode\": \"COD\",\r\n        \"paymentStatus\": \"Done\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 0.0,\r\n        \"deliveryCharges\":20.45,\r\n        \"customerAddressId\":289,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 3,\r\n        \"couponCode\": \"TestcouponCode\",\r\n        \"discountPercentage\": 10.5,\r\n        \"updatedBy\": \"aniket\",        \r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"S001\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S001\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\",\r\n        \"foodPackagedFlag\" : \"N\",\r\n        \"createdBy\": \"aniket\",\r\n        \"updatedBy\": \"aniket\"\r\n        \r\n    },\r\n    {\r\n        \"productId\": \"P001\",          \r\n        \"quantity\": 2,\r\n        \"orderId\": \"44\",\r\n        \"subProductId\" :\"S002\",\r\n        \"storeId\": \"S001\",\r\n        \"price\": 8.5,\r\n        \"remarks\": \"Pizza Order\",\r\n        \"foodPackagedFlag\" : \"N\",\r\n        \"createdBy\": \"aniket\",\r\n        \"updatedBy\": \"aniket\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
+					"raw": "{        \r\n        \"orderId\": \"EMPTY\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S011\",\r\n        \"orderSource\": \"D\",\r\n        \"customerId\": 109,\r\n        \"orderReceivedDateTime\": \"2023-01-07\",\r\n        \"storeTableId\": \"testStore\",\r\n        \"orderStatus\": \"SUBMITTED\",\r\n        \"orderDeliveryType\" : \"DINE IN\",\r\n        \"paymentMode\": \"COD\",\r\n        \"paymentStatus\": \"PAID\",\r\n        \"taxRuleId\": 1,\r\n        \"totalPrice\": 100.0,\r\n        \"deliveryCharges\":20.45,\r\n        \"customerAddressId\":289,\r\n        \"cgstCalculatedValue\": 1,\r\n        \"sgstCalculatedValue\": 2,\r\n        \"overallPriceWithTax\": 123,\r\n        \"couponCode\": \"TestcouponCode\",\r\n        \"discountPercentage\": 10.5,\r\n        \"updatedBy\": \"aniket\",        \r\n        \"orderDetails\" : [\r\n    {\r\n        \"productId\": \"P001\",\r\n        \"orderId\": \"44\",  \r\n        \"subProductId\" :\"NAA\",           \r\n        \"quantity\": 10,\r\n        \"storeId\": \"S011\",\r\n        \"price\": 4.5,\r\n        \"remarks\": \"Burger Order\",\r\n        \"foodPackagedFlag\" : \"N\",\r\n        \"createdBy\": \"aniket\",\r\n        \"updatedBy\": \"aniket\"\r\n        \r\n    }\r\n]\r\n        \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -2595,7 +2595,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getAppDetails",
+					"raw": "http://localhost:8080/api/getAppDetails?restaurantId=ALL&storeId=ALL",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2604,6 +2604,16 @@
 					"path": [
 						"api",
 						"getAppDetails"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "ALL"
+						},
+						{
+							"key": "storeId",
+							"value": "ALL"
+						}
 					]
 				}
 			},
@@ -4177,7 +4187,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{        \r\n    \"orderId\": \"SDR001S00120220919001006\",\r\n    \"productId\": \"P001\",        \r\n    \"subProductId\" :\"S002\",           \r\n    \"status\": \"FOOD READY\",\r\n    \"updatedBy\": \"aniket\"       \r\n        \r\n}",
+					"raw": "{        \r\n    \"orderId\": \"DR001S01120230129000017\",\r\n    \"productId\": \"P001\",        \r\n    \"subProductId\" :\"NAA\",           \r\n    \"status\": \"PROCESSING\",\r\n    \"updatedBy\": \"aniket1\"       \r\n        \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -5135,7 +5145,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllOffers",
+					"raw": "http://localhost:8080/api/getAllOffers?restaurantId=R001&storeId=S001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -5144,6 +5154,16 @@
 					"path": [
 						"api",
 						"getAllOffers"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
 					]
 				}
 			},
@@ -5190,7 +5210,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getOffersByStatus?status=ACTIVE",
+					"raw": "http://localhost:8080/api/getOffersByStatus?restaurantId=R001&storeId=S001&status=ACTIVE",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -5201,6 +5221,14 @@
 						"getOffersByStatus"
 					],
 					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						},
 						{
 							"key": "status",
 							"value": "ACTIVE"

@@ -25,20 +25,22 @@ public class OfferController {
     OfferServiceImpl offerService;
 
     @GetMapping("getAllOffers")
-    public ResponseEntity<List<Offer>> getAllOffers() {
+    public ResponseEntity<List<Offer>> getAllOffers(@RequestParam("restaurantId") String restaurantId,
+                                                    @RequestParam("storeId") String storeId) {
         List<Offer> offers = new ArrayList<>();
-        logger.info("Getting list of all the offers.");
-        offers = offerService.getAllOffers();
+        logger.info("Getting list of all the offers for restaurantId = [{}], storeId = [{}].", restaurantId, storeId);
+        offers = offerService.getAllOffers(restaurantId, storeId);
         logger.info("[{}] offers returned.", offers.size());
         return new ResponseEntity<List<Offer>>(offers, HttpStatus.OK);
 
     }
 
     @GetMapping("getOffersByStatus")
-    public ResponseEntity<List<Offer>> getOffersByStatus(@RequestParam String status) {
+    public ResponseEntity<List<Offer>> getOffersByStatus(@RequestParam("restaurantId") String restaurantId,
+                                                         @RequestParam("storeId") String storeId, @RequestParam String status) {
         List<Offer> offers = new ArrayList<>();
-        logger.info("Getting list of all the offers with status = [{}].", status);
-        offers = offerService.getOffersByStatus(status);
+        logger.info("Getting list of all the offers for restaurantId = [{}], storeId = [{}] with status = [{}].", restaurantId, storeId, status);
+        offers = offerService.getOffersByStatus(restaurantId, storeId, status);
         logger.info("[{}] offers returned.", offers.size());
         return new ResponseEntity<List<Offer>>(offers, HttpStatus.OK);
 

@@ -55,12 +55,13 @@ public class ConfigController {
     }
 
     @GetMapping("getAppDetails")
-    public ResponseEntity<List<AppDetails>> getAppDetails() {
-        logger.info("Get Application details");
+    public ResponseEntity<List<AppDetails>> getAppDetails(@RequestParam("restaurantId") String restaurantId,
+                                                          @RequestParam("storeId") String storeId) {
+        logger.info("Get Application details for restaurantId = {}, storeId = {}. ", restaurantId, storeId);
 
         List<AppDetails> appDetails = null;
         try {
-            appDetails = configService.getAppDetails();
+            appDetails = configService.getAppDetails(restaurantId, storeId);
             return new ResponseEntity<List<AppDetails>>(appDetails, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error getting Application details!!!!!!! {}", ex.getMessage());

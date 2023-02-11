@@ -18,12 +18,12 @@ public class OfferServiceImpl {
     @Autowired
     OfferDetailsRepository offerDetailsRepository;
 
-    public List<Offer> getAllOffers() {
-        return offerRepository.findAll();
+    public List<Offer> getAllOffers(String restaurantId, String storeId) {
+        return offerRepository.findByRestaurantIdAndStoreId(restaurantId, storeId);
     }
 
-    public List<Offer> getOffersByStatus(String status) {
-        return offerRepository.getOffersByStatus(status);
+    public List<Offer> getOffersByStatus(String restaurantId, String storeId, String status) {
+        return offerRepository.findByRestaurantIdAndStoreIdAndOfferStatus(restaurantId, storeId, status);
     }
 
     public Offer saveOffer(Offer offer) {

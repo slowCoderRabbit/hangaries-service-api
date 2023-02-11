@@ -64,6 +64,10 @@ public class ConfigServiceImpl implements ConfigService {
         return applicationRepository.findAll();
     }
 
+    public List<AppDetails> getAppDetails(String restaurantId, String storeId) {
+        return applicationRepository.findByRestaurantIdAndStoreId(restaurantId, storeId);
+    }
+
     public BusinessDate updateBusinessDate(BusinessDate businessDate) {
         return businessDateRepository.save(businessDate);
     }
