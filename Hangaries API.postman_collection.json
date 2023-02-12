@@ -4257,7 +4257,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllSuppliers",
+					"raw": "http://localhost:8080/api/getAllSuppliers?restaurantId=R001&storeId=S001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4266,6 +4266,16 @@
 					"path": [
 						"api",
 						"getAllSuppliers"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
 					]
 				}
 			},
@@ -4284,7 +4294,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n        \r\n        \"supplierName\" :\"supplierName\",\r\n        \"supplierAddress\": \"Hinjiwadi\",        \r\n        \"supplierCity\" :\"Pune\", \r\n        \"supplierState\": \"MH\",\r\n        \"supplierZipCode\": 444444,\r\n        \"supplierMobileNumber\": \"9999999999\",\r\n        \"supplierEmailId\" : \"aniket@gmail.com\",\r\n        \"supplierFaxNumber\" :\"66666666\",\r\n        \"supplierGstNumber\" :\"GST123456\",\r\n        \"supplierTANNumber\" :\"TAN098765\",\r\n        \"supplierCategory\" :\"internal\",\r\n        \"supplierStatus\" :\"ACTIVE\"\r\n    }",
+					"raw": " {\r\n        \"receivingRestaurantId\": \"R002\",\r\n        \"receivingStoreId\": \"S002\",        \r\n        \"supplierName\" :\"supplierName\",\r\n        \"sourcingStoreId\": \"S003\",\r\n        \"supplierAddress\": \"Hinjiwadi\",        \r\n        \"supplierCity\" :\"Pune\", \r\n        \"supplierState\": \"MH\",\r\n        \"supplierZipCode\": 444444,\r\n        \"supplierMobileNumber\": \"9999999999\",\r\n        \"supplierEmailId\" : \"aniket@gmail.com\",\r\n        \"supplierFaxNumber\" :\"66666666\",\r\n        \"supplierGstNumber\" :\"GST123456\",\r\n        \"supplierTANNumber\" :\"TAN098765\",\r\n        \"supplierCategory\" :\"internal\",\r\n        \"supplierStatus\" :\"ACTIVE\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -4347,7 +4357,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllActiveSuppliers",
+					"raw": "http://localhost:8080/api/getAllActiveSuppliers?restaurantId=R001&storeId=S001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4356,6 +4366,16 @@
 					"path": [
 						"api",
 						"getAllActiveSuppliers"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
 					]
 				}
 			},

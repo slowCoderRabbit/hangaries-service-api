@@ -24,11 +24,17 @@ public class Supplier implements Serializable {
     @Column(name = "supplier_id")
     private long supplierId;
 
+    @Column(name = "receiving_restaurant_id")
+    private String receivingRestaurantId;
+
+    @Column(name = "receiving_store_id")
+    private String receivingStoreId;
+
     @Column(name = "supplier_name")
     private String supplierName;
 
-    @Column(name = "store_id")
-    private String storeId;
+    @Column(name = "sourcing_store_id")
+    private String sourcingStoreId;
 
     @Column(name = "supplier_address")
     private String supplierAddress;

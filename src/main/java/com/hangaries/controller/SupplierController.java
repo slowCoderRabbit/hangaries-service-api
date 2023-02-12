@@ -24,19 +24,21 @@ public class SupplierController {
     private SupplierServiceImpl supplierService;
 
     @GetMapping("getAllSuppliers")
-    public ResponseEntity<List<Supplier>> getAllSuppliers() {
+    public ResponseEntity<List<Supplier>> getAllSuppliers(@RequestParam("restaurantId") String restaurantId,
+                                                          @RequestParam("storeId") String storeId) {
         List<Supplier> suppliers = new ArrayList<>();
-        logger.info("Getting list of all suppliers.");
-        suppliers = supplierService.getAllSuppliers();
+        logger.info("Getting list of all suppliers for restaurantId = [{}], storeId = [{}].", restaurantId, storeId);
+        suppliers = supplierService.getAllSuppliers(restaurantId, storeId);
         logger.info("[{}] suppliers found.", suppliers.size());
         return new ResponseEntity<List<Supplier>>(suppliers, HttpStatus.OK);
     }
 
     @GetMapping("getAllActiveSuppliers")
-    public ResponseEntity<List<Supplier>> getAllActiveSuppliers() {
+    public ResponseEntity<List<Supplier>> getAllActiveSuppliers(@RequestParam("restaurantId") String restaurantId,
+                                                                @RequestParam("storeId") String storeId) {
         List<Supplier> suppliers = new ArrayList<>();
-        logger.info("Getting list of all active suppliers.");
-        suppliers = supplierService.getAllActiveSuppliers();
+        logger.info("Getting list of all active suppliers for restaurantId = [{}], storeId = [{}].", restaurantId, storeId);
+        suppliers = supplierService.getAllActiveSuppliers(restaurantId, storeId);
         logger.info("[{}] active suppliers found.", suppliers.size());
         return new ResponseEntity<List<Supplier>>(suppliers, HttpStatus.OK);
     }

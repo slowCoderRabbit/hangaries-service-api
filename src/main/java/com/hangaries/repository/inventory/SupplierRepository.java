@@ -14,8 +14,8 @@ import java.util.List;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
-    @Query(value = "select * from SUPPLIER_MASTER where supplier_status=:status order by supplier_id", nativeQuery = true)
-    List<Supplier> getAllActiveSuppliers(@Param("status") String status);
+    @Query(value = "select * from SUPPLIER_MASTER where receiving_restaurant_id=:restaurantId and receiving_store_id=:storeId and supplier_status=:status order by supplier_id", nativeQuery = true)
+    List<Supplier> getAllActiveSuppliers(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("status") String status);
 
     @Modifying
     @Transactional
@@ -24,4 +24,7 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
     @Query(value = "select * from SUPPLIER_MASTER where supplier_id=:supplierId", nativeQuery = true)
     Supplier getSupplierById(@Param("supplierId") long supplierId);
+
+    List<Supplier> findByReceivingRestaurantIdAndReceivingStoreId(String restaurantId, String storeId);
+
 }

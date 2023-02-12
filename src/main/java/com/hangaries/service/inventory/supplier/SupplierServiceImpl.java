@@ -21,16 +21,16 @@ public class SupplierServiceImpl {
     @Autowired
     SupplierRepository supplierRepository;
 
-    public List<Supplier> getAllSuppliers() {
-        return supplierRepository.findAll();
+    public List<Supplier> getAllSuppliers(String restaurantId, String storeId) {
+        return supplierRepository.findByReceivingRestaurantIdAndReceivingStoreId(restaurantId, storeId);
     }
 
     public Supplier saveSupplier(Supplier supplier) {
         return supplierRepository.save(supplier);
     }
 
-    public List<Supplier> getAllActiveSuppliers() {
-        return supplierRepository.getAllActiveSuppliers(ACTIVE);
+    public List<Supplier> getAllActiveSuppliers(String restaurantId, String storeId) {
+        return supplierRepository.getAllActiveSuppliers(restaurantId, storeId, ACTIVE);
     }
 
     public Supplier saveSupplierStatus(SupplierStatusRequest request) {
