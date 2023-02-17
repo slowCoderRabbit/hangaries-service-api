@@ -36,4 +36,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Transactional
     @Query(value = "UPDATE RECIPE_MASTER a SET a.item_cost = (SELECT b.item_unit_cost*a.item_qty FROM ITEM_MASTER b WHERE b.item_id = a.item_id) WHERE a.item_id=:itemId", nativeQuery = true)
     int updateRecipeItemCost(@Param("itemId") long itemId);
+
+    List<Item> findByRestaurantIdAndStoreId(String restaurantId, String storeId);
+
+    List<Item> findByRestaurantIdAndStoreIdAndItemStatus(String restaurantId, String storeId, String status);
 }

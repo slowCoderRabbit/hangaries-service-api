@@ -25,19 +25,21 @@ public class ItemController {
     private ItemServiceImpl itemService;
 
     @GetMapping("getAllItems")
-    public ResponseEntity<List<Item>> getAllItems() {
+    public ResponseEntity<List<Item>> getAllItems(@RequestParam("restaurantId") String restaurantId,
+                                                  @RequestParam("storeId") String storeId) {
         List<Item> items = new ArrayList<>();
-        logger.info("Getting list of all items .");
-        items = itemService.getAllItems();
+        logger.info("Getting list of all items for restaurantId = [{}], storeId = [{}].", restaurantId, storeId);
+        items = itemService.getAllItems(restaurantId, storeId);
         logger.info("[{}] items found.", items.size());
         return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
     }
 
     @GetMapping("getItemsByStatus")
-    public ResponseEntity<List<Item>> getItemByStatus(@RequestParam String status) {
+    public ResponseEntity<List<Item>> getItemByStatus(@RequestParam("restaurantId") String restaurantId,
+                                                      @RequestParam("storeId") String storeId, @RequestParam String status) {
         List<Item> items = new ArrayList<>();
-        logger.info("Getting list of all items with status = [{}].", status);
-        items = itemService.getItemsByStatus(status);
+        logger.info("Getting list of all items for restaurantId = [{}], storeId = [{}] with status = [{}].", restaurantId, storeId, status);
+        items = itemService.getItemsByStatus(restaurantId, storeId, status);
         logger.info("[{}] [{}] items found.", items.size(), status);
         return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
     }

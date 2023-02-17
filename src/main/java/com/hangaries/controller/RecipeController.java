@@ -25,19 +25,21 @@ public class RecipeController {
     private RecipeServiceImpl recipeService;
 
     @GetMapping("getAllRecipes")
-    public ResponseEntity<List<RecipeWithName>> getAllRecipes() {
+    public ResponseEntity<List<RecipeWithName>> getAllRecipes(@RequestParam("restaurantId") String restaurantId,
+                                                              @RequestParam("storeId") String storeId) {
         List<RecipeWithName> recipes = new ArrayList<>();
-        logger.info("Getting list of all recipes.");
-        recipes = recipeService.getAllRecipes();
+        logger.info("Getting list of all recipes for restaurantId = [{}], storeId = [{}].", restaurantId, storeId);
+        recipes = recipeService.getAllRecipes(restaurantId, storeId);
         logger.info("[{}] recipes found.", recipes.size());
         return new ResponseEntity<List<RecipeWithName>>(recipes, HttpStatus.OK);
     }
 
     @GetMapping("getAllActiveRecipes")
-    public ResponseEntity<List<RecipeWithName>> getAllActiveRecipes() {
+    public ResponseEntity<List<RecipeWithName>> getAllActiveRecipes(@RequestParam("restaurantId") String restaurantId,
+                                                                    @RequestParam("storeId") String storeId) {
         List<RecipeWithName> recipes = new ArrayList<>();
-        logger.info("Getting list of all active recipes.");
-        recipes = recipeService.getAllActiveRecipes();
+        logger.info("Getting list of all active recipes for restaurantId = [{}], storeId = [{}].", restaurantId, storeId);
+        recipes = recipeService.getAllActiveRecipes(restaurantId, storeId);
         logger.info("[{}] active recipes found.", recipes.size());
         return new ResponseEntity<List<RecipeWithName>>(recipes, HttpStatus.OK);
     }

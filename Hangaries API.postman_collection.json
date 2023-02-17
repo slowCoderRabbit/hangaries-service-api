@@ -4500,7 +4500,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllRecipes",
+					"raw": "http://localhost:8080/api/getAllRecipes?restaurantId=R001&storeId=S001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4509,6 +4509,16 @@
 					"path": [
 						"api",
 						"getAllRecipes"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
 					]
 				}
 			},
@@ -4555,7 +4565,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllActiveRecipes",
+					"raw": "http://localhost:8080/api/getAllActiveRecipes?restaurantId=R001&storeId=S001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4564,6 +4574,16 @@
 					"path": [
 						"api",
 						"getAllActiveRecipes"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
 					]
 				}
 			},
@@ -4797,7 +4817,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllItems",
+					"raw": "http://localhost:8080/api/getAllItems?restaurantId=R001&storeId=S002",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4806,6 +4826,16 @@
 					"path": [
 						"api",
 						"getAllItems"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S002"
+						}
 					]
 				}
 			},
@@ -4850,7 +4880,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{  \r\n        \"itemName\": \"1000 ML BOXTest1\",\r\n        \"itemCategory\": \"DISPOSABLE\",\r\n        \"itemUOM\": \"NOS\",\r\n        \"itemGstPercentage\": 5.0,\r\n        \"itemTrackingFlag\": \"Y\",\r\n        \"itemStatus\": \"ACTIVE\",\r\n        \"createdBy\": \"SYSTEM\",\r\n        \"createdDate\": \"2022-10-31T18:55:34.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-10-31T18:55:34.000+00:00\"\r\n    }",
+					"raw": " {       \r\n        \"itemName\": \"1000 ML BOXAA_TestT544\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S002\",\r\n        \"itemCategory\": \"RECIPE\",\r\n        \"itemSubCategory\": \"DISPOSABLE\",\r\n        \"itemUom\": \"NOS\",\r\n        \"itemUnitCost\": 191.0,\r\n        \"itemGstPercentage\": 8.0,\r\n        \"itemTrackingFlag\": \"Y\",\r\n        \"itemStatus\": \"ACTIVE\"\r\n        \r\n    \r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -5330,6 +5360,40 @@
 						"getOfferDetailsByStatus"
 					],
 					"query": [
+						{
+							"key": "status",
+							"value": "ACTIVE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getItemsByStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getItemsByStatus?restaurantId=R001&storeId=S002&status=ACTIVE",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getItemsByStatus"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S002"
+						},
 						{
 							"key": "status",
 							"value": "ACTIVE"

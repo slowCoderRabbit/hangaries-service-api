@@ -21,6 +21,12 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
+    @Column(name = "restaurant_id")
+    private String restaurantId;
+
+    @Column(name = "store_id")
+    private String storeId;
+
     @Column(name = "item_name")
     private String itemName;
 

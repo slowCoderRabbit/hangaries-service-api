@@ -32,8 +32,8 @@ public class ItemServiceImpl {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
+    public List<Item> getAllItems(String restaurantId, String storeId) {
+        return itemRepository.findByRestaurantIdAndStoreId(restaurantId, storeId);
     }
 
     public Item saveItem(Item item) {
@@ -48,8 +48,9 @@ public class ItemServiceImpl {
         return newItem;
     }
 
-    public List<Item> getItemsByStatus(String status) {
-        return itemRepository.getItemsByStatus(status);
+    public List<Item> getItemsByStatus(String restaurantId, String storeId, String status) {
+        return itemRepository.findByRestaurantIdAndStoreIdAndItemStatus(restaurantId, storeId, status);
+//        return itemRepository.getItemsByStatus(status);
     }
 
     public Item saveItemStatus(ItemStatusRequest request) {

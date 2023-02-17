@@ -1,7 +1,6 @@
 package com.hangaries.repository.inventory;
 
 import com.hangaries.model.Recipe;
-import com.hangaries.model.RecipeWithName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,13 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.Date;
-import java.util.List;
 
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
-
-    @Query(value = "SELECT im.item_name as itemName, rm.* FROM devinstance.ITEM_MASTER im, devinstance.RECIPE_MASTER rm where im.item_id = rm.item_id and item_status=:status order by id", nativeQuery = true)
-    List<RecipeWithName> getAllActiveRecipes(@Param("status") String status);
 
     @Modifying
     @Transactional

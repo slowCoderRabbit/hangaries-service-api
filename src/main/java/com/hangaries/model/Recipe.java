@@ -24,6 +24,9 @@ public class Recipe {
     @Column(name = "restaurant_id")
     private String restaurantId;
 
+    @Column(name = "store_id")
+    private String storeId;
+
     @Column(name = "product_id")
     private String productId;
 
