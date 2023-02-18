@@ -92,11 +92,17 @@ public class QueryStringConstants {
             "    ifnull(y.item_consumption_amount,0) consumption_amt, \n" +
             "       y.remarks, y.recon_status, y.item_eod_consumption_qty, y.item_curr_consumption_qty \n" +
             "       FROM ITEM_MASTER x, ITEM_CONSUMPTION_SUMMARY y  \n" +
-            "      WHERE x.item_id = y.item_id \n" +
+            "      WHERE x.restaurant_id = y.restaurant_id \n" +
+            "        AND x.store_id = 'ALL' \n" +
+            "        AND x.item_id = y.item_id \n" +
             "        AND x.item_status = 'ACTIVE') a LEFT JOIN  \n" +
             "    (SELECT a.item_id,b.store_id, round(sum(quantity*item_qty), 2) consumption_qty  \n" +
             "       FROM ITEM_MASTER d, RECIPE_MASTER a, ORDER_MASTER b, ORDER_DETAILS c \n" +
-            "      WHERE b.order_id = c.order_id  \n" +
+            "        WHERE d.restaurant_id = b.restaurant_id \n" +
+            "        AND d.restaurant_id = a.restaurant_id \n" +
+            "        AND d.store_id = 'ALL' \n" +
+            "        AND a.store_id = 'ALL' \n" +
+            "        AND b.order_id = c.order_id  \n" +
             "   AND ((a.product_id = c.product_id and c.sub_product_id = 'NAA') or (a.product_id = c.sub_product_id)) " +
             "     AND a.item_id = d.item_id \n" +
             "     AND d.item_category = 'RECIPE' \n" +
