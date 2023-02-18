@@ -17,8 +17,8 @@ public class ModuleServiceImpl implements ModuleService {
     ModuleRepository moduleRepository;
 
     @Override
-    public List<ModuleMaster> getAllModule() {
-        return moduleRepository.findAll();
+    public List<ModuleMaster> getAllModule(String restaurantId, String storeId) {
+        return moduleRepository.findByRestaurantIdAndStoreId(restaurantId, storeId);
     }
 
     @Override

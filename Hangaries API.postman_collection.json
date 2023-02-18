@@ -1683,7 +1683,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getAllModule",
+					"raw": "http://localhost:8080/api/getAllModule?restaurantId=R001&storeId=ALL",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1692,6 +1692,16 @@
 					"path": [
 						"api",
 						"getAllModule"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "ALL"
+						}
 					]
 				}
 			},

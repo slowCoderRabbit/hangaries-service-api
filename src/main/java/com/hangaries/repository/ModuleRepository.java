@@ -15,4 +15,6 @@ public interface ModuleRepository extends JpaRepository<ModuleMaster, Integer> {
     List<ModuleMaster> getModuleByRestroAndStore(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("moduleStatus") String moduleStatus);
 
     List<ModuleMaster> findByModuleIdIn(List<Integer> roleMappingIds);
+
+    List<ModuleMaster> findByRestaurantIdAndStoreId(String restaurantId, String storeId);
 }

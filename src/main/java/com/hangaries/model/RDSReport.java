@@ -12,6 +12,8 @@ import java.util.List;
 public class RDSReport {
 
     private long request_id;
+    private String restaurant_id;
+    private String store_id;
     private double total_sales;
     private long total_orders;
     private float avg_order_value;

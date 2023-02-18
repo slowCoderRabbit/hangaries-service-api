@@ -23,12 +23,12 @@ public class ModuleController {
     ModuleServiceImpl moduleService;
 
     @GetMapping("getAllModule")
-    public ResponseEntity<List<ModuleMaster>> getAllModule() {
-        logger.info("Getting list of all Modules...");
+    public ResponseEntity<List<ModuleMaster>> getAllModule(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) {
+        logger.info("Getting list of all Modules for restaurantId = [{}], storeId = [{}].", restaurantId, storeId);
 
         List<ModuleMaster> moduleList = new ArrayList<>();
         try {
-            moduleList = moduleService.getAllModule();
+            moduleList = moduleService.getAllModule(restaurantId, storeId);
             return new ResponseEntity<List<ModuleMaster>>(moduleList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getting store details::" + ex.getMessage());
