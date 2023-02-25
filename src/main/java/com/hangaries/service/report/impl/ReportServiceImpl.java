@@ -173,10 +173,22 @@ public class ReportServiceImpl implements ReportService {
                     if (null != rICSummary && !rICSummary.isEmpty()) {
                         reportResult.setReportCashierSalesByDish(rICSummary);
                     }
+                } else if (report.getReportName().equals("CUSTOMER_DATA_REPORT")) {
+                    String query = "select * from REPORT_CUSTOMER_DATA " + queryBuilder;
+                    logger.info("CUSTOMER_DATA_REPORT SQL = [{}]", query);
+                    List<ReportCustomerData> customerData = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportCustomerData.class));
+                    if (null != customerData && !customerData.isEmpty()) {
+                        reportResult.setReportCustomerData2(customerData);
+                    }
+                } else if (report.getReportName().equals("CANCELLED_ORDER_REPORT")) {
+                    String query = "select * from REPORT_CANCELLED_ORDERS " + queryBuilder;
+                    logger.info("CANCELLED_ORDER_REPORT SQL = [{}]", query);
+                    List<ReportCancelledOrder> cancelledOrder = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportCancelledOrder.class));
+                    if (null != cancelledOrder && !cancelledOrder.isEmpty()) {
+                        reportResult.setReportCancelledOrder(cancelledOrder);
+                    }
                 }
-
             }
-
         } catch (Exception e) {
             logger.error("Error during reports table refresh {}", e.getMessage());
         }

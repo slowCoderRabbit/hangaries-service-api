@@ -24,5 +24,7 @@ public class ReportResult {
     List<CustomerReportData> reportCustomerData;
     List<ReportItemConsumptionSummary> reportItemConsumptionSummary;
     List<ReportCashierSalesByDish> reportCashierSalesByDish;
+    List<ReportCustomerData> reportCustomerData2;
+    List<ReportCancelledOrder> reportCancelledOrder;
 
 }
