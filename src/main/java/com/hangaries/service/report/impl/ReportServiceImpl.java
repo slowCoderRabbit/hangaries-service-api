@@ -80,23 +80,33 @@ public class ReportServiceImpl implements ReportService {
                     String query = "select * from REPORT_SALES_SUMMARY_BY_DATE" + queryBuilder + queryDateBuilder;
                     logger.info("SALES_SUMMARY_BY_DATE_LIST SQL = [{}]", query);
                     List<RSSDate> rssDate = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSDate.class));
-                    reportResult.setSalesSummeryByDateList(rssDate);
+                    if (null != rssDate && !rssDate.isEmpty()) {
+                        reportResult.setSalesSummeryByDateList(rssDate);
+                    }
                 } else if (report.getReportName().equals("SALES_SUMMARY_BY_ORDER_SOURCE")) {
                     String query = "select * from REPORT_SALES_SUMMARY_BY_ORDER_SOURCE" + queryBuilder;
                     logger.info("REPORT_SALES_SUMMARY_BY_ORDER_SOURCE SQL = [{}]", query);
                     List<RSSOrderSource> rssOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSOrderSource.class));
-                    reportResult.setSalesSummeryByOrderSource(rssOrderSources);
+                    if (null != rssOrderSources && !rssOrderSources.isEmpty()) {
+                        reportResult.setSalesSummeryByOrderSource(rssOrderSources);
+                    }
+
                 } else if (report.getReportName().equals("SALES_SUMMARY_BY_PAYMENT_MODE")) {
                     String query = "select * from REPORT_SALES_SUMMARY_BY_PAYMENT_MODE" + queryBuilder;
                     logger.info("REPORT_SALES_SUMMARY_BY_PAYMENT_MODE SQL = [{}]", query);
                     List<RSSPaymentMode> rSSPaymentMode = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RSSPaymentMode.class));
-                    reportResult.setSalesSummeryByPaymentMode(rSSPaymentMode);
+                    if (null != rSSPaymentMode && !rSSPaymentMode.isEmpty()) {
+                        reportResult.setSalesSummeryByPaymentMode(rSSPaymentMode);
+                    }
                 } else if (report.getReportName().equals("SALES_BY_DISH_ITEM")) {
 //                    String query = "select * from REPORT_DISH_CONSUMPTION_SUMMARY" + queryBuilder;
                     StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_DISH_CONSUMPTION_SUMMARY", report);
                     logger.info("REPORT_DISH_CONSUMPTION_SUMMARY SQL = [{}]", queryDateBuilder);
                     List<ReportDishConsumptionSummary> rDCSummary = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(ReportDishConsumptionSummary.class));
-                    reportResult.setReportDishConsumptionSummary(rDCSummary);
+                    if (null != rDCSummary && !rDCSummary.isEmpty()) {
+                        reportResult.setReportDishConsumptionSummary(rDCSummary);
+                    }
+
                 } else if (report.getReportName().equals("CASH_SALES_REPORT")) {
                     String query = "select * from REPORT_CASHIER_SUMMARY" + queryBuilder + " order by cashier_name,store_name,type_of_data,category";
                     logger.info("REPORT_CASHIER_SUMMARY SQL = [{}]", query);
@@ -104,7 +114,9 @@ public class ReportServiceImpl implements ReportService {
                     logger.info("ReportCashierSummery records from DB = {}", results.size());
                     List<ReportCashierSummeryResponse> response = transformData(groupCollectionByCashier(results));
                     logger.info("ReportCashierSummery post data transformation records = {}", response.size());
-                    reportResult.setReportCashierSummery(response);
+                    if (null != response && !response.isEmpty()) {
+                        reportResult.setReportCashierSummery(response);
+                    }
                 } else if (report.getReportName().equals("ORDER_REPORT")) {
                     StringBuilder queryDateBuilder = new StringBuilder(" and order_received_date_time between '");
                     queryDateBuilder.append(report.getFromDate());
@@ -119,7 +131,9 @@ public class ReportServiceImpl implements ReportService {
                     logger.info("ReportOrderData post data transformation records = {}", orderMap.size());
                     List<OrderVO> orderList = convertMapList(orderMap);
                     logger.info("ReportOrderData :: Final order list created of size = [{}].", orderList.size());
-                    reportResult.setReportOrderData(orderList);
+                    if (null != orderList && !orderList.isEmpty()) {
+                        reportResult.setReportOrderData(orderList);
+                    }
                 } else if (report.getReportName().equals("DASHBOARD_SUMMARY")) {
                     String query = "select * from REPORT_DASHBOARD_SUMMARY where user_login_id = '" + report.getUserLoginId() + "'";
                     logger.info("REPORT_DASHBOARD_SUMMARY SQL = [{}]", query);
@@ -129,7 +143,9 @@ public class ReportServiceImpl implements ReportService {
                     logger.info("REPORT_DASHBOARD_DETAILS SQL = [{}]", queryDateBuilder);
                     List<RDDReport> rddOrderSources = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(RDDReport.class));
                     rssOrderSources.stream().forEach(o -> o.setReportDashboardDetails(rddOrderSources));
-                    reportResult.setReportDashboardSummery(rssOrderSources);
+                    if (null != rssOrderSources && !rssOrderSources.isEmpty()) {
+                        reportResult.setReportDashboardSummery(rssOrderSources);
+                    }
 //                } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY")) {
 //                    logger.info("Getting REPORT_ITEM_CONSUMPTION_SUMMARY ");
 //                    List<ReportItemConsumptionSummary> rICSummary = getReportItemConsumptionSummary(report, ITEM_CONSUMPTION_SUMMARY_SQL);
@@ -138,19 +154,25 @@ public class ReportServiceImpl implements ReportService {
                     StringBuilder queryDateBuilder = getQueryWithRestoAndUserId("REPORT_RECIPE_ITEM_CONSUMPTION_SUMMARY", report);
                     logger.info("ITEM_CONSUMPTION_SUMMARY_RECIPE SQL = [{}]", queryDateBuilder);
                     List<ReportItemConsumptionSummary> rICSummary = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
-                    reportResult.setReportItemConsumptionSummary(rICSummary);
+                    if (null != rICSummary && !rICSummary.isEmpty()) {
+                        reportResult.setReportItemConsumptionSummary(rICSummary);
+                    }
                 } else if (report.getReportName().equals("ITEM_CONSUMPTION_SUMMARY_NONRECIPE")) {
 //                    String query = "select * from REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY";
                     StringBuilder queryDateBuilder = getQueryWithRestoAndUserId("REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY", report);
                     logger.info("ITEM_CONSUMPTION_SUMMARY_NONRECIPE SQL = [{}]", queryDateBuilder);
                     List<ReportItemConsumptionSummary> rICSummary = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(ReportItemConsumptionSummary.class));
-                    reportResult.setReportItemConsumptionSummary(rICSummary);
+                    if (null != rICSummary && !rICSummary.isEmpty()) {
+                        reportResult.setReportItemConsumptionSummary(rICSummary);
+                    }
                 } else if (report.getReportName().equals("CASHIER_SALES_BY_DISH")) {
 //                    String query = "select * from REPORT_CASHIER_SALES_BY_DISH";
                     StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_CASHIER_SALES_BY_DISH", report);
                     logger.info("CASHIER_SALES_BY_DISH SQL = [{}]", queryDateBuilder);
                     List<ReportCashierSalesByDish> rICSummary = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(ReportCashierSalesByDish.class));
-                    reportResult.setReportCashierSalesByDish(rICSummary);
+                    if (null != rICSummary && !rICSummary.isEmpty()) {
+                        reportResult.setReportCashierSalesByDish(rICSummary);
+                    }
                 }
 
             }
