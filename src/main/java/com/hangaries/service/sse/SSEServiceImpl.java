@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SSEServiceImpl {
@@ -55,7 +52,7 @@ public class SSEServiceImpl {
         for (SseEmitter emitter : emitters) {
             try {
                 logger.info("Dispatching request received for storeId=[{}] for emitter = [{}]", storeId, emitter);
-                emitter.send(SseEmitter.event().name("latestText").data(text));
+                emitter.send(SseEmitter.event().id(String.valueOf((new Random().nextInt() & Integer.MAX_VALUE))).name("message\n").data(text + "\n\n"));
             } catch (Exception e) {
                 offLineEmitters.add(emitter);
             }
