@@ -38,4 +38,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Modifying
     @Query(value = "update ORDER_MASTER om set om.payment_mode=:paymentMode, om.payment_status = :paymentStatus,om.order_status = :status, om.updated_by =:updatedBy,updated_date =:updatedOn where om.order_id = :orderId", nativeQuery = true)
     int updatePaymentModeByOrderId(@Param("orderId") String orderId, @Param("paymentMode") String paymentMode, @Param("paymentStatus") String paymentStatus, @Param("status") String status, @Param("updatedBy") String updatedBy, @Param("updatedOn") Date updatedOn);
+
+    List<Order> findByPaymentTxnReference(String paymentTxnReference);
 }

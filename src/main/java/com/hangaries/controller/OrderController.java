@@ -128,13 +128,8 @@ public class OrderController {
         logger.info("New Order request received [{}]", orderRequest);
 
         List<OrderVO> newOrder = new ArrayList<>();
-        try {
-            newOrder = orderService.saveOrderAndGetOrderView(orderRequest);
-            return new ResponseEntity<List<OrderVO>>(newOrder, HttpStatus.OK);
-        } catch (Exception ex) {
-            logger.error("Error saving order by Id = {} :: {}", orderRequest, ex.getMessage());
-            return new ResponseEntity<List<OrderVO>>(newOrder, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        newOrder = orderService.saveOrderAndGetOrderView(orderRequest);
+        return new ResponseEntity<List<OrderVO>>(newOrder, HttpStatus.OK);
 
     }
 

@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -35,35 +36,34 @@ public class OrderServiceImpl implements OrderService {
     public static final String SYSTEM = "SYSTEM";
     public static final String ORDER_BY_CREATED_DATE = " order by created_date";
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
-
+    private static List<ConfigMaster> paymentRefCheckOrderSources = new ArrayList<>();
     @Autowired
     OrderIdRepository orderIdRepository;
-
     @Autowired
     OrderRepository orderRepository;
-
     @Autowired
     OrderDetailRepository orderDetailRepository;
-
     @Autowired
     OrderProcessingDetailsRepository orderProcessingDetailsRepository;
-
     @Autowired
     ConfigMasterRepository configMasterRepository;
-
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     CustomerDtlsRepository customerDtlsRepository;
-
     @Autowired
     ConfigServiceImpl configService;
     @Autowired
     WERACallbackServiceImpl weraCallbackService;
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Bean(initMethod = "init")
+    private void loadPaymentRefCheckOrderSource() {
+        logger.info("Loading Payment reference check order sources for ");
+        paymentRefCheckOrderSources = configService.getConfigDetailsByCriteria("ALL", "ALL", "PAYMENT_TXN_CHECK");
+        logger.info("[{}] payment reference check order sources loaded. [{}]", paymentRefCheckOrderSources.size(), paymentRefCheckOrderSources);
+    }
 
     @Override
     public String getNewOrderId(OrderIdInput orderIdInput) {
@@ -283,12 +283,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderVO> saveOrderAndGetOrderView(Order orderRequest) {
+
+        checkDuplicatePaymentReference(orderRequest);
         Order savedOrder = saveOrder(orderRequest);
         OrderQueryRequest orderQueryRequest = new OrderQueryRequest();
         orderQueryRequest.setOrderId(savedOrder.getOrderId());
         List<OrderVO> orderList = queryOrderViewByParams(orderQueryRequest);
         return orderList;
 
+    }
+
+    private void checkDuplicatePaymentReference(Order orderRequest) {
+        String paymentTxnReference = orderRequest.getPaymentTxnReference();
+        if (!paymentRefCheckOrderSources.isEmpty() && StringUtils.isNotBlank(paymentTxnReference) && paymentRefCheckOrderSources.stream().anyMatch(c -> c.getConfigCriteriaValue().equals(orderRequest.getOrderSource()))) {
+            List<Order> orders = orderRepository.findByPaymentTxnReference(paymentTxnReference);
+            logger.info("[{}] orders found for PaymentTxnReference = [{}]", paymentTxnReference);
+            if (!orders.isEmpty()) {
+                throw new RuntimeException("Order already exists for PaymentTxnReference = " + paymentTxnReference);
+            }
+        }
     }
 
     @Override
