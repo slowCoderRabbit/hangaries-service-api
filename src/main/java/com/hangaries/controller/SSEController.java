@@ -18,13 +18,13 @@ public class SSEController {
     SSEServiceImpl sseService;
 
     @GetMapping(value = "subscribe", consumes = MediaType.ALL_VALUE)
-    public SseEmitter subscribe(@RequestParam String storeId) {
-        return sseService.getSseEmitter(storeId);
+    public SseEmitter subscribe(@RequestParam String userLoginId) {
+        return sseService.getSseEmitter(userLoginId);
     }
 
     @PostMapping(value = "dispatchEvents")
-    public void dispatchEvents(@RequestParam String storeId, @RequestParam String text) {
-        sseService.dispatchEvents(storeId, text);
+    public void dispatchEvents(@RequestParam String eventKey, @RequestParam String text) {
+        sseService.dispatchEvents(eventKey, text);
     }
 
 }

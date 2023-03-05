@@ -297,7 +297,7 @@ public class OrderServiceImpl implements OrderService {
         String paymentTxnReference = orderRequest.getPaymentTxnReference();
         if (!paymentRefCheckOrderSources.isEmpty() && StringUtils.isNotBlank(paymentTxnReference) && paymentRefCheckOrderSources.stream().anyMatch(c -> c.getConfigCriteriaValue().equals(orderRequest.getOrderSource()))) {
             List<Order> orders = orderRepository.findByPaymentTxnReference(paymentTxnReference);
-            logger.info("[{}] orders found for PaymentTxnReference = [{}]", paymentTxnReference);
+            logger.info("[{}] orders found for PaymentTxnReference = [{}]", orders.size(), paymentTxnReference);
             if (!orders.isEmpty()) {
                 throw new RuntimeException("Order already exists for PaymentTxnReference = " + paymentTxnReference);
             }
