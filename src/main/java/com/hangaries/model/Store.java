@@ -24,7 +24,7 @@ public class Store {
 
     @Id
     @Column(name = "store_Id")
-    private @NotBlank String storeId;
+    private String storeId;
 
     @Column(name = "restaurant_id")
     private @NotBlank String restaurantId;

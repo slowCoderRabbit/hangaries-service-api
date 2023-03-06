@@ -28,8 +28,7 @@ public class StoreController {
     @PostMapping("addStore")
     public ResponseEntity<Store> addStore(@Valid @RequestBody Store newStore) {
         logger.info("New Store details  : " + newStore.toString());
-        Store store = new Store();
-        store = storeService.addStore(newStore);
+        Store store = storeService.addStore(newStore);
         return new ResponseEntity<Store>(store, HttpStatus.OK);
 
     }
@@ -37,8 +36,7 @@ public class StoreController {
     @PostMapping("saveStore")
     public ResponseEntity<Store> saveStore(@Valid @RequestBody Store newStore) {
         logger.info("Save Store details  : " + newStore.toString());
-        Store store = new Store();
-        store = storeService.addStore(newStore);
+        Store store = storeService.addStore(newStore);
         return new ResponseEntity<Store>(store, HttpStatus.OK);
 
     }

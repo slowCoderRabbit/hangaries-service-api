@@ -1,6 +1,7 @@
 package com.hangaries.service.store.impl;
 
 import com.hangaries.model.Store;
+import com.hangaries.repository.OrderIdRepository;
 import com.hangaries.repository.StoreRepository;
 import com.hangaries.service.store.StoreService;
 import org.apache.commons.lang3.StringUtils;
@@ -15,11 +16,14 @@ import java.util.*;
 @Service
 public class StoreServiceImpl implements StoreService {
 
+    public static final String NEW_STORE = "NEW";
     private static final Logger logger = LoggerFactory.getLogger(StoreServiceImpl.class);
-
     private static final Map<String, Store> weraMerchantToStoreMapping = new HashMap<>();
     @Autowired
     StoreRepository storeRepository;
+
+    @Autowired
+    OrderIdRepository idRepository;
 
     public static Map<String, Store> getWeraMerchantToStoreMapping() {
         return Collections.unmodifiableMap(weraMerchantToStoreMapping);
@@ -58,12 +62,42 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store addStore(Store newStore) {
+
+        String newStoreId = null;
+        if (isStoreIdPresent(newStore)) {
+            logger.info("Store Id is empty!!!. Generating new store ID");
+            newStoreId = "S" + getPaddedString(getNextStoreIdFromDB(newStore));
+            logger.info("New store ID = [{}]", newStoreId);
+            newStore.setStoreId(newStoreId);
+        }
+
         Store store = storeRepository.save(newStore);
         logger.info("Store saved successfully with store Id = [{}].", store.getStoreId());
-        logger.info("Calling SP setupNewStore for store Id = [{}].", store.getStoreId());
-        String result = storeRepository.setupNewStore(store.getRestaurantId(), store.getStoreId());
-        logger.info("SP setupNewStore returned result = [{}] for store Id = [{}].", result, store.getStoreId());
+
+        if (isStoreIdPresent(newStore)) {
+            logger.info("Calling SP setupNewStore for store Id = [{}].", store.getStoreId());
+            String result = storeRepository.setupNewStore(store.getRestaurantId(), store.getStoreId());
+            logger.info("SP setupNewStore returned result = [{}] for store Id = [{}].", result, store.getStoreId());
+        }
+
         return store;
+    }
+
+    private String getPaddedString(int maxId) {
+        return String.format("%03d", maxId);
+    }
+
+    private int getNextStoreIdFromDB(Store newStore) {
+        int latestId = idRepository.getLatestOrderId(newStore.getRestaurantId(), NEW_STORE);
+        logger.info("Latest Id from DB for restaurantId = [{}] and store id = [{}] is = [{}]", newStore.getRestaurantId(), NEW_STORE, latestId);
+        latestId++;
+        idRepository.saveNewOrderId(newStore.getRestaurantId(), NEW_STORE, latestId);
+        logger.info("Next Id for restaurantId = [{}] and store id = [{}] is = [{}]", newStore.getRestaurantId(), NEW_STORE, latestId);
+        return latestId;
+    }
+
+    private boolean isStoreIdPresent(Store newStore) {
+        return StringUtils.isBlank(newStore.getStoreId());
     }
 
 
