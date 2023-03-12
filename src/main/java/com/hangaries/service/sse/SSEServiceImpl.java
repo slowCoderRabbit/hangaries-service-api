@@ -15,6 +15,9 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.springframework.web.servlet.mvc.method.annotation.SseEmitter.event;
 
 @Service
 public class SSEServiceImpl {
@@ -102,10 +105,11 @@ public class SSEServiceImpl {
         if (timeNow.isAfter(pushNotificationStartTime) && timeNow.isBefore(pushNotificationEndTime)) {
             List<SseEmitter> offLineEmitters = new ArrayList<>();
             List<SseEmitter> emitters = emitterMap.get(key);
-            for (SseEmitter emitter : emitters) {
+            List<SseEmitter> copy = emitters.stream().collect(Collectors.toList());
+            for (SseEmitter emitter : copy) {
                 try {
                     logger.info("Dispatching request received for key=[{}] for emitter = [{}]", key, emitter);
-                    emitter.send(SseEmitter.event().id(String.valueOf((new Random().nextInt() & Integer.MAX_VALUE))).name("message\n").data(text + "\n\n"));
+                    sendMessage(emitter, text);
                 } catch (Exception e) {
                     offLineEmitters.add(emitter);
                 }
@@ -115,6 +119,15 @@ public class SSEServiceImpl {
             logger.info("Current time = [{}]. Notification not dispatched outside start time = [{}] and end time = [{}] ", timeNow, pushNotificationStartTime, pushNotificationEndTime);
         }
 
+    }
+
+    private void sendMessage(SseEmitter emitter, String text) {
+        try {
+            SseEmitter.SseEventBuilder eventBuilder = event().id(String.valueOf((new Random().nextInt() & Integer.MAX_VALUE))).name("message\n").data(text + "\n\n");
+            emitter.send(eventBuilder);
+        } catch (IOException e) {
+            emitter.completeWithError(e);
+        }
     }
 
 }
