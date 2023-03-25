@@ -666,7 +666,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"storeId\": \"S001\",\r\n        \"restaurantId\": \"R001\",\r\n        \"resturantName\": \"Hangries Yamunanagar\",\r\n        \"country\": \"India\",\r\n        \"city\": \"YamumaNagar\",\r\n        \"storeActiveFlag\": \"Y\",\r\n        \"storeKOTPrintFlag\": \"N\",\r\n        \"zipCode\": null,\r\n        \"storeStartTime\": \"9:00\",\r\n        \"storeEndTime\": \"11:00\",\r\n        \"storeGstNumber\": \"06ABCCS2473H1ZD\",\r\n        \"address1\": \"Nehru Park Road, Near Raman Hotel\",\r\n        \"address2\": \"Model Town\",\r\n        \"address3\": \"Yamunanagar\",\r\n        \"storeAvailableForPickup\": \"Y\",\r\n        \"storeAvailableForDelivery\": \"Y\",\r\n        \"weraMerchantId\": \"1800\",\r\n        \"weraAPIKey\": \"X-Wera-Api-Key\",\r\n        \"weraAPIValue\": \"0fedc3b1-3827-4a19-be51-e0446f46df10\",\r\n        \"menuCloneFlag\": \"Y\",\r\n        \"onlineAvailableFlag\": \"N\",\r\n        \"dineinAvailableFlag\": \"Y\",\r\n        \"longitude\": 111.11,\r\n        \"latitude\": 222.22,\r\n        \"createdBy\": \"SYSTEM\",\r\n        \"createdDate\": \"2022-11-12T07:19:27.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-11-12T07:19:27.000+00:00\"\r\n    }",
+					"raw": "{\r\n        \"storeId\": \"\",\r\n        \"restaurantId\": \"R001\",\r\n        \"resturantName\": \"Hangries Yamunanagar\",\r\n        \"country\": \"India1\",\r\n        \"city\": \"YamumaNagar\",\r\n        \"storeActiveFlag\": \"Y\",\r\n        \"storeKOTPrintFlag\": \"N\",\r\n        \"zipCode\": null,\r\n        \"storeStartTime\": \"9:00\",\r\n        \"storeEndTime\": \"11:00\",\r\n        \"storeGstNumber\": \"06ABCCS2473H1ZD\",\r\n        \"address1\": \"Nehru Park Road, Near Raman Hotel\",\r\n        \"address2\": \"Model Town\",\r\n        \"address3\": \"Yamunanagar\",\r\n        \"storeAvailableForPickup\": \"Y\",\r\n        \"storeAvailableForDelivery\": \"Y\",\r\n        \"weraMerchantId\": \"1800\",\r\n        \"weraAPIKey\": \"X-Wera-Api-Key\",\r\n        \"weraAPIValue\": \"0fedc3b1-3827-4a19-be51-e0446f46df10\",\r\n        \"menuCloneFlag\": \"Y\",\r\n        \"onlineAvailableFlag\": \"N\",\r\n        \"dineinAvailableFlag\": \"Y\",\r\n        \"longitude\": 111.11,\r\n        \"latitude\": 222.22,\r\n        \"createdBy\": \"SYSTEM\",\r\n        \"createdDate\": \"2022-11-12T07:19:27.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-11-12T07:19:27.000+00:00\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3078,7 +3078,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n    \"section\": \"ChineseTesttt\",\r\n    \"dish\": \"Momo's\",\r\n    \"dishCategory\": \"Veg\",\r\n    \"dishType\": \"Hot Garlic Dim Sum (Paneer)\",\r\n    \"productSize\": \"Regular\"\r\n}",
+					"raw": "{    \r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"ALL\" ,\r\n    \"section\": \"ChineseTesttt\",\r\n    \"dish\": \"Momo's\",\r\n    \"dishCategory\": \"Veg\",\r\n    \"dishType\": \"Hot Garlic Dim Sum (Paneer)\",\r\n    \"productSize\": \"Regular\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3232,7 +3232,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n    \"ingredientType\": \"OnionT2\",\r\n    \"category\": \"Topping\",\r\n    \"size\": \"Small\",\r\n     \"price\": 6.8,\r\n    \"imagePath\": \"Testpath\",\r\n    \"subProductStatus\": \"N\"\r\n}",
+					"raw": "{    \r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"ALL\" ,\r\n    \"ingredientType\": \"OnionT23\",\r\n    \"category\": \"Topping\",\r\n    \"size\": \"Small\",\r\n     \"price\": 6.8,\r\n    \"imagePath\": \"Testpath\",\r\n    \"subProductStatus\": \"N\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3704,7 +3704,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"section\":\"TestSection\"\r\n      \r\n    \r\n}",
+					"raw": "{\r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"ALL\" ,\r\n    \"section\":\"TestSection1\"      \r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3762,7 +3762,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"dish\":\"TestDish\"\r\n      \r\n    \r\n}",
+					"raw": "{\r\n    \"dish\":\"TestDish\",\r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"ALL\"     \r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3791,7 +3791,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 37,\r\n    \"dish\": \"TestDishUpdate\"\r\n}",
+					"raw": "{\r\n    \"id\": 43,\r\n    \"dish\": \"TestDishUpdate123\",\r\n    \"restaurantId\": \"R001\",\r\n    \"storeId\": \"ALL\"     \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

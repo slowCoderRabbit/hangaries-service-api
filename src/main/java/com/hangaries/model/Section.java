@@ -20,6 +20,12 @@ public class Section {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "restaurant_id")
+    private String restaurantId;
+
+    @Column(name = "store_id")
+    private String storeId;
+
     @Column(name = "section")
     private String section;
 }

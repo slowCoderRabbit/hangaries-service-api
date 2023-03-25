@@ -20,6 +20,12 @@ public class Dish {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "restaurant_id")
+    private String restaurantId;
+
+    @Column(name = "store_id")
+    private String storeId;
+
     @Column(name = "dish")
     private String dish;
 }

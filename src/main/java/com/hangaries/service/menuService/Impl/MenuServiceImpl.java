@@ -130,6 +130,8 @@ public class MenuServiceImpl implements MenuService {
         if (menu.getId() == 0 && StringUtils.isBlank(menu.getProductId())) {
             logger.info("Menu ID and Product ID are missing hence treating this request as new Product request!");
             Product newProduct = new Product();
+            newProduct.setRestaurantId(menu.getRestaruantId());
+            newProduct.setStoreId(menu.getStoreId());
             newProduct.setSection(menu.getSection());
             newProduct.setDish(menu.getDish());
             newProduct.setDishCategory(menu.getDishCategory());
