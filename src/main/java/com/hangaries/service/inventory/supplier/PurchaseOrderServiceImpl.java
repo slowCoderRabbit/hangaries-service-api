@@ -32,20 +32,20 @@ public class PurchaseOrderServiceImpl {
 
     public PurchaseOrder savePurchaseOrder(PurchaseOrder purchaseOrder) {
         PurchaseOrder newPurchaseOrder = purchaseOrderRepository.save(purchaseOrder);
-        callSPUpdatePOtoConsumption(newPurchaseOrder.getPurchaseOrderId() + "");
+//        callSPUpdatePOtoConsumption(newPurchaseOrder.getPurchaseOrderId() + "");
         return newPurchaseOrder;
     }
 
-    private void callSPUpdatePOtoConsumption(String purchaseOrderId) {
-        logger.info("Calling sp_updatePOtoConsumption for purchaseOrder_Id = [{}].", purchaseOrderId);
-        String result = purchaseOrderRepository.updatePOtoConsumption(purchaseOrderId);
-        logger.info("Calling sp_updatePOtoConsumption result = [{}] for purchaseOrder_Id = [{}].", result, purchaseOrderId);
-    }
+//    private void callSPUpdatePOtoConsumption(String purchaseOrderId) {
+//        logger.info("Calling sp_updatePOtoConsumption for purchaseOrder_Id = [{}].", purchaseOrderId);
+//        String result = purchaseOrderRepository.updatePOtoConsumption(purchaseOrderId);
+//        logger.info("Calling sp_updatePOtoConsumption result = [{}] for purchaseOrder_Id = [{}].", result, purchaseOrderId);
+//    }
 
     public PurchaseOrder savePurchaseOrderStatus(PurchaseOrderStatusRequest request) {
         int result = purchaseOrderRepository.savePurchaseOrderStatus(request.getPurchaseOrderId(), request.getItemStatus(), request.getUpdatedBy(), new Date());
         logger.info("savePurchaseOrderStatus result = [{}]", result);
-        callSPUpdatePOtoConsumption(request.getPurchaseOrderId() + "");
+//        callSPUpdatePOtoConsumption(request.getPurchaseOrderId() + "");
         return purchaseOrderRepository.getPurchaseOrderById(request.getPurchaseOrderId());
     }
 

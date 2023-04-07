@@ -30,6 +30,6 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
     @Query(value = "select * from PURCHASE_ORDER where purchase_order_status<>:status order by purchase_order_id", nativeQuery = true)
     List<PurchaseOrder> getPurchaseOrdersExcludingStatus(@Param("status") String status);
 
-    @Procedure(procedureName = "sp_updatePOtoConsumption", outputParameterName = "oErrorDescription")
-    String updatePOtoConsumption(@Param("purchaseOrderId") String purchaseOrderId);
+//    @Procedure(procedureName = "sp_updatePOtoConsumption", outputParameterName = "oErrorDescription")
+//    String updatePOtoConsumption(@Param("purchaseOrderId") String purchaseOrderId);
 }
