@@ -52,6 +52,9 @@ public class OrderServiceImpl implements OrderService {
     UserRepository userRepository;
     @Autowired
     CustomerDtlsRepository customerDtlsRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
     @Autowired
     ConfigServiceImpl configService;
     @Autowired
@@ -230,6 +233,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrderDetailStatus(order.getOrderStatus());
 
         }
+        updateCustomerAddressToOrder(order);
         BusinessDate businessDate = configService.getBusinessDate(order.getRestaurantId(), order.getStoreId());
         if (null != businessDate) {
             order.setOrderReceivedDateTime(businessDate.getBusinessDate());
@@ -264,6 +268,41 @@ public class OrderServiceImpl implements OrderService {
         return savedOrder;
     }
 
+    private void updateCustomerAddressToOrder(Order order) {
+
+        if (null != order.getCustomerId()) {
+            Optional<Customer> customer = customerRepository.findById(order.getCustomerId());
+            if (customer.isPresent()) {
+                Customer cust = customer.get();
+                StringBuilder stringBuilder = new StringBuilder(cust.getFirstName());
+                stringBuilder.append(" ");
+                stringBuilder.append(cust.getMiddleName());
+                stringBuilder.append(" ");
+                stringBuilder.append(cust.getLastName());
+                order.setCustomerName(stringBuilder.toString().trim());
+            }
+        }
+
+        Optional<CustomerDtls> customerDtls = customerDtlsRepository.findById(order.getCustomerAddressId());
+        if (customerDtls.isPresent()) {
+            CustomerDtls custDtls = customerDtls.get();
+            StringBuilder stringBuilder = new StringBuilder(custDtls.getAddress1());
+            stringBuilder.append(", ");
+            stringBuilder.append(custDtls.getAddress2());
+            stringBuilder.append(", ");
+            stringBuilder.append(custDtls.getLandmark());
+            stringBuilder.append(", ");
+            stringBuilder.append(custDtls.getState());
+            stringBuilder.append(", ");
+            stringBuilder.append(custDtls.getCity());
+            stringBuilder.append(", ");
+            stringBuilder.append(custDtls.getZipCode());
+            order.setCustomerAddress(stringBuilder.toString().trim());
+            order.setCustomerMobileNumber(custDtls.getMobileNumber());
+        }
+
+    }
+
     private String getOrderChannelFromOrder(Order order) {
         String orderChannel = ADMIN;
         if (StringUtils.isNotBlank(order.getOrderChannel())) {
@@ -292,11 +331,11 @@ public class OrderServiceImpl implements OrderService {
         OrderQueryRequest orderQueryRequest = new OrderQueryRequest();
         orderQueryRequest.setOrderId(savedOrder.getOrderId());
         List<OrderVO> orderList = queryOrderViewByParams(orderQueryRequest);
-        try {
-            sseService.dispatchEvents(orderRequest.getRestaurantId() + orderRequest.getStoreId(), savedOrder.getOrderId());
-        } catch (Exception e) {
-            logger.error("Error during SSE dispatchEvents !!!! ", e);
-        }
+//        try {
+//            sseService.dispatchEvents(orderRequest.getRestaurantId() + orderRequest.getStoreId(), savedOrder.getOrderId());
+//        } catch (Exception e) {
+//            logger.error("Error during SSE dispatchEvents !!!! ", e);
+//        }
         return orderList;
 
     }

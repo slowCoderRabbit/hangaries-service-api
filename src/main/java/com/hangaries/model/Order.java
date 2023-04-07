@@ -85,6 +85,14 @@ public class Order implements Serializable {
 
     @Column(name = "customer_address_id")
     private long customerAddressId;
+
+    @Column(name = "customer_name")
+    private String customerName;
+    @Column(name = "customer_address")
+    private String customerAddress;
+    @Column(name = "customer_mobile_number")
+    private String customerMobileNumber;
+
     @Column(name = "delivery_user_id")
     private String deliveryUserId;
     @Column(name = "food_packaged_flag")
