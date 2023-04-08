@@ -70,38 +70,43 @@ public class QueryStringConstants {
             " FROM REPORT_NRECIPE_ITEM_CONSUMPTION_SUMMARY WHERE restaurant_id =:restaurantId AND store_id =:storeId AND business_date between :fromDate and :toDate" +
             " GROUP BY item_id, restaurant_id, store_id, item_name, item_category, store_name, business_date";
 
-    public static final String GET_ITEM_CONSUMPTION_SUMMARY_SQL = "SELECT a.id, a.item_id, a.item_name, a.item_category, a.item_sub_category, a.item_uom, a.restaurant_id, a.store_id, a.business_date, " +
-            "    opng_qty as poOpngQty, today_qty as poTodayQty, wastage_qty as poWastageQty, net_qty as poNetQty, \n" +
-            "      CASE WHEN a.item_category = 'RECIPE' THEN round(ifnull(b.consumption_qty,0),2) \n" +
-            "           WHEN a.item_category = 'NON-RECIPE' THEN ifnull(item_curr_consumption_qty,0) \n" +
-            "    ELSE 0 \n" +
-            "      END as itemCurrConsumptionQty,  \n" +
-            "      CASE WHEN a.item_category = 'RECIPE' THEN ifnull(round((a.net_qty - ifnull(b.consumption_qty,0) + ifnull(variance_qty,0)),2),0) \n" +
-            "           WHEN a.item_category = 'NON-RECIPE' THEN ifnull(item_eod_consumption_qty,0) \n" +
-            "    ELSE 0 \n" +
-            "      END as itemEodConsumptionQty, variance_qty as itemConsumptionVarianceQty, consumption_amt as itemConsumptionAmount, remarks, recon_status \n" +
-            "      FROM  \n" +
-            "    (SELECT y.id, y.item_id, y.item_name, x.item_category, x.item_sub_category, x.item_uom, y.restaurant_id, y.store_id,  \n" +
-            "    y.business_date, ifnull(y.po_opng_qty,0) opng_qty, ifnull(y.po_today_qty,0) today_qty,  \n" +
-            "       ifnull(y.po_wastage_qty,0) wastage_qty, ifnull(y.po_net_qty,0) net_qty,  \n" +
-            "       ifnull(y.item_consumption_variance_qty,0) variance_qty,  \n" +
-            "    ifnull(y.item_consumption_amount,0) consumption_amt, \n" +
-            "       y.remarks, y.recon_status, y.item_eod_consumption_qty, y.item_curr_consumption_qty \n" +
-            "       FROM ITEM_MASTER x, ITEM_CONSUMPTION_SUMMARY y  \n" +
-            "      WHERE x.restaurant_id = y.restaurant_id \n" +
-            "        AND x.store_id = 'ALL' \n" +
-            "        AND x.item_id = y.item_id \n" +
-            "        AND x.item_status = 'ACTIVE') a LEFT JOIN  \n" +
-            "    (SELECT a.item_id,b.store_id, round(sum(quantity*item_qty), 2) consumption_qty  \n" +
-            "       FROM ITEM_MASTER d, RECIPE_MASTER a, ORDER_MASTER b, ORDER_DETAILS c \n" +
-            "        WHERE d.restaurant_id = b.restaurant_id \n" +
-            "        AND d.restaurant_id = a.restaurant_id \n" +
-            "        AND d.store_id = 'ALL' \n" +
-            "        AND a.store_id = 'ALL' \n" +
-            "        AND b.order_id = c.order_id  \n" +
-            "   AND ((a.product_id = c.product_id and c.sub_product_id = 'NAA') or (a.product_id = c.sub_product_id)) " +
-            "     AND a.item_id = d.item_id \n" +
-            "     AND d.item_category = 'RECIPE' \n" +
-            "       group by a.item_id, b.store_id) b on a.store_id = b.store_id and a.item_id = b.item_id order by a.store_id, a.item_id;";
+    public static final String GET_ITEM_CONSUMPTION_SUMMARY_SQL = "SELECT d.id, d.item_id, d.item_name, d.item_category, d.item_sub_category, d.item_uom, d.restaurant_id, d.store_id, d.business_date,\n" +
+            " round(ifnull(sum(po_opng_qty),0),2) poOpngQty, round(ifnull(sum(today_qty),0),2) poTodayQty,  \n" +
+            "\t   round(ifnull(sum(wastage_qty),0),2) poWastageQty, round(ifnull(sum(net_qty),0),2) poNetQty, \n" +
+            "          ifnull(round(sum(item_consumed),2),0) itemCurrConsumptionQty, \n" +
+            "          round(ifnull(sum(po_opng_qty),0),2) + round(ifnull(sum(today_qty),0),2) - round(ifnull(sum(wastage_qty),0),2) - round(ifnull(sum(item_consumed),0),2) + round(ifnull(sum(variance_qty),0),2) itemEodConsumptionQty,\n" +
+            "\t   ifnull(round(sum(variance_qty),2),0) itemConsumptionVarianceQty, \n" +
+            "\t   ifnull(round(sum(consumption_amt),2),0) itemConsumptionAmount, d.remarks, d.recon_status\n" +
+            "FROM (SELECT q.id, p.item_id, p.item_name, p.item_uom, p.item_category, p.item_sub_category, q.restaurant_id, q.store_id,\n" +
+            "                business_date, remarks, recon_status, \n" +
+            "                sum(q.po_opng_qty) po_opng_qty, sum(q.item_consumption_variance_qty) variance_qty, sum(q.item_consumption_amount) consumption_amt\n" +
+            "\t\tFROM ITEM_MASTER p, ITEM_CONSUMPTION_SUMMARY q\n" +
+            "\t   WHERE q.restaurant_id = p.restaurant_id\n" +
+            "\t\t AND p.store_id = 'ALL'\n" +
+            "            AND p.item_id = q.item_id\n" +
+            "            AND item_status = 'ACTIVE'\n" +
+            "            group by q.id, p.item_id, p.item_name, p.item_uom, p.item_category, p.item_sub_category, q.restaurant_id, q.store_id,\n" +
+            "                business_date, remarks, recon_status) d LEFT JOIN\n" +
+            "\t(SELECT b.item_id, e.restaurant_id, e.store_id, round(sum(quantity*item_qty),2) item_consumed\n" +
+            "\t   FROM STORE_MASTER c, ITEM_MASTER d, RECIPE_MASTER b, ORDER_MASTER e, ORDER_DETAILS a\n" +
+            "\t  WHERE c.restaurant_id = e.restaurant_id \n" +
+            "\t\tAND c.restaurant_id = b.restaurant_id \n" +
+            "\t\tAND c.restaurant_id = d.restaurant_id \n" +
+            "\t\tAND c.store_Id = e.store_Id \n" +
+            "\t\tAND d.store_Id = 'ALL' \n" +
+            "\t\tAND b.store_Id = 'ALL'\n" +
+            "\t\tAND a.order_id = e.order_id\n" +
+            "\t\tAND ((b.product_id = a.product_id and a.sub_product_id = 'NAA') or (b.product_id = a.sub_product_id))\n" +
+            "\t\tAND d.item_id = b.item_id\n" +
+            "\t\t-- AND d.item_category = 'RECIPE'\n" +
+            "  group by b.item_id, store_id) c ON d.restaurant_id = c.restaurant_id and d.store_id = c.store_id and d.item_id = c.item_id LEFT JOIN  \n" +
+            "\t(SELECT p.item_id, p.restaurant_id, p.store_id, sum(p.purchase_qty) today_qty, sum(p.wastage_qty) wastage_qty, sum(p.net_qty) net_qty \n" +
+            "          FROM PURCHASE_ORDER p, BUSINESS_DATE_MASTER q\n" +
+            "         WHERE p.restaurant_id = q.restaurant_id \n" +
+            "\t\tAND p.store_id = q.store_id \n" +
+            "           AND p.purchase_order_status = 'RECEIVED' \n" +
+            "           AND DATE(p.updated_date) = q.business_date\n" +
+            "         GROUP BY p.item_id, p.restaurant_id, p.store_id) g ON d.restaurant_id = g.restaurant_id and d.store_id = g.store_id and d.item_id = g.item_id \n" +
+            "  GROUP BY d.id, d.item_id, d.item_name, d.item_category, d.item_sub_category, d.item_uom, d.restaurant_id, d.store_id, d.business_date, remarks, recon_status; ";
 
 }
