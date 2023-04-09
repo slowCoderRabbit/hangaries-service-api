@@ -72,7 +72,7 @@ public class QueryStringConstants {
 
     public static final String GET_ITEM_CONSUMPTION_SUMMARY_SQL = "SELECT d.id, d.item_id, d.item_name, d.item_category, d.item_sub_category, d.item_uom, d.restaurant_id, d.store_id, d.business_date,\n" +
             " round(ifnull(sum(po_opng_qty),0),2) poOpngQty, round(ifnull(sum(today_qty),0),2) poTodayQty,  \n" +
-            "\t   round(ifnull(sum(wastage_qty),0),2) poWastageQty, round(ifnull(sum(net_qty),0),2) poNetQty, \n" +
+            "\t   round(ifnull(sum(wastage_qty),0),2) poWastageQty, round(ifnull(sum(wastage_qty),0),2) poWastageQty, (round(ifnull(sum(po_opng_qty),0),2) + round(ifnull(sum(today_qty),0),2) - round(ifnull(sum(wastage_qty),0),2)) poNetQty, \n" +
             "          ifnull(round(sum(item_consumed),2),0) itemCurrConsumptionQty, \n" +
             "          round(ifnull(sum(po_opng_qty),0),2) + round(ifnull(sum(today_qty),0),2) - round(ifnull(sum(wastage_qty),0),2) - round(ifnull(sum(item_consumed),0),2) + round(ifnull(sum(variance_qty),0),2) itemEodConsumptionQty,\n" +
             "\t   ifnull(round(sum(variance_qty),2),0) itemConsumptionVarianceQty, \n" +
