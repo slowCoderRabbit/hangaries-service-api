@@ -65,6 +65,9 @@ public class Store {
     @Column(name = "Address_3")
     private String address3;
 
+    @Column(name = "store_email_id")
+    private String storeEmailId;
+
     @Column(name = "store_available_for_pickup")
     private String storeAvailableForPickup;
 
