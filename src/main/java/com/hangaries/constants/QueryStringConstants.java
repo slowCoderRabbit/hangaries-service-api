@@ -88,18 +88,11 @@ public class QueryStringConstants {
             "            group by q.id, p.item_id, p.item_name, p.item_uom, p.item_category, p.item_sub_category, q.restaurant_id, q.store_id,\n" +
             "                business_date, remarks, recon_status) d LEFT JOIN\n" +
             "\t(SELECT b.item_id, e.restaurant_id, e.store_id, round(sum(quantity*item_qty),2) item_consumed\n" +
-            "\t   FROM STORE_MASTER c, ITEM_MASTER d, RECIPE_MASTER b, ORDER_MASTER e, ORDER_DETAILS a\n" +
-            "\t  WHERE c.restaurant_id = e.restaurant_id \n" +
-            "\t\tAND c.restaurant_id = b.restaurant_id \n" +
-            "\t\tAND c.restaurant_id = d.restaurant_id \n" +
-            "\t\tAND c.store_Id = e.store_Id \n" +
-            "\t\tAND d.store_Id = 'ALL' \n" +
-            "\t\tAND b.store_Id = 'ALL'\n" +
-            "\t\tAND a.order_id = e.order_id\n" +
+            "\t   FROM RECIPE_MASTER b, ORDER_MASTER e, ORDER_DETAILS a\n" +
+            "\t  WHERE b.restaurant_id = e.restaurant_id \n" +
+            "\t\tAND e.order_id = a.order_id\n" +
             "\t\tAND ((b.product_id = a.product_id and a.sub_product_id = 'NAA') or (b.product_id = a.sub_product_id))\n" +
-            "\t\tAND d.item_id = b.item_id\n" +
-            "\t\t-- AND d.item_category = 'RECIPE'\n" +
-            "  group by b.item_id, store_id) c ON d.restaurant_id = c.restaurant_id and d.store_id = c.store_id and d.item_id = c.item_id LEFT JOIN  \n" +
+            "  group by b.item_id, e.restaurant_id, e.store_id) c ON d.restaurant_id = c.restaurant_id and d.store_id = c.store_id and d.item_id = c.item_id LEFT JOIN  \n" +
             "\t(SELECT p.item_id, p.restaurant_id, p.store_id, sum(p.purchase_qty) today_qty, sum(p.wastage_qty) wastage_qty, sum(p.net_qty) net_qty \n" +
             "          FROM PURCHASE_ORDER p, BUSINESS_DATE_MASTER q\n" +
             "         WHERE p.restaurant_id = q.restaurant_id \n" +
