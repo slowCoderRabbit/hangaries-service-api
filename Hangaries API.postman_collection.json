@@ -5412,6 +5412,247 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "http://localhost:8080/customer/register2",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loginId\": \"testAniket\"\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer/register?mobno=84335463",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"register"
+					],
+					"query": [
+						{
+							"key": "mobno",
+							"value": "84335463"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/customer/update2",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1016,\r\n    \"firstName\": \"Aniket\",\r\n    \"middleName\": \"S\",\r\n    \"lastName\": \"Pashine\",\r\n    \"mobileNumber\": \"84335463\",\r\n    \"emailId\": \"abc@dc.come\",\r\n    \"restaurantId\": null,\r\n    \"storeId\": null,\r\n    \"customerActiveStatus\": null,\r\n    \"alternativeContactId\": null,\r\n    \"startDate\": null,\r\n    \"endDate\": null,\r\n    \"createdDate\": \"2023-04-11T13:45:19.412+00:00\",\r\n    \"updatedDate\": \"2023-04-11T13:45:19.412+00:00\",\r\n    \"createdBy\": null,\r\n    \"updatedBy\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/customer/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"customer",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWeraMenu",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getWeraMenu?restaurantId=R001&storeId=S001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getWeraMenu"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWeraMenu",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"productId\": \"P001\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"zomatoPrice\": 65.0,\r\n        \"swiggyPrice\": 75.0,\r\n        \"createdBy\": \"SYSTEM\",\r\n        \"createdDate\": \"2022-10-10T01:38:02.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-10-10T01:38:02.000+00:00\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveWeraMenu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveWeraMenu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getWeraMenuIngredient",
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getWeraMenuIngredient?restaurantId=R001&storeId=S001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getWeraMenuIngredient"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveWeraMenuIngredient",
+			"protocolProfileBehavior": {
+				"strictSSL": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"subProductId\": \"S001\",\r\n        \"restaurantId\": \"R001\",\r\n        \"storeId\": \"S001\",\r\n        \"zomatoPrice\": 45.0,\r\n        \"swiggyPrice\": 35.0,\r\n        \"createdBy\": \"System\",\r\n        \"createdDate\": \"2022-04-04T16:00:00.000+00:00\",\r\n        \"updatedBy\": \"SYSTEM\",\r\n        \"updatedDate\": \"2022-06-08T04:56:02.000+00:00\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/saveWeraMenuIngredient",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"saveWeraMenuIngredient"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
