@@ -1,6 +1,8 @@
 package com.hangaries.service.wera;
 
 import com.hangaries.model.Store;
+import com.hangaries.model.wera.WeraMenuIngredientMaster;
+import com.hangaries.model.wera.WeraMenuMaster;
 import com.hangaries.model.wera.dto.WeraMenuUploadDTO;
 import com.hangaries.model.wera.request.WeraMenu;
 import com.hangaries.model.wera.request.WeraMenuAddons;
@@ -8,6 +10,8 @@ import com.hangaries.model.wera.request.WeraUploadMenu;
 import com.hangaries.model.wera.response.WeraMenuUploadResponse;
 import com.hangaries.repository.CustomerDtlsRepository;
 import com.hangaries.repository.CustomerRepository;
+import com.hangaries.repository.wera.WeraMenuIngredientMasterRepository;
+import com.hangaries.repository.wera.WeraMenuMasterRepository;
 import com.hangaries.repository.wera.WeraOrderJSONDumpRepository;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import com.hangaries.service.store.impl.StoreServiceImpl;
@@ -43,11 +47,14 @@ public class WERAMenuServiceImpl {
 
     @Autowired
     ConfigServiceImpl configService;
+    @Autowired
+    WeraMenuMasterRepository weraMenuMasterRepository;
+    @Autowired
+    WeraMenuIngredientMasterRepository weraMenuIngredientMasterRepository;
     @Value("${wera.menu.upload.url}")
     private String menuUploadURL;
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
 
     public WeraUploadMenu uploadMenuToWeraFoods(String restaurantId, String storeId) {
         WeraUploadMenu request;
@@ -198,4 +205,19 @@ public class WERAMenuServiceImpl {
         return orderMap;
     }
 
+    public List<WeraMenuMaster> getWeraMenu(String restaurantId, String storeId) {
+        return weraMenuMasterRepository.findByRestaurantIdAndStoreId(restaurantId, storeId);
+    }
+
+    public WeraMenuMaster saveWeraMenu(WeraMenuMaster request) {
+        return weraMenuMasterRepository.save(request);
+    }
+
+    public List<WeraMenuIngredientMaster> getWeraMenuIngredient(String restaurantId, String storeId) {
+        return weraMenuIngredientMasterRepository.findByRestaurantIdAndStoreId(restaurantId, storeId);
+    }
+
+    public WeraMenuIngredientMaster saveWeraMenuIngredient(WeraMenuIngredientMaster request) {
+        return weraMenuIngredientMasterRepository.save(request);
+    }
 }

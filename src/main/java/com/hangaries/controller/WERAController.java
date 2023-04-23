@@ -1,5 +1,7 @@
 package com.hangaries.controller;
 
+import com.hangaries.model.wera.WeraMenuIngredientMaster;
+import com.hangaries.model.wera.WeraMenuMaster;
 import com.hangaries.model.wera.request.WERAOrderAcceptRequest;
 import com.hangaries.model.wera.request.WERAOrderFoodReadyRequest;
 import com.hangaries.model.wera.request.WeraOrder;
@@ -15,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -56,6 +60,36 @@ public class WERAController {
     ResponseEntity<WERAOrderFoodReadyResponse> foodReadyWeraOrder(@RequestBody WERAOrderFoodReadyRequest request) {
         logger.info("Food Ready WERA order details  = [{}].", request);
         return weraCallbackService.callWERAOrderFoodReadyAPI(request);
+    }
+
+    @GetMapping("getWeraMenu")
+    List<WeraMenuMaster> getWeraMenu(@RequestParam("restaurantId") String restaurantId,
+                                     @RequestParam("storeId") String storeId) {
+        logger.info("Getting WERA menu for restaurantId = {}, storeId = {}.", restaurantId, storeId);
+        return weraMenuService.getWeraMenu(restaurantId, storeId);
+
+    }
+
+    @PostMapping("saveWeraMenu")
+    WeraMenuMaster saveWeraMenu(@RequestBody WeraMenuMaster request) {
+        logger.info("Saving WERA menu request = {}.", request);
+        return weraMenuService.saveWeraMenu(request);
+
+    }
+
+    @GetMapping("getWeraMenuIngredient")
+    List<WeraMenuIngredientMaster> getWeraMenuIngredient(@RequestParam("restaurantId") String restaurantId,
+                                                         @RequestParam("storeId") String storeId) {
+        logger.info("Getting WERA menu ingredient for restaurantId = {}, storeId = {}.", restaurantId, storeId);
+        return weraMenuService.getWeraMenuIngredient(restaurantId, storeId);
+
+    }
+
+    @PostMapping("saveWeraMenuIngredient")
+    WeraMenuIngredientMaster saveWeraMenuIngredient(@RequestBody WeraMenuIngredientMaster request) {
+        logger.info("Saving WERA menu ingredient request = {}.", request);
+        return weraMenuService.saveWeraMenuIngredient(request);
+
     }
 
 
