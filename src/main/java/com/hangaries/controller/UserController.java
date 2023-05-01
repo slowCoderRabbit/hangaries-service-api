@@ -1,9 +1,6 @@
 package com.hangaries.controller;
 
-import com.hangaries.model.LoginRequest;
-import com.hangaries.model.LoginResponse;
-import com.hangaries.model.UpdatePasswordRequest;
-import com.hangaries.model.User;
+import com.hangaries.model.*;
 import com.hangaries.service.login.impl.LoginServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +26,12 @@ public class UserController {
     LoginResponse employeeLogin(@Valid @RequestBody LoginRequest loginRequest) {
         logger.info("Login request received for userId  = {} ", loginRequest.getLoginId());
         return loginService.employeeLogin(loginRequest);
+    }
+
+    @PostMapping("employeeLogout")
+    String employeeLogout(@Valid @RequestBody LogoutRequest logoutRequest) {
+        logger.info("Logout request received for userId  = {} ", logoutRequest.getLoginId());
+        return loginService.employeeLogout(logoutRequest);
     }
 
     @GetMapping("getUsersByRoleCategory")

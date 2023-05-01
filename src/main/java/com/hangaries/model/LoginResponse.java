@@ -13,7 +13,7 @@ public class LoginResponse {
 
     private String loginResponse;
     private String restaurantName;
+    private Integer userLoginDetailId;
     private User user;
-
 
 }

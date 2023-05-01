@@ -1,9 +1,8 @@
 package com.hangaries.service.login.impl;
 
-import com.hangaries.model.LoginRequest;
-import com.hangaries.model.LoginResponse;
-import com.hangaries.model.User;
+import com.hangaries.model.*;
 import com.hangaries.repository.StoreRepository;
+import com.hangaries.repository.UserLoginDetailsRepository;
 import com.hangaries.repository.UserRepository;
 import com.hangaries.service.login.LoginService;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.hangaries.constants.HangariesConstants.*;
@@ -25,6 +25,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     StoreRepository storeRepository;
+
+    @Autowired
+    UserLoginDetailsRepository userLoginDetailsRepository;
 
     @Override
     public LoginResponse employeeLogin(LoginRequest loginRequest) {
@@ -41,15 +44,43 @@ public class LoginServiceImpl implements LoginService {
             logger.info("Password matched for userId = [{}].", loginRequest.getLoginId());
             loginResponse.setLoginResponse(SUCCESS);
             loginResponse.setRestaurantName(storeRepository.findByStoreId(loginResponse.getUser().getStoreId()).stream().findFirst().get().getResturantName());
+
+            try {
+                UserLoginDetails userLoginDetails = logUserLoginDetails(populateUserLoginDetails(loginRequest.getLoginId(), "", ""));
+                loginResponse.setUserLoginDetailId(userLoginDetails.getId());
+            } catch (Exception e) {
+                logger.error("Exception while logUserLoginDetails {}", e);
+            }
             user.setLoginPassword("");
+
         } else {
             logger.info("Password did not match for userId = [{}].", loginRequest.getLoginId());
             loginResponse.setLoginResponse(INCORRECT_PASSWORD);
             user.setLoginPassword("");
         }
 
-        return loginResponse;
 
+        return loginResponse;
+    }
+
+    private UserLoginDetails logUserLoginDetails(UserLoginDetails detail) {
+        return userLoginDetailsRepository.save(detail);
+    }
+
+    private UserLoginDetails populateUserLoginDetails(String userLoginId, String restaurantId, String storeId) {
+        UserLoginDetails userLoginDetails = getUserLoginDetailsCommon(userLoginId, restaurantId, storeId);
+        userLoginDetails.setLoginTime(new Date());
+        userLoginDetails.setLoginStatus(ACTIVE);
+        return userLoginDetails;
+
+    }
+
+    private UserLoginDetails getUserLoginDetailsCommon(String userLoginId, String restaurantId, String storeId) {
+        UserLoginDetails userLoginDetails = new UserLoginDetails();
+        userLoginDetails.setUserLoginId(userLoginId);
+        userLoginDetails.setRestaurantId(restaurantId);
+        userLoginDetails.setStoreId(storeId);
+        return userLoginDetails;
     }
 
     @Override
@@ -115,4 +146,15 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
+    public String employeeLogout(LogoutRequest logoutRequest) {
+        UserLoginDetails result = userLoginDetailsRepository.findByUserLoginIdAndId(logoutRequest.getLoginId(), logoutRequest.getUserLoginDetailId());
+        if (null == result) {
+            return "No active login for user found!";
+        }
+        result.setLogoutTime(new Date());
+        result.setLoginStatus(INACTIVE);
+        userLoginDetailsRepository.save(result);
+        return SUCCESS;
+
+    }
 }
