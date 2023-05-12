@@ -5,11 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Date;
 
 import static com.hangaries.constants.HangariesConstants.SYSTEM;
@@ -20,12 +18,14 @@ import static com.hangaries.constants.HangariesConstants.SYSTEM;
 @ToString
 @Entity
 @Table(name = "STORE_MASTER")
-public class Store {
+@IdClass(StoreKey.class)
+public class Store implements Serializable {
 
     @Id
     @Column(name = "store_Id")
     private String storeId;
 
+    @Id
     @Column(name = "restaurant_id")
     private @NotBlank String restaurantId;
 
