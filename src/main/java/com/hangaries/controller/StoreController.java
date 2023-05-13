@@ -55,6 +55,20 @@ public class StoreController {
         }
     }
 
+    @GetMapping("getStoresByRestaurantId")
+    public ResponseEntity<List<Store>> getStoresByRestaurantId(@RequestParam("restaurantId") String restaurantId) {
+        logger.info("Getting list of all Store details for restaurantId = [{}]",restaurantId);
+
+        List<Store> storeList = new ArrayList<>();
+        try {
+            storeList = storeService.getStoresByRestaurantId(restaurantId);
+            return new ResponseEntity<List<Store>>(storeList, HttpStatus.OK);
+        } catch (Exception ex) {
+            logger.error("Error while getting store details::" + ex.getMessage());
+            return new ResponseEntity<List<Store>>(storeList, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("getStoreDetailsByStoreId")
     public ResponseEntity<List<Store>> getStoreByStoreId(@RequestParam("storeId") String storeId) {
         List<Store> storeList = new ArrayList<>();

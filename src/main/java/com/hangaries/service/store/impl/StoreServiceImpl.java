@@ -111,4 +111,8 @@ public class StoreServiceImpl implements StoreService {
         logger.info("updateStoreActiveFlag result = [{}]", result);
         return storeRepository.findByStoreId(storeId);
     }
+
+    public List<Store> getStoresByRestaurantId(String restaurantId) {
+        return storeRepository.findByRestaurantId(restaurantId);
+    }
 }

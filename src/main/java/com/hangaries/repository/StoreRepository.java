@@ -29,4 +29,5 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     @Procedure(procedureName = "sp_SetupNewStore", outputParameterName = "oErrorDescription")
     String setupNewStore(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId);
 
+    List<Store> findByRestaurantId(String restaurantId);
 }
