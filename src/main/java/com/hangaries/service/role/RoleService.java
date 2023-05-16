@@ -7,7 +7,7 @@ import com.hangaries.model.RoleWithModules;
 import java.util.List;
 
 public interface RoleService {
-    List<Role> getAllRoles();
+    List<Role> getAllRoles(String restaurantId);
 
     Role saveNewRole(Role role);
 

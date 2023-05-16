@@ -84,13 +84,13 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public List<User> getUsersByRoleCategory(String roleCategory) {
+    public List<User> getUsersByRoleCategory(String restaurantId, String category) {
         List<User> users = null;
 
-        if (roleCategory.equalsIgnoreCase(ALL)) {
-            users = userRepository.getAllUsersByRoleCategory(ACTIVE);
+        if (category.equalsIgnoreCase(ALL)) {
+            users = userRepository.getAllUsersByRoleCategory(restaurantId, ACTIVE);
         } else {
-            users = userRepository.getUsersByRoleCategory(roleCategory, ACTIVE);
+            users = userRepository.getUsersByRoleCategory(restaurantId, category, ACTIVE);
         }
 
 

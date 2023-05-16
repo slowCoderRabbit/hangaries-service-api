@@ -10,7 +10,7 @@ public interface ProductService {
 
     Product updatedProduct(String productId, String section, String dish, String dishCategory, String dishType, String productSize);
 
-    List<Product> getAllProduct();
+    List<Product> getAllProduct(String restaurantId);
 
     SubProduct saveSubProduct(SubProduct subProduct);
 

@@ -18,4 +18,5 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     @Query(value = "select * from ROLE_MASTER where restaurant_id=:restaurantId and store_id=:storeId and role_status=:roleStatus", nativeQuery = true)
     List<Role> getRoleByRoleCategory(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("roleStatus") String roleStatus);
 
+    List<Role> findByRestaurantId(String restaurantId);
 }

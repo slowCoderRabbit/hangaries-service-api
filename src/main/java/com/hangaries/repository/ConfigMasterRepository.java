@@ -18,8 +18,8 @@ public interface ConfigMasterRepository extends JpaRepository<ConfigMaster, Long
     @Query(value = "SELECT config_criteria_value, config_criteria_description\n" +
             "  FROM CONFIG_MASTER \n" +
             " WHERE config_criteria = 'PAYMENT_MODE'\n" +
-            "   AND restaurant_id = 'R001'\n" +
+            "   AND restaurant_id =:restaurantId\n" +
             "   AND store_id = 'ALL'\n" +
             " ORDER BY config_value", nativeQuery = true)
-    List<Object[]> getPaymentModes();
+    List<Object[]> getPaymentModes(@Param("restaurantId") String restaurantId);
 }

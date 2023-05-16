@@ -99,10 +99,10 @@ public class ConfigController {
     }
 
     @GetMapping("getAllBusinessDates")
-    public ResponseEntity<List<BusinessDate>> getAllBusinessDates() {
-        logger.info("Getting all Business Dates...!");
+    public ResponseEntity<List<BusinessDate>> getAllBusinessDates(@RequestParam("restaurantId") String restaurantId) {
+        logger.info("Getting all Business Dates for restaurantId = [{}].", restaurantId);
 
-        List<BusinessDate> businessDates = configService.getAllBusinessDates();
+        List<BusinessDate> businessDates = configService.getAllBusinessDates(restaurantId);
         logger.info("Returning [{}] records for business dates.", businessDates.size());
         return new ResponseEntity<List<BusinessDate>>(businessDates, HttpStatus.OK);
 
@@ -121,10 +121,10 @@ public class ConfigController {
     }
 
     @GetMapping("getPaymentModes")
-    public ResponseEntity<List<PaymentMode>> getPaymentModes() {
-        logger.info("Getting list of payment modes.");
+    public ResponseEntity<List<PaymentMode>> getPaymentModes(@RequestParam("restaurantId") String restaurantId) {
+        logger.info("Getting list of payment modes for restaurantId = [{}].", restaurantId);
         List<PaymentMode> paymentModeList = new ArrayList<>();
-        paymentModeList = configService.getPaymentModes();
+        paymentModeList = configService.getPaymentModes(restaurantId);
         logger.info("Payment modes list size = [{}].", paymentModeList.size());
         return new ResponseEntity<List<PaymentMode>>(paymentModeList, HttpStatus.OK);
 

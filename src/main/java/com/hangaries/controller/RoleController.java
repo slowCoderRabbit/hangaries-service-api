@@ -28,12 +28,12 @@ public class RoleController {
     RoleServiceImpl roleService;
 
     @GetMapping("getAllRoles")
-    public ResponseEntity<List<Role>> getAllRoles() {
-        logger.info("Getting list of all User roles...");
+    public ResponseEntity<List<Role>> getAllRoles(@RequestParam("restaurantId") String restaurantId) {
+        logger.info("Getting list of all User roles for restaurantId = {}.", restaurantId);
 
         List<Role> roleList = new ArrayList<>();
         try {
-            roleList = roleService.getAllRoles();
+            roleList = roleService.getAllRoles(restaurantId);
             return new ResponseEntity<List<Role>>(roleList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getting store details::" + ex.getMessage());

@@ -1729,7 +1729,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getAllRoles",
+					"raw": "http://localhost:8080/api/getAllRoles?restaurantId=R002",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1738,6 +1738,12 @@
 					"path": [
 						"api",
 						"getAllRoles"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R002"
+						}
 					]
 				}
 			},
@@ -2090,7 +2096,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getUsersByRoleCategory?roleCategory=STORE_ADMIN",
+					"raw": "http://localhost:8080/api/getUsersByRoleCategory?restaurantId=R001&roleCategory=DELIVERY_BOY",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2102,8 +2108,12 @@
 					],
 					"query": [
 						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
 							"key": "roleCategory",
-							"value": "STORE_ADMIN"
+							"value": "DELIVERY_BOY"
 						}
 					]
 				}
@@ -3471,7 +3481,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getAllBusinessDates",
+					"raw": "http://localhost:8080/api/getAllBusinessDates?restaurantId=R002",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -3480,6 +3490,12 @@
 					"path": [
 						"api",
 						"getAllBusinessDates"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R002"
+						}
 					]
 				}
 			},
@@ -3647,7 +3663,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getAllSectionsFromMaster",
+					"raw": "http://localhost:8080/api/getAllSectionsFromMaster?restaurantId=R001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -3656,6 +3672,12 @@
 					"path": [
 						"api",
 						"getAllSectionsFromMaster"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						}
 					]
 				}
 			},
@@ -3928,7 +3950,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getPaymentModes",
+					"raw": "http://localhost:8080/api/getPaymentModes?restaurantId=R002",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -3937,6 +3959,12 @@
 					"path": [
 						"api",
 						"getPaymentModes"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R002"
+						}
 					]
 				}
 			},

@@ -30,9 +30,8 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     ModuleRepository moduleRepository;
 
-    @Override
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
+    public List<Role> getAllRoles(String restaurantId) {
+        return roleRepository.findByRestaurantId(restaurantId);
     }
 
     @Override

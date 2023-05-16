@@ -103,13 +103,13 @@ public class ConfigServiceImpl implements ConfigService {
 
     }
 
-    public List<BusinessDate> getAllBusinessDates() {
-        return businessDateRepository.findAll();
+    public List<BusinessDate> getAllBusinessDates(String restaurantId) {
+        return businessDateRepository.findByRestaurantId(restaurantId);
     }
 
-    public List<PaymentMode> getPaymentModes() {
+    public List<PaymentMode> getPaymentModes(String restaurantId) {
 
-        List<Object[]> results = configMasterRepository.getPaymentModes();
+        List<Object[]> results = configMasterRepository.getPaymentModes(restaurantId);
         List<PaymentMode> paymentModes = new ArrayList<>();
         for (Object[] result : results) {
             String value = result[0].toString();

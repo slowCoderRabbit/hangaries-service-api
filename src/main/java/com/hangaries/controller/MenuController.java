@@ -188,9 +188,9 @@ public class MenuController {
 
     @GetMapping("getAllProduct")
     @ResponseBody
-    public ResponseEntity<List<Product>> getAllProduct() {
-        logger.info("Getting list of all products,menu items.");
-        List<Product> products = productService.getAllProduct();
+    public ResponseEntity<List<Product>> getAllProduct(@RequestParam("restaurantId") String restaurantId) {
+        logger.info("Getting list of all products,menu items for restaurantId = {}.", restaurantId);
+        List<Product> products = productService.getAllProduct(restaurantId);
         return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
 
     }
@@ -264,9 +264,9 @@ public class MenuController {
 
     @GetMapping("getAllSectionsFromMaster")
     @ResponseBody
-    public ResponseEntity<List<Section>> getAllSectionsFromMaster() {
-        logger.info("Getting all sections for the menu!!!!!");
-        List<Section> result = menuService.getAllSectionsFromMaster();
+    public ResponseEntity<List<Section>> getAllSectionsFromMaster(@RequestParam("restaurantId") String restaurantId) {
+        logger.info("Getting all sections for the menu and restaurantId = {}!!!!!", restaurantId);
+        List<Section> result = menuService.getAllSectionsFromMaster(restaurantId);
         logger.info("Total [{}] sections found !!!!!", result.size());
         return new ResponseEntity<List<Section>>(result, HttpStatus.OK);
 

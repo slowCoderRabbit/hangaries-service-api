@@ -193,9 +193,9 @@ public class MenuServiceImpl implements MenuService {
         return dishToppingRepository.findAll();
     }
 
-    public List<Section> getAllSectionsFromMaster() {
+    public List<Section> getAllSectionsFromMaster(String restaurantId) {
 
-        return sectionRepository.findAll();
+        return sectionRepository.findByRestaurantId(restaurantId);
 
     }
 
@@ -213,7 +213,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     public String cloneMenu(String restaurantId, String storeId) {
-        return menuRepository.cloneMenu(restaurantId,storeId);
+        return menuRepository.cloneMenu(restaurantId, storeId);
     }
 
 }
