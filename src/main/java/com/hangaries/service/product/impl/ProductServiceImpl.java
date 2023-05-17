@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProduct(String restaurantId) {
-        return productRepository.findAll(Sort.by(Sort.Direction.ASC, "productId"));
+        return productRepository.findByRestaurantId(restaurantId, Sort.by(Sort.Direction.ASC, "productId"));
 
     }
 

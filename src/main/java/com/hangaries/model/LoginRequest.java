@@ -15,5 +15,6 @@ public class LoginRequest {
 
     private @NotBlank String loginId;
     private @NotBlank String password;
+    private @NotBlank String restaurantId;
 
 }

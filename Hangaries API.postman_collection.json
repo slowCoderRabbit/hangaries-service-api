@@ -2052,7 +2052,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"loginId\" :\"chakri\",\r\n    \"password\":\"chakri\"\r\n}",
+					"raw": "{\r\n    \"loginId\" :\"chakri\",\r\n    \"password\":\"chakri\",\r\n    \"restaurantId\":\"R002\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3116,7 +3116,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllProduct",
+					"raw": "http://localhost:8080/api/getAllProduct?restaurantId=R001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -3125,6 +3125,12 @@
 					"path": [
 						"api",
 						"getAllProduct"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						}
 					]
 				}
 			},
@@ -4713,7 +4719,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllPurchaseOrders",
+					"raw": "http://localhost:8080/api/getAllPurchaseOrders?restaurantId=R001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4722,6 +4728,12 @@
 					"path": [
 						"api",
 						"getAllPurchaseOrders"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						}
 					]
 				}
 			},
@@ -4733,7 +4745,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getPurchaseOrdersByStatus?status=OPEN",
+					"raw": "http://localhost:8080/api/getPurchaseOrdersByStatus?restaurantId=R001&status=RECEIVED",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4745,8 +4757,12 @@
 					],
 					"query": [
 						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
 							"key": "status",
-							"value": "OPEN"
+							"value": "RECEIVED"
 						}
 					]
 				}
@@ -4829,7 +4845,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getPurchaseOrdersExcludingStatus?status=CLOSED",
+					"raw": "http://localhost:8080/api/getPurchaseOrdersExcludingStatus?restaurantId=R001&status=RECEIVED",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4841,8 +4857,12 @@
 					],
 					"query": [
 						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
 							"key": "status",
-							"value": "CLOSED"
+							"value": "RECEIVED"
 						}
 					]
 				}

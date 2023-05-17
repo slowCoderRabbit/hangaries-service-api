@@ -49,29 +49,31 @@ public class PurchaseOrderServiceImpl {
         return purchaseOrderRepository.getPurchaseOrderById(request.getPurchaseOrderId());
     }
 
-    public List<PurchaseOrderWithName> getAllPurchaseOrders() {
-//        return purchaseOrderRepository.findAll();
-        return namedParameterJdbcTemplate.query(PURCHASE_ORDER_ALL, BeanPropertyRowMapper.newInstance(PurchaseOrderWithName.class));
+    public List<PurchaseOrderWithName> getAllPurchaseOrders(String restaurantId) {
+        SqlParameterSource parameters = new MapSqlParameterSource("restaurantId", restaurantId);
+        return namedParameterJdbcTemplate.query(PURCHASE_ORDER_ALL, parameters, BeanPropertyRowMapper.newInstance(PurchaseOrderWithName.class));
     }
 
     public List<PurchaseOrder> getAllActivePurchaseOrders() {
         return purchaseOrderRepository.getPurchaseOrdersByStatus(ACTIVE);
     }
 
-    public List<PurchaseOrderWithName> getPurchaseOrdersByStatus(String status) {
+    public List<PurchaseOrderWithName> getPurchaseOrdersByStatus(String restaurantId, String status) {
 //        return purchaseOrderRepository.getPurchaseOrdersByStatus(status);
-        return getPurchaseOrderWithName(status, PURCHASE_ORDER_WITH_NAME_STATUS);
+        return getPurchaseOrderWithName(restaurantId, status, PURCHASE_ORDER_WITH_NAME_STATUS);
     }
 
-    public List<PurchaseOrderWithName> getPurchaseOrdersExcludingStatus(String status) {
+    public List<PurchaseOrderWithName> getPurchaseOrdersExcludingStatus(String restaurantId, String status) {
 //        return purchaseOrderRepository.getPurchaseOrdersExcludingStatus(status);
-        return getPurchaseOrderWithName(status, PURCHASE_ORDER_WITH_NAME_STATUS_EXCLUDING);
+        return getPurchaseOrderWithName(restaurantId, status, PURCHASE_ORDER_WITH_NAME_STATUS_EXCLUDING);
     }
 
-    List<PurchaseOrderWithName> getPurchaseOrderWithName(String status, String sql) {
-        SqlParameterSource parameters = new MapSqlParameterSource("status", status);
+    List<PurchaseOrderWithName> getPurchaseOrderWithName(String restaurantId, String status, String sql) {
+        MapSqlParameterSource paramSource = new MapSqlParameterSource();
+        paramSource.addValue("restaurantId", restaurantId);
+        paramSource.addValue("status", status);
         List<PurchaseOrderWithName> purchaseOrderWithNames = namedParameterJdbcTemplate.query(
-                sql, parameters, BeanPropertyRowMapper.newInstance(PurchaseOrderWithName.class));
+                sql, paramSource, BeanPropertyRowMapper.newInstance(PurchaseOrderWithName.class));
         return purchaseOrderWithNames;
     }
 }

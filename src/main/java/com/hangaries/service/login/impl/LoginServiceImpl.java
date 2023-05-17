@@ -32,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public LoginResponse employeeLogin(LoginRequest loginRequest) {
 
-        User user = userRepository.findByLoginId(loginRequest.getLoginId());
+        User user = userRepository.findByRestaurantIdAndLoginId(loginRequest.getRestaurantId(), loginRequest.getLoginId());
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setUser(user);

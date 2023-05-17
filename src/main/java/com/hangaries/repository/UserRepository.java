@@ -31,4 +31,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query(value = "UPDATE USER_MASTER SET user_login_password=:loginPassword WHERE user_login_id=:loginId", nativeQuery = true)
     int updateEmployeePasswordByLoginId(@Param("loginId") String loginId, @Param("loginPassword") String loginPassword);
+
+    User findByRestaurantIdAndLoginId(String restaurantId, String loginId);
 }
