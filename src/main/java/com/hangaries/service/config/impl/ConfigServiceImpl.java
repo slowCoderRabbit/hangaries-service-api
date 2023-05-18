@@ -46,6 +46,11 @@ public class ConfigServiceImpl implements ConfigService {
         for (ConfigMaster configMaster : configMasterList) {
             orderSourceMap.put(configMaster.getConfigCriteriaDesc(), configMaster.getConfigCriteriaValue());
         }
+//
+//        orderSourceMap = configMasterList.stream().collect(
+//                groupingBy(ConfigMaster::getRestaurantId,
+//                        Collectors.toMap(ConfigMaster::getConfigCriteriaDesc,ConfigMaster::getConfigCriteriaValue)));
+
         logger.info("Loaded order source mapping!!! Map size = [{}]", orderSourceMap.size());
     }
 

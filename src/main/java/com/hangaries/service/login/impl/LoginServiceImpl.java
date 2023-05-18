@@ -32,13 +32,13 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public LoginResponse employeeLogin(LoginRequest loginRequest) {
 
-        User user = userRepository.findByRestaurantIdAndLoginId(loginRequest.getRestaurantId(), loginRequest.getLoginId());
+        User user = userRepository.findByRestaurantIdAndStoreIdAndLoginId(loginRequest.getRestaurantId(),loginRequest.getStoreId(), loginRequest.getLoginId());
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setUser(user);
 
         if (null == user) {
-            logger.info("No user found for userId = [{}] in DB.", loginRequest.getLoginId());
+            logger.info("No user found for userId = [{}] for restaurantId = [{}] and storeId = [{}] in DB.", loginRequest.getLoginId(),loginRequest.getRestaurantId(),loginRequest.getStoreId());
             loginResponse.setLoginResponse(INCORRECT_ID);
         } else if (isPasswordCorrect(loginRequest.getPassword(), user.getLoginPassword())) {
             logger.info("Password matched for userId = [{}].", loginRequest.getLoginId());

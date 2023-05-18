@@ -14,6 +14,9 @@ public interface ConfigMasterRepository extends JpaRepository<ConfigMaster, Long
     @Query(value = "select * from CONFIG_MASTER where restaurant_id=:restaurantId and store_id=:storeId and config_criteria=:configCriteria ORDER BY config_value", nativeQuery = true)
     List<ConfigMaster> getDetailsFromConfigMaster(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("configCriteria") String configCriteria);
 
+    @Query(value = "select * from CONFIG_MASTER where store_id=:storeId and config_criteria=:configCriteria ORDER BY config_value", nativeQuery = true)
+    List<ConfigMaster> getDetailsFromConfigMasterForAll(@Param("storeId") String storeId, @Param("configCriteria") String configCriteria);
+
 
     @Query(value = "SELECT config_criteria_value, config_criteria_description\n" +
             "  FROM CONFIG_MASTER \n" +

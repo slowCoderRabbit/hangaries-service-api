@@ -137,6 +137,12 @@ public class WERAOrderServiceImpl {
                         weraOrderResponse.setStatus(200);
 
                         try {
+
+                            List<WeraOrderSizeDTO> sizeList = getWeraOrderSizeFromWeraOrder(weraOrder, newOrderId);
+                            if (null != sizeList && !sizeList.isEmpty()) {
+                                weraOrderSizeRepository.saveAll(sizeList);
+                            }
+
                             WERAOrderAcceptRequest request = new WERAOrderAcceptRequest();
                             request.setOrder_id(weraOrderId);
                             request.setMerchant_id(weraMerchantId);
@@ -425,19 +431,23 @@ public class WERAOrderServiceImpl {
     private List<WeraOrderSizeDTO> getWeraOrderSizeFromWeraOrder(WeraOrder weraOrder, String newOrderId) {
         logger.info("Extracting size details from WERA order for orderId = [{}].", newOrderId);
         List<WeraOrderSizeDTO> weraOrderSizeDTOList = new ArrayList<>();
-//        for (WeraOrderVariant size : weraOrder.getVariants()) {
-//            WeraOrderSizeDTO weraOrderSizeDTO = new WeraOrderSizeDTO();
-//            weraOrderSizeDTO.setOrder_id(newOrderId);
-//            weraOrderSizeDTO.setWera_order_id(weraOrder.getOrder_id() + "");
-//            weraOrderSizeDTO.setSize_id(size.getSize_id());
-//            weraOrderSizeDTO.setSize_name(size.getSize_name());
-//            weraOrderSizeDTO.setSize_price(size.getPrice());
-//            weraOrderSizeDTO.setCgst(size.getCgst());
-//            weraOrderSizeDTO.setSgst(size.getSgst());
-//            weraOrderSizeDTO.setCgst_percent(size.getCgst_percent());
-//            weraOrderSizeDTO.setSgst_percent(size.getSgst_percent());
-//            weraOrderSizeDTOList.add(weraOrderSizeDTO);
-//        }
+        for (WeraOrderItem item : weraOrder.getOrder_items()) {
+            if (null != item.getVariants()) {
+                for (WeraOrderVariant variant : item.getVariants()) {
+                    WeraOrderSizeDTO weraOrderSizeDTO = new WeraOrderSizeDTO();
+                    weraOrderSizeDTO.setOrder_id(newOrderId);
+                    weraOrderSizeDTO.setWera_order_id(weraOrder.getOrder_id() + "");
+                    weraOrderSizeDTO.setSize_id(variant.getSize_id());
+                    weraOrderSizeDTO.setSize_name(variant.getSize_name());
+                    weraOrderSizeDTO.setSize_price(variant.getPrice());
+                    weraOrderSizeDTO.setCgst(variant.getCgst());
+                    weraOrderSizeDTO.setSgst(variant.getSgst());
+                    weraOrderSizeDTO.setCgst_percent(variant.getCgst_percent());
+                    weraOrderSizeDTO.setSgst_percent(variant.getSgst_percent());
+                    weraOrderSizeDTOList.add(weraOrderSizeDTO);
+                }
+            }
+        }
         logger.info("Extracted [{}] size details from WERA order for orderId = [{}].", weraOrderSizeDTOList.size(), newOrderId);
         return weraOrderSizeDTOList;
 

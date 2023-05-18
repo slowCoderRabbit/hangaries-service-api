@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 import static com.hangaries.constants.HangariesConstants.SYSTEM;
@@ -18,15 +15,19 @@ import static com.hangaries.constants.HangariesConstants.SYSTEM;
 @AllArgsConstructor
 @ToString
 @Entity
+@IdClass(ConfigMasterKey.class)
 @Table(name = "CONFIG_MASTER")
 public class ConfigMaster {
 
+    @Id
     @Column(name = "restaurant_id")
     private String restaurantId;
 
+    @Id
     @Column(name = "store_id")
     private String storeId;
 
+    @Id
     @Column(name = "config_criteria")
     private String configCriteria;
 
