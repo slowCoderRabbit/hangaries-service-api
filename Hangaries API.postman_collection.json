@@ -2052,7 +2052,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"loginId\" :\"chakri\",\r\n    \"password\":\"chakri\",\r\n    \"restaurantId\":\"R002\"\r\n}",
+					"raw": "{\r\n    \"loginId\" :\"chakri\",\r\n    \"password\":\"chakri\",\r\n    \"restaurantId\":\"R001\",\r\n    \"storeId\":\"S001\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
