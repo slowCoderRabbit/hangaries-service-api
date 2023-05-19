@@ -24,7 +24,7 @@ public class UserController {
 
     @PostMapping("employeeLogin")
     LoginResponse employeeLogin(@Valid @RequestBody LoginRequest loginRequest) {
-        logger.info("Login request received for userId  = {}, restaurantId = {} and storeId = {}.", loginRequest.getLoginId(), loginRequest.getRestaurantId(), loginRequest.getStoreId());
+        logger.info("Login request received for userId  = {}.", loginRequest.getLoginId());
         return loginService.employeeLogin(loginRequest);
     }
 

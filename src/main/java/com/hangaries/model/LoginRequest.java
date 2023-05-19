@@ -14,8 +14,6 @@ import javax.validation.constraints.NotBlank;
 public class LoginRequest {
 
     private @NotBlank String loginId;
-    private String password;
-    private @NotBlank String restaurantId;
-    private @NotBlank String storeId;
+    private @NotBlank String password;
 
 }

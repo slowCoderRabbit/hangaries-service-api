@@ -33,5 +33,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     int updateEmployeePasswordByLoginId(@Param("loginId") String loginId, @Param("loginPassword") String loginPassword);
 
 
-    User findByRestaurantIdAndStoreIdAndLoginId(String restaurantId, String storeId, String loginId);
 }
