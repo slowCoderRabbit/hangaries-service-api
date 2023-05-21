@@ -274,9 +274,9 @@ public class MenuController {
 
     @GetMapping("getAllDishesFromMaster")
     @ResponseBody
-    public ResponseEntity<List<Dish>> getAllDishesFromMaster() {
-        logger.info("Getting all dishes for the menu!!!!!");
-        List<Dish> result = menuService.getAllDishesFromMaster();
+    public ResponseEntity<List<Dish>> getAllDishesFromMaster(@RequestParam("restaurantId") String restaurantId) {
+        logger.info("Getting all dishes for the menu and restaurantId = {}!!!!!", restaurantId);
+        List<Dish> result = menuService.getAllDishesFromMaster(restaurantId);
         logger.info("Total [{}] dishes found !!!!!", result.size());
         return new ResponseEntity<List<Dish>>(result, HttpStatus.OK);
 

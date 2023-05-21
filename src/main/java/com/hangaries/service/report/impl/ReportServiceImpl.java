@@ -135,11 +135,14 @@ public class ReportServiceImpl implements ReportService {
                         reportResult.setReportOrderData(orderList);
                     }
                 } else if (report.getReportName().equals("DASHBOARD_SUMMARY")) {
-                    String query = "select * from REPORT_DASHBOARD_SUMMARY where user_login_id = '" + report.getUserLoginId() + "'";
-                    logger.info("REPORT_DASHBOARD_SUMMARY SQL = [{}]", query);
-                    List<RDSReport> rssOrderSources = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(RDSReport.class));
+
+                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_DASHBOARD_SUMMARY", report);
+//                    String query = "select * from REPORT_DASHBOARD_SUMMARY where user_login_id = '" + report.getUserLoginId() + "'";
+//                    logger.info("REPORT_DASHBOARD_SUMMARY SQL = [{}]", query);
+                    logger.info("REPORT_DASHBOARD_SUMMARY SQL = [{}]", queryDateBuilder);
+                    List<RDSReport> rssOrderSources = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(RDSReport.class));
 //                    query = "select * from REPORT_DASHBOARD_DETAILS where user_login_id = '";
-                    StringBuilder queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_DASHBOARD_DETAILS", report);
+                    queryDateBuilder = getQueryWithRestoStoreAndUserId("REPORT_DASHBOARD_DETAILS", report);
                     logger.info("REPORT_DASHBOARD_DETAILS SQL = [{}]", queryDateBuilder);
                     List<RDDReport> rddOrderSources = jdbcTemplate.query(queryDateBuilder.toString(), BeanPropertyRowMapper.newInstance(RDDReport.class));
                     rssOrderSources.stream().forEach(o -> o.setReportDashboardDetails(rddOrderSources));

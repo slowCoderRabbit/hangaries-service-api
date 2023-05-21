@@ -2052,7 +2052,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"loginId\" :\"chakri\",\r\n    \"password\":\"chakri\"\r\n    \r\n}",
+					"raw": "{\r\n    \"loginId\" :\"gr002\",\r\n    \"password\":\"gr002\"\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3711,7 +3711,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getAllDishesFromMaster",
+					"raw": "http://localhost:8080/api/getAllDishesFromMaster?restaurantId=R002",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -3720,6 +3720,12 @@
 					"path": [
 						"api",
 						"getAllDishesFromMaster"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R002"
+						}
 					]
 				}
 			},

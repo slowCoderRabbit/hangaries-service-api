@@ -199,9 +199,9 @@ public class MenuServiceImpl implements MenuService {
 
     }
 
-    public List<Dish> getAllDishesFromMaster() {
+    public List<Dish> getAllDishesFromMaster(String restaurantId) {
 
-        return dishRepository.findAll();
+        return dishRepository.findByRestaurantId(restaurantId);
     }
 
     public Section saveSection(Section section) {

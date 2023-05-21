@@ -43,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
         } else if (isPasswordCorrect(loginRequest.getPassword(), user.getLoginPassword())) {
             logger.info("Password matched for userId = [{}].", loginRequest.getLoginId());
             loginResponse.setLoginResponse(SUCCESS);
-            loginResponse.setRestaurantName(storeRepository.findByStoreId(loginResponse.getUser().getStoreId()).stream().findFirst().get().getResturantName());
+            loginResponse.setRestaurantName(storeRepository.findByRestaurantIdAndStoreId(loginResponse.getUser().getRestaurantId(), loginResponse.getUser().getStoreId()).stream().findFirst().get().getResturantName());
 
             try {
                 UserLoginDetails userLoginDetails = logUserLoginDetails(populateUserLoginDetails(loginRequest.getLoginId(), "", ""));
