@@ -36,8 +36,8 @@ public interface MenuRepository extends JpaRepository<Menu, Long> {
     @Query(value = "update MENU_MASTER set section=:section, dish=:dish, dish_category=:dishCategory, dish_type=:dishType, product_size=:productSize  where product_id=:productId", nativeQuery = true)
     int updatedProductColumns(String productId, String section, String dish, String dishCategory, String dishType, String productSize);
 
-    @Query(value = "select * from MENU_MASTER where product_id=:productId and store_id=:storeId", nativeQuery = true)
-    List<Menu> getProductMappedToMenuMaster(@Param("productId") String productId, @Param("storeId") String storeId);
+    @Query(value = "select * from MENU_MASTER where product_id=:productId and restaurant_id=:restaurantId and store_id=:storeId", nativeQuery = true)
+    List<Menu> getProductMappedToMenuMaster(@Param("productId") String productId, @Param("restaurantId") String restaurantId, @Param("storeId") String storeId);
 
     @Procedure(procedureName = "sp_CloneMenu", outputParameterName = "oErrorDescription")
     String cloneMenu(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId);

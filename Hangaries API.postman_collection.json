@@ -4522,7 +4522,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"mappings\" :[\r\n    {    \r\n    \"productId\": \"P001\",\r\n    \"storeId\": \"S001\",\r\n    \"menuAvailable\": \"N\"    \r\n},{    \r\n    \"productId\": \"P002\",\r\n    \"storeId\": \"S001\",\r\n    \"menuAvailable\": \"Y\"    \r\n}\r\n]\r\n}",
+					"raw": "{\"mappings\" :[\r\n    {    \r\n    \"productId\": \"P1824\",\r\n    \"restaurantId\": \"R002\",\r\n    \"storeId\": \"S001\",\r\n    \"menuAvailable\": \"N\"    \r\n},{    \r\n    \"productId\": \"P1824\",\r\n    \"restaurantId\": \"R002\",\r\n    \"storeId\": \"S001\",\r\n    \"menuAvailable\": \"Y\"    \r\n}\r\n]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

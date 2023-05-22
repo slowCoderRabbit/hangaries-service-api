@@ -89,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
                 List<Menu> menuList = getProductMappedToMenuMaster(mapping);
                 if (menuList.isEmpty()) {
                     logger.info("Menu mapping NOT found for [{}]. Creating!!!", mapping);
-                    Product product = productRepository.findByProductId(mapping.getProductId());
+                    Product product = productRepository.findByProductIdAndRestaurantId(mapping.getProductId(), mapping.getRestaurantId());
                     if (null != product) {
                         Menu menu = getMenuFromProduct(product, mapping);
                         menu.setMenuAvailableFlag(mapping.getMenuAvailable());
@@ -104,13 +104,13 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
-        return menuRepository.getMenuItemsByRestroAndStore(RESTAURANT_ID, requestList.getMappings().stream().findFirst().get().getStoreId());
+        return menuRepository.getMenuItemsByRestroAndStore(requestList.getMappings().stream().findFirst().get().getRestaurantId(), requestList.getMappings().stream().findFirst().get().getStoreId());
 
     }
 
     private Menu getMenuFromProduct(Product product, ProductMenuMappingRequest mapping) {
         Menu newMenu = new Menu();
-        newMenu.setRestaruantId(RESTAURANT_ID);
+        newMenu.setRestaruantId(mapping.getRestaurantId());
         newMenu.setStoreId(mapping.getStoreId());
         newMenu.setProductId(product.getProductId());
         newMenu.setSection(product.getSection());
@@ -130,6 +130,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private List<Menu> getProductMappedToMenuMaster(ProductMenuMappingRequest mapping) {
-        return menuRepository.getProductMappedToMenuMaster(mapping.getProductId(), mapping.getStoreId());
+        return menuRepository.getProductMappedToMenuMaster(mapping.getProductId(),mapping.getRestaurantId(), mapping.getStoreId());
     }
 }

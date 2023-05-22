@@ -11,6 +11,7 @@ public class ProductMenuMappingRequest {
 
     private String menuAvailable;
     private String productId;
+    private String restaurantId;
     private String storeId;
 
 }
