@@ -4751,7 +4751,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getPurchaseOrdersByStatus?restaurantId=R001&status=RECEIVED",
+					"raw": "http://localhost:8080/api/getPurchaseOrdersByStatus?restaurantId=R002&storeId=S001&status=RECEIVED",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4764,7 +4764,11 @@
 					"query": [
 						{
 							"key": "restaurantId",
-							"value": "R001"
+							"value": "R002"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
 						},
 						{
 							"key": "status",
@@ -4851,7 +4855,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getPurchaseOrdersExcludingStatus?restaurantId=R001&status=RECEIVED",
+					"raw": "http://localhost:8080/api/getPurchaseOrdersExcludingStatus?restaurantId=R001&storeId=S001&status=RECEIVED",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -4865,6 +4869,10 @@
 						{
 							"key": "restaurantId",
 							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
 						},
 						{
 							"key": "status",

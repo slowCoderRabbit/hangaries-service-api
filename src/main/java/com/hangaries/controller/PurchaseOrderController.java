@@ -25,28 +25,28 @@ public class PurchaseOrderController {
     private PurchaseOrderServiceImpl purchaseOrderService;
 
     @GetMapping("getAllPurchaseOrders")
-    public ResponseEntity<List<PurchaseOrderWithName>> getAllPurchaseOrders(@RequestParam("restaurantId") String restaurantId) {
+    public ResponseEntity<List<PurchaseOrderWithName>> getAllPurchaseOrders(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) {
         List<PurchaseOrderWithName> purchaseOrders = new ArrayList<>();
-        logger.info("Getting list of all purchase orders for restaurantId = [{}].", restaurantId);
-        purchaseOrders = purchaseOrderService.getAllPurchaseOrders(restaurantId);
+        logger.info("Getting list of all purchase orders for restaurantId = [{}] and StoreId = [{}].", restaurantId, storeId);
+        purchaseOrders = purchaseOrderService.getAllPurchaseOrders(restaurantId, storeId);
         logger.info("[{}] purchase orders found.", purchaseOrders.size());
         return new ResponseEntity<List<PurchaseOrderWithName>>(purchaseOrders, HttpStatus.OK);
     }
 
     @GetMapping("getPurchaseOrdersByStatus")
-    public ResponseEntity<List<PurchaseOrderWithName>> getPurchaseOrdersByStatus(@RequestParam("restaurantId") String restaurantId, @RequestParam String status) {
+    public ResponseEntity<List<PurchaseOrderWithName>> getPurchaseOrdersByStatus(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId, @RequestParam String status) {
         List<PurchaseOrderWithName> purchaseOrders = new ArrayList<>();
-        logger.info("Getting list of all purchase orders for restaurantId = [{}], with status = [{}].", restaurantId, status);
-        purchaseOrders = purchaseOrderService.getPurchaseOrdersByStatus(restaurantId, status);
+        logger.info("Getting list of all purchase orders for restaurantId = [{}], StoreId = [{}] with status = [{}].", restaurantId, storeId, status);
+        purchaseOrders = purchaseOrderService.getPurchaseOrdersByStatus(restaurantId, storeId, status);
         logger.info("[{}] [{}] purchase orders found.", purchaseOrders.size(), status);
         return new ResponseEntity<List<PurchaseOrderWithName>>(purchaseOrders, HttpStatus.OK);
     }
 
     @GetMapping("getPurchaseOrdersExcludingStatus")
-    public ResponseEntity<List<PurchaseOrderWithName>> getPurchaseOrdersExcludingStatus(@RequestParam("restaurantId") String restaurantId, @RequestParam String status) {
+    public ResponseEntity<List<PurchaseOrderWithName>> getPurchaseOrdersExcludingStatus(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId, @RequestParam String status) {
         List<PurchaseOrderWithName> purchaseOrders = new ArrayList<>();
-        logger.info("Getting list of all purchase orders for restaurantId = [{}] and status <> [{}].", restaurantId, status);
-        purchaseOrders = purchaseOrderService.getPurchaseOrdersExcludingStatus(restaurantId, status);
+        logger.info("Getting list of all purchase orders for restaurantId = [{}], StoreId = [{}] and status <> [{}].", restaurantId, storeId, status);
+        purchaseOrders = purchaseOrderService.getPurchaseOrdersExcludingStatus(restaurantId, storeId, status);
         logger.info("[{}] <> [{}] purchase orders found.", purchaseOrders.size(), status);
         return new ResponseEntity<List<PurchaseOrderWithName>>(purchaseOrders, HttpStatus.OK);
     }
