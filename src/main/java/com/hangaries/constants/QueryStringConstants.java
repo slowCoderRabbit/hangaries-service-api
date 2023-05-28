@@ -36,14 +36,14 @@ public class QueryStringConstants {
 
     public static final String PURCHASE_ORDER_WITH_NAME_STATUS_EXCLUDING = "select rm.restaurant_name,stm.resturant_name as store_name ,supm.supplier_name, po.* from PURCHASE_ORDER po, RESTAURANT_MASTER rm, STORE_MASTER stm, \n" +
             "SUPPLIER_MASTER supm where po.restaurant_id=:restaurantId and purchase_order_status <>:status and po.restaurant_id=rm.restaurant_id\n" +
-            "and po.store_id=stm.store_Id and po.supplier_id=supm.supplier_id order by purchase_order_id";
+            "and po.restaurant_id=stm.restaurant_id and po.store_id=stm.store_Id and po.supplier_id=supm.supplier_id order by purchase_order_id";
 
     public static final String PURCHASE_ORDER_WITH_NAME_STATUS = "select rm.restaurant_name,stm.resturant_name as store_name ,supm.supplier_name, po.* from PURCHASE_ORDER po, RESTAURANT_MASTER rm, STORE_MASTER stm, \n" +
             "SUPPLIER_MASTER supm where po.restaurant_id=:restaurantId and purchase_order_status =:status and po.restaurant_id=rm.restaurant_id\n" +
-            "and po.store_id=stm.store_Id and po.supplier_id=supm.supplier_id order by purchase_order_id";
+            " and po.restaurant_id=stm.restaurant_id and po.store_id=stm.store_Id and po.supplier_id=supm.supplier_id order by purchase_order_id";
 
     public static final String PURCHASE_ORDER_ALL = "select rm.restaurant_name,stm.resturant_name as store_name ,supm.supplier_name, po.* from PURCHASE_ORDER po, RESTAURANT_MASTER rm, STORE_MASTER stm, \n" +
-            "SUPPLIER_MASTER supm where po.restaurant_id=:restaurantId and po.restaurant_id=rm.restaurant_id\n" +
+            "SUPPLIER_MASTER supm where po.restaurant_id=:restaurantId and po.restaurant_id=rm.restaurant_id and po.restaurant_id=stm.restaurant_id \n" +
             "and po.store_id=stm.store_Id and po.supplier_id=supm.supplier_id order by purchase_order_id";
 
     public static final String CUSTOMER_REPORT_SQL = "SELECT a.mobile_number, \n" +

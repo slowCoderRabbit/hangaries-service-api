@@ -27,7 +27,7 @@ public class PurchaseOrderController {
     @GetMapping("getAllPurchaseOrders")
     public ResponseEntity<List<PurchaseOrderWithName>> getAllPurchaseOrders(@RequestParam("restaurantId") String restaurantId) {
         List<PurchaseOrderWithName> purchaseOrders = new ArrayList<>();
-        logger.info("Getting list of all purchase orders for restaurantId = [{}].");
+        logger.info("Getting list of all purchase orders for restaurantId = [{}].", restaurantId);
         purchaseOrders = purchaseOrderService.getAllPurchaseOrders(restaurantId);
         logger.info("[{}] purchase orders found.", purchaseOrders.size());
         return new ResponseEntity<List<PurchaseOrderWithName>>(purchaseOrders, HttpStatus.OK);

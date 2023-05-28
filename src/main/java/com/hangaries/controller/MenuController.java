@@ -206,9 +206,9 @@ public class MenuController {
 
     @GetMapping("getAllSubProduct")
     @ResponseBody
-    public ResponseEntity<List<SubProduct>> getAllSubProduct() {
-        logger.info("Getting list of all products,menu items.");
-        List<SubProduct> products = productService.getAllSubProduct();
+    public ResponseEntity<List<SubProduct>> getAllSubProduct(@RequestParam("restaurantId") String restaurantId) {
+        logger.info("Getting list of all SubProduct for restaurantId = {}.", restaurantId);
+        List<SubProduct> products = productService.getAllSubProduct(restaurantId);
         return new ResponseEntity<List<SubProduct>>(products, HttpStatus.OK);
 
     }

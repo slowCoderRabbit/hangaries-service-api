@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.hangaries.constants.HangariesConstants.RESTAURANT_ID;
-
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -74,8 +72,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    public List<SubProduct> getAllSubProduct() {
-        return subProductRepository.findAll(Sort.by(Sort.Direction.ASC, "subProductId"));
+    public List<SubProduct> getAllSubProduct(String restaurantId) {
+        return subProductRepository.findByRestaurantId(restaurantId, Sort.by(Sort.Direction.ASC, "subProductId"));
     }
 
     private String getPaddedString(int maxId) {
@@ -130,6 +128,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private List<Menu> getProductMappedToMenuMaster(ProductMenuMappingRequest mapping) {
-        return menuRepository.getProductMappedToMenuMaster(mapping.getProductId(),mapping.getRestaurantId(), mapping.getStoreId());
+        return menuRepository.getProductMappedToMenuMaster(mapping.getProductId(), mapping.getRestaurantId(), mapping.getStoreId());
     }
 }
