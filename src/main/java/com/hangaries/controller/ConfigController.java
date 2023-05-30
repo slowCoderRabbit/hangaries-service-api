@@ -120,15 +120,15 @@ public class ConfigController {
 
     }
 
-    @GetMapping("getPaymentModes")
-    public ResponseEntity<List<PaymentMode>> getPaymentModes(@RequestParam("restaurantId") String restaurantId) {
-        logger.info("Getting list of payment modes for restaurantId = [{}].", restaurantId);
-        List<PaymentMode> paymentModeList = new ArrayList<>();
-        paymentModeList = configService.getPaymentModes(restaurantId);
-        logger.info("Payment modes list size = [{}].", paymentModeList.size());
-        return new ResponseEntity<List<PaymentMode>>(paymentModeList, HttpStatus.OK);
-
-    }
+//    @GetMapping("getPaymentModes")
+//    public ResponseEntity<List<PaymentMode>> getPaymentModes(@RequestParam("restaurantId") String restaurantId) {
+//        logger.info("Getting list of payment modes for restaurantId = [{}].", restaurantId);
+//        List<PaymentMode> paymentModeList = new ArrayList<>();
+//        paymentModeList = configService.getPaymentModes(restaurantId);
+//        logger.info("Payment modes list size = [{}].", paymentModeList.size());
+//        return new ResponseEntity<List<PaymentMode>>(paymentModeList, HttpStatus.OK);
+//
+//    }
 
 
 }

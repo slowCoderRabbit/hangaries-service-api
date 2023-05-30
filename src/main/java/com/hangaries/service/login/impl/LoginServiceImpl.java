@@ -46,7 +46,7 @@ public class LoginServiceImpl implements LoginService {
             loginResponse.setRestaurantName(storeRepository.findByRestaurantIdAndStoreId(loginResponse.getUser().getRestaurantId(), loginResponse.getUser().getStoreId()).stream().findFirst().get().getResturantName());
 
             try {
-                UserLoginDetails userLoginDetails = logUserLoginDetails(populateUserLoginDetails(loginRequest.getLoginId(), "", ""));
+                UserLoginDetails userLoginDetails = logUserLoginDetails(populateUserLoginDetails(loginRequest.getLoginId(), loginResponse.getUser().getRestaurantId(), loginResponse.getUser().getStoreId()));
                 loginResponse.setUserLoginDetailId(userLoginDetails.getId());
             } catch (Exception e) {
                 logger.error("Exception while logUserLoginDetails {}", e);
