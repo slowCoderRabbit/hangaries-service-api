@@ -43,25 +43,25 @@ public class Offer {
 //    private String offerType;
 
     @Column(name = "day_sunday")
-    private String daySunday;
+    private String sunday;
 
     @Column(name = "day_monday")
-    private String dayMonday;
+    private String monday;
 
     @Column(name = "day_tuesday")
-    private String dayTuesday;
+    private String tuesday;
 
     @Column(name = "day_wednesday")
-    private String dayWednesday;
+    private String wednesday;
 
     @Column(name = "day_thursday")
-    private String dayThursday;
+    private String thursday;
 
     @Column(name = "day_friday")
-    private String dayFriday;
+    private String friday;
 
     @Column(name = "day_saturday")
-    private String daySaturday;
+    private String saturday;
 
     @Column(name = "offer_applicability")
     private String offerApplicability;

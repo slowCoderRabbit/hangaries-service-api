@@ -5304,7 +5304,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"offerFunctionType\": \"OFTTest\",\r\n    \"offerCode\": \"OC\",\r\n    \"offerDescription\": \"OD\",\r\n    \"daySunday\": \"1\",\r\n    \"dayMonday\": \"2\",\r\n    \"dayTuesday\": \"3\",\r\n    \"dayWednesday\": \"4\",\r\n    \"dayThursday\": \"5\",\r\n    \"dayFriday\": \"6\",\r\n    \"daySaturday\": \"7\",\r\n    \"offerApplicability\": \"OA\",\r\n    \"offerPrice\": 11.11,\r\n    \"offerStatus\": \"ACTIVE\",\r\n    \"offerCriteria\": \"offerCriteriaTest\",\r\n    \"offerSection\": \"offerSectionTest\",\r\n    \"offerDish\": \"offerDishTest\",\r\n    \"offerProductList\": \"offerProductListTest\",\r\n    \"offerDiscount\": 22.22\r\n    \r\n}",
+					"raw": "{\r\n    \"offerFunctionType\": \"OFTTestVVV\",\r\n    \"offerCode\": \"OC\",\r\n    \"restaurantId\": \"R001\",\r\n      \"storeId\": \"S001\",\r\n      \"offerDescription\": \"OD\",\r\n    \"sunday\": \"1\",\r\n    \"monday\": \"2\",\r\n    \"tuesday\": \"3\",\r\n    \"wednesday\": \"4\",\r\n    \"thursday\": \"5\",\r\n    \"friday\": \"6\",\r\n    \"saturday\": \"7\",\r\n    \"offerApplicability\": \"OA\",\r\n    \"offerPrice\": 11.11,\r\n    \"offerStatus\": \"ACTIVE\",\r\n    \"offerCriteria\": \"offerCriteriaTest\",\r\n    \"offerSection\": \"offerSectionTest\",\r\n    \"offerDish\": \"offerDishTest\",\r\n    \"offerProductList\": \"offerProductListTest\",\r\n    \"offerDiscount\": 22.22\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
