@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByLoginId(String loginId);
 
+    User findByLoginIdAndStatus(String loginId, String status);
+
     @Query(value = "select * from USER_MASTER where restaurant_id=:restaurantId and status=:status and role_category=:roleCategory", nativeQuery = true)
     List<User> getUsersByRoleCategory(@Param("restaurantId") String restaurantId, @Param("roleCategory") String roleCategory, @Param("status") String status);
 

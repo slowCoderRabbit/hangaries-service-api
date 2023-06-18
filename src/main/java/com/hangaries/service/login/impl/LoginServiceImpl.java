@@ -32,7 +32,9 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public LoginResponse employeeLogin(LoginRequest loginRequest) {
 
-        User user = userRepository.findByLoginId(loginRequest.getLoginId());
+//        User user = userRepository.findByLoginId(loginRequest.getLoginId());
+
+        User user = userRepository.findByLoginIdAndStatus(loginRequest.getLoginId(), ACTIVE);
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setUser(user);
@@ -58,7 +60,6 @@ public class LoginServiceImpl implements LoginService {
             loginResponse.setLoginResponse(INCORRECT_PASSWORD);
             user.setLoginPassword("");
         }
-
 
         return loginResponse;
     }
@@ -92,7 +93,6 @@ public class LoginServiceImpl implements LoginService {
         } else {
             users = userRepository.getUsersByRoleCategory(restaurantId, category, ACTIVE);
         }
-
 
         for (User user : users) {
             user.setLoginPassword("");
