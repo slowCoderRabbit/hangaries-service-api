@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -72,14 +73,17 @@ public class CustomerController {
 
     @GetMapping("getCustomerDtlsByMobNum")
     @ResponseBody
-    public ResponseEntity<Customer> getCustomerDtlsByMobNum(@RequestParam("mobno") String mobnum) throws Exception {
-        Customer customerList = new Customer();
+    public ResponseEntity<List<Customer>> getCustomerDtlsByMobNum(@RequestParam("mobno") String mobnum) throws Exception {
+        List<Customer> customerList = new ArrayList<>();
         try {
-            customerList = customerService.getCustomerDtlsByMobNum(mobnum);
-            return new ResponseEntity<Customer>(customerList, HttpStatus.OK);
+            Customer customer = customerService.getCustomerDtlsByMobNum(mobnum);
+            if (null != customer) {
+                customerList.add(customer);
+            }
+            return new ResponseEntity<List<Customer>>(customerList, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while getCustomerDtlsByMobNum ::" + ex.getMessage());
-            return new ResponseEntity<Customer>(customerList, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<Customer>>(customerList, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
