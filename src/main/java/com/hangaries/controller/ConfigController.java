@@ -1,6 +1,9 @@
 package com.hangaries.controller;
 
-import com.hangaries.model.*;
+import com.hangaries.model.AppDetails;
+import com.hangaries.model.BusinessDate;
+import com.hangaries.model.BusinessDateRequest;
+import com.hangaries.model.ConfigMaster;
 import com.hangaries.service.config.impl.ConfigServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,10 +113,11 @@ public class ConfigController {
 
     @PostMapping("performEndOfDay")
     public ResponseEntity<BusinessDate> performEndOfDay(@RequestParam("restaurantId") String restaurantId,
-                                                        @RequestParam("storeId") String storeId) {
-        logger.info("Performing EOD for restaurantId = [{}] and storeId = [{}].", restaurantId, storeId);
+                                                        @RequestParam("storeId") String storeId,
+                                                        @RequestParam("loginId") String loginId) {
+        logger.info("[{}] is performing EOD for restaurantId = [{}] and storeId = [{}].", loginId, restaurantId, storeId);
 
-        BusinessDate businessDateNew = configService.performEndOfDay(restaurantId, storeId);
+        BusinessDate businessDateNew = configService.performEndOfDay(restaurantId, storeId, loginId);
 
         logger.info("Business date update to = [{}] for restaurantId = [{}] and storeId = [{}].", businessDateNew.getBusinessDate(), businessDateNew.getRestaurantId(), businessDateNew.getStoreId());
         return new ResponseEntity<BusinessDate>(businessDateNew, HttpStatus.OK);

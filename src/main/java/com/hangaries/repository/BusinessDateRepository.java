@@ -15,7 +15,7 @@ public interface BusinessDateRepository extends JpaRepository<BusinessDate, Long
     BusinessDate getBusinessDate(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId);
 
     @Procedure(procedureName = "sp_EndOfDay", outputParameterName = "oErrorDescription")
-    String performEndOfDay(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId);
+    String performEndOfDay(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("loginId") String loginId);
 
     List<BusinessDate> findByRestaurantId(String restaurantId);
 }

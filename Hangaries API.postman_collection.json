@@ -3412,7 +3412,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/performEndOfDay?restaurantId=R001&storeId=S002",
+					"raw": "http://localhost:8080/api/performEndOfDay?restaurantId=R001&storeId=S001&loginId=testuser",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -3429,7 +3429,11 @@
 						},
 						{
 							"key": "storeId",
-							"value": "S002"
+							"value": "S001"
+						},
+						{
+							"key": "loginId",
+							"value": "testuser"
 						}
 					]
 				}

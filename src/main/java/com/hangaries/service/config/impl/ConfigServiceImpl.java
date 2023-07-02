@@ -81,8 +81,8 @@ public class ConfigServiceImpl implements ConfigService {
         return businessDateRepository.getBusinessDate(restaurantId, storeId);
     }
 
-    public BusinessDate performEndOfDay(String restaurantId, String storeId) {
-        String result = businessDateRepository.performEndOfDay(restaurantId, storeId);
+    public BusinessDate performEndOfDay(String restaurantId, String storeId, String loginId) {
+        String result = businessDateRepository.performEndOfDay(restaurantId, storeId, loginId);
         BusinessDate businessDate = businessDateRepository.getBusinessDate(restaurantId, storeId);
         businessDate.setResult(result);
         return businessDate;
