@@ -190,6 +190,13 @@ public class ReportServiceImpl implements ReportService {
                     if (null != cancelledOrder && !cancelledOrder.isEmpty()) {
                         reportResult.setReportCancelledOrder(cancelledOrder);
                     }
+                } else if (report.getReportName().equals("SALES_SUMMARY_BY_OFFER_CODE")) {
+                    String query = "select * from REPORT_SALES_SUMMARY_BY_OFFER_CODE " + queryBuilder;
+                    logger.info("SALES_SUMMARY_BY_OFFER_CODE SQL = [{}]", query);
+                    List<ReportSalesSummaryByOfferCode> offerCodeList = jdbcTemplate.query(query, BeanPropertyRowMapper.newInstance(ReportSalesSummaryByOfferCode.class));
+                    if (null != offerCodeList && !offerCodeList.isEmpty()) {
+                        reportResult.setReportSalesSummaryByOfferCode(offerCodeList);
+                    }
                 }
             }
         } catch (Exception e) {
