@@ -5,6 +5,7 @@ import com.hangaries.model.InputFile;
 import com.hangaries.model.dto.FileDto;
 import com.hangaries.util.DataBucketUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,16 @@ public class FileServiceImpl implements FileService {
 
     private final DataBucketUtil dataBucketUtil;
 
-    public List<InputFile> uploadFiles(MultipartFile[] files) {
+    public List<InputFile> uploadFiles(MultipartFile[] files, String restaurantId) {
 
         LOGGER.debug("Start file uploading service!!");
         List<InputFile> inputFiles = new ArrayList<>();
 
         Arrays.asList(files).forEach(file -> {
             String originalFileName = file.getOriginalFilename();
+
+            originalFileName = appendRestaurantIdIfExists(restaurantId, originalFileName);
+
             Path path = new File(originalFileName).toPath();
 
             try {
@@ -49,5 +53,12 @@ public class FileServiceImpl implements FileService {
             }
         });
         return inputFiles;
+    }
+
+    String appendRestaurantIdIfExists(String restaurantId, String originalFileName) {
+        if (StringUtils.isNotBlank(restaurantId)) {
+            originalFileName = restaurantId + "/" + originalFileName;
+        }
+        return originalFileName;
     }
 }

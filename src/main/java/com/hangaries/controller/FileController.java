@@ -24,8 +24,9 @@ public class FileController {
     }
 
     @PostMapping(value = "uploadFile", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public List<InputFile> addFile(@RequestParam("files") MultipartFile[] files) {
-        logger.info("[{}] files request received for upload. ", files.length);
-        return fileService.uploadFiles(files);
+    public List<InputFile> addFile(@RequestParam("files") MultipartFile[] files, @RequestParam("restaurantId") String restaurantId) {
+        logger.info("[{}] files request received for restaurantId [{}] upload. ", files.length, restaurantId);
+        return fileService.uploadFiles(files, restaurantId);
     }
+
 }
