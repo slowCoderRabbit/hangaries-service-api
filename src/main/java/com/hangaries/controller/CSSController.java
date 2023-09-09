@@ -1,6 +1,7 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.CSSMaster;
+import com.hangaries.model.CSSRequest;
 import com.hangaries.service.css.CSSServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -34,5 +36,13 @@ public class CSSController {
     public Optional<CSSMaster> saveCSSStatus(@RequestParam("id") long id, @RequestParam("status") String status) {
         logger.info("Saving CSS status = [{}] for id = [{}].", id, status);
         return cssService.saveCSSStatus(id, status);
+    }
+
+    @GetMapping("getActiveCSS")
+    public List<CSSMaster> getActiveCSS(@RequestBody CSSRequest request) {
+        logger.info("Getting active CSS for request = [{}].", request);
+        List<CSSMaster> result = cssService.getActiveCSS(request);
+        logger.info("[{}] active records found for CSS request = [{}].", result.size(), request);
+        return result;
     }
 }
