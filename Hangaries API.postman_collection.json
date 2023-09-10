@@ -6067,6 +6067,74 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getActiveCSSParams",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"console.log(\"Status Code: \" + pm.response.status + \" / Response Date: \" + pm.response.headers.get(\"Date\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": true,
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"restaurantId\": \"R002\",\r\n    \"storeId\": \"ALL\",\r\n\t\"category\": \"HOME\",\r\n\t\"subCategory\": \"Logo\"\t\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getActiveCSS?restaurantId=R002&storeId=ALL&category=HOME&subCategory=Logo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getActiveCSS"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R002"
+						},
+						{
+							"key": "storeId",
+							"value": "ALL"
+						},
+						{
+							"key": "category",
+							"value": "HOME"
+						},
+						{
+							"key": "subCategory",
+							"value": "Logo"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

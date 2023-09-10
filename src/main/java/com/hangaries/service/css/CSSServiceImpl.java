@@ -1,7 +1,6 @@
 package com.hangaries.service.css;
 
 import com.hangaries.model.CSSMaster;
-import com.hangaries.model.CSSRequest;
 import com.hangaries.repository.CSSRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +28,13 @@ public class CSSServiceImpl {
         return cssRepository.findById(id);
     }
 
-    public List<CSSMaster> getActiveCSS(CSSRequest request) {
+//    public List<CSSMaster> getActiveCSS(CSSRequest request) {
+//        return cssRepository.findByRestaurantIdAndStoreIdAndCategoryAndSubCategoryAndStatus(
+//                request.getRestaurantId(), request.getStoreId(), request.getCategory(), request.getSubCategory(), ACTIVE);
+//    }
+
+    public List<CSSMaster> getActiveCSS(String restaurantId, String storeId, String category, String subCategory) {
         return cssRepository.findByRestaurantIdAndStoreIdAndCategoryAndSubCategoryAndStatus(
-                request.getRestaurantId(), request.getStoreId(), request.getCategory(), request.getSubCategory(), ACTIVE);
+                restaurantId, storeId, category, subCategory, ACTIVE);
     }
 }
