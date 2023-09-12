@@ -28,10 +28,9 @@ public class CSSServiceImpl {
         return cssRepository.findById(id);
     }
 
-//    public List<CSSMaster> getActiveCSS(CSSRequest request) {
-//        return cssRepository.findByRestaurantIdAndStoreIdAndCategoryAndSubCategoryAndStatus(
-//                request.getRestaurantId(), request.getStoreId(), request.getCategory(), request.getSubCategory(), ACTIVE);
-//    }
+    public List<CSSMaster> getActiveCSS(String restaurantId, String storeId) {
+        return cssRepository.findByRestaurantIdAndStoreIdAndStatus(restaurantId, storeId, ACTIVE);
+    }
 
     public List<CSSMaster> getActiveCSS(String restaurantId, String storeId, String category, String subCategory) {
         return cssRepository.findByRestaurantIdAndStoreIdAndCategoryAndSubCategoryAndStatus(

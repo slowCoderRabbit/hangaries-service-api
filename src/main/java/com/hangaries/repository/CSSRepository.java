@@ -18,4 +18,6 @@ public interface CSSRepository extends JpaRepository<CSSMaster, Long> {
     void saveCSSStatus(long id, String status);
 
     List<CSSMaster> findByRestaurantIdAndStoreIdAndCategoryAndSubCategoryAndStatus(String restaurantId, String storeId, String category, String subCategory, String active);
+
+    List<CSSMaster> findByRestaurantIdAndStoreIdAndStatus(String restaurantId, String storeId, String active);
 }

@@ -1,7 +1,6 @@
 package com.hangaries.controller;
 
 import com.hangaries.model.CSSMaster;
-import com.hangaries.model.CSSRequest;
 import com.hangaries.service.css.CSSServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +50,14 @@ public class CSSController {
         logger.info("Getting active CSS for restaurantId = [{}], storeId = [{}], category = [{}],subCategory = [{}].", restaurantId, storeId, category, subCategory);
         List<CSSMaster> result = cssService.getActiveCSS(restaurantId, storeId, category, subCategory);
         logger.info("[{}] active records found for CSS for restaurantId = [{}], storeId = [{}], category = [{}],subCategory = [{}].", result.size(), restaurantId, storeId, category, subCategory);
+        return result;
+    }
+
+    @GetMapping("getActiveCSSByRestoIdAndStoreId")
+    public List<CSSMaster> getActiveCSSByRestoIdAndStoreId(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) {
+        logger.info("Getting active CSS for restaurantId = [{}], storeId = [{}].", restaurantId, storeId);
+        List<CSSMaster> result = cssService.getActiveCSS(restaurantId, storeId);
+        logger.info("[{}] active records found for CSS for restaurantId = [{}], storeId = [{}].", result.size(), restaurantId, storeId);
         return result;
     }
 }
