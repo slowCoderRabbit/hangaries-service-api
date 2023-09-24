@@ -3221,7 +3221,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/validateCoupon?couponCode=20OFF1",
+					"raw": "http://localhost:8080/api/validateCoupon?couponCode=20MANAGEMENT&restaurantId=R001&storeId=S001",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -3234,7 +3234,15 @@
 					"query": [
 						{
 							"key": "couponCode",
-							"value": "20OFF1"
+							"value": "20MANAGEMENT"
+						},
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
 						}
 					]
 				}

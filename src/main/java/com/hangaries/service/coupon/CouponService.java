@@ -8,7 +8,7 @@ import java.util.List;
 public interface CouponService {
     Coupon saveCoupon(Coupon coupon);
 
-    CouponResponse validateCoupon(String coupon);
+    CouponResponse validateCoupon(String couponCode, String restaurantId, String storeId);
 
     List<Coupon> getCouponsByRestroAndStore(String restaurantId, String storeId);
 }

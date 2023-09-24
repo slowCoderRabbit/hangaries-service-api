@@ -29,8 +29,8 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public CouponResponse validateCoupon(String couponCode) {
-        Coupon coupon = couponRepository.validateCoupon(couponCode, Y);
+    public CouponResponse validateCoupon(String couponCode, String restaurantId, String storeId) {
+        Coupon coupon = couponRepository.validateCoupon(couponCode, restaurantId, storeId, Y);
         CouponResponse response = new CouponResponse();
         if (null != coupon) {
             response.setValidationResult(VALID_COUPON);

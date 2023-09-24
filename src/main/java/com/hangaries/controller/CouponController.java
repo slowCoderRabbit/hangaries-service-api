@@ -33,9 +33,9 @@ public class CouponController {
 
     @PostMapping("validateCoupon")
     @ResponseBody
-    public ResponseEntity<CouponResponse> validateCoupon(@RequestParam String couponCode) {
-        logger.info("Validating coupon code = {}. ", couponCode);
-        CouponResponse couponResponse = couponService.validateCoupon(couponCode);
+    public ResponseEntity<CouponResponse> validateCoupon(@RequestParam String couponCode, @RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId) {
+        logger.info("Validating coupon code = {} for restaurantId = {} and storeId = {}. ", couponCode, restaurantId, storeId);
+        CouponResponse couponResponse = couponService.validateCoupon(couponCode, restaurantId, storeId);
         return new ResponseEntity<CouponResponse>(couponResponse, HttpStatus.OK);
 
     }
