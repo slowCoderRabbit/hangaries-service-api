@@ -18,8 +18,10 @@ public interface CustomerDtlsRepository extends JpaRepository<CustomerDtls, Long
     @Query(value = "select * from CUSTOMER_ADDRESS_DETAILS where mobile_number=:mobnumber and customer_address_type=:type and active=:status", nativeQuery = true)
     CustomerDtls getCustometDtlsById(@Param("mobnumber") String mobnumber, @Param("type") String type, @Param("status") String status) throws Exception;
 
-    @Query(value = "select * from CUSTOMER_ADDRESS_DETAILS where mobile_number=:mobnumber and active=:status", nativeQuery = true)
-    List<CustomerDtls> getCustomerAddressDtlsByMobNum(@Param("mobnumber") String mobnumber, @Param("status") String status) throws Exception;
+    @Query(value = "select cad.* from CUSTOMER_ADDRESS_DETAILS cad, CUSTOMER_MASTER cm \n" +
+            " where cad.mobile_number=:mobnumber and cm.restaurant_id=:restaurantId " +
+            "and cad.active=:status and cad.mobile_number=cm.mobile_number", nativeQuery = true)
+    List<CustomerDtls> getCustomerAddressDtlsByMobNum(@Param("restaurantId") String restaurantId, @Param("mobnumber") String mobnumber, @Param("status") String status) throws Exception;
 
     @Modifying
     @Transactional

@@ -8,9 +8,9 @@ import java.util.List;
 @Service
 public interface CustomerDtlsService {
 
-    public CustomerDtls saveCustomerDtls(CustomerDtls customerDtls) throws Exception;
+    CustomerDtls saveCustomerDtls(CustomerDtls customerDtls) throws Exception;
 
-    public CustomerDtls updateCustomerDtls(CustomerDtls customerDtls) throws Exception;
+    CustomerDtls updateCustomerDtls(CustomerDtls customerDtls) throws Exception;
 
-    public List<CustomerDtls> getCustomerAddressDtlsByMobNum(String mobnum) throws Exception;
+    List<CustomerDtls> getCustomerAddressDtlsByMobNum(String restaurantId, String mobnum) throws Exception;
 }

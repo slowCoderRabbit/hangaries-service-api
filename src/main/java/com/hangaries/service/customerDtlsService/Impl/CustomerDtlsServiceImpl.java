@@ -46,10 +46,10 @@ public class CustomerDtlsServiceImpl implements CustomerDtlsService {
         return customerDtlsRepository.save(customerDtls);
     }
 
-    public List<CustomerDtls> getCustomerAddressDtlsByMobNum(String mobnum) throws Exception {
+    public List<CustomerDtls> getCustomerAddressDtlsByMobNum(String restaurantId, String mobnum) throws Exception {
         List<CustomerDtls> customerDtlsList = null;
         try {
-            customerDtlsList = customerDtlsRepository.getCustomerAddressDtlsByMobNum(mobnum, STATUS_Y);
+            customerDtlsList = customerDtlsRepository.getCustomerAddressDtlsByMobNum(restaurantId, mobnum, STATUS_Y);
         } catch (Exception ex) {
             logger.error("Error while retrieving address:: ");
             throw new Exception(ex);

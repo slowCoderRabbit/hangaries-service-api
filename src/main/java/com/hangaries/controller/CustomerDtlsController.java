@@ -35,10 +35,11 @@ public class CustomerDtlsController {
 
     @GetMapping("getCustomerAddressDtlsByMobNum")
     @ResponseBody
-    public ResponseEntity<List<CustomerDtls>> getCustomerAddressDtlsByMobNum(@RequestParam("mobno") String mobnum) throws Exception {
+    public ResponseEntity<List<CustomerDtls>> getCustomerAddressDtlsByMobNum(@RequestParam("restaurantId") String restaurantId, @RequestParam("mobno") String mobnum) throws Exception {
         List<CustomerDtls> customerDtlsList = new ArrayList<CustomerDtls>();
+        logger.info("Getting Customer details for restaurantId = [{}] and mobileNo = [{}]", restaurantId, mobnum);
         try {
-            customerDtlsList = customerDtlsService.getCustomerAddressDtlsByMobNum(mobnum);
+            customerDtlsList = customerDtlsService.getCustomerAddressDtlsByMobNum(restaurantId, mobnum);
             return new ResponseEntity<List<CustomerDtls>>(customerDtlsList, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<List<CustomerDtls>>(customerDtlsList, HttpStatus.INTERNAL_SERVER_ERROR);

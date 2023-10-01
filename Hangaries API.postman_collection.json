@@ -1134,7 +1134,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getCustomerAddressDtlsByMobNum?mobno=%2B919034702999",
+					"raw": "http://localhost:8080/api/getCustomerAddressDtlsByMobNum?restaurantId=R001&mobno=%2B918168901188",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1146,8 +1146,12 @@
 					],
 					"query": [
 						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
 							"key": "mobno",
-							"value": "%2B919034702999"
+							"value": "%2B918168901188"
 						}
 					]
 				}
@@ -2096,7 +2100,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getUsersByRoleCategory?restaurantId=R001&roleCategory=DELIVERY_BOY",
+					"raw": "http://localhost:8080/api/getUsersByRoleCategory?restaurantId=R001&storeId=S001&roleCategory=CASHIER",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2112,8 +2116,12 @@
 							"value": "R001"
 						},
 						{
+							"key": "storeId",
+							"value": "S001"
+						},
+						{
 							"key": "roleCategory",
-							"value": "DELIVERY_BOY"
+							"value": "CASHIER"
 						}
 					]
 				}
@@ -2326,7 +2334,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getUsersByRoleCategory?roleCategory=ALL",
+					"raw": "http://localhost:8080/api/getUsersByRoleCategory?restaurantId=R001&storeId=S001&roleCategory=ALL",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2337,6 +2345,14 @@
 						"getUsersByRoleCategory"
 					],
 					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "S001"
+						},
 						{
 							"key": "roleCategory",
 							"value": "ALL"

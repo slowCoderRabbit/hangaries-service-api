@@ -9,7 +9,7 @@ import java.util.List;
 public interface LoginService {
     LoginResponse employeeLogin(LoginRequest loginRequest);
 
-    List<User> getUsersByRoleCategory(String roleCategory, String category);
+    List<User> getUsersByRoleCategory(String restaurantId, String storeId, String category);
 
     User addEmployee(User user);
 

@@ -17,11 +17,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByLoginIdAndStatus(String loginId, String status);
 
-    @Query(value = "select * from USER_MASTER where restaurant_id=:restaurantId and status=:status and role_category=:roleCategory", nativeQuery = true)
-    List<User> getUsersByRoleCategory(@Param("restaurantId") String restaurantId, @Param("roleCategory") String roleCategory, @Param("status") String status);
+    @Query(value = "select * from USER_MASTER where restaurant_id=:restaurantId and store_Id=:storeId and status=:status and role_category=:roleCategory", nativeQuery = true)
+    List<User> getUsersByRoleCategory(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("roleCategory") String roleCategory, @Param("status") String status);
 
-    @Query(value = "select * from USER_MASTER where restaurant_id=:restaurantId and status=:status", nativeQuery = true)
-    List<User> getAllUsersByRoleCategory(@Param("restaurantId") String restaurantId, @Param("status") String status);
+    @Query(value = "select * from USER_MASTER where restaurant_id=:restaurantId and store_Id=:storeId and status=:status", nativeQuery = true)
+    List<User> getAllUsersByRoleCategory(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("status") String status);
 
     @Query(value = "select * from USER_MASTER where restaurant_id=:restaurantId and store_id=:storeId and status=:status", nativeQuery = true)
     List<User> getAllEmployee(@Param("restaurantId") String restaurantId, @Param("storeId") String storeId, @Param("status") String status);

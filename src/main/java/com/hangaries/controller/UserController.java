@@ -35,9 +35,9 @@ public class UserController {
     }
 
     @GetMapping("getUsersByRoleCategory")
-    List<User> getUsersByRoleCategory(@RequestParam("restaurantId") String restaurantId, @RequestParam("roleCategory") String roleCategory) {
-        logger.info("Getting list of users for role restaurantId = {} and category = {}.", restaurantId, roleCategory);
-        return loginService.getUsersByRoleCategory(restaurantId, roleCategory);
+    List<User> getUsersByRoleCategory(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId, @RequestParam("roleCategory") String roleCategory) {
+        logger.info("Getting list of users for role restaurantId = {}, storeId = {} and category = {}.", restaurantId, storeId, roleCategory);
+        return loginService.getUsersByRoleCategory(restaurantId, storeId, roleCategory);
     }
 
     @PostMapping("addUpdateEmployee")
