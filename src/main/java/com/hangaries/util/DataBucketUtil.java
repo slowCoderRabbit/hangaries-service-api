@@ -56,7 +56,7 @@ public class DataBucketUtil {
             Storage storage = options.getService();
             Bucket bucket = storage.get(gcpBucketId, Storage.BucketGetOption.fields());
 
-            Blob blob = bucket.create(gcpDirectoryName + "/" + fileName, fileData, contentType);
+            Blob blob = bucket.create(fileName, fileData, contentType);
 
             if (blob != null) {
                 LOGGER.debug("File successfully uploaded!!");
