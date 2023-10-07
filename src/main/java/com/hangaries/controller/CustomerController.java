@@ -32,11 +32,11 @@ public class CustomerController {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 
     @GetMapping("/customer/register")
-    public ResponseEntity<Customer> registerCustomer(@RequestParam("mobno") String mobno) {
+    public ResponseEntity<Customer> registerCustomer(@RequestParam("restaurantId") String restaurantId, @RequestParam("mobno") String mobno) {
         Customer customerRet = null;
         try {
-            logger.info("Register mobile number: " + mobno);
-            customerRet = customerService.registerCustomer(mobno);
+            logger.info("Register mobile number {} for restaurantId = {} ", restaurantId, mobno);
+            customerRet = customerService.registerCustomer(restaurantId, mobno);
             return new ResponseEntity<Customer>(customerRet, HttpStatus.OK);
         } catch (Exception ex) {
             logger.error("Error while registering customer::" + ex.getMessage());
@@ -73,10 +73,10 @@ public class CustomerController {
 
     @GetMapping("getCustomerDtlsByMobNum")
     @ResponseBody
-    public ResponseEntity<List<Customer>> getCustomerDtlsByMobNum(@RequestParam("mobno") String mobnum) throws Exception {
+    public ResponseEntity<List<Customer>> getCustomerDtlsByMobNum(@RequestParam("restaurantId") String restaurantId, @RequestParam("mobno") String mobnum) throws Exception {
         List<Customer> customerList = new ArrayList<>();
         try {
-            Customer customer = customerService.getCustomerDtlsByMobNum(mobnum);
+            Customer customer = customerService.getCustomerDtlsByMobNum(restaurantId, mobnum);
             if (null != customer) {
                 customerList.add(customer);
             }

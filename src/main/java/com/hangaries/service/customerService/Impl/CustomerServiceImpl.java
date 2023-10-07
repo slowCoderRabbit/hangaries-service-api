@@ -25,19 +25,20 @@ public class CustomerServiceImpl implements CustomerService {
 //        }
 //        return menuList;
 //    }
-    public Customer registerCustomer(String mobnum) throws Exception {
+    public Customer registerCustomer(String restaurantId, String mobnum) throws Exception {
         Customer customerRes = null;
         try {
             Customer customer = new Customer();
-            int count = customerRepository.getCustomerRegisterStatus(mobnum);
+            int count = customerRepository.getCustomerRegisterStatus(restaurantId, mobnum);
             if (count == 0) {
+                customer.setRestaurantId(restaurantId);
                 customer.setMobileNumber(mobnum);
                 customer.setFirstName("");
 
                 customerRes = customerRepository.save(customer);
             }
             if (count == 1) {
-                customerRes = customerRepository.getCustomerById(mobnum);
+                customerRes = customerRepository.getCustomerById(restaurantId, mobnum);
             }
         } catch (Exception ex) {
             logger.error("Error while saving registration details::" + ex.getMessage());
@@ -47,9 +48,9 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRes;
     }
 
-    public Customer getCustomerDtlsByMobNum(String mobnum) throws Exception {
+    public Customer getCustomerDtlsByMobNum(String restaurantId, String mobnum) throws Exception {
 
-        return customerRepository.getCustomerDtlsByMobNum(mobnum);
+        return customerRepository.getCustomerDtlsByMobNum(restaurantId, mobnum);
 
     }
 
@@ -57,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer updateCustomerInfo(Customer customer) throws Exception {
         Customer retCustomer = null;
         try {
-            long customerId = customerRepository.getCustomerIdByMobNo(customer.getMobileNumber());
+            long customerId = customerRepository.getCustomerIdByMobNo(customer.getRestaurantId(), customer.getMobileNumber());
             Customer customerUpdate = customerRepository.getOne(customerId);
             customerUpdate.setEmailId(customer.getEmailId());
             customerUpdate.setFirstName(customer.getFirstName());

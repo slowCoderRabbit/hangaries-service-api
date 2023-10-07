@@ -2919,7 +2919,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/getCustomerDtlsByMobNum?mobno=6584335463",
+					"raw": "http://localhost:8080/api/getCustomerDtlsByMobNum?restaurantId=R001&mobno=%2B919663106002",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2931,8 +2931,12 @@
 					],
 					"query": [
 						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
 							"key": "mobno",
-							"value": "6584335463"
+							"value": "%2B919663106002"
 						}
 					]
 				}
@@ -5530,7 +5534,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/customer/register?mobno=84335463",
+					"raw": "http://localhost:8080/api/customer/register?restaurantId=R001&mobno=84335463",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -5542,6 +5546,10 @@
 						"register"
 					],
 					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
 						{
 							"key": "mobno",
 							"value": "84335463"

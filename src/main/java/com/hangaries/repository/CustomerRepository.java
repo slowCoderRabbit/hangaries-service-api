@@ -14,19 +14,19 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     //  List<Customer> findByLoginId(String loginId);
 
-    @Query(value = "select * from CUSTOMER_MASTER where mobile_number=:mobNo", nativeQuery = true)
-    Customer getCustomerById(@RequestParam("mobNo") String mobNo) throws Exception;
+    @Query(value = "select * from CUSTOMER_MASTER where mobile_number=:mobNo and restaurant_id=:restaurantId", nativeQuery = true)
+    Customer getCustomerById(@Param("restaurantId") String restaurantId, @RequestParam("mobNo") String mobNo) throws Exception;
 
     //
     // List<Customer> deleteByLoginId(String loginId);
-    @Query(value = "select count(*) from CUSTOMER_MASTER where mobile_number=:mobnumber", nativeQuery = true)
-    int getCustomerRegisterStatus(@Param("mobnumber") String mobnumber) throws Exception;
+    @Query(value = "select count(*) from CUSTOMER_MASTER where mobile_number=:mobnumber and restaurant_id=:restaurantId", nativeQuery = true)
+    int getCustomerRegisterStatus(@Param("restaurantId") String restaurantId, @Param("mobnumber") String mobnumber) throws Exception;
 
-    @Query(value = "select id from CUSTOMER_MASTER where mobile_number=:mobnumber", nativeQuery = true)
-    long getCustomerIdByMobNo(@Param("mobnumber") String mobnumber) throws Exception;
+    @Query(value = "select id from CUSTOMER_MASTER where mobile_number=:mobnumber and restaurant_id=:restaurantId", nativeQuery = true)
+    long getCustomerIdByMobNo(@Param("restaurantId") String restaurantId, @Param("mobnumber") String mobnumber) throws Exception;
 
-    @Query(value = "select * from CUSTOMER_MASTER where mobile_number=:mobnumber", nativeQuery = true)
-    Customer getCustomerDtlsByMobNum(@Param("mobnumber") String mobnumber) throws Exception;
+    @Query(value = "select * from CUSTOMER_MASTER where mobile_number=:mobnumber and restaurant_id=:restaurantId", nativeQuery = true)
+    Customer getCustomerDtlsByMobNum(@Param("restaurantId") String restaurantId, @Param("mobnumber") String mobnumber) throws Exception;
 
     List<Customer> findByMobileNumber(String phone_number);
 
