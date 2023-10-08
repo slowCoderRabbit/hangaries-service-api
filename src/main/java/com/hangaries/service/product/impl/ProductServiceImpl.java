@@ -130,4 +130,8 @@ public class ProductServiceImpl implements ProductService {
     private List<Menu> getProductMappedToMenuMaster(ProductMenuMappingRequest mapping) {
         return menuRepository.getProductMappedToMenuMaster(mapping.getProductId(), mapping.getRestaurantId(), mapping.getStoreId());
     }
+
+    public List<Product> getProductById(String restaurantId, String storeId, String productId) {
+        return productRepository.findByRestaurantIdAndStoreIdAndProductId(restaurantId, storeId, productId);
+    }
 }

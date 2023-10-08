@@ -6227,6 +6227,40 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getProductById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getProductById?restaurantId=R001&storeId=ALL&productId=P001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getProductById"
+					],
+					"query": [
+						{
+							"key": "restaurantId",
+							"value": "R001"
+						},
+						{
+							"key": "storeId",
+							"value": "ALL"
+						},
+						{
+							"key": "productId",
+							"value": "P001"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

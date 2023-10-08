@@ -26,4 +26,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByRestaurantId(String restaurantId, Sort productId);
 
     Product findByProductIdAndRestaurantId(String productId, String restaurantId);
+
+    List<Product> findByRestaurantIdAndStoreIdAndProductId(String restaurantId, String storeId, String productId);
 }

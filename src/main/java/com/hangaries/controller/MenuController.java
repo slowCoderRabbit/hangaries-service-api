@@ -195,6 +195,15 @@ public class MenuController {
 
     }
 
+    @GetMapping("getProductById")
+    @ResponseBody
+    public ResponseEntity<List<Product>> getProductById(@RequestParam("restaurantId") String restaurantId, @RequestParam("storeId") String storeId, @RequestParam("productId") String productId) {
+        logger.info("Getting product with id = [{}] for restaurantId = [{}] and storeId = [{}].", productId, restaurantId, storeId);
+        List<Product> products = productService.getProductById(restaurantId, storeId, productId);
+        return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
+
+    }
+
     @PostMapping("saveProductMenuMapping")
     @ResponseBody
     public ResponseEntity<List<Menu>> saveProductMenuMapping(@RequestBody ProductMenuMappingRequestList request) {
