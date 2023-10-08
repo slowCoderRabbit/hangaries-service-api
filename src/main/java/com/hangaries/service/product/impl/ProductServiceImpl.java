@@ -131,7 +131,7 @@ public class ProductServiceImpl implements ProductService {
         return menuRepository.getProductMappedToMenuMaster(mapping.getProductId(), mapping.getRestaurantId(), mapping.getStoreId());
     }
 
-    public List<Product> getProductById(String restaurantId, String storeId, String productId) {
+    public Product getProductById(String restaurantId, String storeId, String productId) {
         return productRepository.findByRestaurantIdAndStoreIdAndProductId(restaurantId, storeId, productId);
     }
 }
