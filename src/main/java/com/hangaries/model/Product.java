@@ -52,6 +52,9 @@ public class Product {
     @Column(name = "dish_description_id")
     private String dishDescriptionId;
 
+    @Column(name = "dish_long_description")
+    private String dishLongDescription;
+
     @Column(name = "product_size")
     private String productSize;
 
